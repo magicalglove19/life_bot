@@ -16,48 +16,39 @@ US_TOP_N = 400
 
 
 def refresh_korea() -> list[dict]:
-    """pykrx로 KOSPI + KOSDAQ 시총 상위 300."""
-    from pykrx import stock
+    """FinanceDataReader로 KRX 전체 종목 시총 상위 300."""
+    import FinanceDataReader as fdr
 
-    # 최근 영업일 찾기 (최대 10일 역탐색)
-    today = datetime.now()
-    date_str = None
-    for i in range(10):
-        d = (today - timedelta(days=i)).strftime("%Y%m%d")
-        try:
-            tickers = stock.get_market_ticker_list(d, market="KOSPI")
-            if tickers:
-                date_str = d
-                break
-        except Exception:
-            continue
-    if not date_str:
-        raise RuntimeError("pykrx: 최근 영업일 조회 실패")
+    df = fdr.StockListing("KRX")
+    if df is None or df.empty:
+        raise RuntimeError("FinanceDataReader: KRX 종목 리스트 조회 실패")
+
+    # 컬럼명은 라이브러리 버전에 따라 다를 수 있음 (Symbol/Code, Marcap)
+    cols = {c.lower(): c for c in df.columns}
+    sym_col = cols.get("code") or cols.get("symbol")
+    name_col = cols.get("name")
+    cap_col = cols.get("marcap") or cols.get("marketcap")
+    market_col = cols.get("market")
+    if not (sym_col and name_col and cap_col):
+        raise RuntimeError(f"FinanceDataReader 컬럼 식별 실패: {list(df.columns)}")
+
+    df = df.dropna(subset=[cap_col])
+    df = df[df[cap_col] > 0]
+    df = df.sort_values(by=cap_col, ascending=False).head(KR_TOP_N)
 
     records = []
-    for market in ("KOSPI", "KOSDAQ"):
-        suffix = ".KS" if market == "KOSPI" else ".KQ"
-        tickers = stock.get_market_ticker_list(date_str, market=market)
-        cap_df = stock.get_market_cap(date_str, market=market)
-        if cap_df is None or cap_df.empty:
-            continue
-        for code in cap_df.index:
-            if code not in tickers:
-                continue
-            try:
-                name = stock.get_market_ticker_name(code)
-            except Exception:
-                name = code
-            records.append({
-                "symbol": f"{code}{suffix}",
-                "name": name,
-                "market": market,
-                "market_cap": int(cap_df.loc[code, "시가총액"]),
-            })
-    records.sort(key=lambda r: r["market_cap"], reverse=True)
-    top = records[:KR_TOP_N]
-    print(f"[refresh] KR: {date_str} 기준 {len(top)}개")
-    return top
+    for _, row in df.iterrows():
+        code = str(row[sym_col]).zfill(6)
+        market = (str(row[market_col]).upper() if market_col else "KOSPI")
+        suffix = ".KS" if "KOSPI" in market else ".KQ"
+        records.append({
+            "symbol": f"{code}{suffix}",
+            "name": str(row[name_col]),
+            "market": market,
+            "market_cap": int(row[cap_col]),
+        })
+    print(f"[refresh] KR: {len(records)}개 (FinanceDataReader)")
+    return records
 
 
 def refresh_us() -> list[dict]:

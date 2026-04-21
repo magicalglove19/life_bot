@@ -58,5 +58,65 @@
     "ko": "집",
     "sentence": "I live in a house.",
     "sentence_ko": "나는 집에서 살고 있어요."
+  },
+  {
+    "en": "school",
+    "ko": "학교",
+    "sentence": "I go to school.",
+    "sentence_ko": "나는 학교에 갑니다."
+  },
+  {
+    "en": "teacher",
+    "ko": "선생님",
+    "sentence": "My teacher is nice.",
+    "sentence_ko": "내 선생님은 친절해요."
+  },
+  {
+    "en": "classroom",
+    "ko": "교실",
+    "sentence": "I learn in the classroom.",
+    "sentence_ko": "나는 교실에서 배우고 있어요."
+  },
+  {
+    "en": "pencil case",
+    "ko": "연필ケース",
+    "sentence": "I have a pencil case.",
+    "sentence_ko": "나는 연필ケース가 있어요."
+  },
+  {
+    "en": "basketball",
+    "ko": "농구",
+    "sentence": "I play basketball.",
+    "sentence_ko": "나는 농구를 해요."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I read books in the library.",
+    "sentence_ko": "나는 도서관에서 책을 읽어요."
+  },
+  {
+    "en": "computer",
+    "ko": "컴퓨터",
+    "sentence": "I use a computer.",
+    "sentence_ko": "나는 컴퓨터를 사용해요."
+  },
+  {
+    "en": "garden",
+    "ko": "정원",
+    "sentence": "I have a garden.",
+    "sentence_ko": "내가 정원이 있어요."
+  },
+  {
+    "en": "sunflower",
+    "ko": "해바라기",
+    "sentence": "I like sunflowers.",
+    "sentence_ko": "나는 해바라기를 좋아해요."
+  },
+  {
+    "en": "laugh",
+    "ko": "웃다",
+    "sentence": "I laugh with my friends.",
+    "sentence_ko": "나는 친구들과 함께 웃어요."
   }
 ]

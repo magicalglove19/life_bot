@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-21T08:35:11",
+  "updated_at": "2026-04-21T08:51:19",
   "count": 400,
   "tickers": [
     {
@@ -1155,10 +1155,6 @@
       "name": "The Allstate Corporation"
     },
     {
-      "symbol": "TAK",
-      "name": "Takeda Pharmaceutical Company Limited"
-    },
-    {
       "symbol": "GWW",
       "name": "W.W. Grainger, Inc."
     },
@@ -1173,6 +1169,10 @@
     {
       "symbol": "D",
       "name": "Dominion Energy, Inc."
+    },
+    {
+      "symbol": "TAK",
+      "name": "Takeda Pharmaceutical Company Limited"
     },
     {
       "symbol": "AME",

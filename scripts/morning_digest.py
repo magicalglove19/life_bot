@@ -1,5 +1,6 @@
 """월~금 08:00 KST — 아침 종합 브리핑.
-변곡점 스캐너 + 강남자리 스캐너 + RSI(ETF 4종)를 1개 메시지로.
+변곡점 스캐너 + 강남자리 스캐너 + RSI(ETF 4종)를 메시지로.
+한국/미국 섹션 분리 · 미국 우선 (사용자는 미국 주식 비중 높음).
 """
 import sys
 from datetime import datetime
@@ -12,10 +13,10 @@ import daejjang_scanner
 import rsi_report
 import refresh_tickers
 
-# 전체 분석은 오래 걸릴 수 있어 각 단계 타임아웃 분리
-INFLECTION_TIMEOUT = 300  # 5분
-DAEJJANG_TIMEOUT = 420    # 7분
-TOP_N_PER_REPORT = 10
+# 각 섹션별 타임아웃 (한국/미국 각각 독립)
+INFLECTION_TIMEOUT_EACH = 240   # 4분
+DAEJJANG_TIMEOUT_EACH = 300     # 5분
+TOP_N_PER_REPORT = 15
 
 
 def load_all_symbols() -> tuple[list[str], list[str]]:
@@ -30,10 +31,9 @@ def load_all_symbols() -> tuple[list[str], list[str]]:
 
 def main() -> int:
     kr_symbols, us_symbols = load_all_symbols()
-    all_symbols = kr_symbols + us_symbols
-    print(f"[morning] 스캔 대상: KR {len(kr_symbols)} + US {len(us_symbols)} = {len(all_symbols)}")
+    print(f"[morning] 스캔 대상: US {len(us_symbols)} + KR {len(kr_symbols)}")
 
-    if not all_symbols:
+    if not kr_symbols and not us_symbols:
         telegram.send(
             "⚠️ <b>아침 브리핑</b>\n종목 리스트 파일이 없습니다.\n"
             "먼저 refresh-tickers 워크플로우를 실행해주세요."
@@ -43,37 +43,63 @@ def main() -> int:
     today = datetime.now().strftime("%Y-%m-%d (%a)")
     sections = [f"☀️ <b>아침 브리핑</b> · {today}", ""]
 
-    # 1. 변곡점 스캐너
-    try:
-        print("[morning] 변곡점 스캔 시작...")
-        infl_results = inflection_scanner.scan_many(
-            all_symbols, max_time_sec=INFLECTION_TIMEOUT
-        )
-        sections.append(inflection_scanner.format_report(
-            "변곡점 매수 신호", infl_results, limit=TOP_N_PER_REPORT
-        ))
-    except Exception as e:
-        print(f"[morning] 변곡점 실패: {e}", file=sys.stderr)
-        sections.append(f"<b>🎯 변곡점 매수 신호</b>\n  (실패: {str(e)[:100]})")
+    # ========== 변곡점 스캐너 (US 먼저) ==========
+    sections.append("<b>━━━ 🎯 변곡점 매수 신호 ━━━</b>")
 
-    sections.append("")
+    # 미국 먼저
+    if us_symbols:
+        try:
+            print("[morning] 변곡점 US 스캔...")
+            us_infl = inflection_scanner.scan_many(us_symbols, max_time_sec=INFLECTION_TIMEOUT_EACH)
+            sections.append(inflection_scanner.format_report(
+                "🇺🇸 미국", us_infl, limit=TOP_N_PER_REPORT
+            ))
+        except Exception as e:
+            print(f"[morning] 변곡점 US 실패: {e}", file=sys.stderr)
+            sections.append(f"🇺🇸 미국: 실패 ({str(e)[:80]})")
+        sections.append("")
 
-    # 2. 강남자리 스캐너
-    try:
-        print("[morning] 강남자리 스캔 시작...")
-        dj_results = daejjang_scanner.scan_many(
-            all_symbols, max_time_sec=DAEJJANG_TIMEOUT
-        )
-        sections.append(daejjang_scanner.format_report(
-            "강남자리·뜬자리", dj_results, limit=TOP_N_PER_REPORT
-        ))
-    except Exception as e:
-        print(f"[morning] 강남자리 실패: {e}", file=sys.stderr)
-        sections.append(f"<b>🏯 강남자리·뜬자리</b>\n  (실패: {str(e)[:100]})")
+    # 한국
+    if kr_symbols:
+        try:
+            print("[morning] 변곡점 KR 스캔...")
+            kr_infl = inflection_scanner.scan_many(kr_symbols, max_time_sec=INFLECTION_TIMEOUT_EACH)
+            sections.append(inflection_scanner.format_report(
+                "🇰🇷 한국", kr_infl, limit=TOP_N_PER_REPORT
+            ))
+        except Exception as e:
+            print(f"[morning] 변곡점 KR 실패: {e}", file=sys.stderr)
+            sections.append(f"🇰🇷 한국: 실패 ({str(e)[:80]})")
+        sections.append("")
 
-    sections.append("")
+    # ========== 강남자리 스캐너 (US 먼저) ==========
+    sections.append("<b>━━━ 🏯 강남자리·뜬자리 ━━━</b>")
 
-    # 3. RSI
+    if us_symbols:
+        try:
+            print("[morning] 강남자리 US 스캔...")
+            us_dj = daejjang_scanner.scan_many(us_symbols, max_time_sec=DAEJJANG_TIMEOUT_EACH)
+            sections.append(daejjang_scanner.format_report(
+                "🇺🇸 미국", us_dj, limit=TOP_N_PER_REPORT
+            ))
+        except Exception as e:
+            print(f"[morning] 강남자리 US 실패: {e}", file=sys.stderr)
+            sections.append(f"🇺🇸 미국: 실패 ({str(e)[:80]})")
+        sections.append("")
+
+    if kr_symbols:
+        try:
+            print("[morning] 강남자리 KR 스캔...")
+            kr_dj = daejjang_scanner.scan_many(kr_symbols, max_time_sec=DAEJJANG_TIMEOUT_EACH)
+            sections.append(daejjang_scanner.format_report(
+                "🇰🇷 한국", kr_dj, limit=TOP_N_PER_REPORT
+            ))
+        except Exception as e:
+            print(f"[morning] 강남자리 KR 실패: {e}", file=sys.stderr)
+            sections.append(f"🇰🇷 한국: 실패 ({str(e)[:80]})")
+        sections.append("")
+
+    # ========== RSI ==========
     try:
         print("[morning] RSI 조회...")
         sections.append(rsi_report.build_report())

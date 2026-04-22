@@ -118,5 +118,65 @@
     "ko": "웃다",
     "sentence": "I laugh with my friends.",
     "sentence_ko": "나는 친구들과 함께 웃어요."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "I see a cloud.",
+    "sentence_ko": "나는 구름을 봅니다."
+  },
+  {
+    "en": "butterfly",
+    "ko": "나비",
+    "sentence": "The butterfly is beautiful.",
+    "sentence_ko": "나비는 아름답습니다."
+  },
+  {
+    "en": "carrot",
+    "ko": "당근",
+    "sentence": "I eat a carrot.",
+    "sentence_ko": "나는 당근을 먹어요."
+  },
+  {
+    "en": "happy",
+    "ko": "행복한",
+    "sentence": "I am happy.",
+    "sentence_ko": "나는 행복하다."
+  },
+  {
+    "en": "piano",
+    "ko": "피아노",
+    "sentence": "I play the piano.",
+    "sentence_ko": "나는 피아노를 연주한다."
+  },
+  {
+    "en": "brother",
+    "ko": "오빠",
+    "sentence": "My brother is tall.",
+    "sentence_ko": "내 오빠는 키가 크다."
+  },
+  {
+    "en": "cereal",
+    "ko": "시리얼",
+    "sentence": "I eat cereal for breakfast.",
+    "sentence_ko": "나는 아침으로 시리얼을 먹어요."
+  },
+  {
+    "en": "kite",
+    "ko": "연",
+    "sentence": "I fly a kite.",
+    "sentence_ko": "나는 연을 날린다."
+  },
+  {
+    "en": "orange",
+    "ko": "오렌지",
+    "sentence": "I eat an orange.",
+    "sentence_ko": "나는 오렌지를 먹어요."
+  },
+  {
+    "en": "smile",
+    "ko": "미소",
+    "sentence": "I smile at you.",
+    "sentence_ko": "나는 너에게 미소를 보낸다."
   }
 ]

@@ -18,5 +18,15 @@
   "notte",
   "scuola",
   "libro",
-  "telefono"
+  "telefono",
+  "nome",
+  "età",
+  "paese",
+  "città",
+  "strada",
+  "hotel",
+  "ristorante",
+  "spiaggia",
+  "montagna",
+  "aeroporto"
 ]

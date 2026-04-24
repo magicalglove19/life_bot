@@ -2,8 +2,9 @@ name: morning-stocks
 
 on:
   schedule:
-    # 08:00 KST (월~금) = 23:00 UTC (Sun~Thu, DOW 0-4)
-    - cron: '7 23 * * 0-4'
+    # 05:00 KST (월~금) = 20:00 UTC (Sun~Thu, DOW 0-4)
+    # 스캔 20분 + GH Actions 지연 30분 여유 → 06:00 KST 이전 도착 목표
+    - cron: '0 20 * * 0-4'
   workflow_dispatch:  # 수동 실행 가능
 
 permissions:

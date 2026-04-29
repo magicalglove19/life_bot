@@ -118,5 +118,65 @@
     "ko": "도서관",
     "sentence": "I read books in the library.",
     "sentence_ko": "나는 도서관에서 책을 읽어요."
+  },
+  {
+    "en": "house",
+    "ko": "집",
+    "sentence": "I live in a house.",
+    "sentence_ko": "나는 집에서 살아요."
+  },
+  {
+    "en": "father",
+    "ko": "아버지",
+    "sentence": "My father is a doctor.",
+    "sentence_ko": "내 아버지가 의사네요."
+  },
+  {
+    "en": "sister",
+    "ko": "누나",
+    "sentence": "I have a sister.",
+    "sentence_ko": "나는 누나가 하나 있어요."
+  },
+  {
+    "en": "bicycle",
+    "ko": "자전거",
+    "sentence": "I ride a bicycle.",
+    "sentence_ko": "나는 자전거를 타요."
+  },
+  {
+    "en": "flower",
+    "ko": "꽃",
+    "sentence": "I like flowers.",
+    "sentence_ko": "나는 꽃을 좋아해요."
+  },
+  {
+    "en": "computer",
+    "ko": "컴퓨터",
+    "sentence": "I use a computer.",
+    "sentence_ko": "나는 컴퓨터를 사용해요."
+  },
+  {
+    "en": "music",
+    "ko": "음악",
+    "sentence": "I like music.",
+    "sentence_ko": "나는 음악을 좋아해요."
+  },
+  {
+    "en": "swim",
+    "ko": "수영",
+    "sentence": "I can swim.",
+    "sentence_ko": "나는 수영을 할 수 있어요."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "I see clouds.",
+    "sentence_ko": "나는 구름을 봐요."
+  },
+  {
+    "en": "sun",
+    "ko": "태양",
+    "sentence": "The sun is shining.",
+    "sentence_ko": "태양이 비추고 있어요."
   }
 ]

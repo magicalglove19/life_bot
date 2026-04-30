@@ -178,5 +178,65 @@
     "ko": "태양",
     "sentence": "The sun is shining.",
     "sentence_ko": "태양이 비추고 있어요."
+  },
+  {
+    "en": "bird",
+    "ko": "새",
+    "sentence": "I see a bird.",
+    "sentence_ko": "나는 새를 봅니다."
+  },
+  {
+    "en": "cloudy",
+    "ko": "흐린",
+    "sentence": "Today is cloudy.",
+    "sentence_ko": "오늘은 흐린 날씨입니다."
+  },
+  {
+    "en": "table",
+    "ko": "테이블",
+    "sentence": "I sit at the table.",
+    "sentence_ko": "나는 테이블에 앉습니다."
+  },
+  {
+    "en": "run",
+    "ko": "달리다",
+    "sentence": "I like to run.",
+    "sentence_ko": "나는 달리는 것을 좋아합니다."
+  },
+  {
+    "en": "yellow",
+    "ko": "노란색",
+    "sentence": "The sun is yellow.",
+    "sentence_ko": "태양은 노란색입니다."
+  },
+  {
+    "en": "rabbit",
+    "ko": "토끼",
+    "sentence": "I have a rabbit.",
+    "sentence_ko": "나는 토끼를 기릅니다."
+  },
+  {
+    "en": "bed",
+    "ko": "잠자리",
+    "sentence": "I sleep in my bed.",
+    "sentence_ko": "나는 내 잠자리에서 자요."
+  },
+  {
+    "en": "rain",
+    "ko": "비",
+    "sentence": "It rains today.",
+    "sentence_ko": "오늘은 비가 옵니다."
+  },
+  {
+    "en": "phone",
+    "ko": "전화기",
+    "sentence": "My mother uses a phone.",
+    "sentence_ko": "나의 어머니는 전화기를 사용합니다."
+  },
+  {
+    "en": "laugh",
+    "ko": "웃다",
+    "sentence": "I laugh with my friends.",
+    "sentence_ko": "나는 내 친구들과 웃습니다."
   }
 ]

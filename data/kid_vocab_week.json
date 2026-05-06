@@ -58,5 +58,65 @@
     "ko": "집",
     "sentence": "I go home.",
     "sentence_ko": "나는 집에 가요."
+  },
+  {
+    "en": "apple",
+    "ko": "사과",
+    "sentence": "I eat an apple.",
+    "sentence_ko": "나는 사과를 먹어요."
+  },
+  {
+    "en": "father",
+    "ko": "아빠",
+    "sentence": "My father is kind.",
+    "sentence_ko": "아빠는 친절하세요."
+  },
+  {
+    "en": "piano",
+    "ko": "피아노",
+    "sentence": "I play the piano.",
+    "sentence_ko": "나는 피아노를 칩니다."
+  },
+  {
+    "en": "carrot",
+    "ko": "당근",
+    "sentence": "I like carrot.",
+    "sentence_ko": " 나는 당근을 좋아해요."
+  },
+  {
+    "en": "brother",
+    "ko": "오빠",
+    "sentence": "My brother is nice.",
+    "sentence_ko": "오빠는 착해요."
+  },
+  {
+    "en": "orange",
+    "ko": "오렌지",
+    "sentence": "I eat an orange.",
+    "sentence_ko": "나는 오렌지를 먹어요."
+  },
+  {
+    "en": "bicycle",
+    "ko": "자전거",
+    "sentence": "I ride a bicycle.",
+    "sentence_ko": "나는 자전거를 타요."
+  },
+  {
+    "en": "sister",
+    "ko": "언니",
+    "sentence": "My sister is pretty.",
+    "sentence_ko": "언니는 예쁘세요."
+  },
+  {
+    "en": "grape",
+    "ko": "포도",
+    "sentence": "I like grape.",
+    "sentence_ko": "나는 포도를 좋아해요."
+  },
+  {
+    "en": "teacher",
+    "ko": "선생님",
+    "sentence": "My teacher is kind.",
+    "sentence_ko": "선생님은 친절하세요."
   }
 ]

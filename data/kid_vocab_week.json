@@ -118,5 +118,65 @@
     "ko": "선생님",
     "sentence": "My teacher is kind.",
     "sentence_ko": "선생님은 친절하세요."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "I see a cloud.",
+    "sentence_ko": "나는 구름을 보아요."
+  },
+  {
+    "en": "egg",
+    "ko": "계란",
+    "sentence": "I eat an egg.",
+    "sentence_ko": "나는 계란을 먹어요."
+  },
+  {
+    "en": "flower",
+    "ko": "꽃",
+    "sentence": "I like a flower.",
+    "sentence_ko": "나는 꽃을 좋아해요."
+  },
+  {
+    "en": "game",
+    "ko": "게임",
+    "sentence": "I play a game.",
+    "sentence_ko": "나는 게임을 해요."
+  },
+  {
+    "en": "hat",
+    "ko": "모자",
+    "sentence": "I wear a hat.",
+    "sentence_ko": "나는 모자를 쓴다."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I go to the library.",
+    "sentence_ko": "나는 도서관에 간다."
+  },
+  {
+    "en": "music",
+    "ko": "음악",
+    "sentence": "I like music.",
+    "sentence_ko": "나는 음악을 좋아해요."
+  },
+  {
+    "en": "park",
+    "ko": "공원",
+    "sentence": "I play in the park.",
+    "sentence_ko": "나는 공원에서 놀아요."
+  },
+  {
+    "en": "rabbit",
+    "ko": "토끼",
+    "sentence": "I have a rabbit.",
+    "sentence_ko": "나는 토끼를 가지고 있어요."
+  },
+  {
+    "en": "sandwich",
+    "ko": "샌드위치",
+    "sentence": "I eat a sandwich.",
+    "sentence_ko": "나는 샌드위치를 먹어요."
   }
 ]

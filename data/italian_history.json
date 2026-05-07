@@ -158,5 +158,15 @@
   "penna",
   "carta",
   "borsa",
-  "orologio"
+  "orologio",
+  "cena",
+  "ristorante",
+  "tavolo",
+  "sedia",
+  "porta",
+  "finestra",
+  "letto",
+  "armadio",
+  "scrivania",
+  "lampada"
 ]

@@ -178,5 +178,15 @@
   "hotel",
   "ristorante",
   "camera",
-  "valigia"
+  "valigia",
+  "uomo",
+  "donna",
+  "bambino",
+  "ospedale",
+  "dottore",
+  "infermiera",
+  "medicina",
+  "farmacia",
+  "malattia",
+  "salute"
 ]

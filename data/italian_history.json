@@ -188,5 +188,15 @@
   "medicina",
   "farmacia",
   "malattia",
-  "salute"
+  "salute",
+  "auto",
+  "strada",
+  "viaggio",
+  "mappa",
+  "hotel",
+  "camera",
+  "bagno",
+  "ascensore",
+  "scala",
+  "portiere"
 ]

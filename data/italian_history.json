@@ -218,5 +218,15 @@
   "ospedale",
   "banca",
   "posta",
-  "telefono pubblico"
+  "telefono pubblico",
+  "giorno",
+  "notte",
+  "mattina",
+  "pomeriggio",
+  "sera",
+  "tempo",
+  "luogo",
+  "evento",
+  "persona",
+  "gruppo"
 ]

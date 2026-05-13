@@ -58,5 +58,65 @@
     "ko": "놀이",
     "sentence": "I like to play.",
     "sentence_ko": "나는 놀이를 좋아해요."
+  },
+  {
+    "en": "cat",
+    "ko": "고양이",
+    "sentence": "I have a cat.",
+    "sentence_ko": "나는 고양이를有一隻"
+  },
+  {
+    "en": "house",
+    "ko": "집",
+    "sentence": "My house is big.",
+    "sentence_ko": "私の家は大きいです"
+  },
+  {
+    "en": "mom",
+    "ko": "엄마",
+    "sentence": "My mom is nice.",
+    "sentence_ko": "私の母は優しいです"
+  },
+  {
+    "en": "bike",
+    "ko": "자전거",
+    "sentence": "I ride a bike.",
+    "sentence_ko": "나는 자전거를 타요"
+  },
+  {
+    "en": "tree",
+    "ko": "나무",
+    "sentence": "I see a tree.",
+    "sentence_ko": "私は木を見ます"
+  },
+  {
+    "en": "fish",
+    "ko": "물고기",
+    "sentence": "I have a fish.",
+    "sentence_ko": "私は魚を持っています"
+  },
+  {
+    "en": "bed",
+    "ko": "침대",
+    "sentence": "I sleep in bed.",
+    "sentence_ko": "私はベッドで寝ます"
+  },
+  {
+    "en": "car",
+    "ko": "자동차",
+    "sentence": "My dad has a car.",
+    "sentence_ko": "私の父は車を持っています"
+  },
+  {
+    "en": "park",
+    "ko": "공원",
+    "sentence": "I go to the park.",
+    "sentence_ko": "私は公園に行きます"
+  },
+  {
+    "en": "apple juice",
+    "ko": "사과 주스",
+    "sentence": "I drink apple juice.",
+    "sentence_ko": "私はリンゴジュースを飲みます"
   }
 ]

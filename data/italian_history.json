@@ -228,5 +228,15 @@
   "luogo",
   "evento",
   "persona",
-  "gruppo"
+  "gruppo",
+  "acqua",
+  "pane",
+  "vino",
+  "formaggio",
+  "frutta",
+  "verdura",
+  "carne",
+  "pesce",
+  "uovo",
+  "dolce"
 ]

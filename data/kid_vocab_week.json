@@ -118,5 +118,65 @@
     "ko": "사과 주스",
     "sentence": "I drink apple juice.",
     "sentence_ko": "私はリンゴジュースを飲みます"
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "I see a cloud.",
+    "sentence_ko": "나는 구름을 보아."
+  },
+  {
+    "en": "piano",
+    "ko": "피아노",
+    "sentence": "I play the piano.",
+    "sentence_ko": "나는 피아노를 연주해."
+  },
+  {
+    "en": "brother",
+    "ko": "오빠",
+    "sentence": "My brother is tall.",
+    "sentence_ko": "내 오빠는 키가 커."
+  },
+  {
+    "en": "flower",
+    "ko": "꽃",
+    "sentence": "I like flowers.",
+    "sentence_ko": "나는 꽃을 좋아해."
+  },
+  {
+    "en": "basketball",
+    "ko": "농구",
+    "sentence": "I play basketball.",
+    "sentence_ko": "나는 농구를 해."
+  },
+  {
+    "en": "cookie",
+    "ko": "쿠키",
+    "sentence": "I eat a cookie.",
+    "sentence_ko": "나는 쿠키를 먹어."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I go to the library.",
+    "sentence_ko": "나는 도서관에 가."
+  },
+  {
+    "en": "guitar",
+    "ko": "기타",
+    "sentence": "My dad plays the guitar.",
+    "sentence_ko": "내 아빠는 기타를 연주해."
+  },
+  {
+    "en": "rainbow",
+    "ko": "무지개",
+    "sentence": "I see a rainbow.",
+    "sentence_ko": "나는 무지개를 보아."
+  },
+  {
+    "en": "computer",
+    "ko": "컴퓨터",
+    "sentence": "I use a computer.",
+    "sentence_ko": "나는 컴퓨터를 사용해."
   }
 ]

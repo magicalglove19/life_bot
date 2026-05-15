@@ -238,5 +238,15 @@
   "carne",
   "pesce",
   "uovo",
-  "dolce"
+  "dolce",
+  "amico",
+  "famiglia",
+  "lavoro",
+  "casa",
+  "strada",
+  "giorno",
+  "notte",
+  "mattina",
+  "pomeriggio",
+  "sera"
 ]

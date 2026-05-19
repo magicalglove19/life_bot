@@ -58,5 +58,65 @@
     "ko": "컴퓨터",
     "sentence": "I use a computer.",
     "sentence_ko": "나는 컴퓨터를 사용해요."
+  },
+  {
+    "en": "banana",
+    "ko": "바나나",
+    "sentence": "I eat a banana.",
+    "sentence_ko": "나는 바나나를 먹어요."
+  },
+  {
+    "en": "mother",
+    "ko": "엄마",
+    "sentence": "My mother is kind.",
+    "sentence_ko": "나의 엄마는 친절해요."
+  },
+  {
+    "en": "piano",
+    "ko": "피아노",
+    "sentence": "I play the piano.",
+    "sentence_ko": "나는 피아노를 연주해요."
+  },
+  {
+    "en": "sunflower",
+    "ko": "해바라기",
+    "sentence": "The sunflower is big.",
+    "sentence_ko": "해바라기는 크다."
+  },
+  {
+    "en": "bicycle",
+    "ko": "자전거",
+    "sentence": "I ride a bicycle.",
+    "sentence_ko": "나는 자전거를 타요."
+  },
+  {
+    "en": "ice cream",
+    "ko": "아이스크림",
+    "sentence": "I love ice cream.",
+    "sentence_ko": "나는 아이스크림을 좋아해요."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I go to the library.",
+    "sentence_ko": "나는 도서관에 가요."
+  },
+  {
+    "en": "brother",
+    "ko": "오빠",
+    "sentence": "My brother is funny.",
+    "sentence_ko": "나의 오빠는 재미있어요."
+  },
+  {
+    "en": "garden",
+    "ko": "정원",
+    "sentence": "I have a garden.",
+    "sentence_ko": "나는 정원을 가지고 있어요."
+  },
+  {
+    "en": "rainbow",
+    "ko": "무지개",
+    "sentence": "I see a rainbow.",
+    "sentence_ko": "나는 무지개를 봅니다."
   }
 ]

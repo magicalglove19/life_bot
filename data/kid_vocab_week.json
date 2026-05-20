@@ -118,5 +118,65 @@
     "ko": "무지개",
     "sentence": "I see a rainbow.",
     "sentence_ko": "나는 무지개를 봅니다."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "I see a cloud.",
+    "sentence_ko": "나는 구름을 보아."
+  },
+  {
+    "en": "orange",
+    "ko": "오렌지",
+    "sentence": "I eat an orange.",
+    "sentence_ko": "나는 오렌지를 먹어."
+  },
+  {
+    "en": "father",
+    "ko": "아버지",
+    "sentence": "My father is kind.",
+    "sentence_ko": "내 아버지가 친절해요."
+  },
+  {
+    "en": "house",
+    "ko": "집",
+    "sentence": "I live in a house.",
+    "sentence_ko": "나는 집에서 살아요."
+  },
+  {
+    "en": "rabbit",
+    "ko": "토끼",
+    "sentence": "I have a rabbit.",
+    "sentence_ko": "나는 토끼를 가지고 있어."
+  },
+  {
+    "en": "water",
+    "ko": "물",
+    "sentence": "I drink water.",
+    "sentence_ko": "나는 물을 마셔."
+  },
+  {
+    "en": "table",
+    "ko": "테이블",
+    "sentence": "I sit at a table.",
+    "sentence_ko": "나는 테이블에 앉아."
+  },
+  {
+    "en": "music",
+    "ko": "음악",
+    "sentence": "I like music.",
+    "sentence_ko": "나는 음악을 좋아해."
+  },
+  {
+    "en": "flower",
+    "ko": "꽃",
+    "sentence": "I see a flower.",
+    "sentence_ko": "나는 꽃을 보아."
+  },
+  {
+    "en": "phone",
+    "ko": "전화기",
+    "sentence": "I use a phone.",
+    "sentence_ko": "나는 전화기를 사용해."
   }
 ]

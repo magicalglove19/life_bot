@@ -288,5 +288,15 @@
   "lavandino",
   "doccia",
   "asciugamano",
-  "spazzolino"
+  "spazzolino",
+  "nome",
+  "cognome",
+  "età",
+  "sposato",
+  "singolo",
+  "lavoro",
+  "studio",
+  "hobby",
+  "viaggiare",
+  "imparare"
 ]

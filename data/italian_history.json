@@ -308,5 +308,15 @@
   "aeroporto",
   "treno",
   "autobus",
-  "bicicletta"
+  "bicicletta",
+  "spiaggia",
+  "libro",
+  "musica",
+  "sport",
+  "viaggio",
+  "hotel",
+  "camera",
+  "bagno",
+  "ascensore",
+  "reception"
 ]

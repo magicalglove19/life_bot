@@ -318,5 +318,15 @@
   "camera",
   "bagno",
   "ascensore",
-  "reception"
+  "reception",
+  "computer",
+  "telefono",
+  "ufficio",
+  "ospedale",
+  "banca",
+  "posta",
+  "farmacia",
+  "polizia",
+  "stazione",
+  "aeroporto"
 ]

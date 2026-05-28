@@ -368,5 +368,15 @@
   "aereo",
   "treno",
   "autobus",
-  "bicicletta"
+  "bicicletta",
+  "amico",
+  "amica",
+  "giorno",
+  "notte",
+  "mattina",
+  "pomeriggio",
+  "sera",
+  "settimana",
+  "mese",
+  "anno"
 ]

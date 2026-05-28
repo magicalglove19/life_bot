@@ -118,5 +118,65 @@
     "ko": "수영",
     "sentence": "I like to swim.",
     "sentence_ko": "私は 수영을 좋아 해요."
+  },
+  {
+    "en": "chicken",
+    "ko": "치킨",
+    "sentence": "I eat chicken at lunch.",
+    "sentence_ko": "나는 점심에 치킨을 먹어요."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "The cloud is white.",
+    "sentence_ko": "구름이 하얀색이에요."
+  },
+  {
+    "en": "bicycle",
+    "ko": "자전거",
+    "sentence": "I ride a bicycle every day.",
+    "sentence_ko": "나는 매일 자전거를 타요."
+  },
+  {
+    "en": "song",
+    "ko": "노래",
+    "sentence": "I like to sing a song.",
+    "sentence_ko": "나는 노래를 부르는 것을 좋아해요."
+  },
+  {
+    "en": "computer",
+    "ko": "컴퓨터",
+    "sentence": "I use a computer at home.",
+    "sentence_ko": "나는 집에서 컴퓨터를 사용해요."
+  },
+  {
+    "en": "brother",
+    "ko": "오빠",
+    "sentence": "My brother is very kind.",
+    "sentence_ko": "내 오빠는 매우 친절해요."
+  },
+  {
+    "en": "ice cream",
+    "ko": "아이스크림",
+    "sentence": "I love to eat ice cream.",
+    "sentence_ko": "나는 아이스크림을 먹는 것을 좋아해요."
+  },
+  {
+    "en": "guitar",
+    "ko": "기타",
+    "sentence": "My dad plays the guitar.",
+    "sentence_ko": "아빠가 기타를 치세요."
+  },
+  {
+    "en": "rabbit",
+    "ko": "토끼",
+    "sentence": "The rabbit is very cute.",
+    "sentence_ko": "토끼가 매우 귀여워요."
+  },
+  {
+    "en": "pizza",
+    "ko": "피자",
+    "sentence": "I want to eat pizza tonight.",
+    "sentence_ko": "나는 오늘 밤에 피자를 먹고 싶어요."
   }
 ]

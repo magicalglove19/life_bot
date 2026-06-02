@@ -418,5 +418,15 @@
   "porta",
   "finestra",
   "soffitto",
-  "pavimento"
+  "pavimento",
+  "libro",
+  "penna",
+  "carta",
+  "dizionario",
+  "traduzione",
+  "conversazione",
+  "ascoltare",
+  "parlare",
+  "scrivere",
+  "leggere"
 ]

@@ -118,5 +118,65 @@
     "ko": "구름",
     "sentence": "I see a cloud.",
     "sentence_ko": "나는 구름을 봐요."
+  },
+  {
+    "en": "apple",
+    "ko": "사과",
+    "sentence": "I eat an apple.",
+    "sentence_ko": "나는 사과를 먹어요."
+  },
+  {
+    "en": "mother",
+    "ko": "엄마",
+    "sentence": "My mother is kind.",
+    "sentence_ko": "私の엄마는 친절해요."
+  },
+  {
+    "en": "chair",
+    "ko": "의자",
+    "sentence": "I sit on a chair.",
+    "sentence_ko": "나는 의자에 앉아요."
+  },
+  {
+    "en": "table",
+    "ko": "테이블",
+    "sentence": "We eat at the table.",
+    "sentence_ko": "우리는 테이블에서 먹어요."
+  },
+  {
+    "en": "bird",
+    "ko": "새",
+    "sentence": "The bird is singing.",
+    "sentence_ko": "그새는 노래하고 있어요."
+  },
+  {
+    "en": "house",
+    "ko": "집",
+    "sentence": "I live in a house.",
+    "sentence_ko": "나는 집에서 살아요."
+  },
+  {
+    "en": "car",
+    "ko": "자동차",
+    "sentence": "My father drives a car.",
+    "sentence_ko": "아빠는 자동차를 운전해요."
+  },
+  {
+    "en": "tree",
+    "ko": "나무",
+    "sentence": "The tree is tall.",
+    "sentence_ko": "나무는 높어요."
+  },
+  {
+    "en": "sun",
+    "ko": "태양",
+    "sentence": "The sun is shining.",
+    "sentence_ko": "태양이 비추고 있어요."
+  },
+  {
+    "en": "game",
+    "ko": "게임",
+    "sentence": "I play a game.",
+    "sentence_ko": "나는 게임을 해요."
   }
 ]

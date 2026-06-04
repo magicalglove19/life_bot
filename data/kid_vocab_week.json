@@ -178,5 +178,65 @@
     "ko": "게임",
     "sentence": "I play a game.",
     "sentence_ko": "나는 게임을 해요."
+  },
+  {
+    "en": "cloudy",
+    "ko": "구름이 많다",
+    "sentence": "It is cloudy today.",
+    "sentence_ko": "오늘은 구름이 많아요."
+  },
+  {
+    "en": "kite",
+    "ko": "연",
+    "sentence": "I fly a kite in the park.",
+    "sentence_ko": "나는 공원에서 연을 날려요."
+  },
+  {
+    "en": "snow",
+    "ko": "눈",
+    "sentence": "I love playing in the snow.",
+    "sentence_ko": "나는 눈에서 spielen."
+  },
+  {
+    "en": "beach",
+    "ko": "해변",
+    "sentence": "My family goes to the beach.",
+    "sentence_ko": "우리 가족은 해변에 갑니다."
+  },
+  {
+    "en": "fish",
+    "ko": "물고기",
+    "sentence": "I have a fish in my aquarium.",
+    "sentence_ko": "나는 수족관에 물고기를 키워요."
+  },
+  {
+    "en": "cake",
+    "ko": "케이크",
+    "sentence": "I eat cake on my birthday.",
+    "sentence_ko": "나는 생일날 케이크를 먹어요."
+  },
+  {
+    "en": "guitar",
+    "ko": "기타",
+    "sentence": "My brother plays the guitar.",
+    "sentence_ko": "私の弟はギターを弾きます."
+  },
+  {
+    "en": "moon",
+    "ko": "달",
+    "sentence": "The moon is shining brightly.",
+    "sentence_ko": "달이 밝게 빛나고 있습니다."
+  },
+  {
+    "en": "rainbow",
+    "ko": "무지개",
+    "sentence": "I see a rainbow in the sky.",
+    "sentence_ko": "나는 하늘에서 무지개를 보아요."
+  },
+  {
+    "en": "star",
+    "ko": "별",
+    "sentence": "I wish upon a star.",
+    "sentence_ko": "나는 별에 소원을 빌어요."
   }
 ]

@@ -458,5 +458,15 @@
   "medicina",
   "posta",
   "lettera",
-  "pacchetto"
+  "pacchetto",
+  "ufficio",
+  "ufficio postale",
+  "panificio",
+  "farmacia",
+  "banca",
+  "ospedale",
+  "scuola elementare",
+  "università",
+  "biblioteca",
+  "museo"
 ]

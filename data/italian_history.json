@@ -468,5 +468,15 @@
   "scuola elementare",
   "università",
   "biblioteca",
-  "museo"
+  "museo",
+  "casa",
+  "bagno",
+  "camera",
+  "letto",
+  "armadio",
+  "tv",
+  "radio",
+  "telefono fisso",
+  "computer portatile",
+  "internet"
 ]

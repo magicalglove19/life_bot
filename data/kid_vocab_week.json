@@ -58,5 +58,65 @@
     "ko": "음악",
     "sentence": "I like music.",
     "sentence_ko": "나는 음악을 좋아해요."
+  },
+  {
+    "en": "banana",
+    "ko": "바나나",
+    "sentence": "I like bananas.",
+    "sentence_ko": "나는 바나나를 좋아해."
+  },
+  {
+    "en": "pork",
+    "ko": "돼지고기",
+    "sentence": "I eat pork with rice.",
+    "sentence_ko": "나는 밥과 함께 돼지를 먹어."
+  },
+  {
+    "en": "sun",
+    "ko": "太陽",
+    "sentence": "The sun shines brightly.",
+    "sentence_ko": "太陽은 밝게 빛나고 있어."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "I see a cloud in the sky.",
+    "sentence_ko": "나는 하늘에 구름을 봐."
+  },
+  {
+    "en": "table",
+    "ko": "테이블",
+    "sentence": "I sit at the table.",
+    "sentence_ko": "나는 탁자에 앉아 있어."
+  },
+  {
+    "en": "computer",
+    "ko": "컴퓨터",
+    "sentence": "I use a computer.",
+    "sentence_ko": "나는 컴퓨터를 사용해."
+  },
+  {
+    "en": "flower",
+    "ko": "꽃",
+    "sentence": "I like flowers.",
+    "sentence_ko": "나는 꽃을 좋아해."
+  },
+  {
+    "en": "bicycle",
+    "ko": "자전거",
+    "sentence": "I ride a bicycle.",
+    "sentence_ko": "나는 자전거를 타."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I go to the library.",
+    "sentence_ko": "나는 도서관에 가."
+  },
+  {
+    "en": "piano",
+    "ko": "피아노",
+    "sentence": "I play the piano.",
+    "sentence_ko": "나는 피아노를 연주해."
   }
 ]

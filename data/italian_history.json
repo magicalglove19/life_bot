@@ -488,5 +488,15 @@
   "strada",
   "auto",
   "treno",
-  "aeroporto"
+  "aeroporto",
+  "giardino",
+  "cucina",
+  "soggiorno",
+  "lavatrice",
+  "asciugatrice",
+  "frigorifero",
+  "forno",
+  "pentola",
+  "coltello",
+  "piatto"
 ]

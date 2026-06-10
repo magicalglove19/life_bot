@@ -118,5 +118,65 @@
     "ko": "피아노",
     "sentence": "I play the piano.",
     "sentence_ko": "나는 피아노를 연주해."
+  },
+  {
+    "en": "pizza",
+    "ko": "피자",
+    "sentence": "I eat pizza.",
+    "sentence_ko": "나는 피자를 먹어요."
+  },
+  {
+    "en": "brother",
+    "ko": "오빠",
+    "sentence": "I have a brother.",
+    "sentence_ko": "나는 오빠가 있어요."
+  },
+  {
+    "en": "park",
+    "ko": "공원",
+    "sentence": "I play in the park.",
+    "sentence_ko": "나는 공원에서 놀아요."
+  },
+  {
+    "en": "carrot",
+    "ko": "당근",
+    "sentence": "I like carrot.",
+    "sentence_ko": "나는 당근을 좋아해요."
+  },
+  {
+    "en": "mother",
+    "ko": "엄마",
+    "sentence": "My mother is kind.",
+    "sentence_ko": "내 엄마는 친절해요."
+  },
+  {
+    "en": "football",
+    "ko": "축구",
+    "sentence": "I play football.",
+    "sentence_ko": "나는 축구를 해요."
+  },
+  {
+    "en": "orange",
+    "ko": "오렌지",
+    "sentence": "I eat an orange.",
+    "sentence_ko": "나는 오렌지를 먹어요."
+  },
+  {
+    "en": "sister",
+    "ko": "여동생",
+    "sentence": "I have a sister.",
+    "sentence_ko": "나는 여동생이 있어요."
+  },
+  {
+    "en": "chicken",
+    "ko": "치킨",
+    "sentence": "I like chicken.",
+    "sentence_ko": "나는 치킨을 좋아해요."
+  },
+  {
+    "en": "beach",
+    "ko": "해변",
+    "sentence": "I go to the beach.",
+    "sentence_ko": "나는 해변에 가요."
   }
 ]

@@ -1,14 +1,4 @@
 [
-  "ciao",
-  "grazie",
-  "per favore",
-  "scusa",
-  "acqua",
-  "casa",
-  "amico",
-  "mamma",
-  "papà",
-  "sorella",
   "fratello",
   "nonno",
   "nonna",
@@ -498,5 +488,15 @@
   "forno",
   "pentola",
   "coltello",
-  "piatto"
+  "piatto",
+  "mattina",
+  "pomeriggio",
+  "sera",
+  "notte",
+  "settimana",
+  "mese",
+  "anno",
+  "giorno",
+  "ora",
+  "minuto"
 ]

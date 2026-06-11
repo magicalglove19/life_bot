@@ -178,5 +178,65 @@
     "ko": "해변",
     "sentence": "I go to the beach.",
     "sentence_ko": "나는 해변에 가요."
+  },
+  {
+    "en": "house",
+    "ko": "집",
+    "sentence": "I live in a house.",
+    "sentence_ko": "나는 집에서 삽니다."
+  },
+  {
+    "en": "tree",
+    "ko": "나무",
+    "sentence": "There is a tree.",
+    "sentence_ko": " 那里에 나무가 있습니다."
+  },
+  {
+    "en": "bird",
+    "ko": "새",
+    "sentence": "The bird is singing.",
+    "sentence_ko": "그 새가 노래를 부르고 있습니다."
+  },
+  {
+    "en": "fish",
+    "ko": "물고기",
+    "sentence": "I have a fish.",
+    "sentence_ko": "나는 물고기를 가지고 있습니다."
+  },
+  {
+    "en": "umbrella",
+    "ko": "우산",
+    "sentence": "I need an umbrella.",
+    "sentence_ko": "나는 우산이 필요합니다."
+  },
+  {
+    "en": "rain",
+    "ko": "비",
+    "sentence": "It is raining.",
+    "sentence_ko": "비가 오고 있습니다."
+  },
+  {
+    "en": "egg",
+    "ko": "계란",
+    "sentence": "I eat an egg.",
+    "sentence_ko": "나는 계란을 먹습니다."
+  },
+  {
+    "en": "cake",
+    "ko": "케이크",
+    "sentence": "I like cake.",
+    "sentence_ko": "나는 케이크를 좋아합니다."
+  },
+  {
+    "en": "phone",
+    "ko": "전화기",
+    "sentence": "I have a phone.",
+    "sentence_ko": "나는 전화기를 가지고 있습니다."
+  },
+  {
+    "en": "garden",
+    "ko": "정원",
+    "sentence": "I have a garden.",
+    "sentence_ko": "나는 정원을 가지고 있습니다."
   }
 ]

@@ -1,14 +1,4 @@
 [
-  "fratello",
-  "nonno",
-  "nonna",
-  "uomo",
-  "donna",
-  "giorno",
-  "notte",
-  "scuola",
-  "libro",
-  "telefono",
   "nome",
   "età",
   "paese",
@@ -498,5 +488,15 @@
   "anno",
   "giorno",
   "ora",
-  "minuto"
+  "minuto",
+  "nome",
+  "cognome",
+  "età",
+  "lavoro",
+  "sposato",
+  "single",
+  "figlio",
+  "figlia",
+  "madre",
+  "padre"
 ]

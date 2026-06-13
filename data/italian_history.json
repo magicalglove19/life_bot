@@ -1,14 +1,4 @@
 [
-  "nome",
-  "età",
-  "paese",
-  "città",
-  "strada",
-  "hotel",
-  "ristorante",
-  "spiaggia",
-  "montagna",
-  "aeroporto",
   "parco",
   "giardino",
   "spiaggia",
@@ -498,5 +488,15 @@
   "figlio",
   "figlia",
   "madre",
-  "padre"
+  "padre",
+  "fratello",
+  "sorella",
+  "nonno",
+  "nonna",
+  "cane",
+  "gatto",
+  "fiore",
+  "albero",
+  "uccello",
+  "pesce"
 ]

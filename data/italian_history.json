@@ -1,14 +1,4 @@
 [
-  "parco",
-  "giardino",
-  "spiaggia",
-  "ferrovia",
-  "autobus",
-  "treno",
-  "aereo",
-  "macchina",
-  "bicicletta",
-  "passeggiata",
   "pane",
   "vino",
   "ristorante",
@@ -498,5 +488,15 @@
   "fiore",
   "albero",
   "uccello",
-  "pesce"
+  "pesce",
+  "passeggiata",
+  "libreria",
+  "caffè",
+  "tavola",
+  "sedia",
+  "finestra",
+  "porta",
+  "scale",
+  "soffitto",
+  "pavimento"
 ]

@@ -1,14 +1,4 @@
 [
-  "pane",
-  "vino",
-  "ristorante",
-  "camera",
-  "letto",
-  "tavolo",
-  "sedia",
-  "finestra",
-  "porta",
-  "chiave",
   "caffe",
   "mela",
   "uva",
@@ -498,5 +488,15 @@
   "porta",
   "scale",
   "soffitto",
-  "pavimento"
+  "pavimento",
+  "spiaggia",
+  "mare",
+  "montagna",
+  "fiume",
+  "parco",
+  "giocare",
+  "leggere",
+  "scrivere",
+  "disegnare",
+  "cantare"
 ]

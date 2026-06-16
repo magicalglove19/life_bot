@@ -1,14 +1,4 @@
 [
-  "caffe",
-  "mela",
-  "uva",
-  "forma",
-  "colore",
-  "numero",
-  "lettera",
-  "carta",
-  "computer",
-  "internet",
   "giornale",
   "radio",
   "televisione",
@@ -498,5 +488,15 @@
   "leggere",
   "scrivere",
   "disegnare",
-  "cantare"
+  "cantare",
+  "ristorante",
+  "pizza",
+  "gelato",
+  "caffè",
+  "tavolo",
+  "sedia",
+  "piatto",
+  "bicchiere",
+  "acqua",
+  "vino"
 ]

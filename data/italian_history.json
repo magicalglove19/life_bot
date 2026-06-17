@@ -1,14 +1,4 @@
 [
-  "giornale",
-  "radio",
-  "televisione",
-  "giocare",
-  "spiare",
-  "fidanzato",
-  "fidanzata",
-  "sposo",
-  "moglie",
-  "viaggio",
   "dottore",
   "farmacia",
   "ospedale",
@@ -498,5 +488,15 @@
   "piatto",
   "bicchiere",
   "acqua",
-  "vino"
+  "vino",
+  "sport",
+  "giocatore",
+  "pallone",
+  "bicicletta",
+  "nuotare",
+  "passeggiare",
+  "viaggio",
+  "mappa",
+  "guida",
+  "turista"
 ]

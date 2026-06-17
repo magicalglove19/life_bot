@@ -118,5 +118,65 @@
     "ko": "컴퓨터",
     "sentence": "I use a computer.",
     "sentence_ko": "私はコンピューターを使う。"
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "I see a cloud.",
+    "sentence_ko": "나는 구름을 볼 수 있어."
+  },
+  {
+    "en": "table",
+    "ko": "테이블",
+    "sentence": "The book is on the table.",
+    "sentence_ko": "책이 테이블 위에 있어."
+  },
+  {
+    "en": "music",
+    "ko": "음악",
+    "sentence": "I like music.",
+    "sentence_ko": "나는 音樂을 좋아해."
+  },
+  {
+    "en": "orange",
+    "ko": "오렌지",
+    "sentence": "I eat an orange.",
+    "sentence_ko": "나는 오렌지를 먹어요."
+  },
+  {
+    "en": "brother",
+    "ko": "오빠/형",
+    "sentence": "My brother is tall.",
+    "sentence_ko": "내 오빠가 키가 커."
+  },
+  {
+    "en": "car",
+    "ko": "자동차",
+    "sentence": "The car is red.",
+    "sentence_ko": "자동차가 빨갛다."
+  },
+  {
+    "en": "picture",
+    "ko": "그림",
+    "sentence": "I draw a picture.",
+    "sentence_ko": "나는 그림을 그려요."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I go to the library.",
+    "sentence_ko": "나는 도서관에 가요."
+  },
+  {
+    "en": "garden",
+    "ko": "정원",
+    "sentence": "The garden is beautiful.",
+    "sentence_ko": "정원이 아름답다."
+  },
+  {
+    "en": "piano",
+    "ko": "피아노",
+    "sentence": "I play the piano.",
+    "sentence_ko": "나는 피아노를 칩니다."
   }
 ]

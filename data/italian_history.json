@@ -1,14 +1,4 @@
 [
-  "dottore",
-  "farmacia",
-  "ospedale",
-  "medicina",
-  "malato",
-  "infermiere",
-  "visita",
-  "ricetta",
-  "paziente",
-  "salute",
   "parco",
   "gioco",
   "musica",
@@ -498,5 +488,15 @@
   "viaggio",
   "mappa",
   "guida",
-  "turista"
+  "turista",
+  "mercato",
+  "negozio",
+  "pane",
+  "formaggio",
+  "vino rosso",
+  "uovo",
+  "carne",
+  "pesce fresco",
+  "frutta",
+  "dolce"
 ]

@@ -178,5 +178,65 @@
     "ko": "피아노",
     "sentence": "I play the piano.",
     "sentence_ko": "나는 피아노를 칩니다."
+  },
+  {
+    "en": "sunshine",
+    "ko": "햇빛",
+    "sentence": "I like playing outside in the sunshine.",
+    "sentence_ko": "나는 햇빛 아래서 밖에서 노는 것을 좋아해요."
+  },
+  {
+    "en": "laughter",
+    "ko": "_smile_",
+    "sentence": "Her laughter is contagious.",
+    "sentence_ko": "그녀의 웃음은 전염성이 있어요."
+  },
+  {
+    "en": "kite",
+    "ko": "연",
+    "sentence": "I flew a kite in the park.",
+    "sentence_ko": "나는 공원에서 연을 날렸어요."
+  },
+  {
+    "en": "snowflake",
+    "ko": "눈송이",
+    "sentence": "The snowflake fell gently on my face.",
+    "sentence_ko": "눈송이가私の 얼굴에 부드럽게 떨어졌어요."
+  },
+  {
+    "en": "butterfly",
+    "ko": "나비",
+    "sentence": "A beautiful butterfly flew around the flower.",
+    "sentence_ko": "아름다운 나비가 꽃 주위를 돌아다녔어요."
+  },
+  {
+    "en": "cookie",
+    "ko": "쿠키",
+    "sentence": "I ate a delicious cookie after dinner.",
+    "sentence_ko": "나는 저녁식사 후에 맛있는 쿠키를 먹었어요."
+  },
+  {
+    "en": "guitar",
+    "ko": "기타",
+    "sentence": "My brother plays the guitar well.",
+    "sentence_ko": "나의 오빠는 기타를 잘 쳐요."
+  },
+  {
+    "en": "rainbow",
+    "ko": "무지개",
+    "sentence": "I saw a beautiful rainbow in the sky.",
+    "sentence_ko": "나는 하늘에 아름다운 무지개를 보았어요."
+  },
+  {
+    "en": "starfish",
+    "ko": "해녀",
+    "sentence": "I found a starfish on the beach.",
+    "sentence_ko": "나는 해변에서 해녀를 발견했어요."
+  },
+  {
+    "en": "violin",
+    "ko": "바이올린",
+    "sentence": "She plays the violin beautifully.",
+    "sentence_ko": "그녀는 바이올린을 아름답게 연주해요."
   }
 ]

@@ -1,14 +1,4 @@
 [
-  "parco",
-  "gioco",
-  "musica",
-  "amore",
-  "fiducia",
-  "rispetto",
-  "speranza",
-  "sogno",
-  "ricordo",
-  "sorriso",
   "fidanzamento",
   "amorevole",
   "rispettoso",
@@ -498,5 +488,15 @@
   "carne",
   "pesce fresco",
   "frutta",
-  "dolce"
+  "dolce",
+  "telefono",
+  "computer",
+  "internet",
+  "posto",
+  "banco",
+  "ospedale",
+  "scuola",
+  "biblioteca",
+  "farmacia",
+  "polizia"
 ]

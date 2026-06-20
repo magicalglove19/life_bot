@@ -1,14 +1,4 @@
 [
-  "fidanzamento",
-  "amorevole",
-  "rispettoso",
-  "speranzoso",
-  "sorridere",
-  "ricordare",
-  "viaggiare",
-  "imparare",
-  "insegnare",
-  "ascoltare",
   "piatto",
   "tavola",
   "coltello",
@@ -498,5 +488,15 @@
   "scuola",
   "biblioteca",
   "farmacia",
-  "polizia"
+  "polizia",
+  "amico",
+  "familia",
+  "scuola",
+  "insegnante",
+  "studente",
+  "libro",
+  "penna",
+  "carta",
+  "cancello",
+  "borsetta"
 ]

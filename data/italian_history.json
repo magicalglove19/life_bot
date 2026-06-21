@@ -1,14 +1,4 @@
 [
-  "piatto",
-  "tavola",
-  "coltello",
-  "forchetta",
-  "cucchiaio",
-  "bicchiere",
-  "torta",
-  "gelato",
-  "caffè",
-  "succo",
   "amico",
   "sorella",
   "madre",
@@ -498,5 +488,15 @@
   "penna",
   "carta",
   "cancello",
-  "borsetta"
+  "borsetta",
+  "casa",
+  "strada",
+  "auto",
+  "aereo",
+  "treno",
+  "hotel",
+  "camera",
+  "bagno",
+  "ascensore",
+  "reception"
 ]

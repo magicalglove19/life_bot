@@ -1,14 +1,4 @@
 [
-  "amico",
-  "sorella",
-  "madre",
-  "padre",
-  "figlio",
-  "fiore",
-  "albero",
-  "cane",
-  "gatto",
-  "pescare",
   "libro",
   "scuola",
   "insegnante",
@@ -498,5 +488,15 @@
   "camera",
   "bagno",
   "ascensore",
-  "reception"
+  "reception",
+  "giorno",
+  "notte",
+  "mattina",
+  "pomeriggio",
+  "sera",
+  "pranzo",
+  "cena",
+  "colazione",
+  "dottore",
+  "infermiere"
 ]

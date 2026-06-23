@@ -1,14 +1,4 @@
 [
-  "libro",
-  "scuola",
-  "insegnante",
-  "studente",
-  "amorevolezza",
-  "rispetto reciproco",
-  "speranza futura",
-  "sorridere sempre",
-  "viaggiare insieme",
-  "imparare ogni giorno",
   "casa",
   "famiglia",
   "amico",
@@ -498,5 +488,15 @@
   "cena",
   "colazione",
   "dottore",
-  "infermiere"
+  "infermiere",
+  "amore",
+  "musica",
+  "giardino",
+  "città",
+  "spiaggia",
+  "tempo",
+  "sole",
+  "pioggia",
+  "neve",
+  "vento"
 ]

@@ -118,5 +118,65 @@
     "ko": "사진",
     "sentence": "I take a photo.",
     "sentence_ko": "나는 사진을 찍어요."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "I see a cloud.",
+    "sentence_ko": "나는 구름을 보아요."
+  },
+  {
+    "en": "orange",
+    "ko": "오렌지",
+    "sentence": "I love to eat oranges.",
+    "sentence_ko": "나는 오렌지를 먹는 것을 좋아해요."
+  },
+  {
+    "en": "sunshine",
+    "ko": "햇빛",
+    "sentence": "I like playing in sunshine.",
+    "sentence_ko": "나는 햇빛 아래서 노는 것을 좋아해요."
+  },
+  {
+    "en": "garden",
+    "ko": "정원",
+    "sentence": "My mom has a garden.",
+    "sentence_ko": "엄마가 정원을 가지고 있어요."
+  },
+  {
+    "en": "laugh",
+    "ko": "웃다",
+    "sentence": "I laugh with my friends.",
+    "sentence_ko": "나는 친구들과 웃어요."
+  },
+  {
+    "en": "kite",
+    "ko": "연",
+    "sentence": "I fly a kite.",
+    "sentence_ko": "나는 연을 날려요."
+  },
+  {
+    "en": "cookie",
+    "ko": "쿠키",
+    "sentence": "I like eating cookies.",
+    "sentence_ko": "나는 쿠키를 먹는 것을 좋아해요."
+  },
+  {
+    "en": " rabbit",
+    "ko": "토끼",
+    "sentence": "I have a rabbit.",
+    "sentence_ko": "나는 토끼를 가지고 있어요."
+  },
+  {
+    "en": "piano",
+    "ko": "피아노",
+    "sentence": "I play the piano.",
+    "sentence_ko": "나는 피아노를 치어요."
+  },
+  {
+    "en": "flowers",
+    "ko": "꽃",
+    "sentence": "I like flowers.",
+    "sentence_ko": "나는 꽃을 좋아해요."
   }
 ]

@@ -1,14 +1,4 @@
 [
-  "casa",
-  "famiglia",
-  "amico",
-  "sorella",
-  "madre",
-  "padre",
-  "figlio",
-  "fiore",
-  "albero",
-  "cane",
   "giardino",
   "nuoto",
   "passeggiata",
@@ -498,5 +488,15 @@
   "sole",
   "pioggia",
   "neve",
-  "vento"
+  "vento",
+  "uomo",
+  "donna",
+  "bambino",
+  "fidanzato",
+  "fidanzata",
+  "sposo",
+  "moglie",
+  "figlio",
+  "figlia",
+  "cugino"
 ]

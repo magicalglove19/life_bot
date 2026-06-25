@@ -1,14 +1,4 @@
 [
-  "giardino",
-  "nuoto",
-  "passeggiata",
-  "bicicletta",
-  "telefono",
-  "messaggio",
-  "amorevolmente",
-  "rispettosamente",
-  "speranzosamente",
-  "sorridendo",
   "nome",
   "città",
   "lingua",
@@ -498,5 +488,15 @@
   "moglie",
   "figlio",
   "figlia",
-  "cugino"
+  "cugino",
+  "carta",
+  "conto",
+  "banca",
+  "denaro",
+  "lavoro",
+  "ufficio",
+  "impiegato",
+  "orario",
+  "pausa",
+  "riposo"
 ]

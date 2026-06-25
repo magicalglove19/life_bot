@@ -178,5 +178,65 @@
     "ko": "꽃",
     "sentence": "I like flowers.",
     "sentence_ko": "나는 꽃을 좋아해요."
+  },
+  {
+    "en": "apple",
+    "ko": "사과",
+    "sentence": "I eat an apple.",
+    "sentence_ko": "나는 사과를 먹어요."
+  },
+  {
+    "en": "bird",
+    "ko": "새",
+    "sentence": "The bird is singing.",
+    "sentence_ko": "그 새는 노래를 하고 있어요."
+  },
+  {
+    "en": "church",
+    "ko": "교회",
+    "sentence": "I go to church.",
+    "sentence_ko": "나는 교회에 가요."
+  },
+  {
+    "en": "egg",
+    "ko": "계란",
+    "sentence": "I like eggs.",
+    "sentence_ko": "나는 계란을 좋아해요."
+  },
+  {
+    "en": "fish",
+    "ko": "물고기",
+    "sentence": "I see a fish.",
+    "sentence_ko": "나는 물고기를 보아요."
+  },
+  {
+    "en": "game",
+    "ko": "게임",
+    "sentence": "I play a game.",
+    "sentence_ko": "나는 게임을 할게요."
+  },
+  {
+    "en": "house",
+    "ko": "집",
+    "sentence": "I live in a house.",
+    "sentence_ko": "나는 집에서 살아요."
+  },
+  {
+    "en": "ice cream",
+    "ko": "아이스크림",
+    "sentence": "I like ice cream.",
+    "sentence_ko": "나는 아이스크림을 좋아해요."
+  },
+  {
+    "en": "kid",
+    "ko": "아이",
+    "sentence": "I am a kid.",
+    "sentence_ko": "나는 아이예요."
+  },
+  {
+    "en": "lemon",
+    "ko": "레몬",
+    "sentence": "I drink lemon juice.",
+    "sentence_ko": "나는 레몬 주스를 마셔요."
   }
 ]

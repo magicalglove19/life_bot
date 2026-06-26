@@ -1,14 +1,4 @@
 [
-  "nome",
-  "città",
-  "lingua",
-  "scuola",
-  "insegnante",
-  "libro",
-  "penna",
-  "carta",
-  "borsa",
-  "orologio",
   "cena",
   "ristorante",
   "tavolo",
@@ -498,5 +488,15 @@
   "impiegato",
   "orario",
   "pausa",
-  "riposo"
+  "riposo",
+  "parco",
+  "fiore",
+  "albero",
+  "uccello",
+  "cane",
+  "gatto",
+  "ospite",
+  "regalo",
+  "libero",
+  "felice"
 ]

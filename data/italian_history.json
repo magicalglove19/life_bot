@@ -1,14 +1,4 @@
 [
-  "cena",
-  "ristorante",
-  "tavolo",
-  "sedia",
-  "porta",
-  "finestra",
-  "letto",
-  "armadio",
-  "scrivania",
-  "lampada",
   "spiaggia",
   "sole",
   "mare",
@@ -498,5 +488,15 @@
   "ospite",
   "regalo",
   "libero",
-  "felice"
+  "felice",
+  "ristorante",
+  "tavolo",
+  "sedia",
+  "porta",
+  "finestra",
+  "scala",
+  "soffitto",
+  "muro",
+  "pavimento",
+  "cucina"
 ]

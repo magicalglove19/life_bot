@@ -1,14 +1,4 @@
 [
-  "spiaggia",
-  "sole",
-  "mare",
-  "vacanza",
-  "aeroporto",
-  "biglietto",
-  "hotel",
-  "ristorante",
-  "camera",
-  "valigia",
   "uomo",
   "donna",
   "bambino",
@@ -498,5 +488,15 @@
   "soffitto",
   "muro",
   "pavimento",
-  "cucina"
+  "cucina",
+  "sport",
+  "tv",
+  "radio",
+  "giornale",
+  "posta",
+  "lettera",
+  "numero",
+  "indirizzo",
+  "cittadino",
+  "viaggio"
 ]

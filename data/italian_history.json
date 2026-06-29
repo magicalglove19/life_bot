@@ -1,14 +1,4 @@
 [
-  "uomo",
-  "donna",
-  "bambino",
-  "ospedale",
-  "dottore",
-  "infermiera",
-  "medicina",
-  "farmacia",
-  "malattia",
-  "salute",
   "auto",
   "strada",
   "viaggio",
@@ -498,5 +488,15 @@
   "numero",
   "indirizzo",
   "cittadino",
-  "viaggio"
+  "viaggio",
+  "acqua",
+  "vino",
+  "caffè",
+  "torta",
+  "gelato",
+  "spiaggia",
+  "mare",
+  "isola",
+  "montagna",
+  "fiume"
 ]

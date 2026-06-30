@@ -58,5 +58,65 @@
     "ko": "가족",
     "sentence": "I love my family.",
     "sentence_ko": "나는 나의 가족을 좋아해요."
+  },
+  {
+    "en": "piano",
+    "ko": "피아노",
+    "sentence": "I play the piano.",
+    "sentence_ko": "나는 피아노를 연주해요."
+  },
+  {
+    "en": "bicycle",
+    "ko": "자전거",
+    "sentence": "I ride a bicycle.",
+    "sentence_ko": "나는 자전거를 타요."
+  },
+  {
+    "en": "mother",
+    "ko": "엄마",
+    "sentence": "My mother is kind.",
+    "sentence_ko": "내 엄마는 친절해요."
+  },
+  {
+    "en": "park",
+    "ko": "공원",
+    "sentence": "I play in the park.",
+    "sentence_ko": "나는 공원에서 놀아요."
+  },
+  {
+    "en": "computer",
+    "ko": "컴퓨터",
+    "sentence": "I use a computer.",
+    "sentence_ko": "나는 컴퓨터를 사용해요."
+  },
+  {
+    "en": "brother",
+    "ko": "오빠",
+    "sentence": "My brother is tall.",
+    "sentence_ko": "내 오빠는 키가 커요."
+  },
+  {
+    "en": "orange",
+    "ko": "오렌지",
+    "sentence": "I eat an orange.",
+    "sentence_ko": "나는 오렌지를 먹어요."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I read in the library.",
+    "sentence_ko": "나는 도서관에서 책을 읽어요."
+  },
+  {
+    "en": "football",
+    "ko": "축구",
+    "sentence": "I play football.",
+    "sentence_ko": "나는 축구를 해요."
+  },
+  {
+    "en": "garden",
+    "ko": "정원",
+    "sentence": "I have a garden.",
+    "sentence_ko": "나는 정원이 있어요."
   }
 ]

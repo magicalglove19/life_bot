@@ -1,14 +1,4 @@
 [
-  "auto",
-  "strada",
-  "viaggio",
-  "mappa",
-  "hotel",
-  "camera",
-  "bagno",
-  "ascensore",
-  "scala",
-  "portiere",
   "computer",
   "internet",
   "musica",
@@ -498,5 +488,15 @@
   "mare",
   "isola",
   "montagna",
-  "fiume"
+  "fiume",
+  "computer",
+  "telefono",
+  "foto",
+  "musica",
+  "arte",
+  "storia",
+  "geografia",
+  "scienza",
+  "teatro",
+  "biblioteca"
 ]

@@ -118,5 +118,65 @@
     "ko": "정원",
     "sentence": "I have a garden.",
     "sentence_ko": "나는 정원이 있어요."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "I see a cloud.",
+    "sentence_ko": "나는 구름을 보아."
+  },
+  {
+    "en": "fish",
+    "ko": "물고기",
+    "sentence": "I have a fish.",
+    "sentence_ko": "나는 물고기를 가지고 있어."
+  },
+  {
+    "en": "table",
+    "ko": "테이블",
+    "sentence": "I sit at a table.",
+    "sentence_ko": "나는 테이블에 앉아."
+  },
+  {
+    "en": "chair",
+    "ko": "의자",
+    "sentence": "I sit on a chair.",
+    "sentence_ko": "나는 의자에 앉아."
+  },
+  {
+    "en": "bird",
+    "ko": "새",
+    "sentence": "I see a bird.",
+    "sentence_ko": "나는 새를 보아."
+  },
+  {
+    "en": "tree",
+    "ko": "나무",
+    "sentence": "I climb a tree.",
+    "sentence_ko": "나는 나무를 타고 올라가."
+  },
+  {
+    "en": "house",
+    "ko": "집",
+    "sentence": "I live in a house.",
+    "sentence_ko": "나는 집에서 산다."
+  },
+  {
+    "en": "car",
+    "ko": "자동차",
+    "sentence": "I ride in a car.",
+    "sentence_ko": "나는 자동차에 탑니다."
+  },
+  {
+    "en": "sun",
+    "ko": "태양",
+    "sentence": "I feel the sun.",
+    "sentence_ko": "나는 태양의 따뜻함을感じ."
+  },
+  {
+    "en": "flower",
+    "ko": "꽃",
+    "sentence": "I see a flower.",
+    "sentence_ko": "나는 꽃을 보아."
   }
 ]

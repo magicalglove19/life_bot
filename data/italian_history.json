@@ -1,14 +1,4 @@
 [
-  "computer",
-  "internet",
-  "musica",
-  "film",
-  "teatro",
-  "giornale",
-  "radio",
-  "svago",
-  "passeggiata",
-  "ricordo",
   "caffè",
   "ristorante",
   "piazza",
@@ -498,5 +488,15 @@
   "geografia",
   "scienza",
   "teatro",
-  "biblioteca"
+  "biblioteca",
+  "amico",
+  "famiglia",
+  "scuola",
+  "insegnante",
+  "studente",
+  "libro",
+  "penna",
+  "cartella",
+  "orario",
+  "vacanza"
 ]

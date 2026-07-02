@@ -1,14 +1,4 @@
 [
-  "caffè",
-  "ristorante",
-  "piazza",
-  "mercato",
-  "farmacia",
-  "polizia",
-  "ospedale",
-  "banca",
-  "posta",
-  "telefono pubblico",
   "giorno",
   "notte",
   "mattina",
@@ -498,5 +488,15 @@
   "penna",
   "cartella",
   "orario",
-  "vacanza"
+  "vacanza",
+  "hotel",
+  "aeroporto",
+  "treno",
+  "autobus",
+  "bicicletta",
+  "strada",
+  "carta di credito",
+  "documento",
+  "passaporto",
+  "valigia"
 ]

@@ -178,5 +178,65 @@
     "ko": "꽃",
     "sentence": "I see a flower.",
     "sentence_ko": "나는 꽃을 보아."
+  },
+  {
+    "en": "pizza",
+    "ko": "피자",
+    "sentence": "I like pizza.",
+    "sentence_ko": "나는 피자가 좋아요."
+  },
+  {
+    "en": "kite",
+    "ko": "연",
+    "sentence": "The kite is flying high.",
+    "sentence_ko": "연이 높이 날고 있어요."
+  },
+  {
+    "en": "sister",
+    "ko": "누나/여동생",
+    "sentence": "My sister is very kind.",
+    "sentence_ko": "내 누나는 매우 친절해요."
+  },
+  {
+    "en": "cookie",
+    "ko": "쿠키",
+    "sentence": "I love eating cookies.",
+    "sentence_ko": "나는 쿠키를 먹는 것을 좋아해요."
+  },
+  {
+    "en": "bear",
+    "ko": "곰",
+    "sentence": "The bear is big and fluffy.",
+    "sentence_ko": "곰은 크고 플러피해요."
+  },
+  {
+    "en": "guitar",
+    "ko": "기타",
+    "sentence": "My brother plays the guitar.",
+    "sentence_ko": "내 오라버니는 기타를 칩니다."
+  },
+  {
+    "en": "rainbow",
+    "ko": "무지개",
+    "sentence": "The rainbow is colorful.",
+    "sentence_ko": "무지개는 색깔이 다양해요."
+  },
+  {
+    "en": "snow",
+    "ko": "눈",
+    "sentence": "I like playing in the snow.",
+    "sentence_ko": "나는 눈에서 노는 것을 좋아해요."
+  },
+  {
+    "en": "cake",
+    "ko": "케이크",
+    "sentence": "The cake is delicious.",
+    "sentence_ko": "케이크는 맛있어요."
+  },
+  {
+    "en": "swim",
+    "ko": "수영",
+    "sentence": "I love to swim in the summer.",
+    "sentence_ko": "나는夏에 수영하는 것을 좋아해요."
   }
 ]

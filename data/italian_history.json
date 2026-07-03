@@ -1,14 +1,4 @@
 [
-  "giorno",
-  "notte",
-  "mattina",
-  "pomeriggio",
-  "sera",
-  "tempo",
-  "luogo",
-  "evento",
-  "persona",
-  "gruppo",
   "acqua",
   "pane",
   "vino",
@@ -498,5 +488,15 @@
   "carta di credito",
   "documento",
   "passaporto",
-  "valigia"
+  "valigia",
+  "ristorante",
+  "medico",
+  "farmacia",
+  "polizia",
+  "ospedale",
+  "dottore",
+  "infermiere",
+  "malato",
+  "medicamento",
+  "assicurazione"
 ]

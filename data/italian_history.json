@@ -1,14 +1,4 @@
 [
-  "acqua",
-  "pane",
-  "vino",
-  "formaggio",
-  "frutta",
-  "verdura",
-  "carne",
-  "pesce",
-  "uovo",
-  "dolce",
   "amico",
   "famiglia",
   "lavoro",
@@ -498,5 +488,15 @@
   "infermiere",
   "malato",
   "medicamento",
-  "assicurazione"
+  "assicurazione",
+  "casa",
+  "giardino",
+  "amico",
+  "sorella",
+  "fratello",
+  "nonno",
+  "nonna",
+  "città",
+  "paese",
+  "strada"
 ]

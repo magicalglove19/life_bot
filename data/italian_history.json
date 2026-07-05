@@ -1,14 +1,4 @@
 [
-  "amico",
-  "famiglia",
-  "lavoro",
-  "casa",
-  "strada",
-  "giorno",
-  "notte",
-  "mattina",
-  "pomeriggio",
-  "sera",
   "giardino",
   "fiore",
   "albero",
@@ -498,5 +488,15 @@
   "nonna",
   "città",
   "paese",
-  "strada"
+  "strada",
+  "nome",
+  "cognome",
+  "telefono",
+  "indirizzo email",
+  "sito web",
+  "password",
+  "profilo",
+  "amicizia",
+  "ricordo",
+  "sogno"
 ]

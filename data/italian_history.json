@@ -1,14 +1,4 @@
 [
-  "giardino",
-  "fiore",
-  "albero",
-  "uccello",
-  "cane",
-  "gatto",
-  "bicicletta",
-  "parco",
-  "passeggiata",
-  "ristoro",
   "libro",
   "scuola",
   "insegnante",
@@ -498,5 +488,15 @@
   "profilo",
   "amicizia",
   "ricordo",
-  "sogno"
+  "sogno",
+  "ufficio",
+  "negozio",
+  "banca",
+  "scuola elementare",
+  "università",
+  "biblioteca universitaria",
+  "ospedale pediatrico",
+  "farmacia ospedaliera",
+  "polizia municipale",
+  "vigile urbano"
 ]

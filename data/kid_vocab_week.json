@@ -58,5 +58,65 @@
     "ko": "집",
     "sentence": "I am going home.",
     "sentence_ko": "나는 집에 가고 있어."
+  },
+  {
+    "en": "apple",
+    "ko": "사과",
+    "sentence": "I eat an apple.",
+    "sentence_ko": "나는 사과를 먹어요."
+  },
+  {
+    "en": "cat",
+    "ko": "고양이",
+    "sentence": "I have a cat.",
+    "sentence_ko": "나는 고양이를 키워요."
+  },
+  {
+    "en": "run",
+    "ko": "달리기",
+    "sentence": "I like to run.",
+    "sentence_ko": "나는 달리기를 좋아해요."
+  },
+  {
+    "en": "piano",
+    "ko": "피아노",
+    "sentence": "I play the piano.",
+    "sentence_ko": "나는 피아노를 칩니다."
+  },
+  {
+    "en": "carrot",
+    "ko": " 당근",
+    "sentence": "I eat a carrot.",
+    "sentence_ko": "나는 당근을 먹어요."
+  },
+  {
+    "en": "bird",
+    "ko": "새",
+    "sentence": "I see a bird.",
+    "sentence_ko": "나는 새를 볼 수 있어요."
+  },
+  {
+    "en": "table",
+    "ko": "테이블",
+    "sentence": "I sit at the table.",
+    "sentence_ko": "나는 테이블에 앉아요."
+  },
+  {
+    "en": "sun",
+    "ko": "태양",
+    "sentence": "The sun is shining.",
+    "sentence_ko": "태양이 밝게 비추고 있어요."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "I see a cloud.",
+    "sentence_ko": "나는 구름을 볼 수 있어요."
+  },
+  {
+    "en": "music",
+    "ko": "음악",
+    "sentence": "I like music.",
+    "sentence_ko": "나는 음악을 좋아해요."
   }
 ]

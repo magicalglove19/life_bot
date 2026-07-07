@@ -1,14 +1,4 @@
 [
-  "libro",
-  "scuola",
-  "insegnante",
-  "studente",
-  "amico",
-  "famiglia",
-  "lavoro",
-  "giardino",
-  "fiore",
-  "uccello",
   "città",
   "parco",
   "biblioteca",
@@ -498,5 +488,15 @@
   "ospedale pediatrico",
   "farmacia ospedaliera",
   "polizia municipale",
-  "vigile urbano"
+  "vigile urbano",
+  "giorno",
+  "settimana",
+  "mese",
+  "anno",
+  "ora",
+  "minuto",
+  "secondo",
+  "lungo",
+  "corto",
+  "veloce"
 ]

@@ -118,5 +118,65 @@
     "ko": "음악",
     "sentence": "I like music.",
     "sentence_ko": "나는 음악을 좋아해요."
+  },
+  {
+    "en": "orange",
+    "ko": "오렌지",
+    "sentence": "I like orange juice.",
+    "sentence_ko": "나는 오렌지 주스를 좋아해요."
+  },
+  {
+    "en": "bicycle",
+    "ko": "자전거",
+    "sentence": "I ride my bicycle.",
+    "sentence_ko": "나는 자전거를 타요."
+  },
+  {
+    "en": "teacher",
+    "ko": "선생님",
+    "sentence": "My teacher is nice.",
+    "sentence_ko": "私の先生은 참 친절해요."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I go to the library.",
+    "sentence_ko": "나는 도서관에 가요."
+  },
+  {
+    "en": "computer",
+    "ko": "컴퓨터",
+    "sentence": "I use a computer.",
+    "sentence_ko": "나는 컴퓨터를 사용해요."
+  },
+  {
+    "en": "flower",
+    "ko": "꽃",
+    "sentence": "I like flowers.",
+    "sentence_ko": "나는 꽃을 좋아해요."
+  },
+  {
+    "en": "swim",
+    "ko": "수영",
+    "sentence": "I can swim.",
+    "sentence_ko": "나는 수영을 할 수 있어요."
+  },
+  {
+    "en": "clock",
+    "ko": "시계",
+    "sentence": "I have a clock.",
+    "sentence_ko": "나는 시계를 가지고 있어요."
+  },
+  {
+    "en": "garden",
+    "ko": "정원",
+    "sentence": "I like the garden.",
+    "sentence_ko": "나는 정원을 좋아해요."
+  },
+  {
+    "en": "photo",
+    "ko": "사진",
+    "sentence": "I take a photo.",
+    "sentence_ko": "나는 사진을 찍어요."
   }
 ]

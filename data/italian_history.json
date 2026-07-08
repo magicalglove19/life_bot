@@ -1,14 +1,4 @@
 [
-  "città",
-  "parco",
-  "biblioteca",
-  "museo",
-  "teatro",
-  "negozio",
-  "ristorante",
-  "cucina",
-  "sala",
-  "famiglia",
   "tavolo",
   "sedia",
   "porta",
@@ -498,5 +488,15 @@
   "secondo",
   "lungo",
   "corto",
-  "veloce"
+  "veloce",
+  "mamma",
+  "papà",
+  "cucina",
+  "bagno",
+  "camera",
+  "letto",
+  "tavolo",
+  "sedia",
+  "porta",
+  "finestra"
 ]

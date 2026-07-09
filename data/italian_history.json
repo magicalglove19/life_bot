@@ -1,14 +1,4 @@
 [
-  "tavolo",
-  "sedia",
-  "porta",
-  "finestra",
-  "letto",
-  "armadio",
-  "lavandino",
-  "doccia",
-  "asciugamano",
-  "spazzolino",
   "nome",
   "cognome",
   "età",
@@ -498,5 +488,15 @@
   "tavolo",
   "sedia",
   "porta",
-  "finestra"
+  "finestra",
+  "parco",
+  "giocare",
+  "rispondere",
+  "fare",
+  "prendere",
+  "andare",
+  "venire",
+  "dire",
+  "sentire",
+  "capire"
 ]

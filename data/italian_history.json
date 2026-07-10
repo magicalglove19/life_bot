@@ -1,14 +1,4 @@
 [
-  "nome",
-  "cognome",
-  "età",
-  "sposato",
-  "singolo",
-  "lavoro",
-  "studio",
-  "hobby",
-  "viaggiare",
-  "imparare",
   "spiaggia",
   "montagna",
   "fiume",
@@ -498,5 +488,15 @@
   "venire",
   "dire",
   "sentire",
-  "capire"
+  "capire",
+  "spiaggia",
+  "montagna",
+  "lago",
+  "parco nazionale",
+  "riserva naturale",
+  "animale",
+  "pianta",
+  "fiore",
+  "uccello",
+  "pesce"
 ]

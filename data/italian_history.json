@@ -1,15 +1,5 @@
 [
   "spiaggia",
-  "montagna",
-  "fiume",
-  "lago",
-  "isola",
-  "porto",
-  "aeroporto",
-  "treno",
-  "autobus",
-  "bicicletta",
-  "spiaggia",
   "libro",
   "musica",
   "sport",
@@ -498,5 +488,15 @@
   "pianta",
   "fiore",
   "uccello",
-  "pesce"
+  "pesce",
+  "uomo",
+  "donna",
+  "bambino",
+  "cibo",
+  "acqua",
+  "pane",
+  "vino",
+  "caffe",
+  "tavola",
+  "ristorante"
 ]

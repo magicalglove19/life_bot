@@ -1,14 +1,4 @@
 [
-  "spiaggia",
-  "libro",
-  "musica",
-  "sport",
-  "viaggio",
-  "hotel",
-  "camera",
-  "bagno",
-  "ascensore",
-  "reception",
   "computer",
   "telefono",
   "ufficio",
@@ -498,5 +488,15 @@
   "vino",
   "caffe",
   "tavola",
-  "ristorante"
+  "ristorante",
+  "libro",
+  "computer",
+  "telefono cellulare",
+  "musica",
+  "sport",
+  "viaggio",
+  "fotografia",
+  "arte",
+  "storia",
+  "geografia"
 ]

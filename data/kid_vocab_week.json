@@ -1,1 +1,62 @@
-[]
+[
+  {
+    "en": "pencil",
+    "ko": "연필",
+    "sentence": "I use a pencil.",
+    "sentence_ko": "나는 연필을 사용해요."
+  },
+  {
+    "en": "book",
+    "ko": "책",
+    "sentence": "I read a book.",
+    "sentence_ko": "나는 책을 읽어요."
+  },
+  {
+    "en": "friend",
+    "ko": "친구",
+    "sentence": "I have a friend.",
+    "sentence_ko": "나는 친구가 있어요."
+  },
+  {
+    "en": "dog",
+    "ko": "강아지",
+    "sentence": "I have a dog.",
+    "sentence_ko": "나는 강아지를 가지고 있어요."
+  },
+  {
+    "en": "happy",
+    "ko": "행복한",
+    "sentence": "I am happy.",
+    "sentence_ko": "나는 행복해요."
+  },
+  {
+    "en": "school",
+    "ko": "학교",
+    "sentence": "I go to school.",
+    "sentence_ko": "나는 학교에 가요."
+  },
+  {
+    "en": "family",
+    "ko": "가정",
+    "sentence": "I love my family.",
+    "sentence_ko": "나는 내 가족을 사랑해요."
+  },
+  {
+    "en": "apple",
+    "ko": "사과",
+    "sentence": "I eat an apple.",
+    "sentence_ko": "나는 사과를 먹어요."
+  },
+  {
+    "en": "run",
+    "ko": "달리기",
+    "sentence": "I like to run.",
+    "sentence_ko": "나는 달리기를 좋아해요."
+  },
+  {
+    "en": "smile",
+    "ko": "미소",
+    "sentence": "I smile every day.",
+    "sentence_ko": "나는 매일 미소를 짓어요."
+  }
+]

@@ -1,14 +1,4 @@
 [
-  "computer",
-  "telefono",
-  "ufficio",
-  "ospedale",
-  "banca",
-  "posta",
-  "farmacia",
-  "polizia",
-  "stazione",
-  "aeroporto",
   "telefono",
   "ufficio",
   "ospedale",
@@ -498,5 +488,15 @@
   "fotografia",
   "arte",
   "storia",
-  "geografia"
+  "geografia",
+  "spiaggia",
+  "montagna",
+  "lago",
+  "parco",
+  "giocare",
+  "rispondere",
+  "fare",
+  "prendere",
+  "andare",
+  "venire"
 ]

@@ -58,5 +58,65 @@
     "ko": "미소",
     "sentence": "I smile every day.",
     "sentence_ko": "나는 매일 미소를 짓어요."
+  },
+  {
+    "en": "cat",
+    "ko": "고양이",
+    "sentence": "I have a cat.",
+    "sentence_ko": "나는 고양이를 가지고 있어요."
+  },
+  {
+    "en": "tree",
+    "ko": "나무",
+    "sentence": "The tree is tall.",
+    "sentence_ko": "그 나무는 높아요."
+  },
+  {
+    "en": "sun",
+    "ko": "태양",
+    "sentence": "The sun is shining.",
+    "sentence_ko": "태양이 비치고 있어요."
+  },
+  {
+    "en": "table",
+    "ko": "테이블",
+    "sentence": "I eat at the table.",
+    "sentence_ko": "나는 테이블에서 먹어요."
+  },
+  {
+    "en": "car",
+    "ko": "차",
+    "sentence": "My dad drives a car.",
+    "sentence_ko": "아빠는 차를 운전하세요."
+  },
+  {
+    "en": "banana",
+    "ko": "바나나",
+    "sentence": "I like bananas.",
+    "sentence_ko": "나는 바나나를 좋아해요."
+  },
+  {
+    "en": "house",
+    "ko": "집",
+    "sentence": "I live in a house.",
+    "sentence_ko": "나는 집에서 살아요."
+  },
+  {
+    "en": "bicycle",
+    "ko": "자전거",
+    "sentence": "I ride a bicycle.",
+    "sentence_ko": "나는 자전거를 타요."
+  },
+  {
+    "en": "piano",
+    "ko": "피아노",
+    "sentence": "My sister plays the piano.",
+    "sentence_ko": "언니는 피아노를 치세요."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "The cloud is white.",
+    "sentence_ko": "그 구름은 하얗어요."
   }
 ]

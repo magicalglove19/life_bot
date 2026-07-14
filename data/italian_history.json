@@ -1,14 +1,4 @@
 [
-  "telefono",
-  "ufficio",
-  "ospedale",
-  "banca",
-  "posta",
-  "farmacia",
-  "polizia",
-  "stazione",
-  "aeroporto",
-  "biglietto",
   "caffè",
   "pane",
   "formaggio",
@@ -498,5 +488,15 @@
   "fare",
   "prendere",
   "andare",
-  "venire"
+  "venire",
+  "hotel",
+  "aeroporto",
+  "treno",
+  "autobus",
+  "metropolitana",
+  "biglietto",
+  "valigia",
+  "passaporto",
+  "viaggiatore",
+  "mappa"
 ]

@@ -1,14 +1,4 @@
 [
-  "caffè",
-  "pane",
-  "formaggio",
-  "vino",
-  "olio",
-  "sale",
-  "zucchero",
-  "mela",
-  "pera",
-  "uva",
   "acqua",
   "pane",
   "formaggio",
@@ -498,5 +488,15 @@
   "valigia",
   "passaporto",
   "viaggiatore",
-  "mappa"
+  "mappa",
+  "amico",
+  "sorella",
+  "fratello",
+  "nonno",
+  "nonna",
+  "cugino",
+  "cugina",
+  "fidanzato",
+  "fidanzata",
+  "famiglia"
 ]

@@ -118,5 +118,65 @@
     "ko": "구름",
     "sentence": "The cloud is white.",
     "sentence_ko": "그 구름은 하얗어요."
+  },
+  {
+    "en": "bird",
+    "ko": "새",
+    "sentence": "I see a bird.",
+    "sentence_ko": "나는 한 마리의 새를 봅니다."
+  },
+  {
+    "en": "orange",
+    "ko": "오렌지",
+    "sentence": "I love to eat orange.",
+    "sentence_ko": "나는 오렌지를 먹는 것을 좋아해요."
+  },
+  {
+    "en": "pen",
+    "ko": "펜",
+    "sentence": "I use a pen.",
+    "sentence_ko": "나는 펜을 사용해요."
+  },
+  {
+    "en": "chair",
+    "ko": "의자",
+    "sentence": "I sit on a chair.",
+    "sentence_ko": "나는 의자에 앉아요."
+  },
+  {
+    "en": "fish",
+    "ko": "물고기",
+    "sentence": "I have a fish.",
+    "sentence_ko": "나는 물고기를 가지고 있어."
+  },
+  {
+    "en": "computer",
+    "ko": "컴퓨터",
+    "sentence": "I use a computer.",
+    "sentence_ko": "나는 컴퓨터를 사용해요."
+  },
+  {
+    "en": "music",
+    "ko": "음악",
+    "sentence": "I love music.",
+    "sentence_ko": "나는 음악을 좋아해요."
+  },
+  {
+    "en": "guitar",
+    "ko": "기타",
+    "sentence": "My brother plays the guitar.",
+    "sentence_ko": "내 오빠는 기타를 연주해요."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I go to the library.",
+    "sentence_ko": "나는 도서관에 갑니다."
+  },
+  {
+    "en": "flower",
+    "ko": "꽃",
+    "sentence": "I like a flower.",
+    "sentence_ko": "나는 꽃을 좋아해요."
   }
 ]

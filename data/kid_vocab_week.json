@@ -178,5 +178,65 @@
     "ko": "꽃",
     "sentence": "I like a flower.",
     "sentence_ko": "나는 꽃을 좋아해요."
+  },
+  {
+    "en": "brother",
+    "ko": "오빠/형",
+    "sentence": "I have a brother.",
+    "sentence_ko": "나는 오빠가 하나 있어요."
+  },
+  {
+    "en": "mother",
+    "ko": "엄마",
+    "sentence": "My mother loves me.",
+    "sentence_ko": "내 母님은 나를 사랑해요."
+  },
+  {
+    "en": "food",
+    "ko": "음식",
+    "sentence": "I like food.",
+    "sentence_ko": "나는 음식을 좋아해요."
+  },
+  {
+    "en": "phone",
+    "ko": "전화기",
+    "sentence": "My mother has a phone.",
+    "sentence_ko": "내 엄마가 전화기를 가지고 있어요."
+  },
+  {
+    "en": "park",
+    "ko": "공원",
+    "sentence": "I play at the park.",
+    "sentence_ko": "나는 공원에서 놀아요."
+  },
+  {
+    "en": "ball",
+    "ko": "공",
+    "sentence": "I have a ball.",
+    "sentence_ko": "나는 공을 가지고 있어요."
+  },
+  {
+    "en": "bed",
+    "ko": "침대",
+    "sentence": "I sleep in my bed.",
+    "sentence_ko": "나는 내 침대에서 자요."
+  },
+  {
+    "en": "teacher",
+    "ko": "선생님",
+    "sentence": "My teacher is kind.",
+    "sentence_ko": "내 선생님은 친절해요."
+  },
+  {
+    "en": "football",
+    "ko": "축구",
+    "sentence": "I like football.",
+    "sentence_ko": "나는 축구를 좋아해요."
+  },
+  {
+    "en": "photo",
+    "ko": "사진",
+    "sentence": "I take a photo.",
+    "sentence_ko": "나는 사진을 찍어요."
   }
 ]

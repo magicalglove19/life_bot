@@ -1,14 +1,4 @@
 [
-  "casa",
-  "strada",
-  "piazza",
-  "chiesa",
-  "ristorante",
-  "hotel",
-  "aereo",
-  "treno",
-  "autobus",
-  "bicicletta",
   "amico",
   "amica",
   "giorno",
@@ -498,5 +488,15 @@
   "mercato",
   "ristorante italiano",
   "gelato",
-  "pizza"
+  "pizza",
+  "scuola",
+  "insegnante",
+  "studente",
+  "libro di testo",
+  "compito",
+  "esame",
+  "voto",
+  "laurea",
+  "università",
+  "borsa di studio"
 ]

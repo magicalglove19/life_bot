@@ -1,14 +1,4 @@
 [
-  "amico",
-  "amica",
-  "giorno",
-  "notte",
-  "mattina",
-  "pomeriggio",
-  "sera",
-  "settimana",
-  "mese",
-  "anno",
   "mamma",
   "papà",
   "fratello",
@@ -498,5 +488,15 @@
   "voto",
   "laurea",
   "università",
-  "borsa di studio"
+  "borsa di studio",
+  "amico",
+  "città",
+  "giornata",
+  "speranza",
+  "felicità",
+  "cultura",
+  "storia",
+  "arte",
+  "musica",
+  "vacanza"
 ]

@@ -1,14 +1,4 @@
 [
-  "mamma",
-  "papà",
-  "fratello",
-  "sorella",
-  "nonno",
-  "nonna",
-  "cucina",
-  "giardino",
-  "animale",
-  "fiore",
   "mercato",
   "negozio",
   "ristorante",
@@ -498,5 +488,15 @@
   "storia",
   "arte",
   "musica",
-  "vacanza"
+  "vacanza",
+  "casa",
+  "strada",
+  "negozio",
+  "ospedale",
+  "scuola elementare",
+  "biblioteca",
+  "ufficio postale",
+  "banca",
+  "polizia",
+  "farmacia"
 ]

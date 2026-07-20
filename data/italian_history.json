@@ -1,14 +1,4 @@
 [
-  "mercato",
-  "negozio",
-  "ristorante",
-  "cameriere",
-  "conto",
-  "pagare",
-  "carta di credito",
-  "bancomat",
-  "denaro",
-  "cambio",
   "uomo",
   "donna",
   "bambino",
@@ -498,5 +488,15 @@
   "ufficio postale",
   "banca",
   "polizia",
-  "farmacia"
+  "farmacia",
+  "giardino",
+  "fiorella",
+  "bicicletta",
+  "nuotare",
+  "spiaggia libera",
+  "ombrellone",
+  "palloncino",
+  "costa",
+  "isola",
+  "faro"
 ]

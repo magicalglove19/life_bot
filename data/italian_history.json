@@ -1,14 +1,4 @@
 [
-  "uomo",
-  "donna",
-  "bambino",
-  "scuola",
-  "insegnante",
-  "studente",
-  "gioco",
-  "parco",
-  "spiagine",
-  "famiglia",
   "giornale",
   "ferro",
   "cavallo",
@@ -498,5 +488,15 @@
   "palloncino",
   "costa",
   "isola",
-  "faro"
+  "faro",
+  "giorno",
+  "notte",
+  "sole",
+  "pioggia",
+  "vento",
+  "neve",
+  "estate",
+  "inverno",
+  "primavera",
+  "autunno"
 ]

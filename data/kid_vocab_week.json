@@ -58,5 +58,65 @@
     "ko": "미소",
     "sentence": "I smile often.",
     "sentence_ko": "나는 자주 웃어요."
+  },
+  {
+    "en": "cat",
+    "ko": "고양이",
+    "sentence": "I have a cat.",
+    "sentence_ko": "나는 고양이를 가지고 있어."
+  },
+  {
+    "en": "apple",
+    "ko": "사과",
+    "sentence": "I eat an apple.",
+    "sentence_ko": "나는 사과를 먹어."
+  },
+  {
+    "en": "run",
+    "ko": "달리다",
+    "sentence": "I can run fast.",
+    "sentence_ko": "나는 빠르게 달릴 수 있어."
+  },
+  {
+    "en": "mother",
+    "ko": "엄마",
+    "sentence": "My mother is kind.",
+    "sentence_ko": "私の母は親切です."
+  },
+  {
+    "en": "car",
+    "ko": "자동차",
+    "sentence": "I like a red car.",
+    "sentence_ko": "나는 빨간 자동차를 좋아해."
+  },
+  {
+    "en": "tree",
+    "ko": "나무",
+    "sentence": "There is a tree.",
+    "sentence_ko": "그곳에 나무가 있습니다."
+  },
+  {
+    "en": "fish",
+    "ko": "물고기",
+    "sentence": "I see a fish.",
+    "sentence_ko": "나는 물고기를 봅니다."
+  },
+  {
+    "en": "bike",
+    "ko": "자전거",
+    "sentence": "I ride a bike.",
+    "sentence_ko": "나는 자전거를 타요."
+  },
+  {
+    "en": "music",
+    "ko": "음악",
+    "sentence": "I like music.",
+    "sentence_ko": "나는 음악을 좋아합니다."
+  },
+  {
+    "en": "bed",
+    "ko": "床",
+    "sentence": "I sleep in bed.",
+    "sentence_ko": "나는 침대에서 자요."
   }
 ]

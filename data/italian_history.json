@@ -1,14 +1,4 @@
 [
-  "giornale",
-  "ferro",
-  "cavallo",
-  "fiorellino",
-  "sedia",
-  "tavolo",
-  "porta",
-  "finestra",
-  "soffitto",
-  "pavimento",
   "libro",
   "penna",
   "carta",
@@ -498,5 +488,15 @@
   "estate",
   "inverno",
   "primavera",
-  "autunno"
+  "autunno",
+  "mangiare",
+  "bere",
+  "acqua",
+  "pane",
+  "uovo",
+  "frutta",
+  "verdura",
+  "carne",
+  "pesce",
+  "vino"
 ]

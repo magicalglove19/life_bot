@@ -118,5 +118,65 @@
     "ko": "床",
     "sentence": "I sleep in bed.",
     "sentence_ko": "나는 침대에서 자요."
+  },
+  {
+    "en": "house",
+    "ko": "집",
+    "sentence": "I live in a house.",
+    "sentence_ko": "나는 집에서 산다."
+  },
+  {
+    "en": "father",
+    "ko": "아빠",
+    "sentence": "My father is a teacher.",
+    "sentence_ko": "아빠는 선생님이세요."
+  },
+  {
+    "en": "brother",
+    "ko": "오빠",
+    "sentence": "I have a brother.",
+    "sentence_ko": "나는 오빠가 있다."
+  },
+  {
+    "en": "sister",
+    "ko": "여동생",
+    "sentence": "My sister is cute.",
+    "sentence_ko": "여동생은 귀엽다."
+  },
+  {
+    "en": "chicken",
+    "ko": "치킨",
+    "sentence": "I like chicken.",
+    "sentence_ko": "나는 치킨을 좋아한다."
+  },
+  {
+    "en": "pizza",
+    "ko": "피자",
+    "sentence": "I love pizza.",
+    "sentence_ko": "나는 피자를 사랑한다."
+  },
+  {
+    "en": "ball",
+    "ko": "공",
+    "sentence": "I play with a ball.",
+    "sentence_ko": "나는 공을 가지고 놀아."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "I see clouds in the sky.",
+    "sentence_ko": "나는 하늘에 구름이 보인다."
+  },
+  {
+    "en": "sun",
+    "ko": "태양",
+    "sentence": "The sun is shining.",
+    "sentence_ko": "태양이 비추고 있다."
+  },
+  {
+    "en": "holiday",
+    "ko": "휴일",
+    "sentence": "I like holidays.",
+    "sentence_ko": "나는 휴일을 좋아한다."
   }
 ]

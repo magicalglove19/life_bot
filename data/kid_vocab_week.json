@@ -178,5 +178,65 @@
     "ko": "휴일",
     "sentence": "I like holidays.",
     "sentence_ko": "나는 휴일을 좋아한다."
+  },
+  {
+    "en": "table",
+    "ko": "테이블",
+    "sentence": "I eat on the table.",
+    "sentence_ko": "나는 테이블 위에서 먹어요."
+  },
+  {
+    "en": "flower",
+    "ko": "꽃",
+    "sentence": "The flower is beautiful.",
+    "sentence_ko": "그 꽃은 아름답습니다."
+  },
+  {
+    "en": "bird",
+    "ko": "새",
+    "sentence": "The bird can fly.",
+    "sentence_ko": "그 새는 날 수 있습니다."
+  },
+  {
+    "en": "teacher",
+    "ko": "선생님",
+    "sentence": "My teacher is kind.",
+    "sentence_ko": "나의 선생님은 친절합니다."
+  },
+  {
+    "en": "pencil case",
+    "ko": "연필 케이스",
+    "sentence": "I have a pencil case.",
+    "sentence_ko": "나는 연필 케이스를 가지고 있어요."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I go to the library.",
+    "sentence_ko": "나는 도서관에 갈거예요."
+  },
+  {
+    "en": "computer",
+    "ko": "컴퓨터",
+    "sentence": "I use a computer.",
+    "sentence_ko": "나는 컴퓨터를 사용해요."
+  },
+  {
+    "en": "basket",
+    "ko": "바스ケット",
+    "sentence": "I have a basket.",
+    "sentence_ko": "나는 바스켓을 가지고 있어요."
+  },
+  {
+    "en": "garden",
+    "ko": "정원",
+    "sentence": "I like the garden.",
+    "sentence_ko": "나는 정원을 좋아해요."
+  },
+  {
+    "en": "kite",
+    "ko": "연",
+    "sentence": "I fly a kite.",
+    "sentence_ko": "나는 연을 날려요."
   }
 ]

@@ -1,14 +1,4 @@
 [
-  "libro",
-  "penna",
-  "carta",
-  "dizionario",
-  "traduzione",
-  "conversazione",
-  "ascoltare",
-  "parlare",
-  "scrivere",
-  "leggere",
   "spiaggia",
   "mare",
   "isola",
@@ -498,5 +488,15 @@
   "verdura",
   "carne",
   "pesce",
-  "vino"
+  "vino",
+  "caffè",
+  "tavolo",
+  "sedia",
+  "finestra",
+  "porta",
+  "letto",
+  "armadio",
+  "scrivania",
+  "lampada",
+  "televisore"
 ]

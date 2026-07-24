@@ -1,14 +1,4 @@
 [
-  "spiaggia",
-  "mare",
-  "isola",
-  "montagna",
-  "bosco",
-  "fiume",
-  "lago",
-  "ponte",
-  "parco nazionale",
-  "riserva naturale",
   "telefono",
   "computer",
   "musica",
@@ -498,5 +488,15 @@
   "armadio",
   "scrivania",
   "lampada",
-  "televisore"
+  "televisore",
+  "telefono",
+  "computer",
+  "internet",
+  "posta",
+  "lettera",
+  "pacco",
+  "francobollo",
+  "indirizzo",
+  "-numero",
+  "fax"
 ]

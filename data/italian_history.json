@@ -1,14 +1,4 @@
 [
-  "telefono",
-  "computer",
-  "musica",
-  "film",
-  "teatro",
-  "spettacolo",
-  "ristorante italiano",
-  "pizza",
-  "gelato",
-  "viaggio",
   "stazione",
   "biglietto",
   "orario",
@@ -498,5 +488,15 @@
   "francobollo",
   "indirizzo",
   "-numero",
-  "fax"
+  "fax",
+  "parco",
+  "giornale",
+  "treno",
+  "aeroporto",
+  "bagno",
+  "ascensore",
+  "camera",
+  "telefono cellulare",
+  "carta di credito",
+  "denaro"
 ]

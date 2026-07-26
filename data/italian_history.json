@@ -1,14 +1,4 @@
 [
-  "stazione",
-  "biglietto",
-  "orario",
-  "ospedale",
-  "dottore",
-  "farmacia",
-  "medicina",
-  "posta",
-  "lettera",
-  "pacchetto",
   "ufficio",
   "ufficio postale",
   "panificio",
@@ -498,5 +488,15 @@
   "camera",
   "telefono cellulare",
   "carta di credito",
-  "denaro"
+  "denaro",
+  "famiglia",
+  "lavoro",
+  "viaggio",
+  "hotel",
+  "ristorante",
+  "bar",
+  "spiaggia",
+  "montagna",
+  "fiume",
+  "parco nazionale"
 ]

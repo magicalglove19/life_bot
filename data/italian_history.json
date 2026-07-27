@@ -1,14 +1,4 @@
 [
-  "ufficio",
-  "ufficio postale",
-  "panificio",
-  "farmacia",
-  "banca",
-  "ospedale",
-  "scuola elementare",
-  "università",
-  "biblioteca",
-  "museo",
   "casa",
   "bagno",
   "camera",
@@ -498,5 +488,15 @@
   "spiaggia",
   "montagna",
   "fiume",
-  "parco nazionale"
+  "parco nazionale",
+  "spiaggia",
+  "ombrellone",
+  "palloncino",
+  "costa",
+  "isola",
+  "faro",
+  "giorno",
+  "notte",
+  "sole",
+  "pioggia"
 ]

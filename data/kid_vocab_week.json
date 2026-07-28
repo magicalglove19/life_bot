@@ -58,5 +58,65 @@
     "ko": "집",
     "sentence": "I go home.",
     "sentence_ko": "나는 집에 가요."
+  },
+  {
+    "en": "cat",
+    "ko": "고양이",
+    "sentence": "I have a cat.",
+    "sentence_ko": "나는 고양이를 가지고 있어."
+  },
+  {
+    "en": "banana",
+    "ko": "바나나",
+    "sentence": "I eat a banana.",
+    "sentence_ko": "나는 바나나를 먹어요."
+  },
+  {
+    "en": "piano",
+    "ko": "피아노",
+    "sentence": "I play the piano.",
+    "sentence_ko": "나는 피아노를 연주해요."
+  },
+  {
+    "en": "mom",
+    "ko": "엄마",
+    "sentence": "I love my mom.",
+    "sentence_ko": "나는 엄마를 사랑해요."
+  },
+  {
+    "en": "car",
+    "ko": "자동차",
+    "sentence": "My dad has a car.",
+    "sentence_ko": "아빠가 자동차를 가지고 있어."
+  },
+  {
+    "en": "flower",
+    "ko": "꽃",
+    "sentence": "I like flowers.",
+    "sentence_ko": "나는 꽃을 좋아해요."
+  },
+  {
+    "en": "bicycle",
+    "ko": "자전거",
+    "sentence": "I ride a bicycle.",
+    "sentence_ko": "나는 자전거를 타요."
+  },
+  {
+    "en": "computer",
+    "ko": "컴퓨터",
+    "sentence": "I use a computer.",
+    "sentence_ko": "나는 컴퓨터를 사용해요."
+  },
+  {
+    "en": "music",
+    "ko": "음악",
+    "sentence": "I like music.",
+    "sentence_ko": "나는 음악을 좋아해요."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I go to the library.",
+    "sentence_ko": "나는 도서관에 가요."
   }
 ]

@@ -1,14 +1,4 @@
 [
-  "casa",
-  "bagno",
-  "camera",
-  "letto",
-  "armadio",
-  "tv",
-  "radio",
-  "telefono fisso",
-  "computer portatile",
-  "internet",
   "amico",
   "amica",
   "ufficio",
@@ -498,5 +488,15 @@
   "giorno",
   "notte",
   "sole",
-  "pioggia"
+  "pioggia",
+  "mattina",
+  "pomeriggio",
+  "sera",
+  "per favore",
+  "grazie",
+  "mi dispiace",
+  "scusa",
+  "dottore",
+  "infermiera",
+  "medicina"
 ]

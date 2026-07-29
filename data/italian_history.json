@@ -1,14 +1,4 @@
 [
-  "amico",
-  "amica",
-  "ufficio",
-  "ufficiale",
-  "città",
-  "paese",
-  "strada",
-  "auto",
-  "treno",
-  "aeroporto",
   "giardino",
   "cucina",
   "soggiorno",
@@ -498,5 +488,15 @@
   "scusa",
   "dottore",
   "infermiera",
-  "medicina"
+  "medicina",
+  "amico",
+  "sorella",
+  "fratello",
+  "madre",
+  "padre",
+  "città",
+  "paese",
+  "straniero",
+  "vacanza",
+  "ristorante"
 ]

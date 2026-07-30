@@ -1,14 +1,4 @@
 [
-  "giardino",
-  "cucina",
-  "soggiorno",
-  "lavatrice",
-  "asciugatrice",
-  "frigorifero",
-  "forno",
-  "pentola",
-  "coltello",
-  "piatto",
   "mattina",
   "pomeriggio",
   "sera",
@@ -498,5 +488,15 @@
   "paese",
   "straniero",
   "vacanza",
-  "ristorante"
+  "ristorante",
+  "casa",
+  "strada",
+  "negozio",
+  "scuola",
+  "biblioteca",
+  "ospedale",
+  "polizia",
+  "ufficio postale",
+  "banca",
+  "stazione"
 ]

@@ -178,5 +178,65 @@
     "ko": "수영",
     "sentence": "I like to swim.",
     "sentence_ko": "나는 수영을 좋아해요."
+  },
+  {
+    "en": "rainbow",
+    "ko": "무지개",
+    "sentence": "I see a rainbow.",
+    "sentence_ko": "나는 무지개를 봅니다."
+  },
+  {
+    "en": "football",
+    "ko": "축구공",
+    "sentence": "He plays with a football.",
+    "sentence_ko": "그는 축구공으로 놀아요."
+  },
+  {
+    "en": "orange",
+    "ko": "오レン지",
+    "sentence": "I eat an orange.",
+    "sentence_ko": "나는 오렌지를 먹어요."
+  },
+  {
+    "en": "penguin",
+    "ko": "펭귄",
+    "sentence": "The penguin is cute.",
+    "sentence_ko": "펭귄은 귀엽습니다."
+  },
+  {
+    "en": "kite",
+    "ko": "연",
+    "sentence": "He flies a kite.",
+    "sentence_ko": "그는 연을 날립니다."
+  },
+  {
+    "en": "grape",
+    "ko": "포도",
+    "sentence": "I like grapes.",
+    "sentence_ko": "나는 포도를 좋아합니다."
+  },
+  {
+    "en": "tiger",
+    "ko": "호랑이",
+    "sentence": "The tiger is big.",
+    "sentence_ko": "호랑이는 크다."
+  },
+  {
+    "en": "violin",
+    "ko": "바이올린",
+    "sentence": "She plays the violin.",
+    "sentence_ko": "그녀는 바이올린을 연주합니다."
+  },
+  {
+    "en": "snowflake",
+    "ko": "눈꽃",
+    "sentence": "I see a snowflake.",
+    "sentence_ko": "나는 눈꽃을 봅니다."
+  },
+  {
+    "en": "butterfly",
+    "ko": "나비",
+    "sentence": "The butterfly is beautiful.",
+    "sentence_ko": "나비는 아름답습니다."
   }
 ]

@@ -1,14 +1,4 @@
 [
-  "mattina",
-  "pomeriggio",
-  "sera",
-  "notte",
-  "settimana",
-  "mese",
-  "anno",
-  "giorno",
-  "ora",
-  "minuto",
   "nome",
   "cognome",
   "età",
@@ -498,5 +488,15 @@
   "polizia",
   "ufficio postale",
   "banca",
-  "stazione"
+  "stazione",
+  "libro",
+  "giardino",
+  "bicicletta",
+  "passeggiata",
+  "ristorante",
+  "gelato",
+  " spiaggia",
+  "fotografia",
+  "musica",
+  "amore"
 ]

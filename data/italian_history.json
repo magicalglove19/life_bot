@@ -1,14 +1,4 @@
 [
-  "nome",
-  "cognome",
-  "età",
-  "lavoro",
-  "sposato",
-  "single",
-  "figlio",
-  "figlia",
-  "madre",
-  "padre",
   "fratello",
   "sorella",
   "nonno",
@@ -498,5 +488,15 @@
   " spiaggia",
   "fotografia",
   "musica",
-  "amore"
+  "amore",
+  "fiore",
+  "albero",
+  "uccello",
+  "gatto",
+  "cane",
+  "amore",
+  "gioia",
+  "sogno",
+  "ricordo",
+  "speranza"
 ]

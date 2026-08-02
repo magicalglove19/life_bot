@@ -1,14 +1,4 @@
 [
-  "fratello",
-  "sorella",
-  "nonno",
-  "nonna",
-  "cane",
-  "gatto",
-  "fiore",
-  "albero",
-  "uccello",
-  "pesce",
   "passeggiata",
   "libreria",
   "caffè",
@@ -498,5 +488,15 @@
   "gioia",
   "sogno",
   "ricordo",
-  "speranza"
+  "speranza",
+  "olio",
+  "sale",
+  "zucchero",
+  "pane",
+  "vino",
+  "formaggio",
+  "prosciutto",
+  "uovo",
+  "carne",
+  "pesce"
 ]

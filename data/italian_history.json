@@ -1,14 +1,4 @@
 [
-  "passeggiata",
-  "libreria",
-  "caffè",
-  "tavola",
-  "sedia",
-  "finestra",
-  "porta",
-  "scale",
-  "soffitto",
-  "pavimento",
   "spiaggia",
   "mare",
   "montagna",
@@ -498,5 +488,15 @@
   "prosciutto",
   "uovo",
   "carne",
-  "pesce"
+  "pesce",
+  "mela",
+  "uomo",
+  "donna",
+  "bambino",
+  "amica",
+  "cucina",
+  "tavolo",
+  "sedia",
+  "finestra",
+  "porta"
 ]

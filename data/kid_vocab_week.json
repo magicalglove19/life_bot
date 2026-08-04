@@ -58,5 +58,65 @@
     "ko": "가족",
     "sentence": "I love my family.",
     "sentence_ko": "나는 내 가족을 사랑해요."
+  },
+  {
+    "en": "banana",
+    "ko": "바나나",
+    "sentence": "I like eating banana.",
+    "sentence_ko": "나는 바나나를 먹는 것을 좋아해요."
+  },
+  {
+    "en": "teacher",
+    "ko": "선생님",
+    "sentence": "My teacher is very kind.",
+    "sentence_ko": "私の先生はとても親切です."
+  },
+  {
+    "en": "car",
+    "ko": "자동차",
+    "sentence": "My father drives a car.",
+    "sentence_ko": "아빠가 자동차를 운전해요."
+  },
+  {
+    "en": "smile",
+    "ko": "미소",
+    "sentence": "You have a nice smile.",
+    "sentence_ko": "당신은 좋은 미소를 가지고 있어요."
+  },
+  {
+    "en": "park",
+    "ko": "공원",
+    "sentence": "I play in the park.",
+    "sentence_ko": "나는 공원에서 놀아요."
+  },
+  {
+    "en": "brother",
+    "ko": "오빠",
+    "sentence": "My brother is very tall.",
+    "sentence_ko": "오빠가 очень 키가 커요."
+  },
+  {
+    "en": "music",
+    "ko": "음악",
+    "sentence": "I like listening to music.",
+    "sentence_ko": "나는 음악을 듣는 것을 좋아해요."
+  },
+  {
+    "en": "bicycle",
+    "ko": "자전거",
+    "sentence": "I ride a bicycle to school.",
+    "sentence_ko": "나는 자전거를 타고 학교에가요."
+  },
+  {
+    "en": "computer",
+    "ko": "컴퓨터",
+    "sentence": "I use a computer at home.",
+    "sentence_ko": "나는 집에서 컴퓨터를 사용해요."
+  },
+  {
+    "en": "flower",
+    "ko": "꽃",
+    "sentence": "The flower is very beautiful.",
+    "sentence_ko": "그 꽃은 매우 아름다워요."
   }
 ]

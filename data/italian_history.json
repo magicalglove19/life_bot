@@ -1,14 +1,4 @@
 [
-  "ristorante",
-  "pizza",
-  "gelato",
-  "caffè",
-  "tavolo",
-  "sedia",
-  "piatto",
-  "bicchiere",
-  "acqua",
-  "vino",
   "sport",
   "giocatore",
   "pallone",
@@ -498,5 +488,15 @@
   "nave",
   "tavolo",
   "sedia",
-  "porta"
+  "porta",
+  "telefono",
+  "carta",
+  "denaro",
+  "ristorazione",
+  "cena",
+  "colazione",
+  "pranzo",
+  "camera",
+  "lettore",
+  "musica classica"
 ]

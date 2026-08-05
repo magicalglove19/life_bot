@@ -118,5 +118,65 @@
     "ko": "꽃",
     "sentence": "The flower is very beautiful.",
     "sentence_ko": "그 꽃은 매우 아름다워요."
+  },
+  {
+    "en": "library",
+    "ko": "도서관",
+    "sentence": "I go to the library.",
+    "sentence_ko": "나는 도서관에 간다."
+  },
+  {
+    "en": "cloud",
+    "ko": "구름",
+    "sentence": "The cloud is white.",
+    "sentence_ko": "구름은 하얀색이다."
+  },
+  {
+    "en": "chicken",
+    "ko": "치킨",
+    "sentence": "I eat chicken.",
+    "sentence_ko": "나는 치킨을 먹는다."
+  },
+  {
+    "en": "mother",
+    "ko": "엄마",
+    "sentence": "My mother is kind.",
+    "sentence_ko": "내 어머니는 친절하다."
+  },
+  {
+    "en": "basketball",
+    "ko": "농구",
+    "sentence": "I play basketball.",
+    "sentence_ko": "나는 농구를 한다."
+  },
+  {
+    "en": "sister",
+    "ko": "언니/누나",
+    "sentence": "My sister is nice.",
+    "sentence_ko": "내 언니는 착하다."
+  },
+  {
+    "en": "water",
+    "ko": "물",
+    "sentence": "I drink water.",
+    "sentence_ko": "나는 물을 마신다."
+  },
+  {
+    "en": "chair",
+    "ko": "의자",
+    "sentence": "I sit on a chair.",
+    "sentence_ko": "나는 의자에 앉는다."
+  },
+  {
+    "en": "house",
+    "ko": "집",
+    "sentence": "I live in a house.",
+    "sentence_ko": "나는 집에서 산다."
+  },
+  {
+    "en": "garden",
+    "ko": "정원",
+    "sentence": "I have a garden.",
+    "sentence_ko": "나는 정원을 가지고 있다."
   }
 ]

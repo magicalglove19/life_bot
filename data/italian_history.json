@@ -1,14 +1,4 @@
 [
-  "sport",
-  "giocatore",
-  "pallone",
-  "bicicletta",
-  "nuotare",
-  "passeggiare",
-  "viaggio",
-  "mappa",
-  "guida",
-  "turista",
   "mercato",
   "negozio",
   "pane",
@@ -498,5 +488,15 @@
   "pranzo",
   "camera",
   "lettore",
-  "musica classica"
+  "musica classica",
+  "parco",
+  "fiorella",
+  "bambola",
+  "torta",
+  "caffè",
+  "tè",
+  "soggiorno",
+  "stanza",
+  "cucina",
+  "frigorifero"
 ]

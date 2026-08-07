@@ -1,14 +1,4 @@
 [
-  "mercato",
-  "negozio",
-  "pane",
-  "formaggio",
-  "vino rosso",
-  "uovo",
-  "carne",
-  "pesce fresco",
-  "frutta",
-  "dolce",
   "telefono",
   "computer",
   "internet",
@@ -498,5 +488,15 @@
   "soggiorno",
   "stanza",
   "cucina",
-  "frigorifero"
+  "frigorifero",
+  "giorno",
+  "mese",
+  "anno",
+  "settimana",
+  "ora",
+  "minuto",
+  "secondo",
+  "lunedì",
+  "martedì",
+  "mercoledì"
 ]

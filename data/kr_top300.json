@@ -1,540 +1,570 @@
 {
-  "updated_at": "2026-08-01T16:11:20",
+  "updated_at": "2026-08-08T15:43:54",
   "count": 300,
   "tickers": [
     {
       "symbol": "005930.KS",
       "name": "삼성전자",
       "market": "KOSPI",
-      "market_cap": 1534648134600000
+      "market_cap": 1350490358448000
     },
     {
       "symbol": "000660.KS",
       "name": "SK하이닉스",
       "market": "KOSPI",
-      "market_cap": 1254985883070000
+      "market_cap": 1038760143030000
     },
     {
       "symbol": "005935.KS",
       "name": "삼성전자우",
       "market": "KOSPI",
-      "market_cap": 153252899773000
+      "market_cap": 136483341630300
     },
     {
       "symbol": "402340.KS",
       "name": "SK스퀘어",
       "market": "KOSPI",
-      "market_cap": 136972804668000
+      "market_cap": 123908924454000
     },
     {
       "symbol": "009150.KS",
       "name": "삼성전기",
       "market": "KOSPI",
-      "market_cap": 85300200832000
-    },
-    {
-      "symbol": "005380.KS",
-      "name": "현대차",
-      "market": "KOSPI",
-      "market_cap": 79446013208000
+      "market_cap": 95458543488000
     },
     {
       "symbol": "373220.KS",
       "name": "LG에너지솔루션",
       "market": "KOSPI",
-      "market_cap": 76752000000000
+      "market_cap": 84240000000000
+    },
+    {
+      "symbol": "005380.KS",
+      "name": "현대차",
+      "market": "KOSPI",
+      "market_cap": 80981696453000
     },
     {
       "symbol": "207940.KS",
       "name": "삼성바이오로직스",
       "market": "KOSPI",
-      "market_cap": 68742062235000
-    },
-    {
-      "symbol": "032830.KS",
-      "name": "삼성생명",
-      "market": "KOSPI",
-      "market_cap": 62300000000000
+      "market_cap": 72028719756000
     },
     {
       "symbol": "105560.KS",
       "name": "KB금융",
       "market": "KOSPI",
-      "market_cap": 59764883179000
-    },
-    {
-      "symbol": "028260.KS",
-      "name": "삼성물산",
-      "market": "KOSPI",
-      "market_cap": 57001904721500
-    },
-    {
-      "symbol": "000270.KS",
-      "name": "기아",
-      "market": "KOSPI",
-      "market_cap": 51495474436200
-    },
-    {
-      "symbol": "329180.KS",
-      "name": "HD현대중공업",
-      "market": "KOSPI",
-      "market_cap": 50486349225000
+      "market_cap": 62354103637200
     },
     {
       "symbol": "012450.KS",
       "name": "한화에어로스페이스",
       "market": "KOSPI",
-      "market_cap": 47283638717000
+      "market_cap": 56565050897000
+    },
+    {
+      "symbol": "032830.KS",
+      "name": "삼성생명",
+      "market": "KOSPI",
+      "market_cap": 55100000000000
+    },
+    {
+      "symbol": "028260.KS",
+      "name": "삼성물산",
+      "market": "KOSPI",
+      "market_cap": 54569391006500
+    },
+    {
+      "symbol": "329180.KS",
+      "name": "HD현대중공업",
+      "market": "KOSPI",
+      "market_cap": 53110379850000
+    },
+    {
+      "symbol": "000270.KS",
+      "name": "기아",
+      "market": "KOSPI",
+      "market_cap": 52666713430200
     },
     {
       "symbol": "055550.KS",
       "name": "신한지주",
       "market": "KOSPI",
-      "market_cap": 47273639067300
-    },
-    {
-      "symbol": "068270.KS",
-      "name": "셀트리온",
-      "market": "KOSPI",
-      "market_cap": 43417776910200
-    },
-    {
-      "symbol": "012330.KS",
-      "name": "현대모비스",
-      "market": "KOSPI",
-      "market_cap": 43188709508000
+      "market_cap": 51639526290000
     },
     {
       "symbol": "034020.KS",
       "name": "두산에너빌리티",
       "market": "KOSPI",
-      "market_cap": 42981652896600
+      "market_cap": 49387264356600
     },
     {
-      "symbol": "034730.KS",
-      "name": "SK",
+      "symbol": "068270.KS",
+      "name": "셀트리온",
       "market": "KOSPI",
-      "market_cap": 40384005571000
+      "market_cap": 46347953605800
     },
     {
-      "symbol": "086790.KS",
-      "name": "하나금융지주",
+      "symbol": "012330.KS",
+      "name": "현대모비스",
       "market": "KOSPI",
-      "market_cap": 34405715599200
-    },
-    {
-      "symbol": "035420.KS",
-      "name": "NAVER",
-      "market": "KOSPI",
-      "market_cap": 32644402336000
+      "market_cap": 45048727459500
     },
     {
       "symbol": "006400.KS",
       "name": "삼성SDI",
       "market": "KOSPI",
-      "market_cap": 31992455410000
+      "market_cap": 36988758270000
     },
     {
-      "symbol": "000810.KS",
-      "name": "삼성화재",
+      "symbol": "086790.KS",
+      "name": "하나금융지주",
       "market": "KOSPI",
-      "market_cap": 28217202936000
+      "market_cap": 36957335655600
+    },
+    {
+      "symbol": "034730.KS",
+      "name": "SK",
+      "market": "KOSPI",
+      "market_cap": 36831373124000
+    },
+    {
+      "symbol": "035420.KS",
+      "name": "NAVER",
+      "market": "KOSPI",
+      "market_cap": 32958290820000
     },
     {
       "symbol": "010120.KS",
       "name": "LS ELECTRIC",
       "market": "KOSPI",
-      "market_cap": 27720000000000
-    },
-    {
-      "symbol": "009540.KS",
-      "name": "HD한국조선해양",
-      "market": "KOSPI",
-      "market_cap": 27212263102000
+      "market_cap": 30150000000000
     },
     {
       "symbol": "066570.KS",
       "name": "LG전자",
       "market": "KOSPI",
-      "market_cap": 26403599819800
+      "market_cap": 30133658030000
     },
     {
-      "symbol": "042660.KS",
-      "name": "한화오션",
+      "symbol": "000810.KS",
+      "name": "삼성화재",
       "market": "KOSPI",
-      "market_cap": 26106421168800
+      "market_cap": 28797620085000
     },
     {
-      "symbol": "005490.KS",
-      "name": "POSCO홀딩스",
+      "symbol": "009540.KS",
+      "name": "HD한국조선해양",
       "market": "KOSPI",
-      "market_cap": 24762977187500
+      "market_cap": 28203086726000
     },
     {
       "symbol": "267260.KS",
       "name": "HD현대일렉트릭",
       "market": "KOSPI",
-      "market_cap": 24656240340000
+      "market_cap": 27467916870000
     },
     {
-      "symbol": "316140.KS",
-      "name": "우리금융지주",
+      "symbol": "042660.KS",
+      "name": "한화오션",
       "market": "KOSPI",
-      "market_cap": 24463813315200
+      "market_cap": 27393357423600
     },
     {
       "symbol": "298040.KS",
       "name": "효성중공업",
       "market": "KOSPI",
-      "market_cap": 22537432516000
+      "market_cap": 26407119936000
     },
     {
-      "symbol": "015760.KS",
-      "name": "한국전력",
+      "symbol": "005490.KS",
+      "name": "POSCO홀딩스",
       "market": "KOSPI",
-      "market_cap": 22340349879600
+      "market_cap": 26228945437000
+    },
+    {
+      "symbol": "316140.KS",
+      "name": "우리금융지주",
+      "market": "KOSPI",
+      "market_cap": 25337520933600
     },
     {
       "symbol": "010130.KS",
       "name": "고려아연",
       "market": "KOSPI",
-      "market_cap": 20852096031000
+      "market_cap": 23085503714000
+    },
+    {
+      "symbol": "015760.KS",
+      "name": "한국전력",
+      "market": "KOSPI",
+      "market_cap": 22853921141200
     },
     {
       "symbol": "138040.KS",
       "name": "메리츠금융지주",
       "market": "KOSPI",
-      "market_cap": 20751061852000
-    },
-    {
-      "symbol": "042700.KS",
-      "name": "한미반도체",
-      "market": "KOSPI",
-      "market_cap": 20444466900000
+      "market_cap": 21135960579900
     },
     {
       "symbol": "011200.KS",
       "name": "HMM",
       "market": "KOSPI",
-      "market_cap": 19760835471500
-    },
-    {
-      "symbol": "006800.KS",
-      "name": "미래에셋증권",
-      "market": "KOSPI",
-      "market_cap": 19333035704000
-    },
-    {
-      "symbol": "000150.KS",
-      "name": "두산",
-      "market": "KOSPI",
-      "market_cap": 18946786950000
-    },
-    {
-      "symbol": "010140.KS",
-      "name": "삼성중공업",
-      "market": "KOSPI",
-      "market_cap": 18788000000000
+      "market_cap": 20562587746000
     },
     {
       "symbol": "096770.KS",
       "name": "SK이노베이션",
       "market": "KOSPI",
-      "market_cap": 18680333074000
+      "market_cap": 20337050396400
     },
     {
       "symbol": "033780.KS",
       "name": "KT&G",
       "market": "KOSPI",
-      "market_cap": 18592452669600
+      "market_cap": 19599414092800
     },
     {
       "symbol": "051910.KS",
       "name": "LG화학",
       "market": "KOSPI",
-      "market_cap": 18212824494000
+      "market_cap": 19483486668000
+    },
+    {
+      "symbol": "010140.KS",
+      "name": "삼성중공업",
+      "market": "KOSPI",
+      "market_cap": 19404000000000
+    },
+    {
+      "symbol": "000150.KS",
+      "name": "두산",
+      "market": "KOSPI",
+      "market_cap": 19286857485000
+    },
+    {
+      "symbol": "006800.KS",
+      "name": "미래에셋증권",
+      "market": "KOSPI",
+      "market_cap": 18969317232000
     },
     {
       "symbol": "017670.KS",
       "name": "SK텔레콤",
       "market": "KOSPI",
-      "market_cap": 17483910314200
+      "market_cap": 18944482674600
     },
     {
-      "symbol": "035720.KS",
-      "name": "카카오",
+      "symbol": "042700.KS",
+      "name": "한미반도체",
       "market": "KOSPI",
-      "market_cap": 16567492018000
-    },
-    {
-      "symbol": "196170.KQ",
-      "name": "알테오젠",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 16531386815500
-    },
-    {
-      "symbol": "024110.KS",
-      "name": "기업은행",
-      "market": "KOSPI",
-      "market_cap": 16466844194850
-    },
-    {
-      "symbol": "018260.KS",
-      "name": "삼성에스디에스",
-      "market": "KOSPI",
-      "market_cap": 15939826800000
+      "market_cap": 18328536060000
     },
     {
       "symbol": "267250.KS",
       "name": "HD현대",
       "market": "KOSPI",
-      "market_cap": 15767019766000
+      "market_cap": 17773444125000
     },
     {
-      "symbol": "079550.KS",
-      "name": "LIG디펜스앤에어로스페이스",
+      "symbol": "035720.KS",
+      "name": "카카오",
       "market": "KOSPI",
-      "market_cap": 15378000000000
+      "market_cap": 17674944693000
+    },
+    {
+      "symbol": "018260.KS",
+      "name": "삼성에스디에스",
+      "market": "KOSPI",
+      "market_cap": 17139182700000
+    },
+    {
+      "symbol": "024110.KS",
+      "name": "기업은행",
+      "market": "KOSPI",
+      "market_cap": 16546586781750
     },
     {
       "symbol": "003550.KS",
       "name": "LG",
       "market": "KOSPI",
-      "market_cap": 15285511604400
+      "market_cap": 16343855632400
     },
     {
-      "symbol": "086280.KS",
-      "name": "현대글로비스",
+      "symbol": "196170.KQ",
+      "name": "알테오젠",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 16343834615000
+    },
+    {
+      "symbol": "079550.KS",
+      "name": "LIG디펜스앤에어로스페이스",
       "market": "KOSPI",
-      "market_cap": 15000000000000
+      "market_cap": 16302000000000
     },
     {
       "symbol": "064350.KS",
       "name": "현대로템",
       "market": "KOSPI",
-      "market_cap": 14592324574100
+      "market_cap": 16033002841700
+    },
+    {
+      "symbol": "086280.KS",
+      "name": "현대글로비스",
+      "market": "KOSPI",
+      "market_cap": 15562500000000
     },
     {
       "symbol": "010950.KS",
       "name": "S-Oil",
       "market": "KOSPI",
-      "market_cap": 14331789421600
-    },
-    {
-      "symbol": "030200.KS",
-      "name": "KT",
-      "market": "KOSPI",
-      "market_cap": 13079925451500
+      "market_cap": 15491392179200
     },
     {
       "symbol": "047810.KS",
       "name": "한국항공우주",
       "market": "KOSPI",
-      "market_cap": 12408581121100
-    },
-    {
-      "symbol": "003670.KS",
-      "name": "포스코퓨처엠",
-      "market": "KOSPI",
-      "market_cap": 12247894494000
-    },
-    {
-      "symbol": "011070.KS",
-      "name": "LG이노텍",
-      "market": "KOSPI",
-      "market_cap": 12164892998000
+      "market_cap": 15030661499400
     },
     {
       "symbol": "278470.KS",
       "name": "에이피알",
       "market": "KOSPI",
-      "market_cap": 11980209600000
+      "market_cap": 14394970597500
+    },
+    {
+      "symbol": "003670.KS",
+      "name": "포스코퓨처엠",
+      "market": "KOSPI",
+      "market_cap": 13857821076000
+    },
+    {
+      "symbol": "030200.KS",
+      "name": "KT",
+      "market": "KOSPI",
+      "market_cap": 13432755810500
     },
     {
       "symbol": "272210.KS",
       "name": "한화시스템",
       "market": "KOSPI",
-      "market_cap": 11807461812500
+      "market_cap": 13356600802300
     },
     {
-      "symbol": "071050.KS",
-      "name": "한국금융지주",
+      "symbol": "011070.KS",
+      "name": "LG이노텍",
       "market": "KOSPI",
-      "market_cap": 11507417348000
-    },
-    {
-      "symbol": "259960.KS",
-      "name": "크래프톤",
-      "market": "KOSPI",
-      "market_cap": 11211493419000
-    },
-    {
-      "symbol": "086520.KQ",
-      "name": "에코프로",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 10739893623200
-    },
-    {
-      "symbol": "323410.KS",
-      "name": "카카오뱅크",
-      "market": "KOSPI",
-      "market_cap": 10544361657700
+      "market_cap": 13064243064000
     },
     {
       "symbol": "000720.KS",
       "name": "현대건설",
       "market": "KOSPI",
-      "market_cap": 10534255369000
+      "market_cap": 12237998573500
     },
     {
-      "symbol": "005940.KS",
-      "name": "NH투자증권",
-      "market": "KOSPI",
-      "market_cap": 10522373992500
-    },
-    {
-      "symbol": "005830.KS",
-      "name": "DB손해보험",
-      "market": "KOSPI",
-      "market_cap": 10283554793000
-    },
-    {
-      "symbol": "247540.KQ",
-      "name": "에코프로비엠",
+      "symbol": "086520.KQ",
+      "name": "에코프로",
       "market": "KOSDAQ GLOBAL",
-      "market_cap": 10125449919000
+      "market_cap": 11676749072000
     },
     {
       "symbol": "307950.KS",
       "name": "현대오토에버",
       "market": "KOSPI",
-      "market_cap": 9996041439000
+      "market_cap": 11298680584000
     },
     {
-      "symbol": "003490.KS",
-      "name": "대한항공",
+      "symbol": "259960.KS",
+      "name": "크래프톤",
       "market": "KOSPI",
-      "market_cap": 9536915119900
+      "market_cap": 11142286669500
+    },
+    {
+      "symbol": "005830.KS",
+      "name": "DB손해보험",
+      "market": "KOSPI",
+      "market_cap": 10866507899100
+    },
+    {
+      "symbol": "323410.KS",
+      "name": "카카오뱅크",
+      "market": "KOSPI",
+      "market_cap": 10496649614000
+    },
+    {
+      "symbol": "071050.KS",
+      "name": "한국금융지주",
+      "market": "KOSPI",
+      "market_cap": 10476486496000
+    },
+    {
+      "symbol": "247540.KQ",
+      "name": "에코프로비엠",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 10467856438000
+    },
+    {
+      "symbol": "005940.KS",
+      "name": "NH투자증권",
+      "market": "KOSPI",
+      "market_cap": 10263929719000
     },
     {
       "symbol": "0126Z0.KS",
       "name": "삼성에피스홀딩스",
       "market": "KOSPI",
-      "market_cap": 9331143375000
+      "market_cap": 10239374663500
     },
     {
       "symbol": "047050.KS",
       "name": "포스코인터내셔널",
       "market": "KOSPI",
-      "market_cap": 9183169533600
+      "market_cap": 10203521704000
     },
     {
-      "symbol": "016360.KS",
-      "name": "삼성증권",
+      "symbol": "003490.KS",
+      "name": "대한항공",
       "market": "KOSPI",
-      "market_cap": 8912140000000
-    },
-    {
-      "symbol": "003230.KS",
-      "name": "삼양식품",
-      "market": "KOSPI",
-      "market_cap": 8798561520000
-    },
-    {
-      "symbol": "028050.KS",
-      "name": "삼성E&A",
-      "market": "KOSPI",
-      "market_cap": 8584800000000
-    },
-    {
-      "symbol": "277810.KQ",
-      "name": "레인보우로보틱스",
-      "market": "KOSDAQ",
-      "market_cap": 8400138514000
-    },
-    {
-      "symbol": "161390.KS",
-      "name": "한국타이어앤테크놀로지",
-      "market": "KOSPI",
-      "market_cap": 8373954664400
+      "market_cap": 9997190946150
     },
     {
       "symbol": "006260.KS",
       "name": "LS",
       "market": "KOSPI",
-      "market_cap": 8330400000000
+      "market_cap": 9890400000000
+    },
+    {
+      "symbol": "003230.KS",
+      "name": "삼양식품",
+      "market": "KOSPI",
+      "market_cap": 9838117590000
+    },
+    {
+      "symbol": "028050.KS",
+      "name": "삼성E&A",
+      "market": "KOSPI",
+      "market_cap": 9427600000000
     },
     {
       "symbol": "078930.KS",
       "name": "GS",
       "market": "KOSPI",
-      "market_cap": 8267699055000
+      "market_cap": 9187364455500
+    },
+    {
+      "symbol": "277810.KQ",
+      "name": "레인보우로보틱스",
+      "market": "KOSDAQ",
+      "market_cap": 9020933970000
     },
     {
       "symbol": "443060.KS",
       "name": "HD현대마린솔루션",
       "market": "KOSPI",
-      "market_cap": 8249356640000
+      "market_cap": 8805291544000
     },
     {
-      "symbol": "039490.KS",
-      "name": "키움증권",
+      "symbol": "161390.KS",
+      "name": "한국타이어앤테크놀로지",
       "market": "KOSPI",
-      "market_cap": 7698010746000
+      "market_cap": 8733192364500
     },
     {
       "symbol": "090430.KS",
       "name": "아모레퍼시픽",
       "market": "KOSPI",
-      "market_cap": 7604058670000
+      "market_cap": 8294273226200
     },
     {
-      "symbol": "180640.KS",
-      "name": "한진칼",
+      "symbol": "016360.KS",
+      "name": "삼성증권",
       "market": "KOSPI",
-      "market_cap": 7457346564300
+      "market_cap": 8126300000000
     },
     {
       "symbol": "352820.KS",
       "name": "하이브",
       "market": "KOSPI",
-      "market_cap": 7276433916800
+      "market_cap": 7974764660000
     },
     {
-      "symbol": "005387.KS",
-      "name": "현대차2우B",
+      "symbol": "180640.KS",
+      "name": "한진칼",
       "market": "KOSPI",
-      "market_cap": 7027749930000
+      "market_cap": 7938034973100
     },
     {
-      "symbol": "021240.KS",
-      "name": "코웨이",
+      "symbol": "039490.KS",
+      "name": "키움증권",
       "market": "KOSPI",
-      "market_cap": 6475219479000
-    },
-    {
-      "symbol": "032640.KS",
-      "name": "LG유플러스",
-      "market": "KOSPI",
-      "market_cap": 6273041878960
-    },
-    {
-      "symbol": "326030.KS",
-      "name": "SK바이오팜",
-      "market": "KOSPI",
-      "market_cap": 6186746750000
+      "market_cap": 7278357690000
     },
     {
       "symbol": "064400.KS",
       "name": "LG씨엔에스",
       "market": "KOSPI",
-      "market_cap": 6055371750000
+      "market_cap": 7033919824800
+    },
+    {
+      "symbol": "005387.KS",
+      "name": "현대차2우B",
+      "market": "KOSPI",
+      "market_cap": 7010267965000
+    },
+    {
+      "symbol": "021240.KS",
+      "name": "코웨이",
+      "market": "KOSPI",
+      "market_cap": 6772442668200
+    },
+    {
+      "symbol": "047040.KS",
+      "name": "대우건설",
+      "market": "KOSPI",
+      "market_cap": 6742994339580
+    },
+    {
+      "symbol": "326030.KS",
+      "name": "SK바이오팜",
+      "market": "KOSPI",
+      "market_cap": 6687951550000
     },
     {
       "symbol": "267270.KS",
       "name": "HD건설기계",
       "market": "KOSPI",
-      "market_cap": 5985444935300
+      "market_cap": 6618013975700
+    },
+    {
+      "symbol": "000100.KS",
+      "name": "유한양행",
+      "market": "KOSPI",
+      "market_cap": 6419596640600
+    },
+    {
+      "symbol": "032640.KS",
+      "name": "LG유플러스",
+      "market": "KOSPI",
+      "market_cap": 6349438870720
+    },
+    {
+      "symbol": "241560.KS",
+      "name": "두산밥캣",
+      "market": "KOSPI",
+      "market_cap": 6096445734000
+    },
+    {
+      "symbol": "007660.KS",
+      "name": "이수페타시스",
+      "market": "KOSPI",
+      "market_cap": 6041578723700
+    },
+    {
+      "symbol": "036930.KQ",
+      "name": "주성엔지니어링",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 5940287263800
     },
     {
       "symbol": "000880.KS",
@@ -543,532 +573,610 @@
       "market_cap": 5908563612200
     },
     {
-      "symbol": "000100.KS",
-      "name": "유한양행",
+      "symbol": "009830.KS",
+      "name": "한화솔루션",
       "market": "KOSPI",
-      "market_cap": 5854098673500
-    },
-    {
-      "symbol": "036930.KQ",
-      "name": "주성엔지니어링",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 5786899564500
+      "market_cap": 5827156970400
     },
     {
       "symbol": "377300.KS",
       "name": "카카오페이",
       "market": "KOSPI",
-      "market_cap": 5762507325000
-    },
-    {
-      "symbol": "241560.KS",
-      "name": "두산밥캣",
-      "market": "KOSPI",
-      "market_cap": 5732192687000
-    },
-    {
-      "symbol": "007660.KS",
-      "name": "이수페타시스",
-      "market": "KOSPI",
-      "market_cap": 5468986815500
+      "market_cap": 5681345250000
     },
     {
       "symbol": "029780.KS",
       "name": "삼성카드",
       "market": "KOSPI",
-      "market_cap": 5445367877000
-    },
-    {
-      "symbol": "047040.KS",
-      "name": "대우건설",
-      "market": "KOSPI",
-      "market_cap": 5251399613640
+      "market_cap": 5543847934350
     },
     {
       "symbol": "271560.KS",
       "name": "오리온",
       "market": "KOSPI",
-      "market_cap": 5209894258400
-    },
-    {
-      "symbol": "036570.KS",
-      "name": "NC",
-      "market": "KOSPI",
-      "market_cap": 5052073159000
+      "market_cap": 5439161228800
     },
     {
       "symbol": "175330.KS",
       "name": "JB금융지주",
       "market": "KOSPI",
-      "market_cap": 4933502244800
+      "market_cap": 5381154622400
     },
     {
-      "symbol": "058470.KQ",
-      "name": "리노공업",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 4885179585000
-    },
-    {
-      "symbol": "088980.KS",
-      "name": "맥쿼리인프라",
+      "symbol": "036570.KS",
+      "name": "NC",
       "market": "KOSPI",
-      "market_cap": 4841901349230
-    },
-    {
-      "symbol": "240810.KQ",
-      "name": "원익IPS",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 4790588737600
-    },
-    {
-      "symbol": "353200.KS",
-      "name": "대덕전자",
-      "market": "KOSPI",
-      "market_cap": 4783558340000
-    },
-    {
-      "symbol": "138930.KS",
-      "name": "BNK금융지주",
-      "market": "KOSPI",
-      "market_cap": 4707661090610
-    },
-    {
-      "symbol": "005385.KS",
-      "name": "현대차우",
-      "market": "KOSPI",
-      "market_cap": 4658855616000
-    },
-    {
-      "symbol": "034220.KS",
-      "name": "LG디스플레이",
-      "market": "KOSPI",
-      "market_cap": 4605000000000
+      "market_cap": 5353689467000
     },
     {
       "symbol": "001440.KS",
       "name": "대한전선",
       "market": "KOSPI",
-      "market_cap": 4547028227200
+      "market_cap": 5311399351600
     },
     {
-      "symbol": "062040.KS",
-      "name": "산일전기",
+      "symbol": "353200.KS",
+      "name": "대덕전자",
       "market": "KOSPI",
-      "market_cap": 4384189720000
-    },
-    {
-      "symbol": "009830.KS",
-      "name": "한화솔루션",
-      "market": "KOSPI",
-      "market_cap": 4383259668000
-    },
-    {
-      "symbol": "051900.KS",
-      "name": "LG생활건강",
-      "market": "KOSPI",
-      "market_cap": 4297975101000
-    },
-    {
-      "symbol": "128940.KS",
-      "name": "한미약품",
-      "market": "KOSPI",
-      "market_cap": 4272465498500
-    },
-    {
-      "symbol": "028300.KQ",
-      "name": "HLB",
-      "market": "KOSDAQ",
-      "market_cap": 4075865623800
-    },
-    {
-      "symbol": "000500.KS",
-      "name": "가온전선",
-      "market": "KOSPI",
-      "market_cap": 3996154859400
-    },
-    {
-      "symbol": "004170.KS",
-      "name": "신세계",
-      "market": "KOSPI",
-      "market_cap": 3995311563000
-    },
-    {
-      "symbol": "454910.KS",
-      "name": "두산로보틱스",
-      "market": "KOSPI",
-      "market_cap": 3992910768000
-    },
-    {
-      "symbol": "111770.KS",
-      "name": "영원무역",
-      "market": "KOSPI",
-      "market_cap": 3961445239200
-    },
-    {
-      "symbol": "088350.KS",
-      "name": "한화생명",
-      "market": "KOSPI",
-      "market_cap": 3838902600000
-    },
-    {
-      "symbol": "001040.KS",
-      "name": "CJ",
-      "market": "KOSPI",
-      "market_cap": 3775503541200
-    },
-    {
-      "symbol": "319660.KQ",
-      "name": "피에스케이",
-      "market": "KOSDAQ",
-      "market_cap": 3754086134400
-    },
-    {
-      "symbol": "298380.KQ",
-      "name": "에이비엘바이오",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 3739962528400
-    },
-    {
-      "symbol": "039030.KQ",
-      "name": "이오테크닉스",
-      "market": "KOSDAQ",
-      "market_cap": 3646586800000
-    },
-    {
-      "symbol": "000990.KS",
-      "name": "DB하이텍",
-      "market": "KOSPI",
-      "market_cap": 3615231262800
-    },
-    {
-      "symbol": "011790.KS",
-      "name": "SKC",
-      "market": "KOSPI",
-      "market_cap": 3580997115600
+      "market_cap": 5129476815000
     },
     {
       "symbol": "010060.KS",
       "name": "OCI홀딩스",
       "market": "KOSPI",
-      "market_cap": 3552945149600
+      "market_cap": 5087638220000
     },
     {
-      "symbol": "214450.KQ",
-      "name": "파마리서치",
+      "symbol": "128940.KS",
+      "name": "한미약품",
+      "market": "KOSPI",
+      "market_cap": 5028313967500
+    },
+    {
+      "symbol": "058470.KQ",
+      "name": "리노공업",
       "market": "KOSDAQ GLOBAL",
-      "market_cap": 3516895848000
+      "market_cap": 5007118545000
     },
     {
-      "symbol": "004020.KS",
-      "name": "현대제철",
+      "symbol": "051900.KS",
+      "name": "LG생활건강",
       "market": "KOSPI",
-      "market_cap": 3516296434750
+      "market_cap": 4994336920500
     },
     {
-      "symbol": "000250.KQ",
-      "name": "삼천당제약",
+      "symbol": "028300.KQ",
+      "name": "HLB",
       "market": "KOSDAQ",
-      "market_cap": 3509237811200
+      "market_cap": 4968293717900
     },
     {
-      "symbol": "052690.KS",
-      "name": "한전기술",
+      "symbol": "034220.KS",
+      "name": "LG디스플레이",
       "market": "KOSPI",
-      "market_cap": 3401580000000
+      "market_cap": 4885000000000
     },
     {
-      "symbol": "018880.KS",
-      "name": "한온시스템",
-      "market": "KOSPI",
-      "market_cap": 3391797734360
-    },
-    {
-      "symbol": "002380.KS",
-      "name": "KCC",
-      "market": "KOSPI",
-      "market_cap": 3334043648000
-    },
-    {
-      "symbol": "023530.KS",
-      "name": "롯데쇼핑",
-      "market": "KOSPI",
-      "market_cap": 3318270961500
-    },
-    {
-      "symbol": "001450.KS",
-      "name": "현대해상",
-      "market": "KOSPI",
-      "market_cap": 3277795212500
-    },
-    {
-      "symbol": "082740.KS",
-      "name": "한화엔진",
-      "market": "KOSPI",
-      "market_cap": 3258610895100
-    },
-    {
-      "symbol": "141080.KQ",
-      "name": "리가켐바이오",
+      "symbol": "298380.KQ",
+      "name": "에이비엘바이오",
       "market": "KOSDAQ GLOBAL",
-      "market_cap": 3239199075000
+      "market_cap": 4848514295800
     },
     {
-      "symbol": "036460.KS",
-      "name": "한국가스공사",
+      "symbol": "062040.KS",
+      "name": "산일전기",
       "market": "KOSPI",
-      "market_cap": 3180182850000
+      "market_cap": 4820120305000
     },
     {
-      "symbol": "440110.KQ",
-      "name": "파두",
-      "market": "KOSDAQ",
-      "market_cap": 3177039111800
-    },
-    {
-      "symbol": "035250.KS",
-      "name": "강원랜드",
+      "symbol": "088980.KS",
+      "name": "맥쿼리인프라",
       "market": "KOSPI",
-      "market_cap": 3144925350000
+      "market_cap": 4779641490140
     },
     {
-      "symbol": "251270.KS",
-      "name": "넷마블",
+      "symbol": "138930.KS",
+      "name": "BNK금융지주",
       "market": "KOSPI",
-      "market_cap": 3138094069300
+      "market_cap": 4701454549950
     },
     {
-      "symbol": "222800.KQ",
-      "name": "심텍",
+      "symbol": "005385.KS",
+      "name": "현대차우",
+      "market": "KOSPI",
+      "market_cap": 4609839600000
+    },
+    {
+      "symbol": "454910.KS",
+      "name": "두산로보틱스",
+      "market": "KOSPI",
+      "market_cap": 4582772586000
+    },
+    {
+      "symbol": "000500.KS",
+      "name": "가온전선",
+      "market": "KOSPI",
+      "market_cap": 4398152553900
+    },
+    {
+      "symbol": "240810.KQ",
+      "name": "원익IPS",
       "market": "KOSDAQ GLOBAL",
-      "market_cap": 3105759879900
+      "market_cap": 4334108458300
     },
     {
-      "symbol": "383220.KS",
-      "name": "F&F",
+      "symbol": "001040.KS",
+      "name": "CJ",
       "market": "KOSPI",
-      "market_cap": 3083719537500
-    },
-    {
-      "symbol": "031210.KS",
-      "name": "서울보증보험",
-      "market": "KOSPI",
-      "market_cap": 2998837634100
-    },
-    {
-      "symbol": "214370.KQ",
-      "name": "케어젠",
-      "market": "KOSDAQ",
-      "market_cap": 2986554000000
-    },
-    {
-      "symbol": "066970.KS",
-      "name": "엘앤에프",
-      "market": "KOSPI",
-      "market_cap": 2982082958000
+      "market_cap": 4251088608600
     },
     {
       "symbol": "087010.KQ",
       "name": "펩트론",
       "market": "KOSDAQ",
-      "market_cap": 2979957330000
+      "market_cap": 4239094230000
     },
     {
-      "symbol": "022100.KS",
-      "name": "포스코DX",
-      "market": "KOSPI",
-      "market_cap": 2928188880540
+      "symbol": "141080.KQ",
+      "name": "리가켐바이오",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 4190598117600
     },
     {
-      "symbol": "028670.KS",
-      "name": "팬오션",
+      "symbol": "111770.KS",
+      "name": "영원무역",
       "market": "KOSPI",
-      "market_cap": 2924095230640
+      "market_cap": 4138691111200
+    },
+    {
+      "symbol": "222800.KQ",
+      "name": "심텍",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 4121032410000
+    },
+    {
+      "symbol": "011790.KS",
+      "name": "SKC",
+      "market": "KOSPI",
+      "market_cap": 4027381797600
+    },
+    {
+      "symbol": "039030.KQ",
+      "name": "이오테크닉스",
+      "market": "KOSDAQ",
+      "market_cap": 3997693975000
+    },
+    {
+      "symbol": "004170.KS",
+      "name": "신세계",
+      "market": "KOSPI",
+      "market_cap": 3966976020000
+    },
+    {
+      "symbol": "088350.KS",
+      "name": "한화생명",
+      "market": "KOSPI",
+      "market_cap": 3956154150000
+    },
+    {
+      "symbol": "214450.KQ",
+      "name": "파마리서치",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 3932481768000
+    },
+    {
+      "symbol": "052690.KS",
+      "name": "한전기술",
+      "market": "KOSPI",
+      "market_cap": 3894618000000
+    },
+    {
+      "symbol": "000250.KQ",
+      "name": "삼천당제약",
+      "market": "KOSDAQ",
+      "market_cap": 3863445638400
+    },
+    {
+      "symbol": "002380.KS",
+      "name": "KCC",
+      "market": "KOSPI",
+      "market_cap": 3798060032000
+    },
+    {
+      "symbol": "004020.KS",
+      "name": "현대제철",
+      "market": "KOSPI",
+      "market_cap": 3776515715500
+    },
+    {
+      "symbol": "018880.KS",
+      "name": "한온시스템",
+      "market": "KOSPI",
+      "market_cap": 3720201751000
+    },
+    {
+      "symbol": "066970.KS",
+      "name": "엘앤에프",
+      "market": "KOSPI",
+      "market_cap": 3669630052000
+    },
+    {
+      "symbol": "000990.KS",
+      "name": "DB하이텍",
+      "market": "KOSPI",
+      "market_cap": 3658735850800
+    },
+    {
+      "symbol": "082740.KS",
+      "name": "한화엔진",
+      "market": "KOSPI",
+      "market_cap": 3546503535000
+    },
+    {
+      "symbol": "214370.KQ",
+      "name": "케어젠",
+      "market": "KOSDAQ",
+      "market_cap": 3545190000000
+    },
+    {
+      "symbol": "319660.KQ",
+      "name": "피에스케이",
+      "market": "KOSDAQ",
+      "market_cap": 3429658937600
     },
     {
       "symbol": "145020.KQ",
       "name": "휴젤",
       "market": "KOSDAQ",
-      "market_cap": 2909777722500
-    },
-    {
-      "symbol": "097950.KS",
-      "name": "CJ제일제당",
-      "market": "KOSPI",
-      "market_cap": 2881371200400
-    },
-    {
-      "symbol": "011780.KS",
-      "name": "금호석유화학",
-      "market": "KOSPI",
-      "market_cap": 2877997980000
-    },
-    {
-      "symbol": "403870.KQ",
-      "name": "HPSP",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 2847580000000
-    },
-    {
-      "symbol": "483650.KS",
-      "name": "달바글로벌",
-      "market": "KOSPI",
-      "market_cap": 2761155215000
-    },
-    {
-      "symbol": "095340.KQ",
-      "name": "ISC",
-      "market": "KOSDAQ",
-      "market_cap": 2747138716800
-    },
-    {
-      "symbol": "012750.KS",
-      "name": "에스원",
-      "market": "KOSPI",
-      "market_cap": 2705541473600
+      "market_cap": 3422899815500
     },
     {
       "symbol": "108490.KQ",
       "name": "로보티즈",
       "market": "KOSDAQ",
-      "market_cap": 2694696946400
+      "market_cap": 3364705926000
     },
     {
-      "symbol": "214150.KQ",
-      "name": "클래시스",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 2684447367850
-    },
-    {
-      "symbol": "139130.KS",
-      "name": "iM금융지주",
+      "symbol": "251270.KS",
+      "name": "넷마블",
       "market": "KOSPI",
-      "market_cap": 2684259765600
+      "market_cap": 3351123953900
     },
     {
-      "symbol": "302440.KS",
-      "name": "SK바이오사이언스",
+      "symbol": "001450.KS",
+      "name": "현대해상",
       "market": "KOSPI",
-      "market_cap": 2655754319050
+      "market_cap": 3350256225000
     },
     {
-      "symbol": "017800.KS",
-      "name": "현대엘리베이터",
+      "symbol": "036460.KS",
+      "name": "한국가스공사",
       "market": "KOSPI",
-      "market_cap": 2654372941500
+      "market_cap": 3300189750000
     },
     {
-      "symbol": "084370.KQ",
-      "name": "유진테크",
-      "market": "KOSDAQ",
-      "market_cap": 2573471516600
-    },
-    {
-      "symbol": "069960.KS",
-      "name": "현대백화점",
+      "symbol": "011780.KS",
+      "name": "금호석유화학",
       "market": "KOSPI",
-      "market_cap": 2561911545600
+      "market_cap": 3260389320000
     },
     {
-      "symbol": "026960.KS",
-      "name": "동서",
+      "symbol": "028670.KS",
+      "name": "팬오션",
       "market": "KOSPI",
-      "market_cap": 2542350000000
+      "market_cap": 3228799852480
     },
     {
-      "symbol": "095610.KQ",
-      "name": "테스",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 2516800000000
-    },
-    {
-      "symbol": "009970.KS",
-      "name": "영원무역홀딩스",
+      "symbol": "022100.KS",
+      "name": "포스코DX",
       "market": "KOSPI",
-      "market_cap": 2487132864000
+      "market_cap": 3154720626750
     },
     {
-      "symbol": "103590.KS",
-      "name": "일진전기",
+      "symbol": "035250.KS",
+      "name": "강원랜드",
       "market": "KOSPI",
-      "market_cap": 2479640280000
+      "market_cap": 3142785945000
     },
     {
-      "symbol": "005850.KS",
-      "name": "에스엘",
+      "symbol": "031210.KS",
+      "name": "서울보증보험",
       "market": "KOSPI",
-      "market_cap": 2457126708000
+      "market_cap": 3100078951200
+    },
+    {
+      "symbol": "097950.KS",
+      "name": "CJ제일제당",
+      "market": "KOSPI",
+      "market_cap": 3078581037000
+    },
+    {
+      "symbol": "483650.KS",
+      "name": "달바글로벌",
+      "market": "KOSPI",
+      "market_cap": 3073503090000
     },
     {
       "symbol": "008930.KS",
       "name": "한미사이언스",
       "market": "KOSPI",
-      "market_cap": 2451837067500
+      "market_cap": 3053682707500
     },
     {
-      "symbol": "003690.KS",
-      "name": "코리안리",
+      "symbol": "214150.KQ",
+      "name": "클래시스",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 2994316748100
+    },
+    {
+      "symbol": "012750.KS",
+      "name": "에스원",
       "market": "KOSPI",
-      "market_cap": 2433448596870
+      "market_cap": 2910737034800
     },
     {
-      "symbol": "004800.KS",
-      "name": "효성",
+      "symbol": "302440.KS",
+      "name": "SK바이오사이언스",
       "market": "KOSPI",
-      "market_cap": 2418988811500
+      "market_cap": 2891123978050
     },
     {
-      "symbol": "011170.KS",
-      "name": "롯데케미칼",
-      "market": "KOSPI",
-      "market_cap": 2416811173500
-    },
-    {
-      "symbol": "081660.KS",
-      "name": "미스토홀딩스",
-      "market": "KOSPI",
-      "market_cap": 2397096576000
-    },
-    {
-      "symbol": "319400.KQ",
-      "name": "현대무벡스",
+      "symbol": "440110.KQ",
+      "name": "파두",
       "market": "KOSDAQ",
-      "market_cap": 2372309630700
+      "market_cap": 2861339641700
     },
     {
-      "symbol": "000240.KS",
-      "name": "한국앤컴퍼니",
+      "symbol": "017800.KS",
+      "name": "현대엘리베이터",
       "market": "KOSPI",
-      "market_cap": 2368634238000
+      "market_cap": 2834197912500
+    },
+    {
+      "symbol": "403870.KQ",
+      "name": "HPSP",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 2831120000000
+    },
+    {
+      "symbol": "139130.KS",
+      "name": "iM금융지주",
+      "market": "KOSPI",
+      "market_cap": 2829954100960
+    },
+    {
+      "symbol": "009420.KS",
+      "name": "한올바이오파마",
+      "market": "KOSPI",
+      "market_cap": 2826218515800
+    },
+    {
+      "symbol": "023530.KS",
+      "name": "롯데쇼핑",
+      "market": "KOSPI",
+      "market_cap": 2820388873500
+    },
+    {
+      "symbol": "375500.KS",
+      "name": "DL이앤씨",
+      "market": "KOSPI",
+      "market_cap": 2785940856000
     },
     {
       "symbol": "007340.KS",
       "name": "DN오토모티브",
       "market": "KOSPI",
-      "market_cap": 2360913402750
+      "market_cap": 2785117174000
     },
     {
-      "symbol": "004370.KS",
-      "name": "농심",
+      "symbol": "103590.KS",
+      "name": "일진전기",
       "market": "KOSPI",
-      "market_cap": 2329651886000
+      "market_cap": 2780058237000
+    },
+    {
+      "symbol": "095340.KQ",
+      "name": "ISC",
+      "market": "KOSDAQ",
+      "market_cap": 2776814598000
+    },
+    {
+      "symbol": "310210.KQ",
+      "name": "보로노이",
+      "market": "KOSDAQ",
+      "market_cap": 2724044836100
+    },
+    {
+      "symbol": "006360.KS",
+      "name": "GS건설",
+      "market": "KOSPI",
+      "market_cap": 2708654158500
+    },
+    {
+      "symbol": "009970.KS",
+      "name": "영원무역홀딩스",
+      "market": "KOSPI",
+      "market_cap": 2674963210500
+    },
+    {
+      "symbol": "004800.KS",
+      "name": "효성",
+      "market": "KOSPI",
+      "market_cap": 2646658346700
+    },
+    {
+      "symbol": "282330.KS",
+      "name": "BGF리테일",
+      "market": "KOSPI",
+      "market_cap": 2646166008600
+    },
+    {
+      "symbol": "026960.KS",
+      "name": "동서",
+      "market": "KOSPI",
+      "market_cap": 2642050000000
     },
     {
       "symbol": "347850.KQ",
       "name": "디앤디파마텍",
       "market": "KOSDAQ",
-      "market_cap": 2310215493600
+      "market_cap": 2635662517500
     },
     {
-      "symbol": "001720.KS",
-      "name": "신영증권",
+      "symbol": "011170.KS",
+      "name": "롯데케미칼",
       "market": "KOSPI",
-      "market_cap": 2306532000000
+      "market_cap": 2609300559000
+    },
+    {
+      "symbol": "080220.KQ",
+      "name": "제주반도체",
+      "market": "KOSDAQ",
+      "market_cap": 2596989608200
+    },
+    {
+      "symbol": "319400.KQ",
+      "name": "현대무벡스",
+      "market": "KOSDAQ",
+      "market_cap": 2595061708700
+    },
+    {
+      "symbol": "257720.KQ",
+      "name": "실리콘투",
+      "market": "KOSDAQ",
+      "market_cap": 2577146703600
+    },
+    {
+      "symbol": "003690.KS",
+      "name": "코리안리",
+      "market": "KOSPI",
+      "market_cap": 2567756580430
+    },
+    {
+      "symbol": "383220.KS",
+      "name": "F&F",
+      "market": "KOSPI",
+      "market_cap": 2566574025000
+    },
+    {
+      "symbol": "005850.KS",
+      "name": "에스엘",
+      "market": "KOSPI",
+      "market_cap": 2563958304000
+    },
+    {
+      "symbol": "226950.KQ",
+      "name": "올릭스",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 2552817420000
+    },
+    {
+      "symbol": "084370.KQ",
+      "name": "유진테크",
+      "market": "KOSDAQ",
+      "market_cap": 2548263870400
     },
     {
       "symbol": "450080.KS",
       "name": "에코프로머티",
       "market": "KOSPI",
-      "market_cap": 2280206614000
+      "market_cap": 2545758626500
+    },
+    {
+      "symbol": "161890.KS",
+      "name": "한국콜마",
+      "market": "KOSPI",
+      "market_cap": 2518661715900
+    },
+    {
+      "symbol": "001720.KS",
+      "name": "신영증권",
+      "market": "KOSPI",
+      "market_cap": 2489016000000
+    },
+    {
+      "symbol": "081660.KS",
+      "name": "미스토홀딩스",
+      "market": "KOSPI",
+      "market_cap": 2474079744000
+    },
+    {
+      "symbol": "489790.KS",
+      "name": "한화비전",
+      "market": "KOSPI",
+      "market_cap": 2468882271000
+    },
+    {
+      "symbol": "004370.KS",
+      "name": "농심",
+      "market": "KOSPI",
+      "market_cap": 2463470010000
+    },
+    {
+      "symbol": "000240.KS",
+      "name": "한국앤컴퍼니",
+      "market": "KOSPI",
+      "market_cap": 2454075954000
+    },
+    {
+      "symbol": "095610.KQ",
+      "name": "테스",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 2412256000000
+    },
+    {
+      "symbol": "014680.KS",
+      "name": "한솔케미칼",
+      "market": "KOSPI",
+      "market_cap": 2401673010000
+    },
+    {
+      "symbol": "204320.KS",
+      "name": "HL만도",
+      "market": "KOSPI",
+      "market_cap": 2385421696000
+    },
+    {
+      "symbol": "007070.KS",
+      "name": "GS리테일",
+      "market": "KOSPI",
+      "market_cap": 2370270215250
+    },
+    {
+      "symbol": "004990.KS",
+      "name": "롯데지주",
+      "market": "KOSPI",
+      "market_cap": 2362031491200
+    },
+    {
+      "symbol": "085620.KS",
+      "name": "미래에셋생명",
+      "market": "KOSPI",
+      "market_cap": 2350780200000
+    },
+    {
+      "symbol": "103140.KS",
+      "name": "풍산",
+      "market": "KOSPI",
+      "market_cap": 2342829640800
+    },
+    {
+      "symbol": "192820.KS",
+      "name": "코스맥스",
+      "market": "KOSPI",
+      "market_cap": 2332324099500
+    },
+    {
+      "symbol": "357780.KQ",
+      "name": "솔브레인",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 2294676970000
+    },
+    {
+      "symbol": "131290.KQ",
+      "name": "티에스이",
+      "market": "KOSDAQ",
+      "market_cap": 2289715803000
     },
     {
       "symbol": "279570.KS",
@@ -1077,592 +1185,586 @@
       "market_cap": 2267835894090
     },
     {
-      "symbol": "009420.KS",
-      "name": "한올바이오파마",
-      "market": "KOSPI",
-      "market_cap": 2267243689200
-    },
-    {
-      "symbol": "375500.KS",
-      "name": "DL이앤씨",
-      "market": "KOSPI",
-      "market_cap": 2263576945500
-    },
-    {
-      "symbol": "004990.KS",
-      "name": "롯데지주",
-      "market": "KOSPI",
-      "market_cap": 2252401337600
-    },
-    {
-      "symbol": "161890.KS",
-      "name": "한국콜마",
-      "market": "KOSPI",
-      "market_cap": 2247203330400
-    },
-    {
-      "symbol": "014680.KS",
-      "name": "한솔케미칼",
-      "market": "KOSPI",
-      "market_cap": 2245159488000
-    },
-    {
-      "symbol": "080220.KQ",
-      "name": "제주반도체",
+      "symbol": "058610.KQ",
+      "name": "에스피지",
       "market": "KOSDAQ",
-      "market_cap": 2242228428300
-    },
-    {
-      "symbol": "257720.KQ",
-      "name": "실리콘투",
-      "market": "KOSDAQ",
-      "market_cap": 2226313755400
+      "market_cap": 2255437512000
     },
     {
       "symbol": "139480.KS",
       "name": "이마트",
       "market": "KOSPI",
-      "market_cap": 2202146356200
-    },
-    {
-      "symbol": "030000.KS",
-      "name": "제일기획",
-      "market": "KOSPI",
-      "market_cap": 2177730389250
-    },
-    {
-      "symbol": "282330.KS",
-      "name": "BGF리테일",
-      "market": "KOSPI",
-      "market_cap": 2160488250000
-    },
-    {
-      "symbol": "005440.KS",
-      "name": "현대지에프홀딩스",
-      "market": "KOSPI",
-      "market_cap": 2160419004220
-    },
-    {
-      "symbol": "489790.KS",
-      "name": "한화비전",
-      "market": "KOSPI",
-      "market_cap": 2120512380000
-    },
-    {
-      "symbol": "031980.KQ",
-      "name": "피에스케이홀딩스",
-      "market": "KOSDAQ",
-      "market_cap": 2108802231000
-    },
-    {
-      "symbol": "178320.KQ",
-      "name": "서진시스템",
-      "market": "KOSDAQ",
-      "market_cap": 2100474321000
-    },
-    {
-      "symbol": "204320.KS",
-      "name": "HL만도",
-      "market": "KOSPI",
-      "market_cap": 2098983264000
-    },
-    {
-      "symbol": "058610.KQ",
-      "name": "에스피지",
-      "market": "KOSDAQ",
-      "market_cap": 2097978256000
-    },
-    {
-      "symbol": "192820.KS",
-      "name": "코스맥스",
-      "market": "KOSPI",
-      "market_cap": 2096254312300
+      "market_cap": 2251818830400
     },
     {
       "symbol": "073240.KS",
       "name": "금호타이어",
       "market": "KOSPI",
-      "market_cap": 2094127492230
-    },
-    {
-      "symbol": "085620.KS",
-      "name": "미래에셋생명",
-      "market": "KOSPI",
-      "market_cap": 2093938200000
+      "market_cap": 2243502841470
     },
     {
       "symbol": "263750.KQ",
       "name": "펄어비스",
       "market": "KOSDAQ",
-      "market_cap": 2086417812000
+      "market_cap": 2237243196000
     },
     {
-      "symbol": "007070.KS",
-      "name": "GS리테일",
+      "symbol": "005440.KS",
+      "name": "현대지에프홀딩스",
       "market": "KOSPI",
-      "market_cap": 2069283521250
+      "market_cap": 2235611855810
     },
     {
-      "symbol": "018670.KS",
-      "name": "SK가스",
+      "symbol": "030000.KS",
+      "name": "제일기획",
       "market": "KOSPI",
-      "market_cap": 2068994034000
+      "market_cap": 2205340283250
     },
     {
-      "symbol": "131290.KQ",
-      "name": "티에스이",
-      "market": "KOSDAQ",
-      "market_cap": 2064062651400
+      "symbol": "069960.KS",
+      "name": "현대백화점",
+      "market": "KOSPI",
+      "market_cap": 2195308041600
     },
     {
-      "symbol": "310210.KQ",
-      "name": "보로노이",
+      "symbol": "178320.KQ",
+      "name": "서진시스템",
       "market": "KOSDAQ",
-      "market_cap": 2045339013700
+      "market_cap": 2170490131700
     },
     {
       "symbol": "051600.KS",
       "name": "한전KPS",
       "market": "KOSPI",
-      "market_cap": 2022750000000
+      "market_cap": 2126250000000
     },
     {
-      "symbol": "006360.KS",
-      "name": "GS건설",
+      "symbol": "018670.KS",
+      "name": "SK가스",
       "market": "KOSPI",
-      "market_cap": 2006885940500
-    },
-    {
-      "symbol": "226950.KQ",
-      "name": "올릭스",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 1996758180000
-    },
-    {
-      "symbol": "005290.KQ",
-      "name": "동진쎄미켐",
-      "market": "KOSDAQ",
-      "market_cap": 1995480432900
-    },
-    {
-      "symbol": "103140.KS",
-      "name": "풍산",
-      "market": "KOSPI",
-      "market_cap": 1995328593600
-    },
-    {
-      "symbol": "067310.KQ",
-      "name": "하나마이크론",
-      "market": "KOSDAQ",
-      "market_cap": 1974778809300
-    },
-    {
-      "symbol": "357780.KQ",
-      "name": "솔브레인",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 1964087915000
-    },
-    {
-      "symbol": "002790.KS",
-      "name": "아모레퍼시픽홀딩스",
-      "market": "KOSPI",
-      "market_cap": 1949683590000
-    },
-    {
-      "symbol": "439260.KS",
-      "name": "대한조선",
-      "market": "KOSPI",
-      "market_cap": 1908245373000
-    },
-    {
-      "symbol": "098460.KQ",
-      "name": "고영",
-      "market": "KOSDAQ",
-      "market_cap": 1858564804250
-    },
-    {
-      "symbol": "462870.KS",
-      "name": "시프트업",
-      "market": "KOSPI",
-      "market_cap": 1856243724000
-    },
-    {
-      "symbol": "064760.KQ",
-      "name": "티씨케이",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 1850193348000
+      "market_cap": 2110651632000
     },
     {
       "symbol": "237690.KQ",
       "name": "에스티팜",
       "market": "KOSDAQ GLOBAL",
-      "market_cap": 1847582463000
+      "market_cap": 2089751463800
     },
     {
-      "symbol": "140410.KQ",
-      "name": "메지온",
+      "symbol": "002790.KS",
+      "name": "아모레퍼시픽홀딩스",
+      "market": "KOSPI",
+      "market_cap": 2083485405000
+    },
+    {
+      "symbol": "031980.KQ",
+      "name": "피에스케이홀딩스",
       "market": "KOSDAQ",
-      "market_cap": 1805753646000
+      "market_cap": 2026865130000
     },
     {
-      "symbol": "140860.KQ",
-      "name": "파크시스템스",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 1785629595000
-    },
-    {
-      "symbol": "068760.KQ",
-      "name": "셀트리온제약",
+      "symbol": "098460.KQ",
+      "name": "고영",
       "market": "KOSDAQ",
-      "market_cap": 1784973746400
+      "market_cap": 2018844704800
     },
     {
-      "symbol": "000155.KS",
-      "name": "두산우",
-      "market": "KOSPI",
-      "market_cap": 1756445049000
-    },
-    {
-      "symbol": "089970.KQ",
-      "name": "브이엠",
+      "symbol": "005290.KQ",
+      "name": "동진쎄미켐",
       "market": "KOSDAQ",
-      "market_cap": 1724403107500
-    },
-    {
-      "symbol": "008770.KS",
-      "name": "호텔신라",
-      "market": "KOSPI",
-      "market_cap": 1709255669550
-    },
-    {
-      "symbol": "000120.KS",
-      "name": "CJ대한통운",
-      "market": "KOSPI",
-      "market_cap": 1699519628000
-    },
-    {
-      "symbol": "071970.KS",
-      "name": "HD현대마린엔진",
-      "market": "KOSPI",
-      "market_cap": 1677417927750
-    },
-    {
-      "symbol": "395400.KS",
-      "name": "SK리츠",
-      "market": "KOSPI",
-      "market_cap": 1649576557600
+      "market_cap": 2005674458100
     },
     {
       "symbol": "336260.KS",
       "name": "두산퓨얼셀",
       "market": "KOSPI",
-      "market_cap": 1607870973300
+      "market_cap": 2000833329300
     },
     {
-      "symbol": "023590.KS",
-      "name": "다우기술",
-      "market": "KOSPI",
-      "market_cap": 1586479984800
+      "symbol": "067310.KQ",
+      "name": "하나마이크론",
+      "market": "KOSDAQ",
+      "market_cap": 1994726070000
     },
     {
-      "symbol": "457190.KS",
-      "name": "이수스페셜티케미컬",
-      "market": "KOSPI",
-      "market_cap": 1583468892800
-    },
-    {
-      "symbol": "011210.KS",
-      "name": "현대위아",
-      "market": "KOSPI",
-      "market_cap": 1582753830600
-    },
-    {
-      "symbol": "112610.KS",
-      "name": "씨에스윈드",
-      "market": "KOSPI",
-      "market_cap": 1572993331900
-    },
-    {
-      "symbol": "041510.KQ",
-      "name": "에스엠",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 1565996796000
-    },
-    {
-      "symbol": "006040.KS",
-      "name": "동원산업",
-      "market": "KOSPI",
-      "market_cap": 1562584992600
+      "symbol": "068760.KQ",
+      "name": "셀트리온제약",
+      "market": "KOSDAQ",
+      "market_cap": 1962583074400
     },
     {
       "symbol": "032820.KQ",
       "name": "우리기술",
       "market": "KOSDAQ",
-      "market_cap": 1549594829580
+      "market_cap": 1935187654400
     },
     {
-      "symbol": "475150.KS",
-      "name": "SK이터닉스",
+      "symbol": "462870.KS",
+      "name": "시프트업",
       "market": "KOSPI",
-      "market_cap": 1548345331800
+      "market_cap": 1923796897500
     },
     {
-      "symbol": "089030.KQ",
-      "name": "테크윙",
-      "market": "KOSDAQ",
-      "market_cap": 1535873585250
+      "symbol": "457190.KS",
+      "name": "이수스페셜티케미컬",
+      "market": "KOSPI",
+      "market_cap": 1897745161600
     },
     {
-      "symbol": "035900.KQ",
-      "name": "JYP Ent.",
+      "symbol": "071970.KS",
+      "name": "HD현대마린엔진",
+      "market": "KOSPI",
+      "market_cap": 1872466524000
+    },
+    {
+      "symbol": "439260.KS",
+      "name": "대한조선",
+      "market": "KOSPI",
+      "market_cap": 1872061079500
+    },
+    {
+      "symbol": "064760.KQ",
+      "name": "티씨케이",
       "market": "KOSDAQ GLOBAL",
-      "market_cap": 1535003654400
+      "market_cap": 1870316296800
     },
     {
-      "symbol": "001800.KS",
-      "name": "오리온홀딩스",
+      "symbol": "112610.KS",
+      "name": "씨에스윈드",
       "market": "KOSPI",
-      "market_cap": 1533994626000
+      "market_cap": 1849216021550
     },
     {
-      "symbol": "00680K.KS",
-      "name": "미래에셋증권2우B",
+      "symbol": "000120.KS",
+      "name": "CJ대한통운",
       "market": "KOSPI",
-      "market_cap": 1493310000000
-    },
-    {
-      "symbol": "001740.KS",
-      "name": "SK네트웍스",
-      "market": "KOSPI",
-      "market_cap": 1468347267480
-    },
-    {
-      "symbol": "001120.KS",
-      "name": "LX인터내셔널",
-      "market": "KOSPI",
-      "market_cap": 1449624000000
-    },
-    {
-      "symbol": "120110.KS",
-      "name": "코오롱인더",
-      "market": "KOSPI",
-      "market_cap": 1438906837600
-    },
-    {
-      "symbol": "020560.KS",
-      "name": "아시아나항공",
-      "market": "KOSPI",
-      "market_cap": 1433695348560
-    },
-    {
-      "symbol": "020150.KS",
-      "name": "롯데에너지머티리얼즈",
-      "market": "KOSPI",
-      "market_cap": 1432195413050
-    },
-    {
-      "symbol": "089860.KS",
-      "name": "롯데렌탈",
-      "market": "KOSPI",
-      "market_cap": 1428774417800
-    },
-    {
-      "symbol": "097230.KS",
-      "name": "HJ중공업",
-      "market": "KOSPI",
-      "market_cap": 1417636900800
-    },
-    {
-      "symbol": "007390.KQ",
-      "name": "네이처셀",
-      "market": "KOSDAQ",
-      "market_cap": 1417571232000
-    },
-    {
-      "symbol": "096530.KQ",
-      "name": "씨젠",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 1404879238600
-    },
-    {
-      "symbol": "290650.KQ",
-      "name": "엘앤씨바이오",
-      "market": "KOSDAQ",
-      "market_cap": 1399727637600
-    },
-    {
-      "symbol": "281820.KS",
-      "name": "케이씨텍",
-      "market": "KOSPI",
-      "market_cap": 1381946537800
-    },
-    {
-      "symbol": "060370.KQ",
-      "name": "LS마린솔루션",
-      "market": "KOSDAQ",
-      "market_cap": 1376493802900
-    },
-    {
-      "symbol": "006280.KS",
-      "name": "녹십자",
-      "market": "KOSPI",
-      "market_cap": 1354469754200
-    },
-    {
-      "symbol": "298020.KS",
-      "name": "효성티앤씨",
-      "market": "KOSPI",
-      "market_cap": 1332926056000
+      "market_cap": 1802175176000
     },
     {
       "symbol": "010170.KQ",
       "name": "대한광통신",
       "market": "KOSDAQ",
-      "market_cap": 1326292679800
+      "market_cap": 1781865663600
     },
     {
-      "symbol": "069620.KS",
-      "name": "대웅제약",
+      "symbol": "120110.KS",
+      "name": "코오롱인더",
       "market": "KOSPI",
-      "market_cap": 1318552235000
+      "market_cap": 1754837475200
+    },
+    {
+      "symbol": "140860.KQ",
+      "name": "파크시스템스",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 1754118484500
+    },
+    {
+      "symbol": "000155.KS",
+      "name": "두산우",
+      "market": "KOSPI",
+      "market_cap": 1742457432000
+    },
+    {
+      "symbol": "041510.KQ",
+      "name": "에스엠",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 1730838564000
+    },
+    {
+      "symbol": "475150.KS",
+      "name": "SK이터닉스",
+      "market": "KOSPI",
+      "market_cap": 1720383702000
+    },
+    {
+      "symbol": "011210.KS",
+      "name": "현대위아",
+      "market": "KOSPI",
+      "market_cap": 1699692687500
+    },
+    {
+      "symbol": "395400.KS",
+      "name": "SK리츠",
+      "market": "KOSPI",
+      "market_cap": 1691719024400
+    },
+    {
+      "symbol": "008770.KS",
+      "name": "호텔신라",
+      "market": "KOSPI",
+      "market_cap": 1675894766700
+    },
+    {
+      "symbol": "290650.KQ",
+      "name": "엘앤씨바이오",
+      "market": "KOSDAQ",
+      "market_cap": 1672121648000
+    },
+    {
+      "symbol": "001800.KS",
+      "name": "오리온홀딩스",
+      "market": "KOSPI",
+      "market_cap": 1669347093000
+    },
+    {
+      "symbol": "140410.KQ",
+      "name": "메지온",
+      "market": "KOSDAQ",
+      "market_cap": 1668026673000
+    },
+    {
+      "symbol": "006040.KS",
+      "name": "동원산업",
+      "market": "KOSPI",
+      "market_cap": 1666315917250
+    },
+    {
+      "symbol": "035900.KQ",
+      "name": "JYP Ent.",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 1662920625600
+    },
+    {
+      "symbol": "023590.KS",
+      "name": "다우기술",
+      "market": "KOSPI",
+      "market_cap": 1662232780800
     },
     {
       "symbol": "0009K0.KQ",
       "name": "에임드바이오",
       "market": "KOSDAQ",
-      "market_cap": 1312824568300
+      "market_cap": 1616779025000
     },
     {
-      "symbol": "420770.KQ",
-      "name": "기가비스",
+      "symbol": "089030.KQ",
+      "name": "테크윙",
       "market": "KOSDAQ",
-      "market_cap": 1311940953000
+      "market_cap": 1615538922000
     },
     {
-      "symbol": "294870.KS",
-      "name": "IPARK현대산업개발",
-      "market": "KOSPI",
-      "market_cap": 1308260500500
+      "symbol": "060370.KQ",
+      "name": "LS마린솔루션",
+      "market": "KOSDAQ",
+      "market_cap": 1606344760500
     },
     {
-      "symbol": "082640.KS",
-      "name": "동양생명",
+      "symbol": "020150.KS",
+      "name": "롯데에너지머티리얼즈",
       "market": "KOSPI",
-      "market_cap": 1300001299730
+      "market_cap": 1602383167800
     },
     {
-      "symbol": "415640.KS",
-      "name": "KB발해인프라",
-      "market": "KOSPI",
-      "market_cap": 1297757353320
+      "symbol": "089970.KQ",
+      "name": "브이엠",
+      "market": "KOSDAQ",
+      "market_cap": 1592769282500
     },
     {
-      "symbol": "007310.KS",
-      "name": "오뚜기",
+      "symbol": "001740.KS",
+      "name": "SK네트웍스",
       "market": "KOSPI",
-      "market_cap": 1296533005000
-    },
-    {
-      "symbol": "192080.KS",
-      "name": "더블유게임즈",
-      "market": "KOSPI",
-      "market_cap": 1272525426800
-    },
-    {
-      "symbol": "322000.KS",
-      "name": "HD현대에너지솔루션",
-      "market": "KOSPI",
-      "market_cap": 1255520000000
+      "market_cap": 1568644211980
     },
     {
       "symbol": "083650.KQ",
       "name": "비에이치아이",
       "market": "KOSDAQ",
-      "market_cap": 1247058312500
+      "market_cap": 1544124312500
     },
     {
-      "symbol": "082920.KQ",
-      "name": "비츠로셀",
+      "symbol": "006280.KS",
+      "name": "녹십자",
+      "market": "KOSPI",
+      "market_cap": 1518081286200
+    },
+    {
+      "symbol": "00680K.KS",
+      "name": "미래에셋증권2우B",
+      "market": "KOSPI",
+      "market_cap": 1509690000000
+    },
+    {
+      "symbol": "096530.KQ",
+      "name": "씨젠",
       "market": "KOSDAQ GLOBAL",
-      "market_cap": 1241335617500
+      "market_cap": 1509331226600
     },
     {
-      "symbol": "131970.KQ",
-      "name": "두산테스나",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 1238875955800
-    },
-    {
-      "symbol": "229640.KS",
-      "name": "LS에코에너지",
+      "symbol": "097230.KS",
+      "name": "HJ중공업",
       "market": "KOSPI",
-      "market_cap": 1235713867650
+      "market_cap": 1507932244800
     },
     {
-      "symbol": "003540.KS",
-      "name": "대신증권",
+      "symbol": "020560.KS",
+      "name": "아시아나항공",
       "market": "KOSPI",
-      "market_cap": 1232169357100
+      "market_cap": 1505792097410
     },
     {
-      "symbol": "181710.KS",
-      "name": "NHN",
-      "market": "KOSPI",
-      "market_cap": 1215141456900
+      "symbol": "950160.KQ",
+      "name": "코오롱티슈진",
+      "market": "KOSDAQ",
+      "market_cap": 1500573025600
     },
     {
-      "symbol": "009155.KS",
-      "name": "삼성전기우",
+      "symbol": "069620.KS",
+      "name": "대웅제약",
       "market": "KOSPI",
-      "market_cap": 1209305344000
+      "market_cap": 1494668175000
+    },
+    {
+      "symbol": "294870.KS",
+      "name": "IPARK현대산업개발",
+      "market": "KOSPI",
+      "market_cap": 1492801024500
     },
     {
       "symbol": "001430.KS",
       "name": "세아베스틸지주",
       "market": "KOSPI",
-      "market_cap": 1194208562700
-    },
-    {
-      "symbol": "437730.KQ",
-      "name": "삼현",
-      "market": "KOSDAQ",
-      "market_cap": 1193789897550
-    },
-    {
-      "symbol": "012630.KS",
-      "name": "HDC",
-      "market": "KOSPI",
-      "market_cap": 1192444751160
+      "market_cap": 1491864150400
     },
     {
       "symbol": "030530.KQ",
       "name": "원익홀딩스",
       "market": "KOSDAQ",
-      "market_cap": 1180196349680
+      "market_cap": 1471383538050
     },
     {
-      "symbol": "004000.KS",
-      "name": "롯데정밀화학",
+      "symbol": "298020.KS",
+      "name": "효성티앤씨",
       "market": "KOSPI",
-      "market_cap": 1151970000000
+      "market_cap": 1467084198000
     },
     {
-      "symbol": "000815.KS",
-      "name": "삼성화재우",
+      "symbol": "089860.KS",
+      "name": "롯데렌탈",
       "market": "KOSPI",
-      "market_cap": 1151688660000
+      "market_cap": 1466899275200
+    },
+    {
+      "symbol": "001120.KS",
+      "name": "LX인터내셔널",
+      "market": "KOSPI",
+      "market_cap": 1465128000000
+    },
+    {
+      "symbol": "007390.KQ",
+      "name": "네이처셀",
+      "market": "KOSDAQ",
+      "market_cap": 1433679996000
+    },
+    {
+      "symbol": "322000.KS",
+      "name": "HD현대에너지솔루션",
+      "market": "KOSPI",
+      "market_cap": 1431360000000
+    },
+    {
+      "symbol": "082920.KQ",
+      "name": "비츠로셀",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 1399323787000
+    },
+    {
+      "symbol": "420770.KQ",
+      "name": "기가비스",
+      "market": "KOSDAQ",
+      "market_cap": 1398136107400
+    },
+    {
+      "symbol": "229640.KS",
+      "name": "LS에코에너지",
+      "market": "KOSPI",
+      "market_cap": 1391900750550
+    },
+    {
+      "symbol": "078600.KQ",
+      "name": "대주전자재료",
+      "market": "KOSDAQ",
+      "market_cap": 1385104971600
+    },
+    {
+      "symbol": "181710.KS",
+      "name": "NHN",
+      "market": "KOSPI",
+      "market_cap": 1369081210200
+    },
+    {
+      "symbol": "007310.KS",
+      "name": "오뚜기",
+      "market": "KOSPI",
+      "market_cap": 1368673945000
+    },
+    {
+      "symbol": "127120.KQ",
+      "name": "제이에스링크",
+      "market": "KOSDAQ",
+      "market_cap": 1360570475700
+    },
+    {
+      "symbol": "012630.KS",
+      "name": "HDC",
+      "market": "KOSPI",
+      "market_cap": 1353149980650
+    },
+    {
+      "symbol": "475830.KQ",
+      "name": "오름테라퓨틱",
+      "market": "KOSDAQ",
+      "market_cap": 1344442621000
     },
     {
       "symbol": "039200.KQ",
       "name": "오스코텍",
       "market": "KOSDAQ",
-      "market_cap": 1149658188800
+      "market_cap": 1337123251200
+    },
+    {
+      "symbol": "007810.KS",
+      "name": "코리아써키트",
+      "market": "KOSPI",
+      "market_cap": 1335831934000
+    },
+    {
+      "symbol": "192080.KS",
+      "name": "더블유게임즈",
+      "market": "KOSPI",
+      "market_cap": 1319107056400
+    },
+    {
+      "symbol": "009155.KS",
+      "name": "삼성전기우",
+      "market": "KOSPI",
+      "market_cap": 1296514864000
     },
     {
       "symbol": "218410.KQ",
       "name": "RFHIC",
       "market": "KOSDAQ",
-      "market_cap": 1134771373400
+      "market_cap": 1287580164900
+    },
+    {
+      "symbol": "082640.KS",
+      "name": "동양생명",
+      "market": "KOSPI",
+      "market_cap": 1287516293250
+    },
+    {
+      "symbol": "415640.KS",
+      "name": "KB발해인프라",
+      "market": "KOSPI",
+      "market_cap": 1267120966320
+    },
+    {
+      "symbol": "004000.KS",
+      "name": "롯데정밀화학",
+      "market": "KOSPI",
+      "market_cap": 1252590000000
+    },
+    {
+      "symbol": "003540.KS",
+      "name": "대신증권",
+      "market": "KOSPI",
+      "market_cap": 1244085888600
+    },
+    {
+      "symbol": "003380.KQ",
+      "name": "하림지주",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 1235421999630
+    },
+    {
+      "symbol": "043260.KQ",
+      "name": "성호전자",
+      "market": "KOSDAQ",
+      "market_cap": 1234675913330
+    },
+    {
+      "symbol": "131970.KQ",
+      "name": "두산테스나",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 1231145060600
+    },
+    {
+      "symbol": "361610.KS",
+      "name": "SK아이이테크놀로지",
+      "market": "KOSPI",
+      "market_cap": 1225170758000
+    },
+    {
+      "symbol": "005070.KS",
+      "name": "코스모신소재",
+      "market": "KOSPI",
+      "market_cap": 1213992570050
+    },
+    {
+      "symbol": "000815.KS",
+      "name": "삼성화재우",
+      "market": "KOSPI",
+      "market_cap": 1213332570000
+    },
+    {
+      "symbol": "017960.KS",
+      "name": "한국카본",
+      "market": "KOSPI",
+      "market_cap": 1193726826600
+    },
+    {
+      "symbol": "323280.KQ",
+      "name": "태성",
+      "market": "KOSDAQ",
+      "market_cap": 1189454321000
+    },
+    {
+      "symbol": "347700.KQ",
+      "name": "스피어",
+      "market": "KOSDAQ",
+      "market_cap": 1188258894100
+    },
+    {
+      "symbol": "195940.KQ",
+      "name": "HK이노엔",
+      "market": "KOSDAQ GLOBAL",
+      "market_cap": 1178523465600
+    },
+    {
+      "symbol": "281820.KS",
+      "name": "케이씨텍",
+      "market": "KOSPI",
+      "market_cap": 1174060597300
+    },
+    {
+      "symbol": "491000.KQ",
+      "name": "리브스메드",
+      "market": "KOSDAQ",
+      "market_cap": 1166793520200
+    },
+    {
+      "symbol": "030610.KS",
+      "name": "교보증권",
+      "market": "KOSPI",
+      "market_cap": 1139629610000
+    },
+    {
+      "symbol": "437730.KQ",
+      "name": "삼현",
+      "market": "KOSDAQ",
+      "market_cap": 1133545520250
+    },
+    {
+      "symbol": "066575.KS",
+      "name": "LG전자우",
+      "market": "KOSPI",
+      "market_cap": 1127093214400
+    },
+    {
+      "symbol": "000080.KS",
+      "name": "하이트진로",
+      "market": "KOSPI",
+      "market_cap": 1120033767670
     },
     {
       "symbol": "183300.KQ",
@@ -1671,136 +1773,34 @@
       "market_cap": 1117664864000
     },
     {
-      "symbol": "007810.KS",
-      "name": "코리아써키트",
-      "market": "KOSPI",
-      "market_cap": 1113992699000
-    },
-    {
-      "symbol": "078600.KQ",
-      "name": "대주전자재료",
-      "market": "KOSDAQ",
-      "market_cap": 1113423384200
-    },
-    {
-      "symbol": "950160.KQ",
-      "name": "코오롱티슈진",
-      "market": "KOSDAQ",
-      "market_cap": 1104612080000
-    },
-    {
-      "symbol": "017960.KS",
-      "name": "한국카본",
-      "market": "KOSPI",
-      "market_cap": 1103292976100
-    },
-    {
-      "symbol": "030610.KS",
-      "name": "교보증권",
-      "market": "KOSPI",
-      "market_cap": 1094044425600
-    },
-    {
-      "symbol": "361610.KS",
-      "name": "SK아이이테크놀로지",
-      "market": "KOSPI",
-      "market_cap": 1084496946000
-    },
-    {
-      "symbol": "000080.KS",
-      "name": "하이트진로",
-      "market": "KOSPI",
-      "market_cap": 1080057609400
-    },
-    {
-      "symbol": "005070.KS",
-      "name": "코스모신소재",
-      "market": "KOSPI",
-      "market_cap": 1077812828950
-    },
-    {
-      "symbol": "003380.KQ",
-      "name": "하림지주",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 1075253961600
-    },
-    {
-      "symbol": "043260.KQ",
-      "name": "성호전자",
-      "market": "KOSDAQ",
-      "market_cap": 1071822088620
-    },
-    {
-      "symbol": "330590.KS",
-      "name": "롯데리츠",
-      "market": "KOSPI",
-      "market_cap": 1044622515660
-    },
-    {
-      "symbol": "166090.KQ",
-      "name": "하나머티리얼즈",
-      "market": "KOSDAQ",
-      "market_cap": 1040305652400
-    },
-    {
-      "symbol": "496320.KQ",
-      "name": "본시스템즈",
-      "market": "KONEX",
-      "market_cap": 1039340379000
-    },
-    {
-      "symbol": "003570.KS",
-      "name": "SNT다이내믹스",
-      "market": "KOSPI",
-      "market_cap": 1024183067600
-    },
-    {
-      "symbol": "195940.KQ",
-      "name": "HK이노엔",
-      "market": "KOSDAQ GLOBAL",
-      "market_cap": 1022709065100
-    },
-    {
       "symbol": "300720.KS",
       "name": "한일시멘트",
       "market": "KOSPI",
-      "market_cap": 1022278405100
+      "market_cap": 1090675449470
+    },
+    {
+      "symbol": "077970.KS",
+      "name": "STX엔진",
+      "market": "KOSPI",
+      "market_cap": 1086005104150
     },
     {
       "symbol": "006340.KS",
       "name": "대원전선",
       "market": "KOSPI",
-      "market_cap": 1019387408000
+      "market_cap": 1081334796640
     },
     {
-      "symbol": "066575.KS",
-      "name": "LG전자우",
+      "symbol": "330590.KS",
+      "name": "롯데리츠",
       "market": "KOSPI",
-      "market_cap": 1015414770900
+      "market_cap": 1080743626160
     },
     {
-      "symbol": "127120.KQ",
-      "name": "제이에스링크",
-      "market": "KOSDAQ",
-      "market_cap": 1006092344100
-    },
-    {
-      "symbol": "475830.KQ",
-      "name": "오름테라퓨틱",
-      "market": "KOSDAQ",
-      "market_cap": 968693714000
-    },
-    {
-      "symbol": "093370.KS",
-      "name": "후성",
+      "symbol": "280360.KS",
+      "name": "롯데웰푸드",
       "market": "KOSPI",
-      "market_cap": 965297970000
-    },
-    {
-      "symbol": "323280.KQ",
-      "name": "태성",
-      "market": "KOSDAQ",
-      "market_cap": 954311875000
+      "market_cap": 1076014700600
     }
   ]
 }

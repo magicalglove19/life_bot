@@ -1,14 +1,4 @@
 [
-  "telefono",
-  "computer",
-  "internet",
-  "posto",
-  "banco",
-  "ospedale",
-  "scuola",
-  "biblioteca",
-  "farmacia",
-  "polizia",
   "amico",
   "familia",
   "scuola",
@@ -498,5 +488,15 @@
   "secondo",
   "lunedì",
   "martedì",
-  "mercoledì"
+  "mercoledì",
+  "famiglia",
+  "viaggio",
+  "hotel",
+  "passeggero",
+  "biglietto",
+  "aeroporto",
+  "bagaglio",
+  "carta di credito",
+  "ristorazione",
+  "guida"
 ]

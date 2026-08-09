@@ -2,8 +2,8 @@ name: kid-english
 
 on:
   schedule:
-    # 19:00 KST (월~금) = 10:00 UTC (Mon~Fri, DOW 1-5)
-    - cron: '6 10 * * 1-5'
+    # 17:00 KST (월~금) = 08:00 UTC (Mon~Fri, DOW 1-5)
+    - cron: '6 8 * * 1-5'
   workflow_dispatch:
 
 permissions:

@@ -32,21 +32,42 @@ def save_week(items: list[dict]) -> None:
     )
 
 
-SYSTEM = """당신은 한국 초등학생(3~6학년)을 위한 영어 교사입니다.
-부모가 퀴즈를 낼 수 있는 영어 단어와 간단한 예문을 만듭니다.
+SYSTEM = """당신은 한국 중학생(중1~중2)을 위한 **실용 영어** 교사입니다.
+실제 비행기 여행, 학교생활, 친구·식당·길찾기 등 현장에서 바로 쓰는 영어 단어와 회화 문장을 만듭니다.
 
-반드시 다음 JSON 포맷으로만 답하세요:
+반드시 다음 JSON 포맷으로만 답하세요 (다른 텍스트 금지):
 
 {
   "items": [
-    {"en": "apple", "ko": "사과", "sentence": "I eat an apple every morning.", "sentence_ko": "나는 매일 아침 사과를 먹어요."},
+    {"en": "boarding pass", "ko": "탑승권", "type": "dialog",
+     "example": "A: May I see your boarding pass, please? B: Sure, here you go.",
+     "example_ko": "A: 탑승권 좀 보여주시겠어요? B: 네, 여기 있어요."},
+    {"en": "raise your hand", "ko": "손을 들다", "type": "sentence",
+     "example": "If you have a question, please raise your hand before you speak.",
+     "example_ko": "질문이 있으면 말하기 전에 손을 들어 주세요."},
     ...총 10개
   ]
 }
 
-- 단어 난이도: 초등 3~6학년 (일상/학교/가족/음식/동물/감정 등)
-- 예문: 5~8단어의 짧고 쉬운 문장
-- 단어와 예문 모두 해석 제공"""
+규칙:
+- 난이도: **중1~중2 / CEFR A2후반~B1** 수준의 **실용 회화 영어**
+- **구성 비율 (10개 중)**:
+  - 8개: 아래 5개 주제에서 다양하게 섞은 **실용 회화 표현**
+  - 2개: 중학생 교과서 수준의 **추상·감정 어휘** (encourage, opportunity, recognize, environment, achievement, embarrassed, exhausted, recommend, confident, situation, decision, mention 등에서 선택)
+- 실용 회화 8개의 주제 풀 (한 주제만 몰빵 금지):
+  1) **비행기·공항 여행** — check-in, boarding pass, aisle seat, carry-on, layover, customs, baggage claim, fasten your seatbelt, turbulence, gate
+  2) **학교생활** — raise your hand, take notes, group project, due date, school cafeteria, locker, principal, field trip, P.E. class, hand in homework
+  3) **친구·일상 회화** — hang out, give me a ride, get along with, on my way, made it, no big deal, sounds good
+  4) **식당·쇼핑·길찾기** — for here or to go, refill, fitting room, on sale, go straight, turn right, around the corner
+  5) **호텔·여행지** — check in/out, front desk, room service, complimentary breakfast, sightseeing
+- 실용 표현은 단일 단어가 아니어도 OK — 구동사·콜로케이션 우선 ("give me a ride", "on my way", "hand in", "check in")
+- **금지**: apple, dog, cat, book, happy, family, food, smile, friend, pencil 등 초급 단어. 토플·수능 고급(sophisticated, ambiguous 등) 출제 금지
+- **문장 10개 중 정확히 5개는 "sentence", 5개는 "dialog"** 로 구성
+  - sentence: 8~14단어, 실제 상황에서 쓸 법한 자연스러운 문장
+  - dialog: "A: ... B: ..." 형태, 전체 14~22단어, **공항·교실·식당 등 구체 상황**
+- 모든 예문은 한국 중학생이 외국에서 또는 영어 수업·여행 중 **그대로 따라 말할 수 있는 라이브 회화**
+- "I am ...", "I have ...", "I like ..." 같은 단순 문형만 반복 금지
+- 단어·예문 모두 자연스러운 한국어 해석 제공"""
 
 
 def build_user_prompt(excluded: list[str]) -> str:
@@ -69,15 +90,31 @@ def parse_response(text: str) -> dict:
     return json.loads(t)
 
 
+def _example_text(it: dict) -> str:
+    """신규 포맷(example/example_ko) + 구버전 포맷(sentence/sentence_ko) 모두 지원."""
+    ex = it.get("example") or it.get("sentence") or ""
+    ex_ko = it.get("example_ko") or it.get("sentence_ko") or ""
+    return ex, ex_ko
+
+
+def _icon(it: dict) -> str:
+    t = (it.get("type") or "").lower()
+    if t == "dialog":
+        return "🗨️"
+    return "💬"
+
+
 def format_new_message(items: list[dict]) -> str:
     today = datetime.now().strftime("%Y-%m-%d (%a)")
-    lines = [f"👦 <b>오늘의 초등 영어 단어 10개</b> · {today}", ""]
+    lines = [f"👦 <b>오늘의 영어 단어 10개</b> (중1~중2 / B1) · {today}", ""]
     for i, it in enumerate(items, 1):
+        ex, ex_ko = _example_text(it)
         lines.append(f"{i:2d}. <b>{it['en']}</b> — {it['ko']}")
-        lines.append(f"    💬 {it['sentence']}")
-        lines.append(f"    → {it['sentence_ko']}")
+        lines.append(f"    {_icon(it)} {ex}")
+        if ex_ko:
+            lines.append(f"    → {ex_ko}")
     lines.append("")
-    lines.append("🎯 저녁 식사 후 퀴즈 시간!")
+    lines.append("🎯 저녁 식사 후 퀴즈 시간! (🗨️ = 대화, 💬 = 문장)")
     return "\n".join(lines)
 
 
@@ -85,8 +122,10 @@ def format_friday_message(picked: list[dict]) -> str:
     today = datetime.now().strftime("%Y-%m-%d (%a)")
     lines = [f"🎉 <b>금요일 주간 랜덤 20개 복습</b> · {today}", ""]
     for i, it in enumerate(picked, 1):
+        ex, _ = _example_text(it)
         lines.append(f"{i:2d}. <b>{it['en']}</b> — {it['ko']}")
-        lines.append(f"    💬 {it['sentence']}")
+        if ex:
+            lines.append(f"    {_icon(it)} {ex}")
     lines.append("")
     lines.append("👨‍👩‍👧 이번 주 단어 총복습! 다음 주 월요일에 새 단어 시작합니다.")
     return "\n".join(lines)

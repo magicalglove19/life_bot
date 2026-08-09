@@ -102,7 +102,7 @@ git push -u origin main
 
 | 시간 | 요일 | Workflow |
 |---|---|---|
-| 08:00 | 월~금 | morning-stocks |
+| 05:00 | 월~토 | morning-stocks |
 | 09:00 | 매일 | italian |
 | 14:00 | 매일 | us-news |
 | 18:00 | 월~금 | premarket |

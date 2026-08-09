@@ -11,6 +11,7 @@ from common import telegram
 import inflection_scanner
 import daejjang_scanner
 import rsi_report
+import chart_patterns
 import refresh_tickers
 
 # 각 섹션별 타임아웃 (한국/미국 각각 독립)
@@ -106,6 +107,15 @@ def main() -> int:
     except Exception as e:
         print(f"[morning] RSI 실패: {e}", file=sys.stderr)
         sections.append(f"<b>📊 RSI</b>\n  (실패: {str(e)[:100]})")
+    sections.append("")
+
+    # ========== 차트 패턴 (컵위드핸들/더블바텀/V라인/갭상승) ==========
+    try:
+        print("[morning] 차트 패턴 스캔...")
+        sections.append(chart_patterns.build_report())
+    except Exception as e:
+        print(f"[morning] 차트 패턴 실패: {e}", file=sys.stderr)
+        sections.append(f"<b>📐 차트 패턴</b>\n  (실패: {str(e)[:100]})")
 
     msg = "\n".join(sections)
     if not telegram.send(msg):

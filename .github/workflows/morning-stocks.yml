@@ -2,9 +2,10 @@ name: morning-stocks
 
 on:
   schedule:
-    # 05:00 KST (월~금) = 20:00 UTC (Sun~Thu, DOW 0-4)
+    # 05:00 KST (월~토) = 20:00 UTC (Sun~Fri, DOW 0-5)
     # 스캔 20분 + GH Actions 지연 30분 여유 → 06:00 KST 이전 도착 목표
-    - cron: '0 20 * * 0-4'
+    # 토요일 실행분은 금요일 미국장 마감(토 새벽) 데이터를 다룸
+    - cron: '0 20 * * 0-5'
   workflow_dispatch:  # 수동 실행 가능
 
 permissions:
@@ -13,7 +14,7 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
 

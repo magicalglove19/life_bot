@@ -1,14 +1,4 @@
 [
-  "amico",
-  "familia",
-  "scuola",
-  "insegnante",
-  "studente",
-  "libro",
-  "penna",
-  "carta",
-  "cancello",
-  "borsetta",
   "casa",
   "strada",
   "auto",
@@ -498,5 +488,15 @@
   "bagaglio",
   "carta di credito",
   "ristorazione",
-  "guida"
+  "guida",
+  "amicizia",
+  "speranza",
+  "felicità",
+  "sole",
+  "pioggia",
+  "vento",
+  "neve",
+  "vuoto",
+  "paura",
+  "sogno"
 ]

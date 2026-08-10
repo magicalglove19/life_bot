@@ -1,1 +1,72 @@
-[]
+[
+  {
+    "en": "check-in",
+    "ko": "체크인",
+    "type": "dialog",
+    "example": "A: Can I help you with check-in? B: Yes, please.",
+    "example_ko": "A: 체크인 도와드릴까요? B: 네, 그러세요."
+  },
+  {
+    "en": "turn right",
+    "ko": "오른쪽으로 돌아가다",
+    "type": "sentence",
+    "example": "To get to the school, turn right at the traffic light.",
+    "example_ko": "학교에 가려면 교차로에서 오른쪽으로 돌아가세요."
+  },
+  {
+    "en": "raise your hand",
+    "ko": "손을 들다",
+    "type": "sentence",
+    "example": "If you have a question, please raise your hand before you speak.",
+    "example_ko": "질문이 있으면 말하기 전에 손을 들어 주세요."
+  },
+  {
+    "en": "give me a ride",
+    "ko": "탑승 시켜 주다",
+    "type": "dialog",
+    "example": "A: Can you give me a ride to the airport? B: Sure, I'd be happy to.",
+    "example_ko": "A: 공항까지 태워주세요? B: 네, 물론이죠."
+  },
+  {
+    "en": "on sale",
+    "ko": "할인 중",
+    "type": "sentence",
+    "example": "The shirts are on sale, so I bought two of them.",
+    "example_ko": "셔츠가 할인 중이라서 두 개를 샀어요."
+  },
+  {
+    "en": "recognize",
+    "ko": "인식하다",
+    "type": "sentence",
+    "example": "I recognize the song, but I don't know the title.",
+    "example_ko": "노래는 알아보지만 제목은 모르겠어."
+  },
+  {
+    "en": "for here or to go",
+    "ko": "매장에서 먹을지 테이크아웃 할지",
+    "type": "dialog",
+    "example": "A: Is this for here or to go? B: I'll take it to go, please.",
+    "example_ko": "A: 매장에서 드실 건가요, 테이크아웃 할 건가요? B: 테이크아웃으로 주세요."
+  },
+  {
+    "en": "hand in homework",
+    "ko": "과제를 제출하다",
+    "type": "sentence",
+    "example": "Don't forget to hand in your homework by the due date.",
+    "example_ko": "마감 기한까지 과제를 제출하세요."
+  },
+  {
+    "en": "encourage",
+    "ko": "격려하다",
+    "type": "sentence",
+    "example": "My parents encourage me to study hard and pursue my dreams.",
+    "example_ko": "부모님이 열심히 공부하고 꿈을追求하라고 격려해줍니다."
+  },
+  {
+    "en": "check out",
+    "ko": "체크아웃",
+    "type": "dialog",
+    "example": "A: Can I help you with check out? B: Yes, I'd like to pay my bill.",
+    "example_ko": "A: 체크아웃 도와드릴까요? B: 네, 계산을 싶습니다."
+  }
+]

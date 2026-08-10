@@ -1,14 +1,4 @@
 [
-  "casa",
-  "strada",
-  "auto",
-  "aereo",
-  "treno",
-  "hotel",
-  "camera",
-  "bagno",
-  "ascensore",
-  "reception",
   "giorno",
   "notte",
   "mattina",
@@ -498,5 +488,15 @@
   "neve",
   "vuoto",
   "paura",
-  "sogno"
+  "sogno",
+  "stazione",
+  "treno",
+  "autobus",
+  "fermata",
+  "biglietto",
+  "capitano",
+  "nave",
+  "porto",
+  "turista",
+  "mappa"
 ]

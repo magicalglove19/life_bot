@@ -68,5 +68,75 @@
     "type": "dialog",
     "example": "A: Can I help you with check out? B: Yes, I'd like to pay my bill.",
     "example_ko": "A: 체크아웃 도와드릴까요? B: 네, 계산을 싶습니다."
+  },
+  {
+    "en": "boarding pass",
+    "ko": "탑승권",
+    "type": "dialog",
+    "example": "A: May I see your boarding pass, please? B: Sure, here you go.",
+    "example_ko": "A: 탑승권 좀 보여주시겠어요? B: 네, 여기 있어요."
+  },
+  {
+    "en": "take notes",
+    "ko": "메모를 적다",
+    "type": "sentence",
+    "example": "You should take notes during the lesson to remember important points.",
+    "example_ko": "중요한 점을 기억하기 위해 수업 중에 메모를 적어야 해요."
+  },
+  {
+    "en": "carry-on",
+    "ko": "캐리온",
+    "type": "dialog",
+    "example": "A: Is this bag a carry-on? B: Yes, it's small enough to fit in the overhead bin.",
+    "example_ko": "A: 이 가방은 캐리온인가요? B: 네, 오버헤드 비ンの 크기에 들어가요."
+  },
+  {
+    "en": "school cafeteria",
+    "ko": "급식실",
+    "type": "sentence",
+    "example": "The school cafeteria serves lunch from 12 to 1 pm every day.",
+    "example_ko": "급식실에서는 매일 12시부터 1시까지 점심을 제공해요."
+  },
+  {
+    "en": "refill",
+    "ko": "재충전",
+    "type": "dialog",
+    "example": "A: Can I get a refill on my water bottle? B: Yes, there's a water fountain over there.",
+    "example_ko": "A: 물병을 재충전할 수 있을까요? B: 네, 저기 수도가 있어요."
+  },
+  {
+    "en": "layover",
+    "ko": "환승",
+    "type": "sentence",
+    "example": "My flight has a layover in Seoul before heading to Los Angeles.",
+    "example_ko": "내 비행기에는 로스앤젤레스로 가기 전에 서울에서 환승이 있어요."
+  },
+  {
+    "en": "complimentary breakfast",
+    "ko": "무료 아침 식사",
+    "type": "sentence",
+    "example": "The hotel offers complimentary breakfast to all guests from 7 to 10 am.",
+    "example_ko": "호텔에서는 모든 손님들에게 7시부터 10시까지 무료 아침 식사를 제공해요."
+  },
+  {
+    "en": "go straight",
+    "ko": "一直으로 가다",
+    "type": "dialog",
+    "example": "A: How do I get to the library? B: Just go straight down this street for three blocks.",
+    "example_ko": "A: 도서관은 어디에 있어요? B: 이 거리를 3개의 블록一直으로 가세요."
+  },
+  {
+    "en": "recommend",
+    "ko": "추천하다",
+    "type": "sentence",
+    "example": "I highly recommend this restaurant because the food is delicious and the service is great.",
+    "example_ko": "이 레스토랑은 음식이 맛있고 서비스가 tuyệt vời해서 강력하게 추천해요."
+  },
+  {
+    "en": "achievement",
+    "ko": "성과",
+    "type": "sentence",
+    "example": "Her achievement in the science fair was recognized by the whole school.",
+    "example_ko": "彼女의 과학 전시회에서의 성과는 전교가認めたよ."
   }
 ]

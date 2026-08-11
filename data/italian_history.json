@@ -1,14 +1,4 @@
 [
-  "giorno",
-  "notte",
-  "mattina",
-  "pomeriggio",
-  "sera",
-  "pranzo",
-  "cena",
-  "colazione",
-  "dottore",
-  "infermiere",
   "amore",
   "musica",
   "giardino",
@@ -498,5 +488,15 @@
   "nave",
   "porto",
   "turista",
-  "mappa"
+  "mappa",
+  "libro",
+  "scuola",
+  "insegnante",
+  "studente",
+  "amico",
+  "città",
+  "strada",
+  "negozio",
+  "ufficio",
+  "ristorante"
 ]

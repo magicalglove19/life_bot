@@ -138,5 +138,75 @@
     "type": "sentence",
     "example": "Her achievement in the science fair was recognized by the whole school.",
     "example_ko": "彼女의 과학 전시회에서의 성과는 전교가認めたよ."
+  },
+  {
+    "en": "fasten your seatbelt",
+    "ko": "안전띠를 매세요",
+    "type": "sentence",
+    "example": "Please fasten your seatbelt before the plane takes off.",
+    "example_ko": "비행기 이륙 전에는 안전띠를 매세요."
+  },
+  {
+    "en": "aisle seat",
+    "ko": "통로쪽 좌석",
+    "type": "dialog",
+    "example": "A: Do you want a window seat or an aisle seat? B: I'll take an aisle seat, please.",
+    "example_ko": "A: 창가 좌석이 좋아요, 아니면 통로쪽 좌석이 좋아요? B: 통로쪽 좌석으로 주세요."
+  },
+  {
+    "en": "made it",
+    "ko": "도착했다",
+    "type": "sentence",
+    "example": "We made it to the airport just in time for our flight.",
+    "example_ko": "우리는 출발하기 바로 전에 공항에 도착했다."
+  },
+  {
+    "en": "get along with",
+    "ko": "어울리다",
+    "type": "dialog",
+    "example": "A: Do you get along with your classmates? B: Yeah, we all get along with each other.",
+    "example_ko": "A: 너는同学들과 어울리는가? B: 응, 우리는 모두 서로 잘 지낸다."
+  },
+  {
+    "en": "principal",
+    "ko": "교장",
+    "type": "sentence",
+    "example": "The principal will give a speech at the school assembly tomorrow.",
+    "example_ko": "교장은 내일 학교 집회에서 연설을 할 것입니다."
+  },
+  {
+    "en": "around the corner",
+    "ko": "곧そこ에",
+    "type": "dialog",
+    "example": "A: Is the restaurant far from here? B: No, it's just around the corner.",
+    "example_ko": "A: 여기서 레스토랑까지 weit遠いですか? B: 아니에요,就在附近にあります."
+  },
+  {
+    "en": "sightseeing",
+    "ko": "관광",
+    "type": "sentence",
+    "example": "We're going sightseeing in the city tomorrow morning.",
+    "example_ko": "내일 아침에 도시에 관광을 갈 것입니다."
+  },
+  {
+    "en": "confident",
+    "ko": "자신감이 있는",
+    "type": "sentence",
+    "example": "She's very confident when she's speaking English.",
+    "example_ko": "영어를 말할 때 그녀는 매우 자신감이 있다."
+  },
+  {
+    "en": "baggage claim",
+    "ko": "수하물领取",
+    "type": "dialog",
+    "example": "A: Where's the baggage claim? B: It's downstairs, let's go.",
+    "example_ko": "A: 수하물领取은 어디에 있어요? B: 아래층에 있어요, 가봅시다."
+  },
+  {
+    "en": "room service",
+    "ko": "객실 서비스",
+    "type": "dialog",
+    "example": "A: Do you want to order room service or go to the restaurant? B: I'll just order room service, thanks.",
+    "example_ko": "A: 객실 서비스로 주문할까요, 아니면 레스토랑에 갈까요? B: 그냥 객실 서비스로 주문할게요, 감사합니다."
   }
 ]

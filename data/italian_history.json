@@ -1,14 +1,4 @@
 [
-  "amore",
-  "musica",
-  "giardino",
-  "città",
-  "spiaggia",
-  "tempo",
-  "sole",
-  "pioggia",
-  "neve",
-  "vento",
   "uomo",
   "donna",
   "bambino",
@@ -498,5 +488,15 @@
   "strada",
   "negozio",
   "ufficio",
-  "ristorante"
+  "ristorante",
+  "spiaggia",
+  "montagna",
+  "fiume",
+  "lago",
+  "isola",
+  "casa vacanze",
+  "ristorante sulla spiaggia",
+  "passeggiata",
+  "bici",
+  "noleggio"
 ]

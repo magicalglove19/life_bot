@@ -1,14 +1,4 @@
 [
-  "uomo",
-  "donna",
-  "bambino",
-  "fidanzato",
-  "fidanzata",
-  "sposo",
-  "moglie",
-  "figlio",
-  "figlia",
-  "cugino",
   "carta",
   "conto",
   "banca",
@@ -498,5 +488,15 @@
   "ristorante sulla spiaggia",
   "passeggiata",
   "bici",
-  "noleggio"
+  "noleggio",
+  "spiaggia",
+  "gelato",
+  "passeggiata",
+  "barca",
+  "vino",
+  "pizza",
+  "ristorante",
+  "otel",
+  "camera",
+  "bagno"
 ]

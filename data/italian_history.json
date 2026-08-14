@@ -1,14 +1,4 @@
 [
-  "carta",
-  "conto",
-  "banca",
-  "denaro",
-  "lavoro",
-  "ufficio",
-  "impiegato",
-  "orario",
-  "pausa",
-  "riposo",
   "parco",
   "fiore",
   "albero",
@@ -498,5 +488,15 @@
   "ristorante",
   "otel",
   "camera",
-  "bagno"
+  "bagno",
+  "amico",
+  "sorella",
+  "fratello",
+  "madre",
+  "padre",
+  "nonno",
+  "nonna",
+  "cugino",
+  "cugina",
+  "zia"
 ]

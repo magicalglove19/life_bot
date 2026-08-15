@@ -1,14 +1,4 @@
 [
-  "parco",
-  "fiore",
-  "albero",
-  "uccello",
-  "cane",
-  "gatto",
-  "ospite",
-  "regalo",
-  "libero",
-  "felice",
   "ristorante",
   "tavolo",
   "sedia",
@@ -498,5 +488,15 @@
   "nonna",
   "cugino",
   "cugina",
-  "zia"
+  "zia",
+  "pane",
+  "acqua",
+  "uomo",
+  "donna",
+  "bambino",
+  "giardino",
+  "pescato",
+  "vino rosso",
+  "formaggio",
+  "olio"
 ]

@@ -3,6 +3,7 @@
 한국/미국 섹션 분리 · 미국 우선 (사용자는 미국 주식 비중 높음).
 """
 import sys
+import threading
 from datetime import datetime
 from pathlib import Path
 
@@ -17,7 +18,29 @@ import refresh_tickers
 # 각 섹션별 타임아웃 (한국/미국 각각 독립)
 INFLECTION_TIMEOUT_EACH = 240   # 4분
 DAEJJANG_TIMEOUT_EACH = 300     # 5분
+CHART_PATTERN_TIMEOUT = 480     # 8분 — yfinance 대량 배치 호출이 멈춰도 전체 브리핑은 보내지도록 하드 타임아웃
 TOP_N_PER_REPORT = 15
+
+
+def _run_with_timeout(fn, timeout_sec: float):
+    """fn()을 별도 스레드에서 실행하고 timeout_sec 안에 못 끝나면 TimeoutError.
+    yfinance 등 외부 API 호출이 멈췄을 때 전체 브리핑 전송이 막히는 것을 방지."""
+    box: dict = {}
+
+    def target():
+        try:
+            box["value"] = fn()
+        except Exception as e:
+            box["error"] = e
+
+    t = threading.Thread(target=target, daemon=True)
+    t.start()
+    t.join(timeout_sec)
+    if t.is_alive():
+        raise TimeoutError(f"{timeout_sec:.0f}초 초과 (아직 실행 중)")
+    if "error" in box:
+        raise box["error"]
+    return box.get("value")
 
 
 def load_all_symbols() -> tuple[list[str], list[str]]:
@@ -110,9 +133,10 @@ def main() -> int:
     sections.append("")
 
     # ========== 차트 패턴 (컵위드핸들/더블바텀/V라인/갭상승) ==========
+    # 하드 타임아웃 적용: yfinance 대량 배치 호출이 멈춰도 나머지 섹션은 반드시 전송됨
     try:
         print("[morning] 차트 패턴 스캔...")
-        sections.append(chart_patterns.build_report())
+        sections.append(_run_with_timeout(chart_patterns.build_report, CHART_PATTERN_TIMEOUT))
     except Exception as e:
         print(f"[morning] 차트 패턴 실패: {e}", file=sys.stderr)
         sections.append(f"<b>📐 차트 패턴</b>\n  (실패: {str(e)[:100]})")

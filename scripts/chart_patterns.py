@@ -34,6 +34,7 @@ def scan_all(tickers: list[str]) -> list[dict]:
         threads=True,
         progress=False,
         auto_adjust=False,
+        timeout=30,
     )
     results = []
     for ticker in tickers:

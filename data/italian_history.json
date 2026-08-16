@@ -1,14 +1,4 @@
 [
-  "ristorante",
-  "tavolo",
-  "sedia",
-  "porta",
-  "finestra",
-  "scala",
-  "soffitto",
-  "muro",
-  "pavimento",
-  "cucina",
   "sport",
   "tv",
   "radio",
@@ -498,5 +488,15 @@
   "pescato",
   "vino rosso",
   "formaggio",
-  "olio"
+  "olio",
+  "libro",
+  "telefono",
+  "computer",
+  "ospedale",
+  "farmacia",
+  "polizia",
+  "dottore",
+  "infermiere",
+  "ambulanza",
+  "urgenza"
 ]

@@ -1,14 +1,4 @@
 [
-  "sport",
-  "tv",
-  "radio",
-  "giornale",
-  "posta",
-  "lettera",
-  "numero",
-  "indirizzo",
-  "cittadino",
-  "viaggio",
   "acqua",
   "vino",
   "caffè",
@@ -498,5 +488,15 @@
   "dottore",
   "infermiere",
   "ambulanza",
-  "urgenza"
+  "urgenza",
+  "casa",
+  "strada",
+  "parco",
+  "ospite",
+  "tavolo",
+  "sedia",
+  "finestra",
+  "porta",
+  "scala",
+  "soffitto"
 ]

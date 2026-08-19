@@ -50,7 +50,10 @@ B_WAS_BEARISH_THRESHOLD = 0.92
 B_WAS_BEARISH_LOOKBACK = 60
 B_MA20_RISE_LOOKBACK = 5
 
-TODAY = dt.date.today()
+KST = dt.timezone(dt.timedelta(hours=9))
+MARKET_CLOSE_MIN = 15 * 60 + 40   # 15:40 KST — 마감(15:30) + 데이터 반영 여유
+
+TODAY = dt.datetime.now(KST).date()
 START_DATE = (TODAY - dt.timedelta(days=HISTORY_DAYS)).isoformat()
 
 PREFERRED_STOCK_RE = re.compile(r".*\d?우(B|C)?$")
@@ -250,12 +253,15 @@ def fmt_num(n) -> str:
 
 
 def format_message(rows_a, rows_b, fetched, universe_size, bar_date) -> str:
-    now = dt.datetime.now()
+    now = dt.datetime.now(KST)
     stale = bar_date is not None and bar_date != TODAY
+    after_close = now.hour * 60 + now.minute >= MARKET_CLOSE_MIN
 
     head = [f"📈 <b>유목민 8일선 · 정배열 스캔</b> · {now.strftime('%m/%d (%a) %H:%M')}"]
     if stale:
         head.append(f"🔒 오늘 시세 없음(휴장 추정) — <b>{bar_date}</b> 종가 기준")
+    elif after_close:
+        head.append(f"✅ <b>{bar_date}</b> 종가 확정 기준")
     else:
         head.append("⏳ 장중 시세 기준 — 종가 확정 전 잠정 결과")
     head.append(f"대상 {universe_size}종목 중 {fetched}개 수집 · A {len(rows_a)}건 / B {len(rows_b)}건")

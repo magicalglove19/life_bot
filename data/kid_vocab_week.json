@@ -1,1 +1,72 @@
-[]
+[
+  {
+    "en": "check in",
+    "ko": "체크인",
+    "type": "dialog",
+    "example": "A: I’d like to check in, please. B: May I see your passport and boarding ticket?",
+    "example_ko": "A: 체크인하고 싶어요. B: 여권과 탑승권을 보여 주시겠어요?"
+  },
+  {
+    "en": "aisle seat",
+    "ko": "통로 좌석",
+    "type": "sentence",
+    "example": "I prefer an aisle seat so I can stretch my legs during the flight.",
+    "example_ko": "비행 중에 다리를 뻗을 수 있게 통로 쪽 좌석을 선호해요."
+  },
+  {
+    "en": "group project",
+    "ko": "그룹 프로젝트",
+    "type": "dialog",
+    "example": "A: Our group project is due Friday. B: Let’s meet after school to divide the tasks.",
+    "example_ko": "A: 우리 그룹 프로젝트는 금요일 마감이에요. B: 방과 후에 만나서 역할을 나눠요."
+  },
+  {
+    "en": "hand in homework",
+    "ko": "숙제 제출",
+    "type": "sentence",
+    "example": "Please hand in your homework before the bell rings tomorrow morning.",
+    "example_ko": "내일 아침 종이 울리기 전에 숙제를 제출해 주세요."
+  },
+  {
+    "en": "hang out",
+    "ko": "놀다",
+    "type": "dialog",
+    "example": "A: Do you want to hang out at the mall after class? B: Sure, see you there at 4.",
+    "example_ko": "A: 수업 끝나고 쇼핑몰에서 놀고 싶어요? B: 좋아요, 4시에 거기서 만나요."
+  },
+  {
+    "en": "on my way",
+    "ko": "가는 중",
+    "type": "sentence",
+    "example": "I’m on my way to the library, see you in ten minutes.",
+    "example_ko": "도서관 가는 중이에요, 10분 후에 봐요."
+  },
+  {
+    "en": "for here or to go",
+    "ko": "여기서 마실지 포장할지",
+    "type": "dialog",
+    "example": "A: Would you like your coffee for here or to go? B: For here, please, thank you.",
+    "example_ko": "A: 커피를 여기서 드실 건가요, 포장할 건가요? B: 여기서 마실게요, 감사합니다."
+  },
+  {
+    "en": "turn right",
+    "ko": "오른쪽으로 돌다",
+    "type": "sentence",
+    "example": "After the school gate, turn right and the art studio is on your left.",
+    "example_ko": "학교 정문을 나와서 오른쪽으로 돌면 예술 스튜디오가 왼쪽에 있어요."
+  },
+  {
+    "en": "encourage",
+    "ko": "격려하다",
+    "type": "sentence",
+    "example": "Teachers should encourage students to ask questions whenever they feel confused.",
+    "example_ko": "선생님은 학생들이 혼란스러울 때마다 질문하도록 격려해야 해요."
+  },
+  {
+    "en": "confident",
+    "ko": "자신감 있는",
+    "type": "dialog",
+    "example": "A: I feel nervous about the presentation. B: You’ll do fine; just be confident and speak clearly.",
+    "example_ko": "A: 발표가 긴장돼요. B: 잘 할 거예요, 자신감을 가지고 또박또박 말하면 돼요."
+  }
+]

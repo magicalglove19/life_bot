@@ -44,12 +44,13 @@ SYSTEM = """당신은 한국 중학생(중1~중2)을 위한 **실용 영어** �
      "example_ko": "A: 탑승권 좀 보여주시겠어요? B: 네, 여기 있어요."},
     {"en": "raise your hand", "ko": "손을 들다", "type": "sentence",
      "example": "If you have a question, please raise your hand before you speak.",
-     "example_ko": "질문이 있으면 말하기 전에 손을 들어 주세요."},
-    ...총 10개
+     "example_ko": "질문이 있으면 말하기 전에 손을 들어 주세요."}
   ]
 }
 
 규칙:
+- 위 예시는 형식만 보여준 것입니다. items 배열에 정확히 10개를 채우세요
+- 생략 기호(...)나 주석을 절대 쓰지 말고, 완결된 JSON만 출력하세요
 - 난이도: **중1~중2 / CEFR A2후반~B1** 수준의 **실용 회화 영어**
 - **구성 비율 (10개 중)**:
   - 8개: 아래 5개 주제에서 다양하게 섞은 **실용 회화 표현**
@@ -78,16 +79,6 @@ def build_user_prompt(excluded: list[str]) -> str:
 
 새로운 10개를 JSON으로."""
 
-
-def parse_response(text: str) -> dict:
-    t = text.strip()
-    if t.startswith("```"):
-        t = t.split("\n", 1)[1] if "\n" in t else t
-        if t.endswith("```"):
-            t = t.rsplit("```", 1)[0]
-        if t.startswith("json"):
-            t = t[4:].lstrip()
-    return json.loads(t)
 
 
 def _example_text(it: dict) -> str:
@@ -156,8 +147,9 @@ def main() -> int:
     # 월~목: 새 단어
     excluded = [it["en"] for it in week]
     try:
-        raw = groq_client.chat(SYSTEM, build_user_prompt(excluded), temperature=0.9)
-        data = parse_response(raw)
+        data = groq_client.chat_json(
+            SYSTEM, build_user_prompt(excluded), temperature=0.9, max_tokens=3500
+        )
         items = data.get("items", [])
         if len(items) < 5:
             raise ValueError(f"단어 수 부족: {len(items)}")

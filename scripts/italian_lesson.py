@@ -35,15 +35,15 @@ SYSTEM = """당신은 이탈리아어 교사입니다. 한국인 초보 학습�
 
 {
   "words": [
-    {"it": "casa", "ko": "집", "pron": "까사"},
-    ...총 10개
+    {"it": "casa", "ko": "집", "pron": "까사"}
   ],
   "sentences": [
-    {"it": "Dov'è il bagno?", "ko": "화장실이 어디에 있나요?", "pron": "도베 일 바뇨"},
-    ...총 3개
+    {"it": "Dov'è il bagno?", "ko": "화장실이 어디에 있나요?", "pron": "도베 일 바뇨"}
   ]
 }
 
+- 위 예시는 형식만 보여준 것입니다. words 배열에 정확히 10개, sentences 배열에 정확히 3개를 채우세요
+- 생략 기호(...)나 주석을 절대 쓰지 말고, 완결된 JSON만 출력하세요
 - 단어는 A1~A2 수준, 일상에서 자주 쓰는 것
 - 발음(pron)은 한글로 한국인이 읽기 쉽게
 - 문장은 여행/일상에서 바로 쓸 수 있는 것"""
@@ -57,17 +57,6 @@ def build_user_prompt(recent: list[str]) -> str:
 
 새로운 10개 단어와 3개 문장을 JSON으로."""
 
-
-def parse_response(text: str) -> dict:
-    # 코드펜스 제거
-    t = text.strip()
-    if t.startswith("```"):
-        t = t.split("\n", 1)[1] if "\n" in t else t
-        if t.endswith("```"):
-            t = t.rsplit("```", 1)[0]
-        if t.startswith("json"):
-            t = t[4:].lstrip()
-    return json.loads(t)
 
 
 def format_message(data: dict) -> str:
@@ -88,8 +77,9 @@ def format_message(data: dict) -> str:
 def main() -> int:
     history = load_history()
     try:
-        raw = groq_client.chat(SYSTEM, build_user_prompt(history), temperature=0.8)
-        data = parse_response(raw)
+        data = groq_client.chat_json(
+            SYSTEM, build_user_prompt(history), temperature=0.8, max_tokens=2500
+        )
     except Exception as e:
         print(f"[italian] 생성 실패: {e}", file=sys.stderr)
         telegram.send(f"⚠️ 이탈리아어 생성 실패: {e}")

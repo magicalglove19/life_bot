@@ -1,14 +1,4 @@
 [
-  "acqua",
-  "vino",
-  "caffè",
-  "torta",
-  "gelato",
-  "spiaggia",
-  "mare",
-  "isola",
-  "montagna",
-  "fiume",
   "computer",
   "telefono",
   "foto",
@@ -498,5 +488,15 @@
   "finestra",
   "porta",
   "scala",
-  "soffitto"
+  "soffitto",
+  "caffè",
+  "colazione",
+  "pranzo",
+  "cena",
+  "bicchiere",
+  "zucchero",
+  "sale",
+  "chiave",
+  "maglietta",
+  "ombrello"
 ]

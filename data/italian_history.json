@@ -1,14 +1,4 @@
 [
-  "computer",
-  "telefono",
-  "foto",
-  "musica",
-  "arte",
-  "storia",
-  "geografia",
-  "scienza",
-  "teatro",
-  "biblioteca",
   "amico",
   "famiglia",
   "scuola",
@@ -498,5 +488,15 @@
   "sale",
   "chiave",
   "maglietta",
-  "ombrello"
+  "ombrello",
+  "gatto",
+  "cane",
+  "macchina",
+  "cibo",
+  "libreria",
+  "mercato",
+  "pasta",
+  "pesce",
+  "banca",
+  "orologio"
 ]

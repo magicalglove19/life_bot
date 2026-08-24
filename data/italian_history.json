@@ -1,14 +1,4 @@
 [
-  "amico",
-  "famiglia",
-  "scuola",
-  "insegnante",
-  "studente",
-  "libro",
-  "penna",
-  "cartella",
-  "orario",
-  "vacanza",
   "hotel",
   "aeroporto",
   "treno",
@@ -498,5 +488,15 @@
   "pasta",
   "pesce",
   "banca",
-  "orologio"
+  "orologio",
+  "cappotto",
+  "scarpa",
+  "cintura",
+  "zaino",
+  "cuscino",
+  "lampada",
+  "sciarpa",
+  "pantaloni",
+  "giacca",
+  "cappello"
 ]

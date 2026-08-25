@@ -68,5 +68,75 @@
     "type": "dialog",
     "example": "A: Are you nervous about the presentation? B: No, I'm feeling confident after the practice and ready now.",
     "example_ko": "A: 발표가 걱정돼? B: 아니요, 연습하고 나니까 자신감 있고 지금 준비됐어요."
+  },
+  {
+    "en": "aisle seat",
+    "ko": "통로 좌석",
+    "type": "dialog",
+    "example": "A: Could I have an aisle seat, please? B: Let me check, there is one available near the window.",
+    "example_ko": "A: 통로 좌석을 받을 수 있을까요? B: 확인해 보겠습니다, 창가 쪽에 한 자리가 남아 있습니다."
+  },
+  {
+    "en": "take notes",
+    "ko": "필기하다",
+    "type": "dialog",
+    "example": "A: Can you take notes while I explain the problem? B: Sure, I’ll write down the key points.",
+    "example_ko": "A: 제가 문제를 설명하는 동안 필기해 주실 수 있나요? B: 물론이죠, 핵심 포인트를 적어 두겠습니다."
+  },
+  {
+    "en": "give me a ride",
+    "ko": "차를 태워 주세요",
+    "type": "dialog",
+    "example": "A: Hey, could you give me a ride to the station? B: No problem, I’ll pick you up at 5 pm.",
+    "example_ko": "A: 이봐요, 역까지 차를 태워 줄 수 있나요? B: 문제없어요, 오후 5시에 마중 나갈게요."
+  },
+  {
+    "en": "for here or to go",
+    "ko": "드실 건가요, 포장해 가실 건가요",
+    "type": "dialog",
+    "example": "A: Is this coffee for here or to go? B: It’s for here, I’ll stay and work.",
+    "example_ko": "A: 이 커피는 여기서 드시겠어요, 포장하시겠어요? B: 여기서 마실게요, 여기서 공부할 거예요."
+  },
+  {
+    "en": "front desk",
+    "ko": "프론트 데스크",
+    "type": "dialog",
+    "example": "A: I’d like to ask the front desk about extra towels. B: They’ll bring them to your room right away.",
+    "example_ko": "A: 프론트 데스크에 추가 수건을 요청하고 싶어요. B: 바로 방으로 가져다 드릴게요."
+  },
+  {
+    "en": "carry-on",
+    "ko": "기내 휴대 수하물",
+    "type": "sentence",
+    "example": "Please keep your carry-on under the seat in front of you.",
+    "example_ko": "기내 휴대 수하물은 앞 좌석 아래에 두세요."
+  },
+  {
+    "en": "due date",
+    "ko": "제출 마감일",
+    "type": "sentence",
+    "example": "The due date for the science report is next Friday.",
+    "example_ko": "과학 보고서의 제출 마감일은 다음 금요일입니다."
+  },
+  {
+    "en": "embarrassed",
+    "ko": "당황한",
+    "type": "sentence",
+    "example": "I felt embarrassed when I forgot my textbook.",
+    "example_ko": "교과서를 깜빡했을 때 저는 당황했어요."
+  },
+  {
+    "en": "go straight",
+    "ko": "곧장 가다",
+    "type": "sentence",
+    "example": "Walk straight for two blocks, then you’ll see the library.",
+    "example_ko": "두 블록을 곧장 걸어가면 도서관이 보일 거예요."
+  },
+  {
+    "en": "opportunity",
+    "ko": "기회",
+    "type": "sentence",
+    "example": "This scholarship is a great opportunity for you to study abroad.",
+    "example_ko": "이 장학금은 해외 유학을 위한 좋은 기회입니다."
   }
 ]

@@ -1,14 +1,4 @@
 [
-  "hotel",
-  "aeroporto",
-  "treno",
-  "autobus",
-  "bicicletta",
-  "strada",
-  "carta di credito",
-  "documento",
-  "passaporto",
-  "valigia",
   "ristorante",
   "medico",
   "farmacia",
@@ -498,5 +488,15 @@
   "sciarpa",
   "pantaloni",
   "giacca",
-  "cappello"
+  "cappello",
+  "treno",
+  "autobus",
+  "aeroporto",
+  "valigia",
+  "biglietto",
+  "piscina",
+  "bar",
+  "cappuccino",
+  "università",
+  "professore"
 ]

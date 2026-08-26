@@ -138,5 +138,75 @@
     "type": "sentence",
     "example": "This scholarship is a great opportunity for you to study abroad.",
     "example_ko": "이 장학금은 해외 유학을 위한 좋은 기회입니다."
+  },
+  {
+    "en": "customs declaration",
+    "ko": "세관 신고서",
+    "type": "dialog",
+    "example": "A: Please fill out your customs declaration before you go through security. B: Okay, I’ll complete it right now.",
+    "example_ko": "A: 보안 검색대 통과 전에 세관 신고서를 작성해 주세요.\nB: 알겠어요, 지금 바로 작성할게요."
+  },
+  {
+    "en": "baggage claim",
+    "ko": "수하물 찾는 곳",
+    "type": "sentence",
+    "example": "We should meet near the baggage claim area after the flight lands.",
+    "example_ko": "우리는 비행기가 착륙한 뒤 수하물 찾는 곳 근처에서 만나야 해요."
+  },
+  {
+    "en": "layover",
+    "ko": "경유",
+    "type": "sentence",
+    "example": "My layover in Dubai is only two hours, so I’ll stay nearby.",
+    "example_ko": "두바이에서 경유 시간이 두 시간뿐이라 근처에 머물 거예요."
+  },
+  {
+    "en": "turbulence",
+    "ko": "기류 흔들림",
+    "type": "dialog",
+    "example": "A: The pilot said we might feel some turbulence soon. B: I’ll keep my seatbelt fastened then.",
+    "example_ko": "A: 파일럿이 곧 기류 흔들림이 있을 수 있다고 했어요.\nB: 그럼 저는 좌석 벨트를 계속 착용할게요."
+  },
+  {
+    "en": "gate number",
+    "ko": "게이트 번호",
+    "type": "sentence",
+    "example": "Check the monitor to find your gate number before boarding.",
+    "example_ko": "탑승하기 전에 모니터에서 게이트 번호를 확인하세요."
+  },
+  {
+    "en": "locker combination",
+    "ko": "락커 비밀번호",
+    "type": "dialog",
+    "example": "A: Can you remember your locker combination for the gym? B: Yes, it’s 4-2-9, I wrote it down.",
+    "example_ko": "A: 체육관 락커 비밀번호 기억하나요?\nB: 네, 4-2-9예요, 적어 두었어요."
+  },
+  {
+    "en": "hand in homework",
+    "ko": "숙제 제출하기",
+    "type": "sentence",
+    "example": "Please hand in your homework on the desk before the bell rings.",
+    "example_ko": "종이 울리기 전에 책상 위에 숙제를 제출해 주세요."
+  },
+  {
+    "en": "school cafeteria",
+    "ko": "학교 식당",
+    "type": "dialog",
+    "example": "A: What’s for lunch in the school cafeteria today? B: They’re serving pizza and salad.",
+    "example_ko": "A: 오늘 학교 식당에서 점심 뭐예요?\nB: 피자와 샐러드가 나와요."
+  },
+  {
+    "en": "recognize",
+    "ko": "인정하다",
+    "type": "sentence",
+    "example": "I recognize the effort you put into preparing the presentation.",
+    "example_ko": "당신이 발표 준비에 쏟은 노력을 인정합니다."
+  },
+  {
+    "en": "achievement",
+    "ko": "성취",
+    "type": "dialog",
+    "example": "A: Completing the science project was a big achievement for you. B: Thanks, I’m proud of the result.",
+    "example_ko": "A: 과학 프로젝트를 완성한 것은 큰 성취였어요.\nB: 고마워요, 결과가 자랑스러워요."
   }
 ]

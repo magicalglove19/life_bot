@@ -1,14 +1,4 @@
 [
-  "ristorante",
-  "medico",
-  "farmacia",
-  "polizia",
-  "ospedale",
-  "dottore",
-  "infermiere",
-  "malato",
-  "medicamento",
-  "assicurazione",
   "casa",
   "giardino",
   "amico",
@@ -498,5 +488,15 @@
   "bar",
   "cappuccino",
   "università",
-  "professore"
+  "professore",
+  "città",
+  "piazza",
+  "negozio",
+  "cameriere",
+  "menù",
+  "tè",
+  "latte",
+  "orario",
+  "biglietteria",
+  "autista"
 ]

@@ -104,8 +104,9 @@ git push -u origin main
 |---|---|---|
 | 05:00 | 월~토 | morning-stocks |
 | 09:00 | 매일 | italian |
+| 13:50 | 월~금 | ma8-screener |
 | 14:00 | 매일 | us-news |
-| 18:00 | 월~금 | premarket |
+| 05:30 | 월~토 | minervini |
 | 19:00 | 월~금 | kid-english |
 | 일요일 00:00 | 주 1회 | refresh-tickers |
 
@@ -133,7 +134,7 @@ export GROQ_API_KEY="gsk_xxx..."
 python scripts/italian_lesson.py
 python scripts/us_news.py
 python scripts/rsi_report.py
-python scripts/premarket_movers.py
+python scripts/minervini_report.py
 ```
 
 ---
@@ -147,16 +148,13 @@ python scripts/premarket_movers.py
 
 ### Groq API 오류
 - 키 형식 `gsk_...` 확인
-- 무료 티어 RPM 초과 시 `scripts/common/groq_client.py`의 FALLBACK_MODEL 자동 재시도함
+- 모델이 단종되면 `scripts/common/groq_client.py`가 후보 모델을 순회하고, 그래도 안 되면 사용 가능한 모델을 자동 탐색함
+- 원인이 궁금하면 Actions 탭 → `groq-doctor` 워크플로 수동 실행 → 텔레그램으로 진단 결과 도착
 
 ### 아침 스캔에서 종목이 하나도 안 잡혀요
 - 정상일 수 있음 (해당 조건에 맞는 종목이 없음)
 - `refresh-tickers`를 먼저 1회 수동 실행했는지 확인
 - Actions 로그에서 "KR/US 시가총액 파일 없음" 메시지 없는지 확인
-
-### Pre-market이 비어있어요
-- NASDAQ API가 개장 직전/휴장일엔 빈 데이터 반환할 수 있음
-- 미국 시장 휴장일(추수감사절, 크리스마스 등)은 스킵
 
 ---
 

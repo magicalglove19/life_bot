@@ -2,8 +2,8 @@ name: refresh-tickers
 
 on:
   schedule:
-    # 일요일 00:00 KST = 토요일 15:00 UTC (DOW 6)
-    - cron: '14 15 * * 6'
+    # 토요일 22:00 KST = 토요일 13:00 UTC (DOW 6)
+    - cron: '14 13 * * 6'
   workflow_dispatch:
 
 permissions:

@@ -2,9 +2,10 @@ name: minervini
 
 on:
   schedule:
-    # premarket(미국 Pre-market 급등주)과 같은 시각 — 18:00 KST (월~금) = 09:00 UTC
-    # 같은 크론이라 두 메시지가 나란히 도착한다. premarket 시간을 바꾸면 이쪽도 같이 바꿀 것.
-    - cron: '8 9 * * 1-5'
+    # 05:30 KST (월~토) = 20:30 UTC (Sun~Fri, DOW 0-5)
+    # 아침 브리핑(morning-stocks, 05:00 KST)과 같은 시간대에 도착한다.
+    # 미국장 마감(16:00 ET = 20:00 UTC)이 확정된 뒤 30분 여유를 두고 시작.
+    - cron: '30 20 * * 0-5'
   workflow_dispatch:
 
 permissions:

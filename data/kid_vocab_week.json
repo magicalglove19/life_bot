@@ -208,5 +208,75 @@
     "type": "dialog",
     "example": "A: Completing the science project was a big achievement for you. B: Thanks, I’m proud of the result.",
     "example_ko": "A: 과학 프로젝트를 완성한 것은 큰 성취였어요.\nB: 고마워요, 결과가 자랑스러워요."
+  },
+  {
+    "en": "passport control",
+    "ko": "출입국 심사대",
+    "type": "dialog",
+    "example": "A: Excuse me, where is passport control? B: It's right after security, on the left.",
+    "example_ko": "A: 실례하지만, 출입국 심사대가 어디에 있나요? B: 보안 검사 뒤에 왼쪽에 있어요."
+  },
+  {
+    "en": "class schedule",
+    "ko": "수업 시간표",
+    "type": "sentence",
+    "example": "Check the class schedule to see which room you need.",
+    "example_ko": "수업 시간표를 확인해서 어느 교실인지 확인하세요."
+  },
+  {
+    "en": "catch up",
+    "ko": "얘기 나누다",
+    "type": "dialog",
+    "example": "A: We should catch up this weekend. B: Sure, let's meet at the cafe on Saturday.",
+    "example_ko": "A: 이번 주말에 만나서 얘기 좀 하자. B: 좋아, 토요일에 카페에서 만나자."
+  },
+  {
+    "en": "takeout",
+    "ko": "포장",
+    "type": "sentence",
+    "example": "I'll order the pizza for takeout and pick it up later.",
+    "example_ko": "피자를 포장 주문해서 나중에 찾아갈게요."
+  },
+  {
+    "en": "room key",
+    "ko": "방 열쇠",
+    "type": "dialog",
+    "example": "A: Can I have my room key, please? B: Here it is, enjoy your stay.",
+    "example_ko": "A: 방 열쇠 주세요. B: 여기 있습니다, 즐거운 숙박 되세요."
+  },
+  {
+    "en": "exhausted",
+    "ko": "피곤한",
+    "type": "sentence",
+    "example": "After the marathon, I felt completely exhausted and needed rest.",
+    "example_ko": "마라톤을 하고 나니 완전히 지쳐서 쉬어야 했어요."
+  },
+  {
+    "en": "recommend",
+    "ko": "추천하다",
+    "type": "dialog",
+    "example": "A: Can you recommend a good movie? B: I suggest the new sci‑fi film, it's great.",
+    "example_ko": "A: 좋은 영화를 추천해 줄래요? B: 새로 나온 SF 영화를 추천해요, 정말 좋습니다."
+  },
+  {
+    "en": "security checkpoint",
+    "ko": "보안 검사대",
+    "type": "sentence",
+    "example": "Please place your bag on the conveyor at the security checkpoint.",
+    "example_ko": "보안 검사대에서 컨베이어에 가방을 올려 주세요."
+  },
+  {
+    "en": "science lab",
+    "ko": "과학 실험실",
+    "type": "dialog",
+    "example": "A: Do we need goggles for the chemistry lab? B: Yes, safety goggles are required.",
+    "example_ko": "A: 화학 실험실에 고글이 필요해요? B: 네, 안전 고글이 필수입니다."
+  },
+  {
+    "en": "turn left",
+    "ko": "왼쪽으로 돌다",
+    "type": "sentence",
+    "example": "When you exit the mall, turn left and you’ll see the park.",
+    "example_ko": "쇼핑몰을 나서면 왼쪽으로 돌아가면 공원이 보여요."
   }
 ]

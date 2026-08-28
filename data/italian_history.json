@@ -1,14 +1,4 @@
 [
-  "casa",
-  "giardino",
-  "amico",
-  "sorella",
-  "fratello",
-  "nonno",
-  "nonna",
-  "città",
-  "paese",
-  "strada",
   "nome",
   "cognome",
   "telefono",
@@ -498,5 +488,15 @@
   "latte",
   "orario",
   "biglietteria",
-  "autista"
+  "autista",
+  "scuola",
+  "penna",
+  "cielo",
+  "sole",
+  "luna",
+  "neve",
+  "pioggia",
+  "vento",
+  "cucina",
+  "mano"
 ]

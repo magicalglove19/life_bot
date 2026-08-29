@@ -1,7 +1,4 @@
 [
-  "ufficio",
-  "negozio",
-  "banca",
   "scuola elementare",
   "università",
   "biblioteca universitaria",
@@ -498,5 +495,8 @@
   "ristorante",
   "birra",
   "frutta",
-  "mappa"
+  "mappa",
+  "pulchra",
+  "fermata",
+  "campo"
 ]

@@ -1,14 +1,4 @@
 [
-  "scuola elementare",
-  "università",
-  "biblioteca universitaria",
-  "ospedale pediatrico",
-  "farmacia ospedaliera",
-  "polizia municipale",
-  "vigile urbano",
-  "giorno",
-  "settimana",
-  "mese",
   "anno",
   "ora",
   "minuto",
@@ -498,5 +488,15 @@
   "mappa",
   "pulchra",
   "fermata",
-  "campo"
+  "campo",
+  "amico",
+  "bagaglio",
+  "stazione",
+  "pasto",
+  "uovo",
+  "acqua",
+  "pane",
+  "sacco",
+  "tempo",
+  "collo"
 ]

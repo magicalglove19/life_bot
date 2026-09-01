@@ -1,14 +1,4 @@
 [
-  "anno",
-  "ora",
-  "minuto",
-  "secondo",
-  "lungo",
-  "corto",
-  "veloce",
-  "mamma",
-  "papà",
-  "cucina",
   "bagno",
   "camera",
   "letto",
@@ -498,5 +488,15 @@
   "pane",
   "sacco",
   "tempo",
-  "collo"
+  "collo",
+  "libro",
+  "telefono",
+  "studente",
+  "famiglia",
+  "vino",
+  "bambino",
+  "auto",
+  "cortile",
+  "bottiglia",
+  "sapore"
 ]

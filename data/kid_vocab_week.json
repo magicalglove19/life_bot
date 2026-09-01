@@ -68,5 +68,75 @@
     "type": "dialog",
     "example": "A: Are you nervous about the presentation? B: No, I'm confident and ready, thanks for asking.",
     "example_ko": "A: 발표가 긴장돼요? B: 아니요, 자신감 있고 준비됐어요, 물어봐 줘서 고마워요."
+  },
+  {
+    "en": "boarding pass",
+    "ko": "탑승권",
+    "type": "sentence",
+    "example": "Please have your boarding pass ready for the security check.",
+    "example_ko": "보안 검색을 위해 탑승권을 준비해 주세요."
+  },
+  {
+    "en": "fasten your seatbelt",
+    "ko": "안전벨트 매다",
+    "type": "sentence",
+    "example": "The pilot asks us to fasten your seatbelt during takeoff.",
+    "example_ko": "파일럿이 이륙 중에 좌석 벨트를 매라고 요청합니다."
+  },
+  {
+    "en": "take notes",
+    "ko": "필기하다",
+    "type": "sentence",
+    "example": "During the lecture, remember to take notes on the key formulas.",
+    "example_ko": "강의 중에 핵심 공식들을 적어 두세요."
+  },
+  {
+    "en": "get along with",
+    "ko": "잘 어울리다",
+    "type": "sentence",
+    "example": "It's important to get along with classmates during group activities.",
+    "example_ko": "팀 활동할 때는 급우들과 잘 어울리는 것이 중요해요."
+  },
+  {
+    "en": "opportunity",
+    "ko": "기회",
+    "type": "sentence",
+    "example": "Studying abroad gives you a valuable opportunity to improve English.",
+    "example_ko": "해외 유학은 영어 실력을 향상시킬 소중한 기회를 줍니다."
+  },
+  {
+    "en": "layover",
+    "ko": "환승 대기시간",
+    "type": "dialog",
+    "example": "A: How long is our layover? B: Only two hours, so we have time to stretch.",
+    "example_ko": "A: 우리 환승 시간은 얼마나 되나요? B: 두 시간만 남았으니 스트레칭할 시간은 있어요."
+  },
+  {
+    "en": "locker",
+    "ko": "사물함",
+    "type": "dialog",
+    "example": "A: I forgot the combination for my locker. B: Let me help you open it.",
+    "example_ko": "A: 내 사물함 비밀번호를 까먹었어. B: 내가 도와줄게, 열어볼게."
+  },
+  {
+    "en": "no big deal",
+    "ko": "괜찮아",
+    "type": "dialog",
+    "example": "A: Sorry I’m late for the meeting. B: No big deal, we just started.",
+    "example_ko": "A: 회의에 늦어서 미안해요. B: 괜찮아, 이제 막 시작했어요."
+  },
+  {
+    "en": "refill",
+    "ko": "리필",
+    "type": "dialog",
+    "example": "A: Could I get a refill on my soda, please? B: Sure, I’ll bring it right away.",
+    "example_ko": "A: 소다 리필 좀 주세요. B: 알겠어요, 바로 가져다 드릴게요."
+  },
+  {
+    "en": "embarrassed",
+    "ko": "부끄러운",
+    "type": "dialog",
+    "example": "A: I spilled coffee on my shirt, I feel so embarrassed. B: Don't worry, it happens to everyone.",
+    "example_ko": "A: 셔츠에 커피를 쏟아서 너무 부끄러워요. B: 걱정 마, 누구에게나 일어나요."
   }
 ]

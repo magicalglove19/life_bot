@@ -1,14 +1,4 @@
 [
-  "bagno",
-  "camera",
-  "letto",
-  "tavolo",
-  "sedia",
-  "porta",
-  "finestra",
-  "parco",
-  "giocare",
-  "rispondere",
   "fare",
   "prendere",
   "andare",
@@ -498,5 +488,15 @@
   "auto",
   "cortile",
   "bottiglia",
-  "sapore"
+  "sapore",
+  "casa",
+  "strada",
+  "parco",
+  "lago",
+  "montagna",
+  "cucchiaio",
+  "forchetta",
+  "burro",
+  "formaggio",
+  "carne"
 ]

@@ -7,6 +7,8 @@ on:
     # 토요일 실행분은 금요일 미국장 마감(토 새벽) 데이터를 다룸
     - cron: '0 20 * * 0-5'
   workflow_dispatch:  # 수동 실행 가능
+  repository_dispatch:
+    types: [morning-stocks]
 
 permissions:
   contents: read

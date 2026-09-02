@@ -5,6 +5,8 @@ on:
     # 토요일 22:00 KST = 토요일 13:00 UTC (DOW 6)
     - cron: '14 13 * * 6'
   workflow_dispatch:
+  repository_dispatch:
+    types: [refresh-tickers]
 
 permissions:
   contents: write  # data/kr_top300.json, us_top400.json 커밋용

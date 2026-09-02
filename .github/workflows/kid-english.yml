@@ -5,6 +5,8 @@ on:
     # 17:00 KST (월~금) = 08:00 UTC (Mon~Fri, DOW 1-5)
     - cron: '6 8 * * 1-5'
   workflow_dispatch:
+  repository_dispatch:
+    types: [kid-english]
 
 permissions:
   contents: write  # data/kid_vocab_week.json 커밋용

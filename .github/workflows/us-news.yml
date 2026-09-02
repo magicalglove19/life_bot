@@ -5,6 +5,8 @@ on:
     # 12:00 KST (매일) = 03:00 UTC
     - cron: '12 3 * * *'
   workflow_dispatch:
+  repository_dispatch:
+    types: [us-news]
 
 permissions:
   contents: read

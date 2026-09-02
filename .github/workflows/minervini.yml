@@ -7,6 +7,8 @@ on:
     # 미국장 마감(16:00 ET = 20:00 UTC)이 확정된 뒤 30분 여유를 두고 시작.
     - cron: '30 20 * * 0-5'
   workflow_dispatch:
+  repository_dispatch:
+    types: [minervini]
 
 permissions:
   contents: read

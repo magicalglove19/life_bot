@@ -6,6 +6,8 @@ on:
     # 스캔 5~10분 + GH Actions 지연 15분 여유 → 15:00 KST(장 마감 전) 이전 도착 목표
     - cron: '50 4 * * 1-5'
   workflow_dispatch:
+  repository_dispatch:
+    types: [ma8-screener]
 
 permissions:
   contents: read

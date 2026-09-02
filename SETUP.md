@@ -107,7 +107,7 @@ git push -u origin main
 | 13:50 | 월~금 | ma8-screener |
 | 14:00 | 매일 | us-news |
 | 05:30 | 월~토 | minervini |
-| 19:00 | 월~금 | kid-english |
+| — | 수동 | kid-english (예약 해제) |
 | 일요일 00:00 | 주 1회 | refresh-tickers |
 
 ⚠️ **GitHub Actions 주의사항**

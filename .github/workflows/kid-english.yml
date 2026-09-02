@@ -1,9 +1,9 @@
 name: kid-english
 
 on:
-  schedule:
-    # 17:00 KST (월~금) = 08:00 UTC (Mon~Fri, DOW 1-5)
-    - cron: '6 8 * * 1-5'
+  # 예약 실행 제거 — GitHub 예약이 4~12시간씩 밀려서 자동 발송을 중단한다.
+  # 수동 실행과 외부 트리거는 그대로 살아 있으므로 되살리려면 schedule만 다시 넣으면 된다.
+  #   - cron: '6 8 * * 1-5'   # 17:06 KST (월~금)
   workflow_dispatch:
   repository_dispatch:
     types: [kid-english]

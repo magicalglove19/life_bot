@@ -1,14 +1,4 @@
 [
-  "fare",
-  "prendere",
-  "andare",
-  "venire",
-  "dire",
-  "sentire",
-  "capire",
-  "spiaggia",
-  "montagna",
-  "lago",
   "parco nazionale",
   "riserva naturale",
   "animale",
@@ -498,5 +488,15 @@
   "forchetta",
   "burro",
   "formaggio",
-  "carne"
+  "carne",
+  "buongiorno",
+  "arrivederci",
+  "sedia",
+  "tavolo",
+  "porta",
+  "finestra",
+  "dottore",
+  "farmacia",
+  "ospedale",
+  "polizia"
 ]

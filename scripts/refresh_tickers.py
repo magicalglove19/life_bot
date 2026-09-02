@@ -6,6 +6,9 @@ import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import timeutil  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 KR_FILE = DATA_DIR / "kr_top300.json"
@@ -121,7 +124,7 @@ def refresh_us() -> list[dict]:
 def save(records: list[dict], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = {
-        "updated_at": datetime.now().isoformat(timespec="seconds"),
+        "updated_at": timeutil.now().isoformat(timespec="seconds"),
         "count": len(records),
         "tickers": records,
     }

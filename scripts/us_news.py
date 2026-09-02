@@ -6,7 +6,7 @@ from pathlib import Path
 import feedparser
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import groq_client, telegram
+from common import groq_client, telegram, timeutil
 
 # MarketWatch RSS 피드 후보 (Top Stories / Real-Time Headlines)
 FEEDS = [
@@ -65,7 +65,7 @@ def clean_html(html: str) -> str:
 
 
 def format_message(items: list[dict]) -> str:
-    today = datetime.now().strftime("%Y-%m-%d (%a)")
+    today = timeutil.stamp()
     lines = [f"📰 <b>미국 경제 뉴스 TOP {len(items)}</b> · {today}", ""]
     for i, it in enumerate(items, 1):
         summary_en = clean_html(it["summary"])[:400]

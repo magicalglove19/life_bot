@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import telegram
+from common import telegram, timeutil
 import inflection_scanner
 import daejjang_scanner
 import rsi_report
@@ -64,8 +64,9 @@ def main() -> int:
         )
         return 1
 
-    today = datetime.now().strftime("%Y-%m-%d (%a)")
-    sections = [f"☀️ <b>아침 브리핑</b> · {today}", ""]
+    # 예약 시각과 실제 발송 시각이 벌어지는 일이 잦아 발송 시각을 함께 찍는다
+    today = timeutil.stamp()
+    sections = [f"☀️ <b>아침 브리핑</b> · {today} {timeutil.stamp('%H:%M')} KST", ""]
 
     # ========== 변곡점 스캐너 (US 먼저) ==========
     sections.append("<b>━━━ 🎯 변곡점 매수 신호 ━━━</b>")

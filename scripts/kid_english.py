@@ -10,7 +10,7 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import groq_client, telegram
+from common import groq_client, telegram, timeutil
 
 ROOT = Path(__file__).resolve().parent.parent
 WEEK_FILE = ROOT / "data" / "kid_vocab_week.json"
@@ -73,7 +73,7 @@ SYSTEM = """당신은 한국 중학생(중1~중2)을 위한 **실용 영어** �
 
 def build_user_prompt(excluded: list[str]) -> str:
     ex = ", ".join(excluded[-200:]) if excluded else "없음"
-    return f"""오늘({datetime.now().strftime('%Y-%m-%d')}) 배울 새 영어 단어 10개를 만들어주세요.
+    return f"""오늘({timeutil.stamp('%Y-%m-%d')}) 배울 새 영어 단어 10개를 만들어주세요.
 
 이번 주에 이미 배운 단어 (제외 필수): {ex}
 
@@ -96,7 +96,7 @@ def _icon(it: dict) -> str:
 
 
 def format_new_message(items: list[dict]) -> str:
-    today = datetime.now().strftime("%Y-%m-%d (%a)")
+    today = timeutil.stamp()
     lines = [f"👦 <b>오늘의 영어 단어 10개</b> (중1~중2 / B1) · {today}", ""]
     for i, it in enumerate(items, 1):
         ex, ex_ko = _example_text(it)
@@ -110,7 +110,7 @@ def format_new_message(items: list[dict]) -> str:
 
 
 def format_friday_message(picked: list[dict]) -> str:
-    today = datetime.now().strftime("%Y-%m-%d (%a)")
+    today = timeutil.stamp()
     lines = [f"🎉 <b>금요일 주간 랜덤 20개 복습</b> · {today}", ""]
     for i, it in enumerate(picked, 1):
         ex, _ = _example_text(it)
@@ -124,7 +124,7 @@ def format_friday_message(picked: list[dict]) -> str:
 
 def is_friday() -> bool:
     # 월=0, 금=4
-    return datetime.now().weekday() == 4
+    return timeutil.weekday() == 4
 
 
 def main() -> int:

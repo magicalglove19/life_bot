@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import groq_client, telegram
+from common import groq_client, telegram, timeutil
 
 ROOT = Path(__file__).resolve().parent.parent
 HISTORY_FILE = ROOT / "data" / "italian_history.json"
@@ -51,7 +51,7 @@ SYSTEM = """당신은 이탈리아어 교사입니다. 한국인 초보 학습�
 
 def build_user_prompt(recent: list[str]) -> str:
     excluded = ", ".join(recent[-100:]) if recent else "없음"
-    return f"""오늘({datetime.now().strftime('%Y-%m-%d')}) 배울 이탈리아어를 생성해주세요.
+    return f"""오늘({timeutil.stamp('%Y-%m-%d')}) 배울 이탈리아어를 생성해주세요.
 
 최근에 이미 배운 단어 (제외): {excluded}
 
@@ -60,7 +60,7 @@ def build_user_prompt(recent: list[str]) -> str:
 
 
 def format_message(data: dict) -> str:
-    today = datetime.now().strftime("%Y-%m-%d (%a)")
+    today = timeutil.stamp()
     lines = [f"🇮🇹 <b>이탈리아어 오늘의 학습</b> · {today}", ""]
     lines.append("<b>📘 단어 10개</b>")
     for i, w in enumerate(data["words"], 1):

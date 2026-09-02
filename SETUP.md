@@ -10,7 +10,7 @@
 1. 텔레그램 앱에서 **@BotFather** 검색 → 대화 시작
 2. `/newbot` 입력
 3. 봇 이름 입력 (예: `My Life Bot`)
-4. 봇 사용자명 입력 (반드시 `bot`으로 끝나야 함, 예: `superstar_life_bot`)
+4. 봇 사용자명 입력 (반드시 `bot`으로 끝나야 함, 예: `my_life_bot`)
 5. BotFather가 **Bot Token** 을 알려줍니다 → 복사해서 어딘가에 메모
    - 예시 형태: `7891234567:AAFxxx_yyyyyyyyyyyyy`
 
@@ -43,7 +43,7 @@
 ### (1) 로컬 초기화
 터미널에서:
 ```bash
-cd "/Users/superstar/Desktop/코딩/life-bot"
+cd /path/to/life-bot   # 레포를 받아둔 경로
 git init
 git add .
 git commit -m "initial: life-bot setup"
@@ -120,7 +120,7 @@ git push -u origin main
 ## 🛠️ 로컬에서 테스트하고 싶을 때
 
 ```bash
-cd "/Users/superstar/Desktop/코딩/life-bot"
+cd /path/to/life-bot   # 레포를 받아둔 경로
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt

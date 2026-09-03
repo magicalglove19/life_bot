@@ -1,14 +1,4 @@
 [
-  "parco nazionale",
-  "riserva naturale",
-  "animale",
-  "pianta",
-  "fiore",
-  "uccello",
-  "pesce",
-  "uomo",
-  "donna",
-  "bambino",
   "cibo",
   "acqua",
   "pane",
@@ -498,5 +488,15 @@
   "dottore",
   "farmacia",
   "ospedale",
-  "polizia"
+  "polizia",
+  "gatto",
+  "cane",
+  "pizza",
+  "caffè",
+  "lavoro",
+  "ufficio",
+  "computer",
+  "ragazzo",
+  "ragazza",
+  "supermercato"
 ]

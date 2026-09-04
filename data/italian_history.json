@@ -1,14 +1,4 @@
 [
-  "cibo",
-  "acqua",
-  "pane",
-  "vino",
-  "caffe",
-  "tavola",
-  "ristorante",
-  "libro",
-  "computer",
-  "telefono cellulare",
   "musica",
   "sport",
   "viaggio",
@@ -498,5 +488,15 @@
   "computer",
   "ragazzo",
   "ragazza",
-  "supermercato"
+  "supermercato",
+  "macchina",
+  "cibo",
+  "banco",
+  "chiave",
+  "orologio",
+  "mercato",
+  "pasta",
+  "pollo",
+  "pesce",
+  "scarpa"
 ]

@@ -1,14 +1,4 @@
 [
-  "musica",
-  "sport",
-  "viaggio",
-  "fotografia",
-  "arte",
-  "storia",
-  "geografia",
-  "spiaggia",
-  "montagna",
-  "lago",
   "parco",
   "giocare",
   "rispondere",
@@ -498,5 +488,15 @@
   "pasta",
   "pollo",
   "pesce",
-  "scarpa"
+  "scarpa",
+  "treno",
+  "autobus",
+  "aeroporto",
+  "colazione",
+  "pranzo",
+  "cena",
+  "mela",
+  "zucchero",
+  "occhiali",
+  "cappotto"
 ]

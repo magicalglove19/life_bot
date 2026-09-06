@@ -104,7 +104,7 @@ git push -u origin main
 |---|---|---|
 | 05:00 | 월~토 | morning-stocks |
 | 09:00 | 매일 | italian |
-| 13:50 | 월~금 | ma8-screener |
+| 13시경 | 월~금 | ma8-screener |
 | 14:00 | 매일 | us-news |
 | 05:30 | 월~토 | minervini |
 | — | 수동 | kid-english (예약 해제) |

@@ -1,14 +1,4 @@
 [
-  "parco",
-  "giocare",
-  "rispondere",
-  "fare",
-  "prendere",
-  "andare",
-  "venire",
-  "hotel",
-  "aeroporto",
-  "treno",
   "autobus",
   "metropolitana",
   "biglietto",
@@ -498,5 +488,15 @@
   "mela",
   "zucchero",
   "occhiali",
-  "cappotto"
+  "cappotto",
+  "giorno",
+  "notte",
+  "perché",
+  "dove",
+  "quanto",
+  "andare",
+  "venire",
+  "parlare",
+  "capire",
+  "comprare"
 ]

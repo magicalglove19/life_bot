@@ -1,14 +1,4 @@
 [
-  "autobus",
-  "metropolitana",
-  "biglietto",
-  "valigia",
-  "passaporto",
-  "viaggiatore",
-  "mappa",
-  "amico",
-  "sorella",
-  "fratello",
   "nonno",
   "nonna",
   "cugino",
@@ -498,5 +488,15 @@
   "venire",
   "parlare",
   "capire",
-  "comprare"
+  "comprare",
+  "cielo",
+  "città",
+  "negozio",
+  "cassa",
+  "scuola",
+  "biglietto",
+  "cappello",
+  "maglietta",
+  "pantaloni",
+  "bagno"
 ]

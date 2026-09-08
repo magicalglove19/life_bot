@@ -1,14 +1,4 @@
 [
-  "nonno",
-  "nonna",
-  "cugino",
-  "cugina",
-  "fidanzato",
-  "fidanzata",
-  "famiglia",
-  "stazione",
-  "piazza",
-  "museo",
   "giardino",
   "fontana",
   "chiesa",
@@ -498,5 +488,15 @@
   "cappello",
   "maglietta",
   "pantaloni",
-  "bagno"
+  "bagno",
+  "gelato",
+  "sveglia",
+  "zaino",
+  "luna",
+  "sole",
+  "pioggia",
+  "cucina",
+  "piscina",
+  "latte",
+  "sale"
 ]

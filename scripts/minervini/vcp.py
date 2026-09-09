@@ -49,7 +49,8 @@ class VCPResult:
     dryup_ratio: float = np.nan
     tightness: float = np.nan
     atr_contraction: float = np.nan    # 최근 ATR% / 베이스 초기 ATR%
-    breakout_volume_mult: float = np.nan
+    breakout_volume_mult: float = np.nan   # 돌파가 일어난 '그 날'의 거래량 / 50일 평균
+    volume_mult_today: float = np.nan      # 오늘 봉의 거래량 / 50일 평균
     score: float = 0.0
     note: str = ""
     base_start_date = None     # 베이스(첫 수축의 고점)가 시작된 날
@@ -162,10 +163,10 @@ def detect(df: pd.DataFrame, cfg: VCPConfig) -> VCPResult:
 
     # 거래량 마름: 최근 5일 평균 대비 50일 평균
     vol = df["Volume"].astype(float)
-    vol5 = float(vol.iloc[-5:].mean())
-    vol50 = float(vol.iloc[-50:].mean())
-    res.dryup_ratio = vol5 / vol50 if vol50 > 0 else np.nan
-    res.breakout_volume_mult = float(vol.iloc[-1]) / vol50 if vol50 > 0 else np.nan
+    vol50s = vol.rolling(50, min_periods=20).mean()
+    vol50 = float(vol50s.iloc[-1])
+    res.dryup_ratio = float(vol.iloc[-5:].mean()) / vol50 if vol50 > 0 else np.nan
+    res.volume_mult_today = float(vol.iloc[-1]) / vol50 if vol50 > 0 else np.nan
 
     res.tightness = true_price_tightness(df)
 
@@ -198,6 +199,11 @@ def detect(df: pd.DataFrame, cfg: VCPConfig) -> VCPResult:
         while i > 0 and closes[i - 1] > res.pivot:
             i -= 1
         res.breakout_date = dates[i]
+        # 미너비니의 돌파 확인은 '돌파한 그 날'의 거래량이다. 오늘 거래량이 아니다.
+        abs_i = len(df) - len(window) + i
+        base_vol = float(vol50s.iloc[abs_i])
+        if base_vol > 0:
+            res.breakout_volume_mult = float(vol.iloc[abs_i]) / base_vol
 
     if res.is_vcp:
         if close > res.pivot:

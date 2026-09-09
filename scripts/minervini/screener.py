@@ -302,6 +302,7 @@ def to_dataframe(candidates: list[Candidate]) -> pd.DataFrame:
                 "베이스시작": history.fmt(v.base_start_date) if ok else "-",
                 "피벗형성": history.fmt(v.pivot_date) if ok else "-",
                 "돌파일": history.fmt(v.breakout_date) if v.breakout_date is not None else "-",
+                "돌파거래량": f"{v.breakout_volume_mult:.2f}x" if np.isfinite(v.breakout_volume_mult) else "-",
                 "52주고점일": history.fmt(c.high52_date),
                 "거래량마름": f"{v.dryup_ratio:.2f}" if (ok and np.isfinite(v.dryup_ratio)) else "-",
                 # 펀더멘털

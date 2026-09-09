@@ -247,6 +247,10 @@ def render_detail(
             dc = LIME if v.dryup_ratio <= 0.85 else (YELLOW if v.dryup_ratio <= 1.0 else GRAY)
             print(f"{thin}   {DIM}거래량 마름{RESET} {dc}{v.dryup_ratio:>5.2f}{RESET}  "
                   f"{bar(clamp(1 - (v.dryup_ratio - 0.4) / 0.9), 26, dc)}  {DIM}0.85 이하면 양호{RESET}")
+        if np.isfinite(v.breakout_volume_mult):
+            bc = LIME if v.breakout_volume_mult >= 1.4 else YELLOW
+            print(f"{thin}   {DIM}돌파일 거래량{RESET} {bc}{v.breakout_volume_mult:>4.2f}x{RESET}  "
+                  f"{bar(clamp(v.breakout_volume_mult / 2.5), 26, bc)}  {DIM}1.40x 이상이면 확인{RESET}")
         if np.isfinite(v.pivot):
             print(f"{thin}   {DIM}피벗{RESET} {WHITE}{BOLD}{v.pivot:,.2f}{RESET} "
                   f"{DIM}(현재가 대비 {v.distance_to_pivot:+.1f}%){RESET}   "
@@ -613,6 +617,12 @@ def _detail_html(d: dict) -> str:
             vb.append(f'<div class="brow"><span class="lb">{i}차</span><span>{dep:.1f}%</span>'
                       f'{_bar_html(dep / mx * 100, "last" if last else "")}'
                       f'<span class="tag">{tag}</span></div>')
+    bov = d["vcp"].get("breakout_vol")
+    if bov is not None and np.isfinite(bov):
+        okv = bov >= 1.4
+        vb.append(f'<div class="brow"><span class="lb">돌파일</span><span>{bov:.2f}x</span>'
+                  f'{_bar_html(min(1.0, bov / 2.5) * 100, "dryok" if okv else "dry")}'
+                  f'<span class="lb">1.40x↑ 확인</span></div>')
     dry = d["vcp"].get("dryup")
     if dry is not None and np.isfinite(dry):
         ok = dry <= 0.85

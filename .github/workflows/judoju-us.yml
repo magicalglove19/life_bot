@@ -1,0 +1,85 @@
+name: judoju-us
+
+# 미국 주도주 스냅샷 — 나스닥 스크리너 + 야후 일봉이 전부다.
+# API 키도 계좌도 필요 없고, 시크릿은 기존 텔레그램 두 개를 그대로 쓴다.
+#
+# ✅ 한국판(judoju.yml)과 달리 예약 지연을 걱정하지 않아도 된다.
+#    한국판은 12:00 스냅샷이 12:00 에 찍혀야 해서 repository_dispatch 가
+#    주 경로였다. 이쪽은 '미국장 마감 후 ~ 다음 개장 전' 아무 때나 돌면 되고
+#    그 창이 17시간 반이다. 이 레포 실측 최악 지연(4시간 20분)도 창 안에 든다.
+#    그래서 예약 하나로 끝난다.
+#
+# 시각 계산 (cron 은 UTC)
+#    미국 마감 16:00 ET = 20:00 UTC(서머타임) / 21:00 UTC(겨울)
+#    21:00 UTC 예약 + 이 대역 실측 지연(약 1시간 36분) → 약 22:36 UTC 실행
+#      = 서머타임 18:36 ET / 겨울 17:36 ET  — 둘 다 마감 후 ✅
+#      = 한국 시간 다음날 아침 07:36 쯤 도착
+#    혹시 장중에 돌더라도 judoju_us.py 가 미완결 세션을 저장하지 않고 건너뛴다.
+
+on:
+  schedule:
+    - cron: '0 21 * * 1-5'      # 미국 월~금 마감 후
+  repository_dispatch:
+    types: [judoju-us]
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '이미 저장된 세션도 다시 처리'
+        required: false
+        default: false
+        type: boolean
+      dry_run:
+        description: '텔레그램으로 보내지 않고 로그로만 확인'
+        required: false
+        default: false
+        type: boolean
+      quick:
+        description: '일봉 조회 생략 (RVOL·눌림 없음, 3초)'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write               # 상태 파일 커밋
+
+concurrency:
+  group: judoju-us
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15         # 일봉 60종목 조회에 30초 남짓, 넉넉히
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install deps
+        run: pip install requests      # common/telegram.py 가 쓴다
+
+      - name: Run 미국 주도주 스냅샷
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          JUDOJU_US_FORCE:  ${{ (github.event_name == 'workflow_dispatch' && inputs.force)   && '1' || '0' }}
+          JUDOJU_US_DRYRUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '1' || '0' }}
+          JUDOJU_US_QUICK:  ${{ (github.event_name == 'workflow_dispatch' && inputs.quick)   && '1' || '0' }}
+        run: python scripts/judoju_us.py
+
+      - name: 상태 커밋
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/judoju_us_state.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "judoju-us: 마감 스냅샷 [skip ci]"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            git push
+          fi

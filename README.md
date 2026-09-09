@@ -17,7 +17,7 @@
 ## 데이터 소스 (전부 무료)
 
 - **주식 가격·RSI**: yfinance (Yahoo)
-- **한국 시가총액 Top 300**: pykrx
+- **한국 시가총액 Top 300**: FinanceDataReader (장애 시 네이버 금융 시가총액 페이지로 자동 대체)
 - **미국 뉴스**: MarketWatch RSS
 - **LLM (번역·생성)**: Groq 무료 티어 (Llama 3.3 70B)
 - **장중 거래대금 순위**: 네이버 금융 거래상위 (인증 불필요)

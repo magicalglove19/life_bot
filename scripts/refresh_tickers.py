@@ -1,8 +1,12 @@
 """주 1회 실행 — 한국 300 + 미국 400 시가총액 상위 종목 갱신.
 data/kr_top300.json, data/us_top400.json에 저장.
 """
+import html as H
 import json
+import re
 import sys
+import time
+import urllib.request
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -18,7 +22,97 @@ KR_TOP_N = 300
 US_TOP_N = 400
 
 
+NAVER_UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
+NAVER_URL = "https://finance.naver.com/sise/sise_market_sum.naver?sosok={sosok}&page={page}"
+_NAVER_LINK = re.compile(r'code=(\d{6})"[^>]*class="tltle">([^<]+)</a>')
+_NAVER_NUM = re.compile(r'<td class="number">(.*?)</td>', re.S)
+NAVER_PAGES = 8          # 시장당 8페이지 × 50종목. ETF를 걸러내므로 넉넉히 받는다
+
+# 네이버 시가총액 페이지에는 ETF·ETN·스팩이 섞여 있다. FinanceDataReader의
+# 종목 리스트에는 이것들이 없으므로, 대체 경로에서도 같은 구성이 되도록 걸러낸다.
+_NAVER_NOISE = ("KODEX", "TIGER", "KBSTAR", "ARIRANG", "ACE ", "SOL ", "PLUS ", "RISE ",
+                "HANARO", "KIWOOM", "TIMEFOLIO", "ETN", "레버리지", "인버스", "선물",
+                "스팩", "리츠")
+
+
+def _is_naver_noise(name: str) -> bool:
+    return any(k in name for k in _NAVER_NOISE)
+
+
+def _naver_clean(cell: str) -> str:
+    return H.unescape(re.sub(r"<[^>]+>", " ", cell)).replace(",", "").replace("%", "").strip()
+
+
+def _naver_page(sosok: int, page: int) -> list[dict]:
+    """네이버 시가총액 페이지 한 장. 컬럼 순서는
+    현재가 · 전일비 · 등락률 · 액면가 · 시가총액(억) · 상장주식수 · ... 이다."""
+    url = NAVER_URL.format(sosok=sosok, page=page)
+    raw = urllib.request.urlopen(
+        urllib.request.Request(url, headers=NAVER_UA), timeout=20
+    ).read()
+    text = raw.decode("euc-kr", errors="replace")
+
+    out = []
+    for row in re.findall(r"<tr[^>]*>(.*?)</tr>", text, re.S):
+        m = _NAVER_LINK.search(row)
+        if not m:
+            continue
+        nums = [_naver_clean(x) for x in _NAVER_NUM.findall(row)]
+        if len(nums) < 5:
+            continue
+        try:
+            cap = int(float(nums[4])) * 100_000_000     # 억원 → 원 (FDR Marcap과 단위 통일)
+        except ValueError:
+            continue
+        if cap <= 0:
+            continue
+        name = H.unescape(m.group(2)).strip()
+        if _is_naver_noise(name):
+            continue
+        out.append({
+            "symbol": f"{m.group(1)}{'.KQ' if sosok else '.KS'}",
+            "name": name,
+            "market": "KOSDAQ" if sosok else "KOSPI",
+            "market_cap": cap,
+        })
+    return out
+
+
+def _refresh_korea_naver() -> list[dict]:
+    """대비책 — 네이버 금융 시가총액 페이지에서 상위 종목을 긁는다.
+
+    FinanceDataReader의 종목 리스트 API가 죽었을 때 쓴다(2026-09 실제로 404가 났다).
+    개별 시세 조회는 멀쩡한데 리스트 API만 죽는 경우가 있어 이쪽만 대체한다.
+    """
+    records = []
+    for sosok in (0, 1):                      # 0=코스피, 1=코스닥
+        for page in range(1, NAVER_PAGES + 1):
+            try:
+                rows = _naver_page(sosok, page)
+            except Exception as e:
+                print(f"[refresh] 네이버 {sosok}/{page} 실패: {e}", file=sys.stderr)
+                continue
+            if not rows:
+                break
+            records.extend(rows)
+            time.sleep(0.3)                   # 예의상 간격
+    if not records:
+        raise RuntimeError("네이버 시가총액 페이지에서 아무것도 못 받음")
+    records.sort(key=lambda r: r["market_cap"], reverse=True)
+    print(f"[refresh] KR: {len(records)}개 수집 → 상위 {KR_TOP_N} (네이버 대체)")
+    return records[:KR_TOP_N]
+
+
 def refresh_korea() -> list[dict]:
+    """KRX 시총 상위 300. FinanceDataReader 우선, 실패하면 네이버로 대체."""
+    try:
+        return _refresh_korea_fdr()
+    except Exception as e:
+        print(f"[refresh] FinanceDataReader 실패 → 네이버로 대체: {e}", file=sys.stderr)
+        return _refresh_korea_naver()
+
+
+def _refresh_korea_fdr() -> list[dict]:
     """FinanceDataReader로 KRX 전체 종목 시총 상위 300."""
     import FinanceDataReader as fdr
 

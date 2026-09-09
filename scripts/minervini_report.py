@@ -4,8 +4,11 @@
 미국장 마감 직후라 당일 종가가 확정된 상태로 판정한다.
 
 메시지가 길어 잘리는 것을 막기 위해 항상 2편으로 나눠 보낸다.
-  1편 — 시장 국면 + 지금 실행 가능한 자리 (돌파 / 매수구간)
+  1편 — 시장 국면 + 지금 실행 가능한 자리 (당일 돌파 / 최근 돌파 / 매수구간)
   2편 — 신규 셋업 · 초타이트 엄선 · Stage 2 요약
+
+'당일 돌파'는 오늘 피벗을 대량 거래로 넘어선 것만 따로 뺀다. 점수 하한을 적용하지
+않는다 — 60점대라도 오늘 터졌으면 봐야 하는 자리이기 때문이다.
 
 판정 로직은 원본(2026 마크미니 스크리너/minervini)을 그대로 벤더링한 것이며,
 여기서는 결과를 텔레그램용으로 요약만 한다.
@@ -32,6 +35,7 @@ MIN_SCORE = float(os.environ.get("MINERVINI_MIN_SCORE", "70"))
 MAX_PART_CHARS = 3400   # 텔레그램 4096자 한도에 여유를 둔 편당 상한
 SECTION_LIMIT = 8       # 섹션당 최대 종목 수
 TIGHT_LAST_DEPTH = 8.0  # 초타이트 판정: 마지막 수축 %
+MAX_DAYS_PAST_PIVOT = 5  # 피벗을 넘은 지 이 거래일을 넘기면 연장(쫓아가는 매수)
 
 LIGHT_EMOJI = {"초록불": "🟢", "노란불": "🟡", "주황불": "🟠", "빨간불": "🔴", "회색불": "⚪"}
 
@@ -50,26 +54,37 @@ def num(v, digits=2, dash="-") -> str:
 
 
 def pivot_age(c) -> str:
+    """매수 타점(피벗)을 넘은 지 며칠인가."""
     if c.days_past_pivot < 0:
         return "피벗 대기"
     if c.days_past_pivot == 0:
-        return "오늘 돌파"
-    return f"돌파 {c.days_past_pivot}일째"
+        return "오늘 넘음"
+    tail = " ⚠연장" if c.days_past_pivot > MAX_DAYS_PAST_PIVOT else ""
+    return f"타점 {c.days_past_pivot}일 경과{tail}"
+
+
+def is_extended(c) -> bool:
+    return c.days_past_pivot > MAX_DAYS_PAST_PIVOT
 
 
 def stock_line(c, with_exec: bool = True) -> str:
-    """종목 한 건. 2줄 — 첫 줄은 정체, 둘째 줄은 실행 정보."""
+    """종목 한 건. 실행 정보가 붙으면 2줄, 아니면 1줄."""
     head = (f"• <b>{esc(c.ticker)}</b> ${num(c.price)} · RS {num(c.rs_rating, 0)}"
             f" · 점수 {num(c.total_score, 0)}")
     if not with_exec:
-        age = f" · 셋업 {c.setup_days}일째" if c.setup_days else ""
-        return head + age
+        # 관심 목록 — 지금 실행할 자리인지(상태)를 같이 보여준다.
+        bits = [esc(c.vcp.status), pivot_age(c)]
+        if c.setup_days:
+            bits.append(f"셋업 {c.setup_days}일째")
+        return head + "\n   " + " · ".join(bits)
 
     stop_txt = f"{num(c.stop)} ({num(-c.stop_pct, 1)}%)" if np.isfinite(c.stop_pct) else num(c.stop)
     detail = f"   진입 {num(c.entry)} / 손절 {stop_txt}"
     if c.shares:
         detail += f" · 수량 {c.shares}"
     detail += f" · {pivot_age(c)}"
+    if np.isfinite(c.vcp.breakout_volume_mult):
+        detail += f" · 돌파거래량 {num(c.vcp.breakout_volume_mult, 2)}x"
     return f"{head}\n{detail}"
 
 
@@ -113,9 +128,15 @@ def trim(parts: list[str]) -> str:
 
 
 def build_messages(res) -> list[str]:
-    cands = [c for c in res.candidates if c.vcp.is_vcp and c.total_score >= MIN_SCORE]
+    setups = [c for c in res.candidates if c.vcp.is_vcp]
+    cands = [c for c in setups if c.total_score >= MIN_SCORE]
 
-    breakout = [c for c in cands if c.vcp.status == "돌파" and 0 <= c.days_past_pivot <= 5]
+    # 당일 돌파는 점수 하한을 적용하지 않는다 — 오늘 터진 자리는 점수와 무관하게 봐야 한다.
+    today_brk = [c for c in setups if c.vcp.status == "돌파" and c.days_past_pivot == 0]
+    recent_brk = [c for c in setups
+                  if c.vcp.status == "돌파" and 0 < c.days_past_pivot <= MAX_DAYS_PAST_PIVOT]
+    stale_brk = [c for c in setups if c.vcp.status == "돌파" and is_extended(c)]
+
     buyzone = [c for c in cands if c.vcp.status == "매수구간"]
     fresh = [c for c in cands if c.setup_days and c.setup_days <= 3]
     tight = [c for c in cands
@@ -129,12 +150,19 @@ def build_messages(res) -> list[str]:
     head1 = (f"🇺🇸 <b>미너비니 스크리너</b> · {stamp}  <b>(1/2)</b>\n"
              f"S&amp;P 500 {res.scanned}종목 스캔 · Stage 2 통과 {len(res.stage2)}"
              f" · 종합 {num(MIN_SCORE, 0)}점 이상 {len(cands)}종목")
-    part1 = trim([
+    blocks1 = [
         head1,
         market_block(res.regime),
-        section("🚀 지금 돌파 중", breakout, empty="없음 — 무리해서 쫓아가지 않는다"),
+        section("⚡ 오늘 돌파 (점수 무관)", today_brk,
+                empty="오늘 새로 돌파한 종목 없음"),
+        section(f"🚀 최근 돌파 (1~{MAX_DAYS_PAST_PIVOT}일 전)", recent_brk,
+                empty="없음 — 무리해서 쫓아가지 않는다"),
         section("🎯 매수구간 대기 (피벗 6% 이내)", buyzone, empty="없음"),
-    ])
+    ]
+    if stale_brk:
+        names = ", ".join(f"{esc(c.ticker)}({c.days_past_pivot}일)" for c in stale_brk[:8])
+        blocks1.append(f"<i>타점 {MAX_DAYS_PAST_PIVOT}일 초과로 제외(연장): {names}</i>")
+    part1 = trim(blocks1)
 
     # ---------- 2편: 관심 목록 ----------
     head2 = f"🇺🇸 <b>미너비니 스크리너</b> · {stamp}  <b>(2/2)</b>"
@@ -148,12 +176,14 @@ def build_messages(res) -> list[str]:
     blocks = [
         head2,
         section("🆕 새로 등장한 셋업 (3일 이내)", fresh, with_exec=False, empty="없음"),
-        section("💎 초타이트 엄선 (거래량 마름 + 마지막 수축 8% 이내)", tight, with_exec=False, empty="없음"),
+        section("💎 초타이트 엄선 (마지막 수축 8% 이내 + 거래량 마름)", tight, with_exec=False,
+                empty="없음"),
     ]
     if stage2_line:
         blocks.append(stage2_line)
     blocks.append(
-        f"<i>계좌 ${ACCOUNT:,.0f} · 1회 리스크 {RISK_PCT}% 기준 수량. "
+        f"<i>💎는 베이스 '모양'이 좋다는 뜻(품질)이고, 지금 살 자리인지는 각 줄의 상태·타점으로 봅니다.\n"
+        f"계좌 ${ACCOUNT:,.0f} · 1회 리스크 {RISK_PCT}% 기준 수량. "
         f"기술적 스크리닝이며 투자 조언이 아닙니다.</i>"
     )
     part2 = trim(blocks)
@@ -162,22 +192,30 @@ def build_messages(res) -> list[str]:
 
 
 def main() -> int:
+    dry = "--dry-run" in sys.argv    # 텔레그램으로 보내지 않고 화면에만 출력
     cfg = Config()
     cfg.risk.account_size = ACCOUNT
     cfg.risk.risk_per_trade_pct = RISK_PCT
 
+    cfg.vcp.max_days_past_pivot = MAX_DAYS_PAST_PIVOT
+
     try:
-        res = screener.scan(cfg, universe_name="sp500", verbose=False)
+        res = screener.scan(cfg, universe_name="sp500", verbose="--verbose" in sys.argv)
     except Exception as e:
-        telegram.send(f"⚠️ <b>미너비니 스크리너 실패</b>\n{esc(e)}")
+        if not dry:
+            telegram.send(f"⚠️ <b>미너비니 스크리너 실패</b>\n{esc(e)}")
         print(f"[minervini] 스캔 실패: {e}", file=sys.stderr)
         return 1
 
     ok = True
     for i, msg in enumerate(build_messages(res), 1):
         print(f"----- {i}편 ({len(msg)}자) -----\n{msg}\n")
+        if dry:
+            continue
         if not telegram.send(msg):
             ok = False
+    if dry:
+        print("[minervini] --dry-run: 텔레그램으로 보내지 않았습니다.", file=sys.stderr)
     print(f"[minervini] {res.scanned}종목 · Stage2 {len(res.stage2)} · {res.elapsed:.0f}초 · 전송 {ok}",
           file=sys.stderr)
     return 0 if ok else 1

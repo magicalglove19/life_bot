@@ -204,7 +204,9 @@ def build(state, ymd, slot):
     if head:
         for rank, code, name, price, chg, amt in head:
             st = streak_days(state, code, ymd)
-            tag = f"[{st}일]" if st >= 2 else "[신규]" if code not in morning else ""
+            # 09:30 기준선이 없는 날에는 '신규'를 붙이지 않는다 (전부 신규가 되어버린다)
+            tag = (f"[{st}일]" if st >= 2
+                   else "[신규]" if morning and code not in morning else "")
             lines.append(f"🔥 <b>{esc(name)}</b>  {chg:+.1f}%  "
                          f"{fmt_amt(amt)}  {rank}위 {tag}".rstrip())
     else:

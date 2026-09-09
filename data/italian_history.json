@@ -1,14 +1,4 @@
 [
-  "giardino",
-  "fontana",
-  "chiesa",
-  "mercato",
-  "ristorante italiano",
-  "gelato",
-  "pizza",
-  "scuola",
-  "insegnante",
-  "studente",
   "libro di testo",
   "compito",
   "esame",
@@ -498,5 +488,15 @@
   "cucina",
   "piscina",
   "latte",
-  "sale"
+  "sale",
+  "stanza",
+  "sala",
+  "bicchiere",
+  "caramella",
+  "freddo",
+  "biscotto",
+  "ombrello",
+  "fiore",
+  "albero",
+  "valigia"
 ]

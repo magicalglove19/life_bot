@@ -205,11 +205,13 @@ GitHub의 예약(schedule) 실행은 이 레포 실측으로 **2~4.6시간** 밀
    - Permissions → Repository permissions → **Contents: Read and write**
    - 만료일은 짧게(90일~1년). 만료되면 아래 2번만 다시 하면 된다
 
-2. **토큰을 맥 키체인에 보관** — 터미널에서 실행하면 값을 물어본다.
-   화면에 찍히지 않고 셸 기록에도 남지 않는다.
+2. **토큰을 맥 키체인에 보관** — 토큰을 복사한 상태(클립보드)에서 실행한다.
+   저장 전에 GitHub에 유효성을 물어보고, 유효할 때만 저장한다.
    ```bash
-   security add-generic-password -a "$USER" -s life-bot-github-pat -w
+   ./scripts/local/set-token.sh
    ```
+   토큰이 화면에 찍히거나 셸 기록에 남지 않는다. 나중에 만료되면 새 토큰을
+   복사한 뒤 이 명령만 다시 실행하면 된다 (기존 항목은 자동 정리된다).
 
 3. **예약 설치**
    ```bash

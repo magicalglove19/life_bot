@@ -1,0 +1,94 @@
+name: judoju
+
+# 당일 주도주 스냅샷 — 네이버 금융 '거래상위' 두 페이지가 데이터의 전부다.
+# API 키도 계좌도 필요 없고, 시크릿은 기존 텔레그램 두 개를 그대로 쓴다.
+#
+# ⚠️ 시각이 생명인 작업이다. GitHub 예약 큐는 슬롯마다 지연이 다르고
+#    (이 레포 실측: UTC 03~05시 4.3~4.6시간), 12:00 KST = 03:00 UTC 가
+#    하필 그 구간이다. 예약만 믿으면 스냅샷이 장 마감 후에 찍힌다.
+#
+#    → 주 경로는 repository_dispatch (외부 스케줄러가 정각에 때린다).
+#      아래 schedule 은 백업일 뿐이고, 슬롯 시간대를 벗어나면
+#      judoju.py 가 상태 오염을 막기 위해 스스로 건너뛴다.
+
+on:
+  repository_dispatch:
+    types: [judoju]          # client_payload: { "slot": "0930" | "1200" | "1500" }
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: '슬롯'
+        required: true
+        default: '1200'
+        type: choice
+        options: ['0930', '1200', '1500']
+      force:
+        description: '시간대 밖에서도 강제 실행'
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    # 백업용. 예약 지연을 감안해 앞당겼지만 정확도는 보장되지 않는다.
+    - cron: '20 23 * * 0-4'   # → 09:30 KST 목표 (전날 23:20 UTC)
+    - cron: '50 1 * * 1-5'    # → 12:00 KST 목표
+    - cron: '50 4 * * 1-5'    # → 15:00 KST 목표
+
+permissions:
+  contents: write            # 상태 파일 커밋
+
+concurrency:
+  group: judoju
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 슬롯 결정
+        id: slot
+        run: |
+          case "${{ github.event_name }}" in
+            repository_dispatch) SLOT="${{ github.event.client_payload.slot }}" ;;
+            workflow_dispatch)   SLOT="${{ inputs.slot }}" ;;
+            schedule)
+              case "${{ github.event.schedule }}" in
+                '20 23 * * 0-4') SLOT=0930 ;;
+                '50 1 * * 1-5')  SLOT=1200 ;;
+                *)               SLOT=1500 ;;
+              esac ;;
+          esac
+          echo "slot=${SLOT:-1200}" >> "$GITHUB_OUTPUT"
+          echo "슬롯: ${SLOT:-1200}"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install deps
+        run: pip install requests      # common/telegram.py 가 쓴다
+
+      - name: Run 주도주 스냅샷
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          JUDOJU_SLOT: ${{ steps.slot.outputs.slot }}
+          JUDOJU_FORCE: ${{ (github.event_name == 'workflow_dispatch' && inputs.force) && '1' || '0' }}
+        run: python scripts/judoju.py
+
+      - name: 상태 커밋
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/judoju_state.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "judoju: ${{ steps.slot.outputs.slot }} 스냅샷 [skip ci]"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            git push
+          fi

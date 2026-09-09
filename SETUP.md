@@ -78,6 +78,8 @@ git push -u origin main
 | `TELEGRAM_CHAT_ID` | 1단계에서 받은 Chat ID |
 | `GROQ_API_KEY` | 2단계에서 받은 Groq 키 |
 
+> 주도주 봇(`judoju`)은 네이버 금융을 읽으므로 추가 시크릿이 없습니다.
+
 ---
 
 ## 5️⃣ 첫 실행 테스트
@@ -109,6 +111,30 @@ git push -u origin main
 | 05:30 | 월~토 | minervini |
 | — | 수동 | kid-english (예약 해제) |
 | 일요일 00:00 | 주 1회 | refresh-tickers |
+| 09:30·12:00·15:00 | 월~금 | judoju (외부 트리거 권장 — 아래 참고) |
+
+### ⏰ judoju 는 예약으로는 제 시간에 못 온다
+
+공식 문서는 15분 지연이라고 하지만 이 레포 실측은 다르다. UTC 03~05시 슬롯에서
+**4.3~4.6시간** 밀린 적이 있고, 12:00 KST 가 정확히 03:00 UTC 다.
+예약만 걸면 주도주 스냅샷이 장 마감 뒤에 찍힌다.
+
+그래서 `judoju` 는 **repository_dispatch** 를 주 경로로 쓴다. 무료 외부 스케줄러
+(cron-job.org 등)에서 아래를 정각에 때리면 지연 없이 즉시 실행된다.
+
+```
+POST https://api.github.com/repos/magicalglove19/life_bot/dispatches
+Authorization: Bearer <PAT (repo 권한)>
+Accept: application/vnd.github+json
+Body: {"event_type":"judoju","client_payload":{"slot":"1200"}}
+```
+
+`slot` 을 `0930` / `1200` / `1500` 으로 바꿔 세 개 등록한다 (월~금).
+PAT 은 GitHub > Settings > Developer settings > Personal access tokens 에서
+`repo` 권한으로 만든다.
+
+예약(schedule)도 백업으로 걸려 있지만, 슬롯 시간대를 벗어나면 `judoju.py` 가
+상태 파일 오염을 막기 위해 **스스로 건너뛴다**. 즉 늦게 온 스냅샷은 버려진다.
 
 ⚠️ **GitHub Actions 주의사항**
 - 무료 티어에서 크론은 **최대 15분 지연** 가능 (공식 문서 언급)

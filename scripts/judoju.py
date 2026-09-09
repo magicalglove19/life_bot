@@ -13,6 +13,7 @@
 거래대금만 큰 초고가주는 표에 안 잡힐 수 있다. 실측으로 삼성전자·SK하이닉스급은
 문제없이 들어온다.
 """
+import datetime as dt
 import html as H
 import json
 import re
@@ -37,6 +38,21 @@ HEADLINE = 5            # 리포트 상단에 크게 보여줄 최대 종목 수
 HEADLINE_CHG = 3.0      # 🔥 로 올리는 최소 등락률(%)
 MAX_CAP_EOK = 300_000   # 시가총액 30조(억 단위) 이상은 제외 — 삼성전자·하이닉스 편향 제거
 MIN_PRICE = 1000        # 동전주 제외
+
+# --- 눌림 관찰 -----------------------------------------------------------
+# 급등한 날 사는 건 어렵다. 며칠 뒤 조정받을 때를 보자는 기능.
+# '눌림'과 '무너짐'을 가르는 건 두 가지다 — 이동평균선을 지키는가, 거래량이 식었는가.
+# 투매로 빠지면 거래량이 오히려 늘고, 쉬어가는 눌림이면 거래량이 준다.
+PB_POOL = 80            # 눌림을 검사할 대상 (거래대금 상위 N종목)
+PB_SURGE_CHG = 8.0      # 급등일 기준 — 전일 대비 %
+PB_LOOKBACK = 11        # 급등일을 찾을 최근 거래일 수
+PB_MIN_DROP = -5.0      # 급등 후 고점 대비 최소 하락률
+PB_MAX_VOLR = 0.6       # 거래량이 급등일의 60% 이하로 식었을 것
+PB_MA5_BAND = 4.0       # 5일선 ±4% 이내 (급등 1~3일 뒤 1차 눌림)
+PB_MA8_LO, PB_MA8_HI = -3.0, 6.0   # 8일선 -3~+6% (급등 4~10일 뒤 2차 눌림)
+DAILY_URL = ("https://api.finance.naver.com/siseJson.naver?symbol={code}"
+             "&requestType=1&startTime={start}&endTime={end}&timeframe=day")
+BAR_RE = re.compile(r"\[([^\[\]]+)\]")
 
 # 슬롯별 유효 시간대 (KST, 분). 예약이 밀려 엉뚱한 시각에 돌면
 # 잘못된 라벨로 상태 파일을 오염시키므로 아예 수집하지 않는다.
@@ -116,8 +132,9 @@ def fetch_all():
     keep.sort(key=lambda r: -r[4])
 
     print(f"[judoju] 원본 {len(rows)}종목 → 필터 후 {len(keep)}종목")
-    return [[i, c, n, p, ch, a] for i, (c, n, p, ch, a, _) in
+    snap = [[i, c, n, p, ch, a] for i, (c, n, p, ch, a, _) in
             enumerate(keep[:STORE_RANK], 1)]
+    return snap, [r[:5] for r in keep[:PB_POOL]]
 
 
 # ---------------------------------------------------------------- 상태
@@ -157,6 +174,95 @@ def looks_like_holiday(state, ymd, snap):
     return False
 
 
+# ---------------------------------------------------------------- 눌림 관찰
+
+def fetch_daily(code, days=70):
+    """네이버 일봉. [날짜, 시가, 고가, 저가, 종가, 거래량, 외국인소진율] 배열이 온다."""
+    end = timeutil.now()
+    url = DAILY_URL.format(code=code,
+                           start=(end - dt.timedelta(days=days)).strftime("%Y%m%d"),
+                           end=end.strftime("%Y%m%d"))
+    req = urllib.request.Request(url, headers=UA)
+    with urllib.request.urlopen(req, timeout=15) as r:
+        txt = r.read().decode("cp949", "replace")
+
+    bars = []
+    for row in BAR_RE.findall(txt):
+        c = [x.strip().strip("\'\"") for x in row.split(",")]
+        if len(c) >= 6 and c[0].isdigit():
+            try:
+                bars.append({"d": c[0], "h": int(c[2]), "c": int(c[4]), "v": int(c[5])})
+            except ValueError:
+                pass
+    return bars
+
+
+def check_pullback(bars):
+    """급등 후 조정 중이면 정보를 돌려주고, 아니면 None."""
+    if len(bars) < 12:
+        return None
+    close = [b["c"] for b in bars]
+    ma5 = sum(close[-5:]) / 5
+    ma8 = sum(close[-8:]) / 8
+
+    # 최근 며칠 안의 급등일. 오늘 급등은 눌림이 아니므로 어제까지만 본다.
+    surge = None
+    for i in range(max(1, len(bars) - PB_LOOKBACK), len(bars) - 1):
+        if (bars[i]["c"] / bars[i - 1]["c"] - 1) * 100 >= PB_SURGE_CHG:
+            surge = i
+    if surge is None:
+        return None
+
+    high = max(b["h"] for b in bars[surge:])
+    drop = (close[-1] / high - 1) * 100
+    volr = bars[-1]["v"] / bars[surge]["v"] if bars[surge]["v"] else 9
+    gap5 = (close[-1] / ma5 - 1) * 100
+    gap8 = (close[-1] / ma8 - 1) * 100
+
+    if drop > PB_MIN_DROP or volr > PB_MAX_VOLR:
+        return None                       # 아직 안 눌렸거나, 거래량이 안 식었다(투매)
+    if close[-1] <= bars[surge - 1]["c"]:
+        return None                       # 급등분을 다 반납했다. 눌림이 아니라 되돌림.
+    if abs(gap5) <= PB_MA5_BAND and close[-1] >= ma8:
+        kind = "5일선"
+    elif PB_MA8_LO <= gap8 <= PB_MA8_HI:
+        kind = "8일선"
+    else:
+        return None                       # 지지선에서 멀거나 이미 무너졌다
+
+    return {"kind": kind, "ago": len(bars) - 1 - surge, "drop": drop,
+            "gap": gap5 if kind == "5일선" else gap8, "volr": volr,
+            "surge_chg": (bars[surge]["c"] / bars[surge - 1]["c"] - 1) * 100}
+
+
+def find_pullbacks(pool, state, ymd):
+    """눌림 후보 목록. 오늘 거래대금 상위 + 최근 며칠 주도주였던 종목을 함께 본다."""
+    seen, targets = set(), []
+    for code, name, *_ in pool:
+        seen.add(code)
+        targets.append((code, name))
+    for d in sorted(state["days"])[-5:]:                  # 눌리면 순위에서 사라지므로
+        for slot in ("1200", "1500"):                      # 과거 주도주도 챙긴다
+            for r in state["days"][d].get(slot, {}).get("snap", []):
+                if r[1] not in seen and r[4] >= HEADLINE_CHG:
+                    seen.add(r[1])
+                    targets.append((r[1], r[2]))
+
+    print(f"[judoju] 눌림 검사 {len(targets)}종목")
+    hits = []
+    for code, name in targets:
+        try:
+            info = check_pullback(fetch_daily(code))
+        except Exception:
+            continue
+        finally:
+            time.sleep(0.12)              # 네이버에 무리 가지 않게
+        if info:
+            hits.append({"code": code, "name": name, **info})
+    print(f"[judoju] 눌림 후보 {len(hits)}개")
+    return sorted(hits, key=lambda h: h["ago"])
+
+
 # ---------------------------------------------------------------- 리포트
 
 def fmt_amt(v):
@@ -182,7 +288,7 @@ def streak_days(state, code, ymd):
     return n
 
 
-def build(state, ymd, slot):
+def build(state, ymd, slot, pullbacks=None):
     day = state["days"].get(ymd, {})
     cur = day.get(slot)
     if not cur:
@@ -226,6 +332,15 @@ def build(state, ymd, slot):
     else:
         lines.append("<i>09:30 기준선이 없어 생존·신규 비교는 생략합니다.</i>")
 
+    if pullbacks:
+        lines += ["", "🎯 <b>눌림 관찰</b> — 급등 후 조정 중"]
+        for h in pullbacks[:5]:
+            lines.append(
+                f"   {esc(h['name'])}  {h['ago']}일전 {h['surge_chg']:+.0f}%  "
+                f"고점 {h['drop']:+.0f}%  {h['kind'][0]}선 {h['gap']:+.1f}%  "
+                f"거래량 {h['volr']:.0%}")
+        lines.append("   <i>매수 신호가 아니라 관찰 후보입니다.</i>")
+
     return "\n".join(lines)
 
 
@@ -258,7 +373,7 @@ def main() -> int:
 
     state = load_state()
     try:
-        snap = fetch_all()
+        snap, pool = fetch_all()
     except Exception as e:
         print(f"[judoju] 수집 실패: {e}", file=sys.stderr)
         return 1
@@ -275,7 +390,8 @@ def main() -> int:
         print(f"[judoju] 09:30 기준선 {len(snap)}종목 저장 (알림 없음).")
         return 0
 
-    text = build(state, ymd, slot)
+    # 눌림 검사는 종목별 일봉을 받아야 해서 20초쯤 걸린다. 알림 슬롯에서만 한다.
+    text = build(state, ymd, slot, find_pullbacks(pool, state, ymd))
     if not text:
         print("[judoju] 리포트를 만들 데이터가 없습니다.", file=sys.stderr)
         return 1

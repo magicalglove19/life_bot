@@ -2,29 +2,53 @@
 # GitHub 토큰을 맥 키체인에 저장한다. 저장 전에 실제로 GitHub에 물어보고,
 # 유효할 때만 저장한다 (무효한 값이 저장돼 나중에 401로 헤매는 걸 막는다).
 #
-# 사용:
-#   1) GitHub에서 토큰을 복사한다 (클립보드에 둔 채로)
-#   2) ./scripts/local/set-token.sh
+# 사용 (셋 중 아무거나):
+#   ./scripts/local/set-token.sh github_pat_xxx   ← 토큰을 인자로
+#   ./scripts/local/set-token.sh                  ← 클립보드에 있으면 자동
+#   ./scripts/local/set-token.sh                  ← 없으면 직접 입력하라고 물어본다
 
 set -euo pipefail
 SERVICE="life-bot-github-pat"
 REPO="magicalglove19/life_bot"
 
-TOKEN="$(pbpaste)"
-TOKEN="${TOKEN//[$'\t\r\n ']/}"          # 눈에 안 보이는 공백·줄바꿈 제거
+strip() { printf '%s' "${1//[$'\t\r\n ']/}"; }
+looks_like_token() {
+  case "$1" in github_pat_*|ghp_*) return 0 ;; *) return 1 ;; esac
+}
 
-if [ -z "$TOKEN" ]; then
-  echo "❌ 클립보드가 비어 있습니다. GitHub에서 토큰을 복사한 뒤 다시 실행하세요." >&2
-  exit 1
+# 1순위: 명령 인자   2순위: 클립보드   3순위: 직접 입력
+TOKEN="$(strip "${1:-}")"
+SRC="인자"
+
+if ! looks_like_token "$TOKEN"; then
+  TOKEN="$(strip "$(pbpaste 2>/dev/null || true)")"
+  SRC="클립보드"
 fi
 
-echo "클립보드에서 읽음: ${#TOKEN}자"
-case "$TOKEN" in
-  github_pat_*) echo "  형식: fine-grained ✅" ;;
-  ghp_*)        echo "  형식: classic ✅" ;;
-  *)            echo "❌ GitHub 토큰이 아닙니다 (github_pat_ 또는 ghp_ 로 시작해야 함)." >&2
-                echo "   복사가 제대로 됐는지 확인하세요." >&2; exit 1 ;;
-esac
+if ! looks_like_token "$TOKEN"; then
+  echo "클립보드에 토큰이 없습니다. 직접 붙여넣으세요."
+  echo "(이 칸에서는 붙여넣기가 화면에 보입니다. Cmd+V 후 엔터)"
+  printf '토큰: '
+  read -r RAW
+  TOKEN="$(strip "$RAW")"
+  SRC="직접 입력"
+fi
+
+if [ -z "$TOKEN" ]; then
+  echo "❌ 아무것도 입력되지 않았습니다." >&2; exit 1
+fi
+
+echo "$SRC에서 읽음: ${#TOKEN}자"
+if looks_like_token "$TOKEN"; then
+  case "$TOKEN" in
+    github_pat_*) echo "  형식: fine-grained ✅" ;;
+    ghp_*)        echo "  형식: classic ✅" ;;
+  esac
+else
+  echo "❌ GitHub 토큰 형식이 아닙니다 (github_pat_ 또는 ghp_ 로 시작해야 함)." >&2
+  echo "   읽은 값의 앞 12자: ${TOKEN:0:12}..." >&2
+  exit 1
+fi
 
 echo -n "GitHub에 유효성 확인 중... "
 CODE="$(curl -s -o /dev/null -w '%{http_code}' \

@@ -9,6 +9,7 @@
 장중에 도는 작업이라 당일 봉은 아직 확정 종가가 아님 → 잠정 결과로 표시.
 예약은 09:05 KST지만 GitHub 대기열 지연(약 4시간)을 감안한 값이라 실제 실행은 13시경이다.
 """
+import json
 import os
 import re
 import sys
@@ -34,6 +35,8 @@ MA_PERIODS = [5, 8, 10, 20, 60, 120]
 HISTORY_DAYS = 420
 MAX_WORKERS = 10
 PER_CALL_TIMEOUT = 20        # 종목 1개당 강제 시간제한(초)
+UNIVERSE_TIMEOUT = 60        # 종목 리스트 조회는 응답이 커서 개별 종목보다 넉넉히 준다
+UNIVERSE_RETRIES = 3         # 이 호출이 실패하면 스캔 자체가 불가능하므로 재시도한다
 MAX_FETCH_SEC = 900          # 수집 전체 예산(초). 넘으면 확보된 것만으로 스크리닝
 TOP_N = 15                   # 패턴별 메시지 표시 개수
 
@@ -50,6 +53,9 @@ B_CONVERGE_LOOKBACK = 20
 B_WAS_BEARISH_THRESHOLD = 0.92
 B_WAS_BEARISH_LOOKBACK = 60
 B_MA20_RISE_LOOKBACK = 5
+
+ROOT = Path(__file__).resolve().parent.parent
+SAVED_UNIVERSE = ROOT / "data" / "kr_top300.json"   # refresh-tickers가 주 1회 갱신
 
 KST = dt.timezone(dt.timedelta(hours=9))
 MARKET_CLOSE_MIN = 15 * 60 + 40   # 15:40 KST — 마감(15:30) + 데이터 반영 여유
@@ -69,16 +75,83 @@ EXCLUDE_DEPT = {
 # ----------------------------------------------------------------------
 # 데이터 수집
 # ----------------------------------------------------------------------
-def get_universe(n=UNIVERSE_SIZE):
+def _fetch_universe_raw(retries=UNIVERSE_RETRIES):
+    """KRX 전체 종목 리스트를 받아온다.
+
+    이 한 번의 호출이 실패하면 스캔 전체가 무산된다(실측 12회 중 2회 실패,
+    둘 다 24초 만에 종료 — 기본 소켓 타임아웃 15초에 걸린 것으로 보인다).
+    그래서 이 호출에 한해 타임아웃을 늘리고 몇 차례 다시 시도한다.
+    """
     import FinanceDataReader as fdr
 
-    df = fdr.StockListing("KRX")
-    df = df[df["Market"].isin(["KOSPI", "KOSDAQ"])]
-    df = df[~df["Dept"].isin(EXCLUDE_DEPT)]
+    prev_timeout = socket.getdefaulttimeout()
+    socket.setdefaulttimeout(UNIVERSE_TIMEOUT)
+    last_err = None
+    try:
+        for attempt in range(retries):
+            try:
+                df = fdr.StockListing("KRX")
+                if df is not None and len(df) > 100:
+                    return df
+                last_err = RuntimeError(
+                    f"종목 리스트가 비었거나 너무 적음 ({0 if df is None else len(df)}건)"
+                )
+            except Exception as e:
+                last_err = e
+            print(f"[ma8] 유니버스 조회 실패 ({attempt+1}/{retries}): {last_err}", file=sys.stderr)
+            if attempt < retries - 1:
+                time.sleep(10 * (attempt + 1))
+    finally:
+        socket.setdefaulttimeout(prev_timeout)
+
+    raise RuntimeError(f"유니버스 조회 {retries}회 모두 실패 — 마지막 오류: {last_err}")
+
+
+def _universe_from_saved():
+    """대비책 — 레포에 주 1회 갱신되는 시가총액 상위 목록을 쓴다.
+
+    FinanceDataReader의 종목 리스트 API가 죽어도(2026-09 실제로 404가 났다)
+    스캔이 통째로 무산되지 않게 한다. 다만 이 목록에는 Dept 정보가 없어
+    SPAC·관리종목 제외 필터는 적용되지 않는다.
+    """
+    if not SAVED_UNIVERSE.exists():
+        raise RuntimeError(f"대비책 목록도 없음: {SAVED_UNIVERSE}")
+    data = json.loads(SAVED_UNIVERSE.read_text(encoding="utf-8"))
+    rows = []
+    for t in data.get("tickers", []):
+        sym = str(t.get("symbol", ""))
+        code = sym.split(".")[0]
+        if len(code) != 6 or not code.isdigit():
+            continue
+        rows.append({
+            "Code": code,
+            "Name": t.get("name", ""),
+            "Market": "KOSDAQ" if sym.endswith(".KQ") else "KOSPI",
+            "Marcap": t.get("market_cap", 0) or 0,
+        })
+    if not rows:
+        raise RuntimeError("대비책 목록이 비어 있음")
+    print(f"[ma8] 대비책 목록 사용 — {SAVED_UNIVERSE.name} "
+          f"(갱신 {data.get('updated_at', '?')[:10]}, {len(rows)}종목)", file=sys.stderr)
+    return pd.DataFrame(rows)
+
+
+def get_universe(n=UNIVERSE_SIZE):
+    """(유니버스 DataFrame, 출처) 반환. 출처는 'live' 또는 'saved'."""
+    try:
+        df = _fetch_universe_raw()
+        df = df[df["Market"].isin(["KOSPI", "KOSDAQ"])]
+        df = df[~df["Dept"].isin(EXCLUDE_DEPT)]
+        source = "live"
+    except Exception as e:
+        print(f"[ma8] 실시간 종목 리스트 실패 → 저장본으로 대체: {e}", file=sys.stderr)
+        df = _universe_from_saved()
+        source = "saved"
+
     df = df[~df["Name"].apply(lambda x: bool(PREFERRED_STOCK_RE.match(str(x))))]
     df = df[df["Marcap"] > 0]
     df = df.sort_values("Marcap", ascending=False).head(n)
-    return df[["Code", "Name", "Market", "Marcap"]].reset_index(drop=True)
+    return df[["Code", "Name", "Market", "Marcap"]].reset_index(drop=True), source
 
 
 def _fetch_raw(code, retries, holder):
@@ -253,7 +326,7 @@ def fmt_num(n) -> str:
         return str(n)
 
 
-def format_message(rows_a, rows_b, fetched, universe_size, bar_date) -> str:
+def format_message(rows_a, rows_b, fetched, universe_size, bar_date, uni_source="live") -> str:
     now = dt.datetime.now(KST)
     stale = bar_date is not None and bar_date != TODAY
     after_close = now.hour * 60 + now.minute >= MARKET_CLOSE_MIN
@@ -266,6 +339,8 @@ def format_message(rows_a, rows_b, fetched, universe_size, bar_date) -> str:
     else:
         head.append("⏳ 장중 시세 기준 — 종가 확정 전 잠정 결과")
     head.append(f"대상 {universe_size}종목 중 {fetched}개 수집 · A {len(rows_a)}건 / B {len(rows_b)}건")
+    if uni_source == "saved":
+        head.append("⚠️ 종목 리스트 API 장애 — 저장된 시가총액 목록으로 대체 스캔")
     head.append("")
 
     lines = list(head)
@@ -315,7 +390,7 @@ def main() -> int:
 
     try:
         print("[ma8] 유니버스 로딩...", file=sys.stderr)
-        uni = get_universe(UNIVERSE_SIZE)
+        uni, uni_source = get_universe(UNIVERSE_SIZE)
     except Exception as e:
         telegram.send(f"⚠️ <b>8일선 스캔 실패</b>\n유니버스 조회 오류: {esc(e)}")
         print(f"[ma8] 유니버스 실패: {e}", file=sys.stderr)
@@ -357,7 +432,7 @@ def main() -> int:
     # 대다수 종목의 마지막 봉 날짜 = 시장 기준일 (휴장 판단용)
     bar_date = pd.Series(bar_dates).mode().iloc[0] if bar_dates else None
 
-    msg = format_message(rows_a, rows_b, len(price_data), len(uni), bar_date)
+    msg = format_message(rows_a, rows_b, len(price_data), len(uni), bar_date, uni_source)
     ok = telegram.send(msg)
     print(f"[ma8] A {len(rows_a)}건 / B {len(rows_b)}건 · 전송 {ok} · 총 {time.time()-t0:.0f}초", file=sys.stderr)
     return 0 if ok else 1

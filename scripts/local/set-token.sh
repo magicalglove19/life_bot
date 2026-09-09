@@ -38,7 +38,7 @@ if [ -z "$TOKEN" ]; then
   echo "❌ 아무것도 입력되지 않았습니다." >&2; exit 1
 fi
 
-echo "$SRC에서 읽음: ${#TOKEN}자"
+echo "${SRC}에서 읽음: ${#TOKEN}자"
 if looks_like_token "$TOKEN"; then
   case "$TOKEN" in
     github_pat_*) echo "  형식: fine-grained ✅" ;;

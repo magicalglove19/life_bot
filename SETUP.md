@@ -187,3 +187,42 @@ python scripts/minervini_report.py
 ## 🔄 스크립트 수정하고 싶을 때
 
 로컬에서 편집 → 커밋/푸시 → 다음 예정 시간에 반영됨. 즉시 테스트는 **Actions 탭 → Run workflow** 수동 실행.
+
+---
+
+## ⏱️ 12:00 주도주만 맥에서 트리거하는 이유
+
+GitHub의 예약(schedule) 실행은 이 레포 실측으로 **2~4.6시간** 밀린다. 지연 폭이
+예약 슬롯의 UTC 시간대를 따라가는데, 그 조합상 **10:00~13:20 KST 사이에 실행되게
+만드는 예약값이 존재하지 않는다.** judoju의 12:00 슬롯이 여기 걸린다.
+
+그래서 이 슬롯만 맥이 직접 GitHub을 찌른다 (`repository_dispatch`는 즉시 실행된다).
+
+### 설치 (한 번만)
+
+1. **GitHub 토큰 발급** — https://github.com/settings/personal-access-tokens/new
+   - Repository access: **Only select repositories** → `life_bot`
+   - Permissions → Repository permissions → **Contents: Read and write**
+   - 만료일은 짧게(90일~1년). 만료되면 아래 2번만 다시 하면 된다
+
+2. **토큰을 맥 키체인에 보관** — 터미널에서 실행하면 값을 물어본다.
+   화면에 찍히지 않고 셸 기록에도 남지 않는다.
+   ```bash
+   security add-generic-password -a "$USER" -s life-bot-github-pat -w
+   ```
+
+3. **예약 설치**
+   ```bash
+   ./scripts/local/install-judoju-trigger.sh
+   ```
+
+### 확인 / 해제
+
+```bash
+./scripts/local/trigger.sh judoju 1200      # 지금 즉시 실행시켜 보기
+tail -f ~/Library/Logs/lifebot-trigger.log  # 실행 기록
+launchctl unload ~/Library/LaunchAgents/com.lifebot.judoju-1200.plist   # 해제
+```
+
+맥이 12시에 자고 있었다면 깨어날 때 실행되고, 13:30(1200 슬롯 허용 한계)을 넘겼다면
+`judoju.py`가 스스로 건너뛴다. 잘못된 시각의 데이터가 상태 파일을 오염시키지 않는다.

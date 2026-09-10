@@ -1,0 +1,57 @@
+name: kcg
+
+# 강창권 상한가 후 눌림목 — 평일 15:00 KST 국내 스크리너.
+#
+# ⚠️ 시각이 중요한 작업이다. 장 마감(15:30) 전에 도착해야 종가로 살 수 있다.
+#    15:00 KST = 06:00 UTC 는 예약을 그대로 걸 수 없는 시간대라(큐 지연),
+#    judoju 의 1500 슬롯과 같은 역산값 '40 1 * * 1-5' 를 쓴다.
+#    (이 레포 실측: UTC 00~05시 예약 → 약 4시간 20분 지연 → 15:00 KST 도착)
+#
+#    큐가 빠른 날에는 10:40 KST 에 실행될 수 있다. 그때는 kcg_report.py 가
+#    발송 창(14:00~16:30 KST)을 벗어났다고 판단해 스스로 건너뛴다.
+#    정확한 시각이 필요하면 외부 스케줄러에서 repository_dispatch 를 때린다.
+
+on:
+  schedule:
+    - cron: '40 1 * * 1-5'      # +4:20 → 15:00 KST (judoju 1500 슬롯과 같은 값)
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '발송 창(14:00~16:30 KST) 밖에서도 강제 발송'
+        required: false
+        default: true
+        type: boolean
+  repository_dispatch:
+    types: [kcg]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kcg
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run 강창권 screener
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # 수동 실행(workflow_dispatch)은 기본으로 시간대 가드를 무시한다.
+          KCG_FORCE: ${{ (github.event_name == 'workflow_dispatch' && inputs.force) && '1' || '0' }}
+        run: python scripts/kcg_report.py

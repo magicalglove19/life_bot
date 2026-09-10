@@ -28,6 +28,9 @@ from common import telegram, timeutil
 
 ROOT = Path(__file__).resolve().parent.parent
 STATE_PATH = ROOT / "data" / "judoju_state.json"
+# 테마 맵은 주 1회만 바뀌고 덩치가 크다(130KB). 매일 바뀌는 스냅샷과 한 파일에
+# 두면 커밋마다 통째로 다시 저장되어 저장소가 쓸데없이 커진다.
+THEMES_PATH = ROOT / "data" / "judoju_themes.json"
 
 URL = "https://finance.naver.com/sise/sise_quant.naver?sosok={sosok}"
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
@@ -50,6 +53,18 @@ PB_MIN_DROP = -5.0      # 급등 후 고점 대비 최소 하락률
 PB_MAX_VOLR = 0.6       # 거래량이 급등일의 60% 이하로 식었을 것
 PB_MA5_BAND = 4.0       # 5일선 ±4% 이내 (급등 1~3일 뒤 1차 눌림)
 PB_MA8_LO, PB_MA8_HI = -3.0, 6.0   # 8일선 -3~+6% (급등 4~10일 뒤 2차 눌림)
+# --- 테마 / 업종 ---------------------------------------------------------
+# 첫 설계에서 "수동 매핑이 제일 어렵다"고 봤던 부분인데, 네이버 테마 페이지로 자동화된다.
+# 266개 테마의 구성종목을 한 번 훑어 code→테마 맵을 만들고 일주일 캐시한다(약 70초).
+# 테마가 없는 종목은 종목 페이지의 업종으로 대체한다.
+THEME_LIST_URL = "https://finance.naver.com/sise/theme.naver?&page={page}"
+THEME_DETAIL_URL = ("https://finance.naver.com/sise/"
+                    "sise_group_detail.naver?type=theme&no={no}")
+ITEM_URL = "https://finance.naver.com/item/main.naver?code={code}"
+THEME_MAX_MEMBERS = 60  # 이보다 크면 '코스닥 우량주' 같이 뭉뚱그린 테마라 버린다
+THEME_TTL_DAYS = 7      # 테마 맵을 다시 만드는 주기
+LEAD_THEME_MIN = 3      # 상위 30 중 N종목 이상이면 '주도 테마'
+
 DAILY_URL = ("https://api.finance.naver.com/siseJson.naver?symbol={code}"
              "&requestType=1&startTime={start}&endTime={end}&timeframe=day")
 BAR_RE = re.compile(r"\[([^\[\]]+)\]")
@@ -174,6 +189,115 @@ def looks_like_holiday(state, ymd, snap):
     return False
 
 
+# ---------------------------------------------------------------- 테마 / 업종
+
+def _get(url, enc="euc-kr"):
+    req = urllib.request.Request(url, headers=UA)
+    with urllib.request.urlopen(req, timeout=15) as r:
+        return r.read().decode(enc, "replace")
+
+
+def build_theme_map():
+    """code → [테마명] 맵을 통째로 만든다. 느리므로 일주일에 한 번만 부른다."""
+    themes = {}
+    for page in range(1, 10):
+        try:
+            html = _get(THEME_LIST_URL.format(page=page))
+        except Exception:
+            break
+        found = dict(re.findall(r'type=theme&no=(\d+)["\'][^>]*>([^<]+)', html))
+        fresh = {k: v for k, v in found.items() if k not in themes}
+        if not fresh:
+            break                       # 마지막 페이지를 넘기면 같은 내용이 반복된다
+        themes.update(fresh)
+        time.sleep(0.12)
+
+    print(f"[judoju] 테마 {len(themes)}개 구성종목 수집 중... (1분쯤 걸립니다)")
+    cmap = {}
+    for no, raw_name in themes.items():
+        try:
+            html = _get(THEME_DETAIL_URL.format(no=no))
+        except Exception:
+            continue
+        finally:
+            time.sleep(0.12)
+        codes = set(re.findall(r'code=(\d{6})["\'][^>]*>[^<]+</a>', html))
+        if not codes or len(codes) > THEME_MAX_MEMBERS:
+            continue                    # 너무 큰 테마는 정보량이 없다
+        label = H.unescape(raw_name).strip()
+        for c in codes:
+            cmap.setdefault(c, []).append(label)
+    print(f"[judoju] 테마 맵 완성 — {len(cmap)}종목")
+    return cmap
+
+
+def ensure_themes(state, ymd):
+    """캐시된 테마 맵을 돌려주고, 일주일 지났으면 다시 만든다."""
+    cached = {}
+    if THEMES_PATH.exists():
+        try:
+            cached = json.loads(THEMES_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            cached = {}
+    built = cached.get("built", "")
+    if built and cached.get("map"):
+        age = (dt.datetime.strptime(ymd, "%Y%m%d")
+               - dt.datetime.strptime(built, "%Y%m%d")).days
+        if 0 <= age < THEME_TTL_DAYS:
+            return cached["map"]
+    try:
+        cmap = build_theme_map()
+    except Exception as e:
+        print(f"[judoju] 테마 맵 생성 실패, 이전 것을 씁니다: {e}")
+        return cached.get("map", {})
+    if cmap:
+        THEMES_PATH.write_text(
+            json.dumps({"built": ymd, "map": cmap}, ensure_ascii=False,
+                       sort_keys=True),
+            encoding="utf-8")
+    return cmap or cached.get("map", {})
+
+
+def fetch_upjong(code):
+    """테마가 없는 종목의 대체값. 종목 페이지는 EUC-KR 이 아니라 UTF-8 이다."""
+    try:
+        html = _get(ITEM_URL.format(code=code), enc="utf-8")
+    except Exception:
+        return ""
+    m = re.search(r'type=upjong&no=\d+["\'][^>]*>([^<]+)', html)
+    return H.unescape(m.group(1)).strip() if m else ""
+
+
+def label_of(cmap, code, cache, hot=()):
+    """표시용 섹터명. 오늘의 주도 테마에 속하면 그걸 우선 쓰고, 없으면 첫 테마, 그것도
+    없으면 업종으로 대체한다. 같은 종목이 여러 테마에 속할 때 리포트가 따로 놀지 않게."""
+    if code in cache:
+        return cache[code]
+    names = cmap.get(code) or []
+    hot_names = {n for n, _ in hot}
+    pick = next((n for n in names if n in hot_names), names[0] if names else "")
+    if not pick:
+        pick = fetch_upjong(code)
+        time.sleep(0.12)
+    cache[code] = short(pick)
+    return cache[code]
+
+
+def short(name):
+    """'5G(5세대 이동통신)' → '5G'. 괄호 안 설명은 리포트에서 자리만 차지한다."""
+    return re.split(r"[(\[]", name, 1)[0].strip() or name
+
+
+def lead_themes(cmap, snap):
+    """상위 30 안에서 같은 테마가 몇 개인지 — 종목이 아니라 테마가 주도하는 국면인지 본다."""
+    count = {}
+    for r in snap:
+        for name in (cmap.get(r[1]) or [])[:3]:
+            count[name] = count.get(name, 0) + 1
+    hot = [(n, c) for n, c in count.items() if c >= LEAD_THEME_MIN]
+    return sorted(hot, key=lambda x: -x[1])[:3]
+
+
 # ---------------------------------------------------------------- 눌림 관찰
 
 def fetch_daily(code, days=70):
@@ -288,7 +412,7 @@ def streak_days(state, code, ymd):
     return n
 
 
-def build(state, ymd, slot, pullbacks=None):
+def build(state, ymd, slot, pullbacks=None, cmap=None):
     day = state["days"].get(ymd, {})
     cur = day.get(slot)
     if not cur:
@@ -304,8 +428,17 @@ def build(state, ymd, slot, pullbacks=None):
     fresh = [r for r in snap if r[1] not in morning and r[1] not in head_codes]
     dropped = morning - codes
 
+    cmap = cmap or {}
+    seccache = {}
+
     label = {"0930": "09:30", "1200": "12:00", "1500": "15:00"}[slot]
     lines = [f"📊 <b>{label} 주도주</b> · {timeutil.stamp('%m/%d (%a)')}", ""]
+
+    hot = lead_themes(cmap, snap)
+    if hot:
+        lines.append("🏷 주도 테마 — "
+                     + " · ".join(f"{esc(short(n))} {c}" for n, c in hot))
+        lines.append("")
 
     if head:
         for rank, code, name, price, chg, amt in head:
@@ -313,7 +446,9 @@ def build(state, ymd, slot, pullbacks=None):
             # 09:30 기준선이 없는 날에는 '신규'를 붙이지 않는다 (전부 신규가 되어버린다)
             tag = (f"[{st}일]" if st >= 2
                    else "[신규]" if morning and code not in morning else "")
-            lines.append(f"🔥 <b>{esc(name)}</b>  {chg:+.1f}%  "
+            sec = label_of(cmap, code, seccache, hot)
+            sec = f" · {esc(sec)}" if sec else ""
+            lines.append(f"🔥 <b>{esc(name)}</b>{sec}  {chg:+.1f}%  "
                          f"{fmt_amt(amt)}  {rank}위 {tag}".rstrip())
     else:
         lines.append(f"🔥 거래대금 상위 중 +{HEADLINE_CHG:.0f}% 이상 없음")
@@ -335,8 +470,10 @@ def build(state, ymd, slot, pullbacks=None):
     if pullbacks:
         lines += ["", "🎯 <b>눌림 관찰</b> — 급등 후 조정 중"]
         for h in pullbacks[:5]:
+            sec = label_of(cmap, h["code"], seccache, hot)
+            sec = f" · {esc(sec)}" if sec else ""
             lines.append(
-                f"   {esc(h['name'])}  {h['ago']}일전 {h['surge_chg']:+.0f}%  "
+                f"   {esc(h['name'])}{sec}  {h['ago']}일전 {h['surge_chg']:+.0f}%  "
                 f"고점 {h['drop']:+.0f}%  {h['kind'][0]}선 {h['gap']:+.1f}%  "
                 f"거래량 {h['volr']:.0%}")
         lines.append("   <i>매수 신호가 아니라 관찰 후보입니다.</i>")
@@ -391,7 +528,8 @@ def main() -> int:
         return 0
 
     # 눌림 검사는 종목별 일봉을 받아야 해서 20초쯤 걸린다. 알림 슬롯에서만 한다.
-    text = build(state, ymd, slot, find_pullbacks(pool, state, ymd))
+    cmap = ensure_themes(state, ymd)
+    text = build(state, ymd, slot, find_pullbacks(pool, state, ymd), cmap)
     if not text:
         print("[judoju] 리포트를 만들 데이터가 없습니다.", file=sys.stderr)
         return 1

@@ -112,6 +112,105 @@ PB_MA8_LO, PB_MA8_HI = -3.0, 6.0   # 8일선 -3~+6% (급등 4~10일 뒤 2차 눌
 RVOL_DAYS = 20          # RVOL 기준 기간
 
 
+# --- 업종 이름 --------------------------------------------------------------
+# 나스닥은 sector 와 industry 를 둘 다 준다. 리포트에 쓰는 건 industry 다.
+# sector 는 거래대금 상위 12개 중 9개가 'Technology' 로 뭉쳐서(실측 2026-09-10)
+# NVDA(반도체)와 META(소프트웨어)를 구분해 주지 못한다. 주도주 리포트에서
+# 알고 싶은 건 '돈이 어느 업종으로 갔나' 이므로 갈라주는 쪽을 쓴다.
+# 이름이 길고 나스닥 특유의 표기라 짧은 한글로 바꾼다 — 상위 100종목 기준
+# 적중률 99%. 표에 없으면 영문을 다듬어 그대로 쓴다.
+INDUSTRY_KO = {
+    "Semiconductors": "반도체",
+    "Computer Software: Prepackaged Software": "SW",
+    "Computer Software: Programming Data Processing": "SW·데이터",
+    "EDP Services": "IT서비스",
+    "Computer Manufacturing": "컴퓨터",
+    "Computer peripheral equipment": "컴퓨터주변",
+    "Computer Communications Equipment": "네트워크장비",
+    "Electronic Components": "전자부품",
+    "Telecommunications Equipment": "통신장비",
+    "Radio And Television Broadcasting And Communications Equipment": "방송통신장비",
+    "Consumer Electronics/Appliances": "가전",
+    "Industrial Machinery/Components": "산업기계",
+    "Metal Fabrications": "금속가공",
+    "Construction/Ag Equipment/Trucks": "건설기계",
+    "Auto Manufacturing": "자동차",
+    "Aerospace": "항공우주",
+    "Military/Government/Technical": "방산",
+    "Biotechnology: Pharmaceutical Preparations": "제약",
+    "Biotechnology: Biological Products (No Diagnostic Substances)": "바이오",
+    "Biotechnology: In Vitro & In Vivo Diagnostic Substances": "진단",
+    "Biotechnology: Laboratory Analytical Instruments": "분석장비",
+    "Medical/Dental Instruments": "의료기기",
+    "Medical Specialities": "의료서비스",
+    "Major Pharmaceuticals": "대형제약",
+    "Major Banks": "은행",
+    "Savings Institutions": "저축은행",
+    "Investment Bankers/Brokers/Service": "증권",
+    "Investment Managers": "자산운용",
+    "Finance: Consumer Services": "소비자금융",
+    "Property-Casualty Insurers": "손해보험",
+    "Life Insurance": "생명보험",
+    "Real Estate Investment Trusts": "리츠",
+    "Real Estate": "부동산",
+    "Homebuilding": "주택건설",
+    "Integrated oil Companies": "정유",
+    "Oil & Gas Production": "석유가스",
+    "Oilfield Services/Equipment": "오일서비스",
+    "Natural Gas Distribution": "가스",
+    "Coal Mining": "석탄",
+    "Electric Utilities: Central": "전력",
+    "Power Generation": "발전",
+    "Major Chemicals": "화학",
+    "Specialty Chemicals": "정밀화학",
+    "Precious Metals": "귀금속",
+    "Steel/Iron Ore": "철강",
+    "Metal Mining": "광산",
+    "Business Services": "기업서비스",
+    "Diversified Commercial Services": "상업서비스",
+    "Professional Services": "전문서비스",
+    "Advertising": "광고",
+    "Catalog/Specialty Distribution": "이커머스",
+    "Department/Specialty Retail Stores": "유통",
+    "Clothing/Shoe/Accessory Stores": "의류유통",
+    "RETAIL: Building Materials": "건자재유통",
+    "Retail: Computer Software & Peripheral Equipment": "IT유통",
+    "Consumer Electronics/Video Chains": "가전유통",
+    "Retail-Auto Dealers and Gas Stations": "자동차유통",
+    "Food Chains": "식품유통",
+    "Restaurants": "외식",
+    "Beverages (Production/Distribution)": "음료",
+    "Package Goods/Cosmetics": "화장품",
+    "Apparel": "의류",
+    "Shoe Manufacturing": "신발",
+    "Farming/Seeds/Milling": "농업",
+    "Transportation Services": "운송",
+    "Air Freight/Delivery Services": "항공화물",
+    "Marine Transportation": "해운",
+    "Railroads": "철도",
+    "Trucking Freight/Courier Services": "화물운송",
+    "Hotels/Resorts": "호텔",
+    "Casinos": "카지노",
+    "Movies/Entertainment": "엔터",
+    "Cable & Other Pay Television Services": "케이블TV",
+    "Telecommunications": "통신",
+    "Building Products": "건자재",
+    "Engineering & Construction": "건설",
+    "Containers/Packaging": "포장재",
+    "Ordnance And Accessories": "무기",
+    "Blank Checks": "스팩",
+}
+
+
+def industry_ko(ind, sector=""):
+    """나스닥 업종명을 짧은 한글로. 표에 없으면 영문을 다듬어 쓴다."""
+    if not ind:
+        return sector or ""
+    if ind in INDUSTRY_KO:
+        return INDUSTRY_KO[ind]
+    s = ind.split(":")[-1].split("/")[0].split("(")[0].strip()
+    return s[:14] or sector or "기타"
+
 # ---------------------------------------------------------------- 수집
 
 def _num(v):
@@ -158,7 +257,8 @@ def fetch_screener():
         if dv < MIN_DOLLAR_VOL:
             continue
         keep.append([sym, short_name(name), price, _num(r.get("pctchange")),
-                     dv, _num(r.get("marketCap"))])
+                     dv, _num(r.get("marketCap")),
+                     industry_ko(r.get("industry"), r.get("sector"))])
     keep.sort(key=lambda x: -x[4])
     print(f"  원본 {len(rows)}종목 → 필터 후 {len(keep)}종목")
     return keep
@@ -199,36 +299,74 @@ def split_buckets(rows):
 
 # ---------------------------------------------------------------- 일봉 / 세션
 
+def _meta_day(meta):
+    """meta.regularMarketTime 이 가리키는 정규장 날짜(ET)."""
+    ts = meta.get("regularMarketTime")
+    return datetime.fromtimestamp(ts, ET) if ts else None
+
+
 def fetch_daily(sym):
-    """야후 일봉. [{d, h, c, v}] 로 정리해서 돌려준다."""
+    """야후 일봉. [{d, h, c, v}] 로 정리해서 돌려준다.
+
+    ⚠️ 마지막 봉을 meta 로 메운다. 야후는 **마감 직후 몇 시간 동안 그날 일봉의
+    close 를 채우지 않는다** — 실측(2026-09-09 20:40 ET, 마감 4시간 40분 뒤)에도
+    close=None 이었고 high·volume 만 들어 있었다. 그런데 같은 응답의 meta 에는
+    확정된 종가(regularMarketPrice)·고가·거래량이 이미 들어 있다.
+
+    이걸 안 메우면 '마지막 봉 = 어제'가 되어 세션이 하루씩 밀린다. 그러면
+    오늘 마감 데이터가 어제 이름으로 저장되고, 그 뒤로 계속 밀려서 전 거래일
+    대비 비교가 통째로 무너진다.
+    """
     d = get_json(CHART.format(sym=urllib.parse.quote(sym.replace("/", "-"))),
                  timeout=20)["chart"]["result"][0]
-    q = d["indicators"]["quote"][0]
+    q, meta = d["indicators"]["quote"][0], d["meta"]
+    rmt = _meta_day(meta)
+    last = len(d["timestamp"]) - 1
+
     bars = []
     for i, ts in enumerate(d["timestamp"]):
+        day = datetime.fromtimestamp(ts, ET).strftime("%Y%m%d")
         c, h, v = q["close"][i], q["high"][i], q["volume"][i]
+        if i == last and rmt and rmt.strftime("%Y%m%d") == day:
+            if c is None:
+                c = meta.get("regularMarketPrice")
+            if h is None:
+                h = meta.get("regularMarketDayHigh")
+            if v is None:
+                v = meta.get("regularMarketVolume")
         if c is None or h is None or v is None:
             continue                                  # 거래정지일 등 구멍
-        bars.append({"d": datetime.fromtimestamp(ts, ET).strftime("%Y%m%d"),
-                     "h": float(h), "c": float(c), "v": int(v)})
-    return bars, d["meta"]
+        bars.append({"d": day, "h": float(h), "c": float(c), "v": int(v)})
+    return bars, meta
 
 
 def session_info():
-    """(세션날짜 YYYYMMDD, 그 세션이 끝났는가) — 시계가 아니라 야후 봉에서 읽는다.
+    """(세션날짜 YYYYMMDD, 그 세션이 끝났는가).
 
-    시계로 추정하면 미국 공휴일 표를 코드에 박아야 한다. 마지막 봉의 날짜를
-    물어보면 Labor Day 든 Thanksgiving 이든 저절로 맞는다.
+    시계로 추정하지 않는다 — 그러면 미국 공휴일 표를 코드에 박아야 한다.
+    야후 meta 의 regularMarketTime 이 '마지막 정규장이 언제 끝났는가'를
+    직접 알려주므로 Labor Day 든 Thanksgiving 이든 저절로 맞는다.
+    (실측: 2026-09-07 Labor Day 는 봉에도 meta 에도 없어 09-04 → 09-08 로 건너뛴다)
+
+    봉이 아니라 meta 를 보는 이유는 fetch_daily 의 주석에 있다 — 마감 직후
+    몇 시간 동안 그날 봉의 close 가 비어 있어서, 봉만 보면 하루씩 밀린다.
     """
     bars, meta = fetch_daily(REF_SYMBOL)
     if not bars:
         raise RuntimeError(f"{REF_SYMBOL} 일봉을 받지 못했습니다.")
-    ymd = bars[-1]["d"]
+    rmt = _meta_day(meta)
+    if rmt is None:                                   # meta 가 없으면 봉으로 물러선다
+        ymd, now_et = bars[-1]["d"], datetime.now(ET)
+        return ymd, not (ymd == now_et.strftime("%Y%m%d")
+                         and now_et.hour * 60 + now_et.minute < 16 * 60)
+
+    ymd = rmt.strftime("%Y%m%d")
     now_et = datetime.now(ET)
-    # 마지막 봉이 오늘이면서 아직 16:00 ET 전이면 장중이다.
-    live = (ymd == now_et.strftime("%Y%m%d")
-            and now_et.hour * 60 + now_et.minute < 16 * 60)
-    return ymd, not live
+    # 그 세션이 끝났나 — 날짜가 오늘 이전이면 당연히 끝났고,
+    # 오늘이면 16:00 ET 를 지났는지로 가른다.
+    closed = (rmt.date() < now_et.date()
+              or now_et.hour * 60 + now_et.minute >= 16 * 60)
+    return ymd, closed
 
 
 # ---------------------------------------------------------------- 상태
@@ -391,13 +529,30 @@ def bucket_lines(state, ymd, rows, prev, rv, title):
     if not head:
         return [f"🔥 <b>{title}</b> — +{HEADLINE_CHG:.0f}% 이상 없음"]
     out = [f"🔥 <b>{title}</b>"]
-    for rank, sym, name, price, chg, dv, cap in head:
+    for rank, sym, name, price, chg, dv, cap, *rest in head:
         r = rv.get(sym)
         rtxt = f" RVOL {r:.1f}x" if r else ""
+        ind = rest[0] if rest else ""
         out.append(f"  <b>{esc(sym)}</b> {chg:+.1f}% {fmt_usd(dv)}{rtxt} "
                    f"{rank}위 {tag_for(state, sym, ymd, prev)} "
-                   f"<i>{esc(name[:20])}</i>".replace("  ", " ").rstrip())
+                   f"<i>{esc(ind)}{' · ' if ind else ''}{esc(name[:18])}</i>"
+                   .replace("  ", " ").rstrip())
     return out
+
+
+def industry_tally(day, top=6):
+    """저장된 스냅샷 전체(대형+중소형)를 업종별로 센다.
+
+    상위 몇 종목이 아니라 저장분 전부를 센다 — 리포트에 이름이 오르지 못한
+    5위 밖에도 같은 업종이 깔려 있으면 그게 오늘 장의 성격이다.
+    """
+    c = {}
+    for b in ("mega", "small"):
+        for r in day.get(b, []):
+            ind = r[7] if len(r) > 7 else ""
+            if ind:
+                c[ind] = c.get(ind, 0) + 1
+    return [kv for kv in sorted(c.items(), key=lambda kv: -kv[1]) if kv[1] >= 2][:top]
 
 
 def build(state, ymd, rv=None, pullbacks=None):
@@ -428,6 +583,10 @@ def build(state, ymd, rv=None, pullbacks=None):
     else:
         lines.append("<i>전 거래일 기록이 없어 생존·신규 비교는 생략합니다.</i>")
 
+    tally = industry_tally(day)
+    if tally:
+        lines.append("업종: " + " · ".join(f"{esc(k)} {v}" for k, v in tally))
+
     if pullbacks:
         lines += ["", "🎯 <b>눌림 관찰</b> — 급등 후 조정 중"]
         for h in pullbacks[:5]:
@@ -451,10 +610,11 @@ def preview(mega, small, live):
     print(f"\n  📊 지금 거래대금 상위 ({when} 기준, 저장 안 함)\n")
     for title, rows in (("중소형", small), ("대형", mega)):
         print(f"   ── {title}")
-        for rank, sym, name, price, chg, dv, cap in rows[:8]:
+        for rank, sym, name, price, chg, dv, cap, *rest in rows[:8]:
             mark = "🔥" if chg >= HEADLINE_CHG else "  "
+            ind = rest[0] if rest else ""
             print(f"   {mark} {rank:2d}. {sym:6s} {chg:+6.1f}%  "
-                  f"{fmt_usd(dv):>8s}  {name[:26]}")
+                  f"{fmt_usd(dv):>8s}  {ind[:8]:10s} {name[:22]}")
         print()
     if live:
         print("  (미국 장이 열려 있습니다. 마감 후 다시 실행하면 저장합니다.)")

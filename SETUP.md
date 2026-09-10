@@ -114,16 +114,51 @@ git push -u origin main
 | 09:30·12:00·15:00 | 월~금 | judoju (외부 트리거 권장 — 아래 참고) |
 | 15:00 | 월~금 | kcg — 강창권 상한가 후 눌림목 (국내) |
 
-### ⏰ kcg 도 같은 시간대 문제를 쓴다
+### ⏰ kcg 는 맥이 정각에 찌른다
 
 `kcg` 는 장 마감(15:30) 전에 도착해야 종가로 살 수 있어서 15:00 이 생명이다.
-judoju 의 1500 슬롯과 같은 역산값 `cron: '40 1 * * 1-5'` 를 쓴다.
+예약만으로는 못 맞추므로 **repository_dispatch 가 주 경로**다.
 
-큐가 빠른 날에는 10:40 KST 에 실행될 수 있는데, 그때 "오늘 종가 매수"를 보내면
-장 초반 가격으로 판정한 엉뚱한 메시지가 된다. 그래서 `kcg_report.py` 가
-**발송 창(14:00~16:30 KST)** 을 벗어나면 스스로 건너뛴다.
-정확한 시각이 필요하면 `{"event_type":"kcg"}` 로 repository_dispatch 를 때린다.
+```bash
+./scripts/local/install-trigger.sh kcg 15:00
+```
+
+`schedule` 은 맥이 꺼져 있을 때를 위한 백업이다. 엉뚱한 시각에 도착하면
+`kcg_report.py` 가 **발송 창(14:00~16:30 KST)** 을 벗어났다고 보고 스스로 건너뛴다.
 수동 실행(Actions → Run workflow)은 기본으로 이 가드를 무시한다.
+
+### 🐛 launchd 가 Desktop 아래 스크립트를 실행하지 못한다
+
+`install-judoju-trigger.sh` 예전 버전은 이 레포의 `trigger.sh` 를 launchd 가
+직접 실행하도록 걸었다. 그런데 레포가 `~/Desktop` 아래에 있으면 macOS TCC 가
+에이전트의 접근을 막는다. **조용히 실패한다** — 알림도 오류창도 없고,
+`launchctl list` 에 종료 코드 126 만 남는다.
+
+```
+$ launchctl list | grep judoju
+-	126	com.lifebot.judoju-1200
+
+$ tail ~/Library/Logs/lifebot-trigger.log
+/bin/bash: .../life-bot/scripts/local/trigger.sh: Operation not permitted
+```
+
+같은 스크립트를 `~/Library/Application Support/` 에 두면 정상 실행된다(종료 코드 0).
+그래서 `install-trigger.sh` 는 실행기를 그쪽으로 복사해 두고 launchd 는 사본을
+실행한다. `trigger.sh` 를 고쳤으면 설치 스크립트를 다시 돌려야 사본이 갱신된다.
+
+### 📊 예약 지연 실측 (2026-09-06 ~ 09-10)
+
+| 예약 슬롯 (UTC) | 지연 | 표본 |
+|---|---|---|
+| 20시 | 1h42m ~ 2h33m | 8 |
+| 21시 | 2h02m | 1 |
+| 22시 | 1h23m ~ 1h53m | 4 |
+| 23시 | 1h49m | 1 |
+| 03시 | 4h48m ~ 5h00m | 3 |
+
+슬롯 안에서는 비교적 일정하지만 슬롯이 달라지면 크게 벌어진다.
+`judoju` 의 `40 1 * * 1-5` (01시 UTC) 는 **아직 한 번도 실행된 적이 없어**
+도착 시각이 검증되지 않았다. 주석의 `+4:20 → 15:00 ✅` 는 관측이 아니라 예상값이다.
 
 ### ⏰ judoju 는 예약으로는 제 시간에 못 온다
 

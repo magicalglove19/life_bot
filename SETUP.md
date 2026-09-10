@@ -123,9 +123,35 @@ git push -u origin main
 ./scripts/local/install-trigger.sh kcg 15:00
 ```
 
-`schedule` 은 맥이 꺼져 있을 때를 위한 백업이다. 엉뚱한 시각에 도착하면
+노트북을 항상 켜두지 않는다면 **외부 스케줄러**(cron-job.org 등)에 걸어둔다.
+맥과 무관하게 정각에 뜬다.
+
+| 항목 | 값 |
+|---|---|
+| URL | `https://api.github.com/repos/magicalglove19/life_bot/dispatches` |
+| Method | `POST` |
+| Header | `Accept: application/vnd.github+json` |
+| Header | `Authorization: Bearer <PAT>` |
+| Header | `X-GitHub-Api-Version: 2022-11-28` |
+| Header | `Content-Type: application/json` |
+| Body | `{"event_type":"kcg"}` |
+| 일정 | 월~금 15:00, 타임존 **Asia/Seoul** |
+| 성공 응답 | `204 No Content` |
+
+⚠️ 이 PAT 은 남의 서버에 저장된다. 맥 키체인의 것을 그대로 넣지 말고
+**이 용도로만 쓰는 별도 토큰**을 새로 발급한다 — Only select repositories → `life_bot`,
+Contents: Read and write, 만료 짧게. 사고가 나면 그 토큰만 폐기하면 된다.
+
+`schedule` 은 이 둘이 다 안 될 때를 위한 마지막 백업이다. 엉뚱한 시각에 도착하면
 `kcg_report.py` 가 **발송 창(14:00~16:30 KST)** 을 벗어났다고 보고 스스로 건너뛴다.
 수동 실행(Actions → Run workflow)은 기본으로 이 가드를 무시한다.
+
+### 🔁 트리거가 셋인데 메시지는 하루 한 번
+
+외부 스케줄러 · 맥 launchd · 백업 예약이 모두 발송 창 안에 들어올 수 있다.
+그러면 같은 메시지가 세 번 간다. 그래서 `kcg_report.py` 는 발송에 성공하면
+`data/kcg_state.json` 에 그날 날짜를 적고 커밋한다. 같은 날 두 번째 실행은
+그 파일을 보고 건너뛴다. 셋 중 아무거나 먼저 성공하면 나머지는 조용히 넘어간다.
 
 ### 🐛 launchd 가 Desktop 아래 스크립트를 실행하지 못한다
 

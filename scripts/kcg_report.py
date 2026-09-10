@@ -10,6 +10,7 @@
 판정 로직은 원본(2026 강창권 상한가 후/kcg)을 그대로 벤더링한 것이며,
 여기서는 결과를 텔레그램용으로 요약만 한다.
 """
+import json
 import os
 import sys
 import datetime as dt
@@ -35,10 +36,28 @@ DETAIL_TOP = int(os.environ.get("KCG_DETAIL_TOP", "10"))
 WINDOW_START = (14, 0)
 WINDOW_END = (16, 30)
 
+# 트리거가 여러 개다 — 외부 스케줄러(repository_dispatch), 맥 launchd, 백업 예약.
+# 셋이 다 창 안에 들어오면 같은 메시지가 세 번 간다. 하루 한 번만 보내도록
+# 마지막 발송일을 커밋해 둔다 (judoju 가 상태 파일을 다루는 방식과 같다).
+STATE = Path(__file__).resolve().parent.parent / "data" / "kcg_state.json"
+
 
 def in_window(now: dt.datetime) -> bool:
     cur = (now.hour, now.minute)
     return WINDOW_START <= cur <= WINDOW_END
+
+
+def load_state() -> dict:
+    try:
+        return json.loads(STATE.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def mark_sent(day: str) -> None:
+    STATE.parent.mkdir(parents=True, exist_ok=True)
+    STATE.write_text(json.dumps({"last_sent": day}, ensure_ascii=False, indent=1) + "\n",
+                     encoding="utf-8")
 
 
 def main() -> int:
@@ -54,6 +73,10 @@ def main() -> int:
             print(f"[kcg] 실행 시각 {now:%H:%M} KST 가 발송 창"
                   f"({WINDOW_START[0]:02d}:{WINDOW_START[1]:02d}~"
                   f"{WINDOW_END[0]:02d}:{WINDOW_END[1]:02d}) 밖입니다 — 건너뜁니다.")
+            return 0
+        last = load_state().get("last_sent")
+        if last == f"{now:%Y-%m-%d}":
+            print(f"[kcg] 오늘({last}) 이미 보냈습니다 — 건너뜁니다.")
             return 0
 
     cfg = Config()
@@ -84,7 +107,11 @@ def main() -> int:
     if dry:
         print(body)
         return 0
-    return 0 if telegram.send(body) else 1
+    if not telegram.send(body):
+        return 1
+    mark_sent(f"{now:%Y-%m-%d}")
+    print(f"[kcg] 발송 완료 — {now:%Y-%m-%d} 기록")
+    return 0
 
 
 if __name__ == "__main__":

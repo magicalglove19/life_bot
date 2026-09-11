@@ -1,14 +1,4 @@
 [
-  "speranza",
-  "felicità",
-  "cultura",
-  "storia",
-  "arte",
-  "musica",
-  "vacanza",
-  "casa",
-  "strada",
-  "negozio",
   "ospedale",
   "scuola elementare",
   "biblioteca",
@@ -498,5 +488,15 @@
   "arancia",
   "pepe",
   "isola",
-  "autunno"
+  "autunno",
+  "libro",
+  "penna",
+  "telefono",
+  "vino",
+  "birra",
+  "limone",
+  "banana",
+  "stazione",
+  "cuscino",
+  "bottiglia"
 ]

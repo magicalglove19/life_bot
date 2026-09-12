@@ -499,7 +499,21 @@ def _esc(x) -> str:
     return html.escape("" if x is None else str(x))
 
 
+# 돌아보기 리포트에서 쓰는 열들 (수익률처럼 부호로 색이 갈리는 것들)
+_SIGNED_COLS = ("수익률", "초과", "MFE", "MAE", "SPY", "평균", "중앙값",
+                "평균이익", "평균손실", "최고", "최악")
+
+
 def _cell_class(col: str, val: str) -> str:
+    if col in _SIGNED_COLS:
+        return "" if val in ("-", "") else ("neg" if val.lstrip().startswith("-") else "pos")
+    if col == "결과":
+        return {"수익": "bk", "손절": "neg", "손실": "warn", "손절(미마감)": "warn",
+                "미체결": "buy", "진행중": "form", "대기중": "form"}.get(val, "")
+    if col == "등급":
+        return "bk" if "강력매수" in val else "buy"
+    if col in ("신호일", "청산일"):
+        return "date"
     if col == "VCP상태":
         return {"돌파": "bk", "매수구간": "buy", "형성중": "form"}.get(val, "warn")
     if col in ("셋업등장", "Stage2진입", "베이스시작", "피벗형성", "돌파일", "52주고점일"):

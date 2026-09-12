@@ -8,7 +8,13 @@
   2편 — 신규 셋업 · 초타이트 엄선 · Stage 2 요약
 
 '당일 돌파'는 오늘 피벗을 대량 거래로 넘어선 것만 따로 뺀다. 점수 하한을 적용하지
-않는다 — 60점대라도 오늘 터졌으면 봐야 하는 자리이기 때문이다.
+않는다 — 점수가 낮아도 오늘 터졌으면 봐야 하는 자리이기 때문이다.
+
+review.py 로 최근 1년을 되감아 재보니 두 자리의 성적이 크게 갈렸다.
+  거래량 확인된 돌파   39건 · 승률 64% · 손익비 1.74 · SPY 대비 +3.49%
+  아직 안 터진 매수구간 357건 · 승률 42% · 손익비 1.18 · SPY 대비 -0.92%
+그래서 돌파에는 1회 리스크를 다 걸고(1.0배) 미확인 자리는 절반만 건다(0.5배).
+메시지에도 이 근거를 같이 실어서, 어느 목록을 믿을지 매일 보이게 한다.
 
 판정 로직은 원본(2026 마크미니 스크리너/minervini)을 그대로 벤더링한 것이며,
 여기서는 결과를 텔레그램용으로 요약만 한다.
@@ -30,7 +36,9 @@ KST = dt.timezone(dt.timedelta(hours=9))
 # 계좌 설정 — 수량 계산에만 쓰인다. 워크플로 env로 덮어쓸 수 있다.
 ACCOUNT = float(os.environ.get("MINERVINI_ACCOUNT", "100000"))
 RISK_PCT = float(os.environ.get("MINERVINI_RISK", "1.25"))
-MIN_SCORE = float(os.environ.get("MINERVINI_MIN_SCORE", "70"))
+MIN_SCORE = float(os.environ.get("MINERVINI_MIN_SCORE", "75"))
+
+CFG_MIN_RS = Config().trend.min_rs_rating   # 화면 설명용 (config.py 가 진짜 기준)
 
 MAX_PART_CHARS = 3400   # 텔레그램 4096자 한도에 여유를 둔 편당 상한
 SECTION_LIMIT = 8       # 섹션당 최대 종목 수
@@ -38,6 +46,10 @@ TIGHT_LAST_DEPTH = 8.0  # 초타이트 판정: 마지막 수축 %
 MAX_DAYS_PAST_PIVOT = 5  # 피벗을 넘은 지 이 거래일을 넘기면 연장(쫓아가는 매수)
 
 LIGHT_EMOJI = {"초록불": "🟢", "노란불": "🟡", "주황불": "🟠", "빨간불": "🔴", "회색불": "⚪"}
+
+# 최근 1년 되감기 실적 (python3 review.py --months 12 로 다시 뽑는다)
+BACKTEST_BREAKOUT = "1년 39건 · 승률 64% · 평균 +4.32% · SPY 대비 +3.49%"
+BACKTEST_SETUP = "1년 357건 · 승률 42% · 평균 -0.38% · SPY 대비 -0.92%"
 
 
 def esc(s) -> str:
@@ -82,14 +94,20 @@ def stock_line(c, with_exec: bool = True) -> str:
     detail = f"   진입 {num(c.entry)} / 손절 {stop_txt}"
     if c.shares:
         detail += f" · 수량 {c.shares}"
+        if c.risk_mult != 1.0:
+            detail += f" (비중 {num(c.risk_mult, 1)}배)"
     detail += f" · {pivot_age(c)}"
     if np.isfinite(c.vcp.breakout_volume_mult):
         detail += f" · 돌파거래량 {num(c.vcp.breakout_volume_mult, 2)}x"
     return f"{head}\n{detail}"
 
 
-def section(title: str, items: list, with_exec: bool = True, empty: str = "해당 없음") -> str:
+def section(title: str, items: list, with_exec: bool = True, empty: str = "해당 없음",
+            note: str | None = None) -> str:
+    """note 는 제목 아래 한 줄로 붙는 보조 설명 (볼드에 먹히지 않게 따로 뺀다)."""
     lines = [f"<b>{title}</b> ({len(items)})" if items else f"<b>{title}</b>"]
+    if note:
+        lines.append(f"<i>{note}</i>")
     if not items:
         lines.append(empty)
         return "\n".join(lines)
@@ -110,9 +128,13 @@ def market_block(r) -> str:
         pos.append("200일선 " + ("위" if r.above_ma200 else "아래"))
         pos.append("200일선 " + ("우상향" if r.ma200_up else "하락"))
         lines.append(f"{esc(r.symbol)} {num(r.price)} · " + " · ".join(pos))
+        # 시장 폭은 RS 70 고정 기준으로 잰 '시장의 상태'다.
+        # 위 헤더의 'Stage 2 통과 N'(내 RS 하한으로 거른 수)과는 다른 숫자다.
         lines.append(f"52주 고점 대비 {num(r.pct_from_high, 1)}% · "
-                     f"Stage 2 비율 {num(r.breadth_stage2, 0)}% · "
+                     f"시장 폭 {num(r.breadth_stage2, 1)}% · "
                      f"200일선 위 {num(r.breadth_above_ma200, 0)}%")
+        lines.append(f"<i>시장 폭 = 전체 중 상승추세 비율(RS 70 고정). "
+                     f"내 기준(RS {num(CFG_MIN_RS, 0)})으로 거른 종목 수와는 다릅니다.</i>")
     if r.comment:
         lines.append(f"<i>{esc(r.comment)}</i>")
     return "\n".join(lines)
@@ -148,16 +170,17 @@ def build_messages(res) -> list[str]:
 
     # ---------- 1편: 국면 + 지금 실행할 자리 ----------
     head1 = (f"🇺🇸 <b>미너비니 스크리너</b> · {stamp}  <b>(1/2)</b>\n"
-             f"S&amp;P 500 {res.scanned}종목 스캔 · Stage 2 통과 {len(res.stage2)}"
+             f"S&amp;P 500 {res.scanned}종목 스캔 · RS {num(CFG_MIN_RS, 0)}+ Stage 2 통과 {len(res.stage2)}"
              f" · 종합 {num(MIN_SCORE, 0)}점 이상 {len(cands)}종목")
     blocks1 = [
         head1,
         market_block(res.regime),
-        section("⚡ 오늘 돌파 (점수 무관)", today_brk,
-                empty="오늘 새로 돌파한 종목 없음"),
+        section("⚡ 오늘 돌파 — 리스크 1.0배 (점수 무관)", today_brk,
+                empty="오늘 새로 돌파한 종목 없음", note=BACKTEST_BREAKOUT),
         section(f"🚀 최근 돌파 (1~{MAX_DAYS_PAST_PIVOT}일 전)", recent_brk,
                 empty="없음 — 무리해서 쫓아가지 않는다"),
-        section("🎯 매수구간 대기 (피벗 6% 이내)", buyzone, empty="없음"),
+        section("🎯 매수구간 대기 — 리스크 0.5배만 (피벗 6% 이내)", buyzone,
+                empty="없음", note=BACKTEST_SETUP),
     ]
     if stale_brk:
         names = ", ".join(f"{esc(c.ticker)}({c.days_past_pivot}일)" for c in stale_brk[:8])
@@ -184,6 +207,8 @@ def build_messages(res) -> list[str]:
     blocks.append(
         f"<i>💎는 베이스 '모양'이 좋다는 뜻(품질)이고, 지금 살 자리인지는 각 줄의 상태·타점으로 봅니다.\n"
         f"계좌 ${ACCOUNT:,.0f} · 1회 리스크 {RISK_PCT}% 기준 수량. "
+        f"거래량으로 확인된 돌파는 리스크를 다 걸고(1.0배), 아직 피벗을 못 넘은 자리는 "
+        f"절반만 겁니다(0.5배) — 1년 되감기에서 두 자리의 성적이 크게 갈렸습니다.\n"
         f"기술적 스크리닝이며 투자 조언이 아닙니다.</i>"
     )
     part2 = trim(blocks)

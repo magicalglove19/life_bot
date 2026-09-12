@@ -24,7 +24,14 @@ class TrendTemplateConfig:
 
     min_pct_above_52w_low: float = 30.0   # 52주 저점 대비 최소 +30%
     max_pct_below_52w_high: float = 25.0  # 52주 고점 대비 -25% 이내
-    min_rs_rating: float = 70.0           # RS 등급 70 이상 (80~90대 선호)
+    # RS 등급 하한. 미너비니는 최소 70, 80~90대를 선호한다고 쓴다.
+    # review.py 로 최근 6개월을 되감아 재보니 이 숫자를 올릴수록 성적이 단조 증가했다.
+    #   RS 70 → '강력매수'(오늘 돌파) 59건 · 월 9.8건 · SPY 대비 +0.32%
+    #   RS 85 → 35건 · 월 5.8건 · 승률 62% · 손익비 1.64 · SPY 대비 +2.14%  ← 현재값
+    #   RS 90 → 26건 · 월 4.3건 · 손익비 1.98 · SPY 대비 +2.70% (표본이 얇다)
+    # 85를 고른 이유는 표본이 35건으로 더 두툼해 결과를 믿을 만해서다.
+    # 다시 재보려면: python3 review.py --compare
+    min_rs_rating: float = 85.0
 
 
 @dataclass
@@ -57,8 +64,16 @@ class VCPConfig:
     # 피벗(매수 트리거)까지의 거리 %
     max_distance_to_pivot: float = 6.0
 
-    # 돌파 확인용 거래량 배수 (50일 평균 대비)
-    breakout_volume_mult: float = 1.4
+    # 돌파 확인용 거래량 배수 (50일 평균 대비).
+    # 미너비니 원문은 1.4배 정도지만, review.py 로 1년치를 재보니 거래량이 셀수록 성적이 단조 증가했다.
+    #   돌파 거래량 없음 331건 → SPY 대비 -0.87%
+    #   1.4~2.0배      62건 → +0.48%
+    #   2.0~3.0배      30건 → +2.53% (승률 60%)
+    #   3.0배+         21건 → +3.43%
+    # 하한을 2.0으로 올리면 '강력매수'가 월 8.2건 → 3.8건으로 줄지만
+    # SPY 대비 +2.20% → +3.49%, 승률 61% → 64%, 손익비 1.55 → 1.74 로 나아진다.
+    # 다시 재보려면: python3 review.py --compare --months 12
+    breakout_volume_mult: float = 2.0
 
     # 피벗(매수 타점)을 넘은 지 이 거래일 수를 넘기면 '연장(extended)' — 쫓아가는 매수가 된다
     max_days_past_pivot: int = 5
@@ -83,6 +98,15 @@ class RiskConfig:
     risk_per_trade_pct: float = 1.25   # 계좌의 1.25~2.5%
     max_stop_pct: float = 8.0          # 최대 손절폭 7~8%
     max_position_pct: float = 25.0     # 한 종목 최대 비중
+
+    # 자리에 따라 거는 리스크를 다르게 한다 — 미너비니도 확신도에 따라 비중을 조절한다.
+    # review.py 로 1년치를 재본 결과가 근거다.
+    #   거래량 확인된 '돌파'  39건 · 승률 64% · 손익비 1.74 · SPY 대비 +3.49%
+    #   아직 안 터진 '매수구간' 357건 · 승률 42% · 손익비 1.18 · SPY 대비 -0.92%
+    # 앞의 자리에 1회 리스크를 다 걸고, 뒤의 자리는 절반만 건다.
+    # 1.0 / 1.0 으로 두면 예전처럼 똑같이 걸린다.
+    breakout_risk_mult: float = 1.0   # 돌파 — 거래량으로 확인된 자리
+    setup_risk_mult: float = 0.5      # 매수구간·형성중 — 아직 확인 안 된 자리
 
 
 @dataclass

@@ -75,21 +75,28 @@ def download_prices(
     """티커별 일봉(OHLCV, 수정주가) DataFrame 딕셔너리를 반환한다."""
     import yfinance as yf
 
+    # 달력일 기준으로 넉넉히 (거래일 ≈ 달력일 * 0.69)
+    start = dt.date.today() - dt.timedelta(days=int(history_days * 1.5) + 10)
+
     cache_path = _cache_file(tag)
     if use_cache and os.path.exists(cache_path):
         try:
             with open(cache_path, "rb") as fh:
                 cached = pickle.load(fh)
-            # 같은 날, 같은 요청 목록이면 그대로 재사용 (상장폐지 등으로 못 받은 종목 포함)
-            if set(tickers).issubset(set(cached.get("requested", []))):
+            # 같은 날, 같은 요청 목록이면 그대로 재사용 (상장폐지 등으로 못 받은 종목 포함).
+            # 단 캐시가 더 짧은 기간으로 받아둔 것이면 다시 받아야 한다 —
+            # 안 그러면 1년치를 요청해도 조용히 6개월치로 계산된다.
+            long_enough = cached.get("start") is not None and cached["start"] <= start.isoformat()
+            if set(tickers).issubset(set(cached.get("requested", []))) and long_enough:
                 if verbose:
                     print(f"  {report.GREEN}✔{report.RESET} 오늘자 캐시 재사용 {report.DIM}({os.path.basename(cache_path)}){report.RESET}")
                 return {t: f for t, f in cached["frames"].items() if t in set(tickers)}
+            if verbose and not long_enough:
+                print(f"  {report.DIM}캐시가 요청 기간보다 짧아 다시 받습니다 "
+                      f"({cached.get('start', '기간 정보 없음')} → {start.isoformat()} 필요){report.RESET}")
         except Exception:
             pass  # 캐시가 깨졌으면 그냥 새로 받는다
 
-    # 달력일 기준으로 넉넉히 (거래일 ≈ 달력일 * 0.69)
-    start = dt.date.today() - dt.timedelta(days=int(history_days * 1.5) + 10)
     frames: dict[str, pd.DataFrame] = {}
     total = len(tickers)
     t0 = time.time()
@@ -119,7 +126,7 @@ def download_prices(
 
     if use_cache and frames:
         with open(cache_path, "wb") as fh:
-            pickle.dump({"requested": list(tickers), "frames": frames}, fh)
+            pickle.dump({"requested": list(tickers), "frames": frames, "start": start.isoformat()}, fh)
         _purge_old(tag)
 
     if verbose:

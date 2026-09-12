@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import dataclasses
 import datetime as dt
 import math
 import os
@@ -17,6 +18,12 @@ from .config import Config
 from .data import _cache_file, download_prices
 from .indicators import percentile_rating, rs_score
 from .universe import load_universe
+
+# 시장 폭(breadth)을 잴 때 쓰는 고정 RS 기준.
+# 시장 국면은 '시장이 어떤 상태인가'를 재는 것이지 '내 필터가 몇 개를 남기는가'가 아니다.
+# cfg.trend.min_rs_rating 을 올리면 통과 종목이 줄어드는데, 그걸 그대로 시장 폭으로 쓰면
+# 필터를 조일 때마다 신호등이 저절로 빨개진다. 그래서 여기만 원문 기준(70)으로 고정한다.
+BREADTH_RS = 70.0
 
 # 종합점수 가중치 (펀더멘털이 없으면 나머지로 재분배)
 WEIGHTS = {"rs": 0.35, "vcp": 0.35, "trend": 0.15, "fund": 0.15}
@@ -48,6 +55,7 @@ class Candidate:
     shares: int = 0
     position_value: float = np.nan
     risk_amount: float = np.nan
+    risk_mult: float = 1.0      # 이 자리에 건 1회 리스크 배수 (돌파 1.0 / 미확인 0.5)
     total_score: float = 0.0
 
 
@@ -60,6 +68,7 @@ class ScanResult:
     universe_name: str
     generated: str
     elapsed: float = 0.0
+    last_bar: str = ""       # 판정의 기준이 된 마지막 거래일 (YYYY-MM-DD)
 
 
 def _trend_strength(c: Candidate) -> float:
@@ -82,6 +91,16 @@ def _composite(c: Candidate) -> float:
     return round(total, 1)
 
 
+def risk_mult(c: Candidate, cfg: Config) -> float:
+    """이 자리에 1회 리스크를 얼마나 걸 것인가 (config.RiskConfig 주석 참고).
+
+    거래량으로 확인된 돌파와, 아직 피벗을 못 넘은 매수구간은 성적이 크게 달랐다.
+    같은 금액을 거는 게 오히려 이상하다.
+    """
+    confirmed = c.vcp.is_vcp and c.vcp.status == "돌파"
+    return cfg.risk.breakout_risk_mult if confirmed else cfg.risk.setup_risk_mult
+
+
 def _position_sizing(c: Candidate, cfg: Config) -> None:
     """미너비니식 역산: 손절폭에서 수량을 정한다 (금액이 아니라 리스크가 먼저)."""
     risk = cfg.risk
@@ -102,7 +121,8 @@ def _position_sizing(c: Candidate, cfg: Config) -> None:
     per_share_risk = c.entry - c.stop
     if per_share_risk <= 0:
         return
-    budget = risk.account_size * risk.risk_per_trade_pct / 100.0
+    c.risk_mult = risk_mult(c, cfg)
+    budget = risk.account_size * risk.risk_per_trade_pct / 100.0 * c.risk_mult
     shares = math.floor(budget / per_share_risk)
     cap = math.floor(risk.account_size * risk.max_position_pct / 100.0 / c.entry)
     c.shares = max(0, min(shares, cap))
@@ -247,8 +267,21 @@ def scan(
 
     candidates.sort(key=lambda x: x.total_score, reverse=True)
 
+    # 시장 폭은 사용자의 RS 하한과 무관하게 고정 기준으로 센다 (위 BREADTH_RS 주석 참고)
     n = max(1, len(metrics))
-    regime = market.analyze(bench, len(stage2) / n * 100.0, above_ma200 / n * 100.0, cfg.benchmark)
+    breadth_trend = dataclasses.replace(cfg.trend, min_rs_rating=BREADTH_RS)
+    n_breadth = sum(
+        1 for tk, m in metrics.items()
+        if trend_template.evaluate(m, float(ratings.get(tk, np.nan)), breadth_trend).ok
+    )
+    regime = market.analyze(bench, n_breadth / n * 100.0, above_ma200 / n * 100.0, cfg.benchmark)
+
+    # 저널·리뷰가 '언제 기준 신호인지'를 알 수 있도록 마지막 거래일을 남긴다
+    last_bar = ""
+    if bench is not None and len(bench):
+        last_bar = pd.Timestamp(bench.index[-1]).strftime("%Y-%m-%d")
+    elif frames:
+        last_bar = pd.Timestamp(max(f.index[-1] for f in frames.values())).strftime("%Y-%m-%d")
 
     total_elapsed = time.time() - t_start
     if verbose:
@@ -263,6 +296,7 @@ def scan(
         universe_name=universe_name,
         generated=dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
         elapsed=total_elapsed,
+        last_bar=last_bar,
     )
 
 
@@ -296,6 +330,7 @@ def to_dataframe(candidates: list[Candidate]) -> pd.DataFrame:
                 "손절%": f"{c.stop_pct:.1f}%" if np.isfinite(c.stop_pct) else "-",
                 "수량": c.shares or "-",
                 "투자금액": f"{c.position_value:,.0f}" if np.isfinite(c.position_value) else "-",
+                "비중": f"{c.risk_mult:.1f}x",
                 # 패턴 상세
                 "수축": " → ".join(f"{d:.0f}%" for d in v.depths) if (ok and v.depths) else "-",
                 "베이스(봉)": v.base_bars if ok else "-",

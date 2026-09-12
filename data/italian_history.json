@@ -1,14 +1,4 @@
 [
-  "ospedale",
-  "scuola elementare",
-  "biblioteca",
-  "ufficio postale",
-  "banca",
-  "polizia",
-  "farmacia",
-  "giardino",
-  "fiorella",
-  "bicicletta",
   "nuotare",
   "spiaggia libera",
   "ombrellone",
@@ -498,5 +488,15 @@
   "banana",
   "stazione",
   "cuscino",
-  "bottiglia"
+  "bottiglia",
+  "casa",
+  "famiglia",
+  "bambino",
+  "madre",
+  "padre",
+  "nonno",
+  "nonna",
+  "strada",
+  "parco",
+  "libreria"
 ]

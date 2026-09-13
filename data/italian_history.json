@@ -1,14 +1,4 @@
 [
-  "nuotare",
-  "spiaggia libera",
-  "ombrellone",
-  "palloncino",
-  "costa",
-  "isola",
-  "faro",
-  "giorno",
-  "notte",
-  "sole",
   "pioggia",
   "vento",
   "neve",
@@ -498,5 +488,15 @@
   "nonna",
   "strada",
   "parco",
-  "libreria"
+  "libreria",
+  "sedia",
+  "tavolo",
+  "finestra",
+  "porta",
+  "lampada",
+  "cucchiaio",
+  "forchetta",
+  "coltello",
+  "sciarpa",
+  "cappuccino"
 ]

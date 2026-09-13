@@ -48,6 +48,9 @@ class Candidate:
     setup_since = None       # VCP 셋업이 잡히기 시작한 날
     setup_days: int = 0
     days_past_pivot: int = -1   # 피벗을 넘은 뒤 지난 거래일 수 (-1이면 아직 피벗 아래)
+    pct_above_pivot: float = np.nan  # 현재가가 피벗보다 몇 % 위인가 (피벗 아래면 NaN)
+    extended: bool = False      # 연장 = 날짜 또는 거리로 타점을 지나쳤다
+    extended_reason: str = ""   # "7일 경과" / "피벗 +10.2%"
     high52_date = None
     entry: float = np.nan
     stop: float = np.nan
@@ -69,6 +72,24 @@ class ScanResult:
     generated: str
     elapsed: float = 0.0
     last_bar: str = ""       # 판정의 기준이 된 마지막 거래일 (YYYY-MM-DD)
+
+
+def mark_extended(c: "Candidate", cfg: Config) -> None:
+    """매수 타점을 지나쳤는지 — 날짜(며칠 지났나)와 거리(얼마나 올랐나) 둘 다 본다."""
+    c.pct_above_pivot = np.nan
+    c.extended, c.extended_reason = False, ""
+    if c.days_past_pivot < 0:
+        return
+    pivot = c.vcp.pivot
+    if np.isfinite(pivot) and pivot > 0 and np.isfinite(c.price):
+        c.pct_above_pivot = (c.price / pivot - 1.0) * 100.0
+    reasons = []
+    if c.days_past_pivot > cfg.vcp.max_days_past_pivot:
+        reasons.append(f"{c.days_past_pivot}일 경과")
+    if np.isfinite(c.pct_above_pivot) and round(c.pct_above_pivot, 6) > cfg.vcp.max_pct_above_pivot:
+        reasons.append(f"피벗 +{c.pct_above_pivot:.1f}%")
+    c.extended = bool(reasons)
+    c.extended_reason = " · ".join(reasons)
 
 
 def _trend_strength(c: Candidate) -> float:
@@ -228,6 +249,7 @@ def scan(
                 c.days_past_pivot = len(idx) - idx.get_loc(c.vcp.breakout_date) - 1
             except KeyError:
                 c.days_past_pivot = -1
+        mark_extended(c, cfg)
 
     # 과거 시점으로 되감아 "언제부터인가"를 역산한다
     if stage2:
@@ -323,6 +345,8 @@ def to_dataframe(candidates: list[Candidate]) -> pd.DataFrame:
                 "Stage2일수": c.stage2_days or "-",
                 "Stage2진입": history.fmt(c.stage2_since) if c.stage2_since is not None else "-",
                 "타점경과": ("오늘" if c.days_past_pivot == 0 else f"{c.days_past_pivot}일") if c.days_past_pivot >= 0 else "-",
+                "피벗위%": f"{c.pct_above_pivot:+.1f}%" if np.isfinite(c.pct_above_pivot) else "-",
+                "연장": c.extended_reason or "-",
                 # 실행
                 "피벗": f"{v.pivot:,.2f}" if ok else "-",
                 "진입가": f"{c.entry:,.2f}" if np.isfinite(c.entry) else "-",

@@ -78,6 +78,10 @@ class VCPConfig:
     # 피벗(매수 타점)을 넘은 지 이 거래일 수를 넘기면 '연장(extended)' — 쫓아가는 매수가 된다
     max_days_past_pivot: int = 5
 
+    # 피벗 위로 이 %를 넘게 올라가 있으면 날짜와 상관없이 '연장'.
+    # 오늘 돌파했어도 피벗 위 10%에서 사면 손절선이 멀어 쫓아가는 매수가 된다.
+    max_pct_above_pivot: float = 5.0
+
     max_stop_distance: float = 10.0  # 피벗 진입 기준 구조적 손절폭 상한 %
 
     # --- 돌파 종목 전용 점수 (vcp._breakout_score) ---

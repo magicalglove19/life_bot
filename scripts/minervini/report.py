@@ -718,7 +718,7 @@ def save_html(path: str, regime, meta: dict, sections: list, sector_groups: list
         nav.append('<a href="#detail">🔎 정밀 진단</a>')
         inner = ""
         if meta.get("detail_dropped"):
-            names = ", ".join(f"{t} ({d}일 경과)" for t, d in meta["detail_dropped"])
+            names = ", ".join(f"{t} ({d})" for t, d in meta["detail_dropped"])
             inner += f'<p class="hint">연장 구간이라 제외: {_esc(names)}</p>'
         inner += ("".join(_detail_html(d) for d in details) if details
                   else '<div class="empty">매수 타점 안에 든 종목이 없습니다.</div>')

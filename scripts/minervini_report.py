@@ -44,6 +44,7 @@ MAX_PART_CHARS = 3400   # 텔레그램 4096자 한도에 여유를 둔 편당 �
 SECTION_LIMIT = 8       # 섹션당 최대 종목 수
 TIGHT_LAST_DEPTH = 8.0  # 초타이트 판정: 마지막 수축 %
 MAX_DAYS_PAST_PIVOT = 5  # 피벗을 넘은 지 이 거래일을 넘기면 연장(쫓아가는 매수)
+MAX_PCT_ABOVE_PIVOT = 5.0  # 피벗 위로 이 %를 넘게 올라가 있어도 연장 (오늘 돌파라도)
 
 LIGHT_EMOJI = {"초록불": "🟢", "노란불": "🟡", "주황불": "🟠", "빨간불": "🔴", "회색불": "⚪"}
 
@@ -66,17 +67,18 @@ def num(v, digits=2, dash="-") -> str:
 
 
 def pivot_age(c) -> str:
-    """매수 타점(피벗)을 넘은 지 며칠인가."""
+    """매수 타점(피벗)을 넘은 지 며칠, 피벗보다 얼마나 위인가."""
     if c.days_past_pivot < 0:
         return "피벗 대기"
-    if c.days_past_pivot == 0:
-        return "오늘 넘음"
-    tail = " ⚠연장" if c.days_past_pivot > MAX_DAYS_PAST_PIVOT else ""
-    return f"타점 {c.days_past_pivot}일 경과{tail}"
+    txt = "오늘 넘음" if c.days_past_pivot == 0 else f"타점 {c.days_past_pivot}일 경과"
+    if np.isfinite(c.pct_above_pivot):
+        txt += f" (피벗 +{c.pct_above_pivot:.1f}%)"
+    return txt + (" ⚠연장" if c.extended else "")
 
 
 def is_extended(c) -> bool:
-    return c.days_past_pivot > MAX_DAYS_PAST_PIVOT
+    """날짜(며칠 지났나) 또는 거리(피벗에서 얼마나 올랐나)로 타점을 지나쳤는지. screener가 판정한다."""
+    return c.extended
 
 
 def stock_line(c, with_exec: bool = True) -> str:
@@ -154,9 +156,10 @@ def build_messages(res) -> list[str]:
     cands = [c for c in setups if c.total_score >= MIN_SCORE]
 
     # 당일 돌파는 점수 하한을 적용하지 않는다 — 오늘 터진 자리는 점수와 무관하게 봐야 한다.
-    today_brk = [c for c in setups if c.vcp.status == "돌파" and c.days_past_pivot == 0]
+    today_brk = [c for c in setups
+                 if c.vcp.status == "돌파" and c.days_past_pivot == 0 and not is_extended(c)]
     recent_brk = [c for c in setups
-                  if c.vcp.status == "돌파" and 0 < c.days_past_pivot <= MAX_DAYS_PAST_PIVOT]
+                  if c.vcp.status == "돌파" and 0 < c.days_past_pivot and not is_extended(c)]
     stale_brk = [c for c in setups if c.vcp.status == "돌파" and is_extended(c)]
 
     buyzone = [c for c in cands if c.vcp.status == "매수구간"]
@@ -177,14 +180,14 @@ def build_messages(res) -> list[str]:
         market_block(res.regime),
         section("⚡ 오늘 돌파 — 리스크 1.0배 (점수 무관)", today_brk,
                 empty="오늘 새로 돌파한 종목 없음", note=BACKTEST_BREAKOUT),
-        section(f"🚀 최근 돌파 (1~{MAX_DAYS_PAST_PIVOT}일 전)", recent_brk,
+        section(f"🚀 최근 돌파 (1~{MAX_DAYS_PAST_PIVOT}일 전 · 피벗 +{MAX_PCT_ABOVE_PIVOT:.0f}% 이내)", recent_brk,
                 empty="없음 — 무리해서 쫓아가지 않는다"),
         section("🎯 매수구간 대기 — 리스크 0.5배만 (피벗 6% 이내)", buyzone,
                 empty="없음", note=BACKTEST_SETUP),
     ]
     if stale_brk:
-        names = ", ".join(f"{esc(c.ticker)}({c.days_past_pivot}일)" for c in stale_brk[:8])
-        blocks1.append(f"<i>타점 {MAX_DAYS_PAST_PIVOT}일 초과로 제외(연장): {names}</i>")
+        names = ", ".join(f"{esc(c.ticker)}({esc(c.extended_reason)})" for c in stale_brk[:8])
+        blocks1.append(f"<i>연장이라 제외 — {MAX_DAYS_PAST_PIVOT}일 초과 또는 피벗 +{MAX_PCT_ABOVE_PIVOT:.0f}% 초과: {names}</i>")
     part1 = trim(blocks1)
 
     # ---------- 2편: 관심 목록 ----------
@@ -223,6 +226,7 @@ def main() -> int:
     cfg.risk.risk_per_trade_pct = RISK_PCT
 
     cfg.vcp.max_days_past_pivot = MAX_DAYS_PAST_PIVOT
+    cfg.vcp.max_pct_above_pivot = MAX_PCT_ABOVE_PIVOT
 
     try:
         res = screener.scan(cfg, universe_name="sp500", verbose="--verbose" in sys.argv)

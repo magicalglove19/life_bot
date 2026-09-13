@@ -52,6 +52,7 @@ class VCPResult:
     breakout_volume_mult: float = np.nan   # 돌파가 일어난 '그 날'의 거래량 / 50일 평균
     volume_mult_today: float = np.nan      # 오늘 봉의 거래량 / 50일 평균
     score: float = 0.0
+    score_kind: str = "setup"   # "setup" | "breakout" — 어느 점수 체계로 매겼는지
     note: str = ""
     base_start_date = None     # 베이스(첫 수축의 고점)가 시작된 날
     pivot_date = None          # 피벗(마지막 수축의 고점)이 만들어진 날
@@ -214,12 +215,70 @@ def detect(df: pd.DataFrame, cfg: VCPConfig) -> VCPResult:
         else:
             res.status = "형성중"
 
-    res.score = _score(res, cfg)
+    # 돌파한 종목과 아직 돌파 전인 셋업은 좋은 조건이 서로 다르다.
+    # 같은 점수로 줄 세우면 돌파 종목의 순위가 뒤집힌다 (config.py 주석 참고).
+    if close > res.pivot:
+        res.score_kind = "breakout"
+        res.score = _breakout_score(res, cfg)
+    else:
+        res.score_kind = "setup"
+        res.score = _setup_score(res, cfg)
     return res
 
 
-def _score(r: VCPResult, cfg: VCPConfig) -> float:
-    """VCP 품질 점수 0~100. 셋업 순위를 매기는 용도."""
+def _clamp(x, lo=0.0, hi=1.0):
+    return max(lo, min(hi, x))
+
+
+def _breakout_score(r: VCPResult, cfg: VCPConfig) -> float:
+    """이미 피벗을 넘은 종목의 점수 0~100.
+
+    돌파의 질을 가르는 건 '돌파일 거래량'과 '피벗 위 여유'였다. 둘 다 세 시장
+    구간에서 같은 방향으로 단조롭게 움직였다.
+      돌파일 거래량 1배↓ → 휩소 67~72% / 3배↑ → 24~52%
+      피벗 위 0.3%↓  → 휩소 75~83% / 4%↑  → 24~38%, 초과수익도 단조 증가
+    """
+    if not r.contractions:
+        return 0.0
+
+    # 돌파일 거래량 (50일 평균 대비). 1배를 밑돌면 0점.
+    if np.isfinite(r.breakout_volume_mult):
+        s_vol = cfg.bo_score_vol_pts * _clamp(
+            (r.breakout_volume_mult - 1.0) / max(1e-9, cfg.bo_score_vol_cap - 1.0)
+        )
+    else:
+        s_vol = 0.0
+
+    # 피벗 위 여유. distance_to_pivot은 피벗이 종가보다 얼마나 위인지라, 돌파 후엔 음수다.
+    above = -r.distance_to_pivot
+    if np.isfinite(above):
+        s_room = cfg.bo_score_room_pts * _clamp(
+            (above - cfg.bo_score_room_min)
+            / max(1e-9, cfg.bo_score_room_cap - cfg.bo_score_room_min)
+        )
+    else:
+        s_room = 0.0
+
+    # 수축 횟수 — 기존 체계와 같은 모양, 배점만 축소
+    n = r.n_contractions
+    unit = cfg.bo_score_count_pts / 25.0
+    s_count = {0: 0.0, 1: 0.0, 2: 15.0 * unit}.get(n, (25.0 if n <= 5 else 20.0) * unit)
+
+    # 수축 감쇠비 — 세 구간 모두 의도대로 작동한 유일한 기존 성분이라 배점을 늘렸다
+    first = r.contractions[0].depth
+    decay = r.contractions[-1].depth / first if first > 0 else 1.0
+    s_decay = cfg.bo_score_decay_pts * _clamp(1 - decay)
+
+    return round(s_vol + s_room + s_count + s_decay, 1)
+
+
+def _setup_score(r: VCPResult, cfg: VCPConfig) -> float:
+    """아직 피벗을 넘지 않은 셋업의 품질 점수 0~100.
+
+    주의: 이 점수는 '돌파 전'을 전제로 한다. 돌파한 종목에 쓰면 거래량 마름·
+    스프레드 압축·피벗 근접도가 전부 역방향으로 작동한다 (config.py 주석 참고).
+    돌파 종목은 _breakout_score()를 쓴다.
+    """
     if not r.contractions:
         return 0.0
 
@@ -251,3 +310,7 @@ def _score(r: VCPResult, cfg: VCPConfig) -> float:
         s_dist = 0
 
     return round(s_count + s_tight + s_decay + s_vol + s_spread + s_dist, 1)
+
+
+# 예전 이름으로 부르던 곳이 있을 수 있어 별칭을 남긴다
+_score = _setup_score

@@ -1,17 +1,15 @@
 """월~금 09:30 / 12:00 / 15:00 (KST) — 당일 주도주 스냅샷.
 
-데이터는 네이버 금융 '거래상위' 페이지 두 장이 전부다. 인증도 API 키도 없다.
-    https://finance.naver.com/sise/sise_quant.naver?sosok=0  (코스피 약 80종목)
-    https://finance.naver.com/sise/sise_quant.naver?sosok=1  (코스닥 약 97종목)
-
-거래량 상위 목록이지만 거래대금·등락률·시가총액이 같은 표에 있어서,
-받아온 뒤 거래대금 기준으로 다시 정렬하면 우리가 원하는 순위가 나온다.
+데이터는 네이버 금융 모바일 JSON API 가 전부다. 인증도 API 키도 없다.
+    거래대금 상위  m.stock.naver.com/api/stocks/priceTop/{KOSPI|KOSDAQ}
+    테마 목록      m.stock.naver.com/api/stocks/theme
+    테마 구성종목   m.stock.naver.com/api/stocks/theme/{no}
+    일봉          api.stock.naver.com/chart/domestic/item/{code}/day
 
 09:30 은 알림을 보내지 않는다. '생존/신규' 판정의 기준선을 만드는 조용한 수집이다.
 
-한계 — 어디까지나 '거래량' 상위 약 180종목이 모집단이다. 거래량은 적은데
-거래대금만 큰 초고가주는 표에 안 잡힐 수 있다. 실측으로 삼성전자·SK하이닉스급은
-문제없이 들어온다.
+2026-09-11 에 네이버가 구 HTML 페이지를 전부 SPA 로 리다이렉트해서 스크래핑이
+죽었고, 그때 이 API 로 옮겼다. 모집단은 코스피·코스닥 거래대금 상위 각 100종목이다.
 """
 import datetime as dt
 import html as H
@@ -32,8 +30,13 @@ STATE_PATH = ROOT / "data" / "judoju_state.json"
 # 두면 커밋마다 통째로 다시 저장되어 저장소가 쓸데없이 커진다.
 THEMES_PATH = ROOT / "data" / "judoju_themes.json"
 
-URL = "https://finance.naver.com/sise/sise_quant.naver?sosok={sosok}"
-UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
+# 2026-09-11, 네이버가 구 HTML 페이지를 전부 새 SPA 로 리다이렉트하면서 스크래핑이
+# 죽었다. 그 뒤로는 SPA 가 쓰는 JSON API 를 직접 부른다. 결과적으로 더 낫다 —
+# 거래대금·시가총액이 raw 로 오고 ETF/ETN 여부가 stockEndType 필드로 구분된다.
+MAPI = "https://m.stock.naver.com/api"
+RANK_URL = MAPI + "/stocks/priceTop/{cat}?page=1&pageSize=100"
+UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+      "Referer": "https://stock.naver.com/"}
 
 KEEP_DAYS = 10          # 상태 파일에 남길 거래일 수
 STORE_RANK = 30         # 저장할 거래대금 순위. 출력이 아니라 저장이다.
@@ -57,17 +60,14 @@ PB_MA8_LO, PB_MA8_HI = -3.0, 6.0   # 8일선 -3~+6% (급등 4~10일 뒤 2차 눌
 # 첫 설계에서 "수동 매핑이 제일 어렵다"고 봤던 부분인데, 네이버 테마 페이지로 자동화된다.
 # 266개 테마의 구성종목을 한 번 훑어 code→테마 맵을 만들고 일주일 캐시한다(약 70초).
 # 테마가 없는 종목은 종목 페이지의 업종으로 대체한다.
-THEME_LIST_URL = "https://finance.naver.com/sise/theme.naver?&page={page}"
-THEME_DETAIL_URL = ("https://finance.naver.com/sise/"
-                    "sise_group_detail.naver?type=theme&no={no}")
-ITEM_URL = "https://finance.naver.com/item/main.naver?code={code}"
+THEME_LIST_URL = MAPI + "/stocks/theme?page={page}&pageSize=100"
+THEME_DETAIL_URL = MAPI + "/stocks/theme/{no}?page=1&pageSize=100"
 THEME_MAX_MEMBERS = 60  # 이보다 크면 '코스닥 우량주' 같이 뭉뚱그린 테마라 버린다
 THEME_TTL_DAYS = 7      # 테마 맵을 다시 만드는 주기
 LEAD_THEME_MIN = 3      # 상위 30 중 N종목 이상이면 '주도 테마'
 
-DAILY_URL = ("https://api.finance.naver.com/siseJson.naver?symbol={code}"
-             "&requestType=1&startTime={start}&endTime={end}&timeframe=day")
-BAR_RE = re.compile(r"\[([^\[\]]+)\]")
+DAILY_URL = ("https://api.stock.naver.com/chart/domestic/item/{code}/day"
+             "?startDateTime={start}0000&endDateTime={end}2359")
 
 # 슬롯별 유효 시간대 (KST, 분). 예약이 밀려 엉뚱한 시각에 돌면
 # 잘못된 라벨로 상태 파일을 오염시키므로 아예 수집하지 않는다.
@@ -83,51 +83,52 @@ NOISE = ("KODEX", "TIGER", "KBSTAR", "ARIRANG", "ACE ", "SOL ", "PLUS ", "RISE "
          "HANARO", "KIWOOM", "TIMEFOLIO", "ETN", "레버리지", "인버스", "선물",
          "스팩", "제..호", "리츠")
 PREF_RE = re.compile(r"\d*우(B|C)?$")          # 우선주
-ROW_RE = re.compile(r"<tr>(.*?)</tr>", re.S)
-LINK_RE = re.compile(r'code=(\d{6})" class="tltle">([^<]+)</a>')
-NUM_RE = re.compile(r'<td class="number">(.*?)</td>', re.S)
 
 
 # ---------------------------------------------------------------- 수집
 
-def _clean(cell):
-    return re.sub(r"<[^>]+>", "", cell).replace(",", "").replace("%", "").strip()
+def fetch_json(url, timeout=20):
+    req = urllib.request.Request(url, headers=UA)
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+
+def num(v, default=0):
+    """API 는 '1,234' 같은 콤마 문자열과 숫자를 섞어서 준다."""
+    try:
+        return float(str(v).replace(",", "").strip())
+    except (TypeError, ValueError):
+        return default
 
 
 def is_noise(name):
     return PREF_RE.search(name) or any(k in name for k in NOISE)
 
 
-def fetch_market(sosok):
-    req = urllib.request.Request(URL.format(sosok=sosok), headers=UA)
-    with urllib.request.urlopen(req, timeout=20) as r:
-        page = r.read().decode("euc-kr", "replace")
-
+def fetch_market(cat):
+    """거래대금 상위 100. 정렬이 간간이 어긋나 있어 받은 뒤 직접 다시 정렬한다."""
     out = {}
-    for tr in ROW_RE.findall(page):
-        m = LINK_RE.search(tr)
-        if not m:
+    for x in fetch_json(RANK_URL.format(cat=cat)).get("stocks", []):
+        if x.get("stockEndType") != "stock":        # etf / etn 제외
             continue
-        nums = [_clean(c) for c in NUM_RE.findall(tr)]
-        if len(nums) < 8:
+        code = x.get("itemCode")
+        name = (x.get("stockName") or "").strip()
+        if not code or not name:
             continue
-        try:
-            # 현재가 / 전일비 / 등락률 / 거래량 / 거래대금(백만) / 매수 / 매도 / 시총(억)
-            price, chg = int(nums[0]), float(nums[2])
-            amt = int(nums[4]) * 1_000_000        # 백만원 → 원
-            cap = int(nums[7]) if nums[7].isdigit() else 0
-        except ValueError:
-            continue
-        out[m.group(1)] = (H.unescape(m.group(2)).strip(), price, chg, amt, cap)
+        out[code] = (name,
+                     int(num(x.get("closePriceRaw"))),
+                     num(x.get("fluctuationsRatio")),
+                     int(num(x.get("accumulatedTradingValueRaw"))),   # 원
+                     int(num(x.get("marketValue"))))                  # 억
     return out
 
 
 def fetch_all():
     rows = {}
-    for sosok in (0, 1):
+    for cat in ("KOSPI", "KOSDAQ"):
         for attempt in range(3):
             try:
-                rows.update(fetch_market(sosok))
+                rows.update(fetch_market(cat))
                 break
             except (urllib.error.URLError, OSError) as e:
                 print(f"[judoju] sosok={sosok} 수집 실패({attempt + 1}/3): {e}",
@@ -191,42 +192,39 @@ def looks_like_holiday(state, ymd, snap):
 
 # ---------------------------------------------------------------- 테마 / 업종
 
-def _get(url, enc="euc-kr"):
-    req = urllib.request.Request(url, headers=UA)
-    with urllib.request.urlopen(req, timeout=15) as r:
-        return r.read().decode(enc, "replace")
-
-
 def build_theme_map():
     """code → [테마명] 맵을 통째로 만든다. 느리므로 일주일에 한 번만 부른다."""
-    themes = {}
+    groups = []
     for page in range(1, 10):
         try:
-            html = _get(THEME_LIST_URL.format(page=page))
+            got = fetch_json(THEME_LIST_URL.format(page=page)).get("groups", [])
         except Exception:
             break
-        found = dict(re.findall(r'type=theme&no=(\d+)["\'][^>]*>([^<]+)', html))
-        fresh = {k: v for k, v in found.items() if k not in themes}
-        if not fresh:
-            break                       # 마지막 페이지를 넘기면 같은 내용이 반복된다
-        themes.update(fresh)
+        if not got:
+            break
+        groups += got
+        if len(got) < 100:
+            break
         time.sleep(0.12)
 
-    print(f"[judoju] 테마 {len(themes)}개 구성종목 수집 중... (1분쯤 걸립니다)")
+    # 목록이 구성종목 수를 같이 주므로, 너무 큰 테마는 상세를 받기도 전에 버린다.
+    wanted = [g for g in groups if 0 < g.get("totalCount", 0) <= THEME_MAX_MEMBERS]
+    print(f"[judoju] 테마 {len(groups)}개 중 {len(wanted)}개 수집 중 (1분쯤 걸립니다)")
+
     cmap = {}
-    for no, raw_name in themes.items():
+    for g in wanted:
+        label = (g.get("name") or "").strip()
+        if not label:
+            continue
         try:
-            html = _get(THEME_DETAIL_URL.format(no=no))
+            stocks = fetch_json(THEME_DETAIL_URL.format(no=g["no"])).get("stocks", [])
         except Exception:
             continue
         finally:
             time.sleep(0.12)
-        codes = set(re.findall(r'code=(\d{6})["\'][^>]*>[^<]+</a>', html))
-        if not codes or len(codes) > THEME_MAX_MEMBERS:
-            continue                    # 너무 큰 테마는 정보량이 없다
-        label = H.unescape(raw_name).strip()
-        for c in codes:
-            cmap.setdefault(c, []).append(label)
+        for x in stocks:
+            if x.get("itemCode"):
+                cmap.setdefault(x["itemCode"], []).append(label)
     print(f"[judoju] 테마 맵 완성 — {len(cmap)}종목")
     return cmap
 
@@ -259,13 +257,8 @@ def ensure_themes(state, ymd):
 
 
 def fetch_upjong(code):
-    """테마가 없는 종목의 대체값. 종목 페이지는 EUC-KR 이 아니라 UTF-8 이다."""
-    try:
-        html = _get(ITEM_URL.format(code=code), enc="utf-8")
-    except Exception:
-        return ""
-    m = re.search(r'type=upjong&no=\d+["\'][^>]*>([^<]+)', html)
-    return H.unescape(m.group(1)).strip() if m else ""
+    """새 API 는 업종을 코드(숫자)로만 주고 이름을 주지 않는다. 테마로만 표시한다."""
+    return ""
 
 
 def label_of(cmap, code, cache, hot=()):
@@ -301,23 +294,20 @@ def lead_themes(cmap, snap):
 # ---------------------------------------------------------------- 눌림 관찰
 
 def fetch_daily(code, days=70):
-    """네이버 일봉. [날짜, 시가, 고가, 저가, 종가, 거래량, 외국인소진율] 배열이 온다."""
+    """일봉. 새 차트 API 는 JSON 배열을 준다."""
     end = timeutil.now()
     url = DAILY_URL.format(code=code,
                            start=(end - dt.timedelta(days=days)).strftime("%Y%m%d"),
                            end=end.strftime("%Y%m%d"))
-    req = urllib.request.Request(url, headers=UA)
-    with urllib.request.urlopen(req, timeout=15) as r:
-        txt = r.read().decode("cp949", "replace")
-
     bars = []
-    for row in BAR_RE.findall(txt):
-        c = [x.strip().strip("\'\"") for x in row.split(",")]
-        if len(c) >= 6 and c[0].isdigit():
-            try:
-                bars.append({"d": c[0], "h": int(c[2]), "c": int(c[4]), "v": int(c[5])})
-            except ValueError:
-                pass
+    for b in fetch_json(url, timeout=15):
+        try:
+            bars.append({"d": str(b["localDate"]),
+                         "h": int(float(b["highPrice"])),
+                         "c": int(float(b["closePrice"])),
+                         "v": int(float(b["accumulatedTradingVolume"]))})
+        except (KeyError, TypeError, ValueError):
+            continue
     return bars
 
 

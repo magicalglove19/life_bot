@@ -125,7 +125,8 @@ def main() -> int:
 
     sections = [
         f"☀️ <b>아침 브리핑</b> · {timeutil.stamp()} {timeutil.stamp('%H:%M')} KST",
-        f"<i>🇺🇸 미국 · 점수순 상위 {TOP_N} · {signal_rank.HOLD_DAYS}거래일 보유 기준</i>",
+        f"<i>🇺🇸 미국 · {signal_rank.MIN_SCORE}점 이상 최대 {TOP_N}개 · "
+        f"{signal_rank.HOLD_DAYS}거래일 보유 기준</i>",
         "",
     ]
 
@@ -149,8 +150,8 @@ def main() -> int:
     sections += [
         "",
         "<i>점수 = RS40 + ATR25 + 거래량15 + 120MA10 + 거래대금5 + 패턴5. "
-        "백테스트로 검증된 건 ✅(관문 통과)뿐, ⚠️1개 미달·▫️2개+ 미달은 참고용. "
-        f"{signal_rank.HOLD_DAYS}거래일 보유·-10~35% 낙폭 감내 비중 전제. 매수 추천 아님.</i>",
+        f"{signal_rank.MIN_SCORE}점 이상: 2022 하락장 SPY 대비 +1.0%p(유의X) / 2023 +3.2%p. "
+        f"{signal_rank.HOLD_DAYS}거래일 보유·20일 내 평균 -11% 낙폭 감내 비중 전제. 매수 추천 아님.</i>",
     ]
 
     if "--dry-run" in sys.argv:

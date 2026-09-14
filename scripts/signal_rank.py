@@ -192,13 +192,20 @@ def rank(store: dict[str, pd.DataFrame], bench: pd.Series,
     return {"passed": passed, "near": near, "rest": rest}
 
 
-def top_n(result: dict, n: int) -> list[dict]:
-    """관문 통과 종목은 무조건 포함하고, 남는 자리를 나머지 중 점수 높은 순으로 채운다.
-    표시 순서는 점수순 (동점이면 RS)."""
+# 2022·2023 일별 재생 백테스트(20거래일, 기준선 대비):
+#   매일 15개 채우기  2022 -0.47%p / 2023 +1.01%p  ← 하락장에 40점대 채움 종목이 손해
+#   60점 이상만       2022 +1.04%p / 2023 +3.22%p  (하루 3~4개로 저절로 줄어듦)
+MIN_SCORE = 60
+
+
+def top_n(result: dict, n: int, min_score: int = MIN_SCORE) -> list[dict]:
+    """관문 통과 종목을 먼저 넣고 남는 자리를 나머지 점수순으로 채운 뒤,
+    min_score 미만은 버린다. 표시 순서는 점수순 (동점이면 RS)."""
     key = lambda x: (x["score"], x["rs126"])
     passed = result["passed"][:n]
     others = sorted(result["near"] + result.get("rest", []), key=key, reverse=True)
-    return sorted(passed + others[:n - len(passed)], key=key, reverse=True)
+    picks = passed + others[:n - len(passed)]
+    return sorted([m for m in picks if m["score"] >= min_score], key=key, reverse=True)
 
 
 def _fmt_price(m: dict, is_kr: bool) -> str:
@@ -216,16 +223,16 @@ def format_report(title: str, result: dict, is_kr: bool = False,
                   limit: int = 15, tags: dict[str, str] | None = None) -> str:
     """종목당 2줄. 1줄: 순위·티커·점수·가격  2줄: 핵심 지표·패턴·미달 사유.
 
-    ✅ 관문 전부 통과 / ⚠️ 1개 미달 / ▫️ 2개 이상 미달. 통과 종목이 항상 위에 온다.
+    ✅ 관문 전부 통과 / ⚠️ 1개 미달 / ▫️ 2개 이상 미달. MIN_SCORE 미만은 싣지 않는다.
     """
     passed, near = result["passed"], result["near"]
     total = len(passed) + len(near) + len(result.get("rest", []))
     picks = top_n(result, limit)
     lines = [f"<b>{title}</b>",
-             f"<i>패턴 {total}종목 중 상위 {len(picks)} · ✅통과 {len(passed)} ⚠️1개미달 {len(near)}</i>"]
+             f"<i>패턴 {total}종목 중 {MIN_SCORE}점 이상 {len(picks)}개 · ✅통과 {len(passed)}</i>"]
 
     if not picks:
-        lines.append("  <i>조건 근접 종목 없음</i>")
+        lines.append(f"  <i>{MIN_SCORE}점 이상 없음 — 하락장에선 정상, 쉬는 날</i>")
     for i, m in enumerate(picks, 1):
         label = m["symbol"]
         if is_kr and m.get("name"):

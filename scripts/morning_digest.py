@@ -91,8 +91,8 @@ def daejjang_tags(store: dict, symbols: list[str]) -> dict[str, str]:
     return tags
 
 
-def scan_market(symbols: list[str], bench_symbol: str, is_kr: bool) -> tuple[dict, dict]:
-    """한 시장 전체 스캔. (rank 결과, 강남자리 태그) 반환."""
+def scan_market(symbols: list[str], bench_symbol: str, is_kr: bool) -> tuple[dict, dict, dict | None]:
+    """한 시장 전체 스캔. (rank 결과, 강남자리 태그, 시장 필터) 반환."""
     store = market_data.fetch(symbols + [bench_symbol])
     bench_df = store.pop(bench_symbol, None)
     if bench_df is None or len(bench_df) < signal_rank.RS_PERIOD + 1:
@@ -105,11 +105,13 @@ def scan_market(symbols: list[str], bench_symbol: str, is_kr: bool) -> tuple[dic
     result = signal_rank.rank(store, bench, patterns, is_kr=is_kr,
                               names=refresh_tickers.load_names())
     tags = daejjang_tags(store, [m["symbol"] for m in signal_rank.top_n(result, TOP_N)])
-    return result, tags
+    regime = signal_rank.market_regime(bench)
+    print(f"[morning] 시장 필터: {regime}")
+    return result, tags, regime
 
 
-def render(title: str, result: dict, tags: dict, is_kr: bool) -> str:
-    return signal_rank.format_report(title, result, is_kr=is_kr, limit=TOP_N, tags=tags)
+def render(title: str, result: dict, tags: dict, is_kr: bool, regime: dict | None) -> str:
+    return signal_rank.format_report(title, result, is_kr=is_kr, limit=TOP_N, tags=tags, regime=regime)
 
 
 def main() -> int:
@@ -133,9 +135,9 @@ def main() -> int:
     if us_symbols:
         try:
             print("[morning] 미국 스캔...")
-            result, tags = _run_with_timeout(
+            result, tags, regime = _run_with_timeout(
                 lambda: scan_market(us_symbols, US_BENCH, is_kr=False), MARKET_TIMEOUT)
-            sections.append(render("━━━ 🎯 매수 후보 ━━━", result, tags, False))
+            sections.append(render("━━━ 🎯 매수 후보 ━━━", result, tags, False, regime))
         except Exception as e:
             print(f"[morning] 미국 실패: {e}", file=sys.stderr)
             sections.append(f"━━━ 🎯 매수 후보 ━━━\n  실패 ({str(e)[:80]})")
@@ -149,9 +151,10 @@ def main() -> int:
 
     sections += [
         "",
+        f"<b>💰 종목당 계좌의 {signal_rank.POSITION_MAX_PCT}% 이하</b> · "
+        f"손절 -{signal_rank.STOP_PCT}% (갭 하락 시 더 잃을 수 있음)",
         "<i>점수 = RS40 + ATR25 + 거래량15 + 120MA10 + 거래대금5 + 패턴5. "
-        f"{signal_rank.MIN_SCORE}점 이상: 2022 하락장 SPY 대비 +1.0%p(유의X) / 2023 +3.2%p. "
-        f"{signal_rank.HOLD_DAYS}거래일 보유·20일 내 평균 -11% 낙폭 감내 비중 전제. 매수 추천 아님.</i>",
+        f"{signal_rank.HOLD_DAYS}거래일 보유 기준. SPY 50일선<200일선이면 매수 중단. 매수 추천 아님.</i>",
     ]
 
     if "--dry-run" in sys.argv:

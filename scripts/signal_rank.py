@@ -197,6 +197,29 @@ def rank(store: dict[str, pd.DataFrame], bench: pd.Series,
 #   60점 이상만       2022 +1.04%p / 2023 +3.22%p  (하루 3~4개로 저절로 줄어듦)
 MIN_SCORE = 60
 
+# ── 낙폭 관리 (같은 일별 재생 백테스트) ─────────────────────────────────
+# 손절: -8~-10%·ATR×2는 정상 흔들림에 40~58%가 걸려 평균수익이 오히려 나빠졌다.
+#   -15%는 매매당 -0.4~0.5%p 비용으로 최악 5% 거래를 -25% → -16~18%로 줄였다.
+STOP_PCT = 15
+# 비중: 손절해도 갭으로 -15~20%까지 잃을 수 있어, 종목당 계좌 1% 손실 한도 ≈ 5%.
+POSITION_MAX_PCT = 5
+# 시장 필터: SPY 50일선 < 200일선이면 신규 매수 중단. 계좌 최대낙폭(20일 굴림 모델)
+#   2022 -18.3% → -3.5% (수익 +4.9 → +6.4%), 2023 수익 71.9 → 68.7%, 2021·2024 영향 없음.
+#   'SPY > 200일선'은 2022 반등마다 켜졌다 꺼져 오히려 손해였다(-5.4%).
+#   하락장 표본은 2022 한 번뿐이고, 2020년 같은 급락엔 늦게 꺼진다.
+REGIME_FAST, REGIME_SLOW = 50, 200
+REGIME_OFF_WATCH = 3     # 필터가 꺼진 날 관찰용으로만 보여줄 개수
+
+
+def market_regime(bench: pd.Series) -> dict | None:
+    """벤치마크 50일선/200일선 비교. 데이터가 모자라면 None (필터 판단 불가 → 켜진 것으로 취급)."""
+    b = bench.dropna()
+    if len(b) < REGIME_SLOW:
+        return None
+    fast = float(b.rolling(REGIME_FAST).mean().iloc[-1])
+    slow = float(b.rolling(REGIME_SLOW).mean().iloc[-1])
+    return {"on": fast > slow, "price": float(b.iloc[-1]), "ma_fast": fast, "ma_slow": slow}
+
 
 def top_n(result: dict, n: int, min_score: int = MIN_SCORE) -> list[dict]:
     """관문 통과 종목을 먼저 넣고 남는 자리를 나머지 점수순으로 채운 뒤,
@@ -220,27 +243,39 @@ PATTERN_SHORT = {
 
 
 def format_report(title: str, result: dict, is_kr: bool = False,
-                  limit: int = 15, tags: dict[str, str] | None = None) -> str:
-    """종목당 2줄. 1줄: 순위·티커·점수·가격  2줄: 핵심 지표·패턴·미달 사유.
+                  limit: int = 15, tags: dict[str, str] | None = None,
+                  regime: dict | None = None) -> str:
+    """종목당 2줄. 1줄: 순위·티커·점수·가격·손절가  2줄: 핵심 지표·패턴·미달 사유.
 
     ✅ 관문 전부 통과 / ⚠️ 1개 미달 / ▫️ 2개 이상 미달. MIN_SCORE 미만은 싣지 않는다.
+    regime["on"]이 False면 매수 후보 대신 관찰용 상위 REGIME_OFF_WATCH개만 싣는다.
     """
     passed, near = result["passed"], result["near"]
     total = len(passed) + len(near) + len(result.get("rest", []))
     picks = top_n(result, limit)
-    lines = [f"<b>{title}</b>",
-             f"<i>패턴 {total}종목 중 {MIN_SCORE}점 이상 {len(picks)}개 · ✅통과 {len(passed)}</i>"]
+    off = regime is not None and not regime["on"]
+
+    if off:
+        picks = picks[:REGIME_OFF_WATCH]
+        lines = [f"<b>━━━ 🔴 시장 하락추세 — 신규 매수 쉬는 구간 ━━━</b>",
+                 f"<i>SPY {REGIME_FAST}일선 {regime['ma_fast']:,.1f} < {REGIME_SLOW}일선 "
+                 f"{regime['ma_slow']:,.1f}. 다시 위로 올라서면 매수 후보를 보냅니다.</i>",
+                 f"<i>관찰용 상위 {len(picks)}개 (패턴 {total}종목 중)</i>"]
+    else:
+        lines = [f"<b>{title}</b>",
+                 f"<i>패턴 {total}종목 중 {MIN_SCORE}점 이상 {len(picks)}개 · ✅통과 {len(passed)}</i>"]
 
     if not picks:
-        lines.append(f"  <i>{MIN_SCORE}점 이상 없음 — 하락장에선 정상, 쉬는 날</i>")
+        lines.append(f"  <i>{MIN_SCORE}점 이상 없음 — 쉬는 날</i>")
     for i, m in enumerate(picks, 1):
         label = m["symbol"]
         if is_kr and m.get("name"):
             label += f" {m['name']}"
-        mark = "✅" if not m["fails"] else "⚠️" if len(m["fails"]) == 1 else "▫️"
+        mark = "👀" if off else "✅" if not m["fails"] else "⚠️" if len(m["fails"]) == 1 else "▫️"
+        stop = m["price"] * (1 - STOP_PCT / 100)
         lines.append(
             f"{i}. {mark} <b>{label}</b> <b>{m['score']}점</b> "
-            f"{_fmt_price(m, is_kr)} ({m['change_pct']:+.1f}%)"
+            f"{_fmt_price(m, is_kr)} ({m['change_pct']:+.1f}%) · 손절 {_fmt_price(dict(m, price=stop), is_kr)}"
         )
         pats = "+".join(PATTERN_SHORT.get(p, p) for p in m["patterns"])
         detail = (f"    RS{m['rs126']:+.0f} ATR{m['atr_pct']:.1f}% "

@@ -4,6 +4,7 @@
   · 오늘 종가 매수  — 종목명
   · 정밀 진단       — 종목명과 점수
   · 보유 종목       — 손절·익절 신호가 뜬 것만 (positions.txt 를 넘겼을 때)
+  · 신정제 종가배팅 — 종목명 · 유형 · 재료 한 줄 · 손절선(당일 저가)
 """
 
 from __future__ import annotations
@@ -26,14 +27,40 @@ def _won(x: float) -> str:
     return f"{x:,.0f}" if np.isfinite(x) else "-"
 
 
-def build(res, holdings: list, frames: dict, cfg: Config, detail_top: int = 10) -> str:
+def _closing_block(picks: list, total: int, cfg: Config) -> str:
+    lines = ["🔔 <b>신정제 종가배팅</b>  <i>15:18~15:20 매수 · 다음 날 09:05 전 청산</i>"]
+    if not picks:
+        lines.append("없음")
+        return "\n".join(lines)
+    for p in picks:
+        lines.append(f"<b>{_esc(p.name)}</b> ({_esc(p.code)}) 유형{p.kind} · "
+                     f"{p.chg:+.1f}% · {p.value / 1e8:,.0f}억")
+        if p.news:
+            lines.append(f"  📰 {_esc(p.news[0][1][:40])}")
+        elif not p.news_checked:
+            lines.append("  📰 뉴스 조회 실패 — 재료 직접 확인")
+        lines.append(f"  손절 매수가·당일저가 {_won(p.day_low)} 이탈")
+    if total > len(picks):
+        lines.append(f"<i>… 외 {total - len(picks)}종목</i>")
+    lines.append("<i>15:18 체크: 저점 미이탈 · 1분봉 20선 눌림 반등 · 매도잔량&gt;매수잔량 · "
+                 "프로그램 매수 · 추격 금지\n익일 09:00 시초가 1/3 → 09:05 전량 · "
+                 "시간외 하락 시 전량 손절</i>")
+    return "\n".join(lines)
+
+
+def build(res, holdings: list, frames: dict, cfg: Config, detail_top: int = 10,
+          closing: list | None = None) -> str:
     # GitHub Actions 는 UTC 로 돈다. 국내장 도구이므로 항상 KST 로 찍는다.
     now = dt.datetime.now(KST).strftime("%m/%d %H:%M")
+    head = f"매수 시그널 {len(res.buys)} · 조정 중 {len(res.tracking)}"
+    if closing is not None:
+        head += f" · 종가배팅 {len(closing)}"
     blocks = [
-        f"📈 <b>강창권 상한가 후 눌림목</b>  {now}\n"
-        f"<i>{cfg.market} {res.scanned}종목 · 매수 시그널 {len(res.buys)} · "
-        f"조정 중 {len(res.tracking)}</i>"
+        f"📈 <b>강창권 눌림목 + 신정제 종가배팅</b>  {now}\n"
+        f"<i>{cfg.market} {res.scanned}종목 · {head}</i>"
     ]
+    if closing is not None:
+        blocks.append(_closing_block(closing[:cfg.closing.top], len(closing), cfg))
 
     if res.buys:
         lines = ["🎯 <b>오늘 종가 매수</b>"]

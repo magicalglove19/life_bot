@@ -1,14 +1,15 @@
 name: kcg
 
-# 강창권 상한가 후 눌림목 — 평일 15:00 KST 국내 스크리너.
+# 강창권 상한가 후 눌림목 + 신정제 종가배팅 — 평일 14:40 KST 국내 스크리너.
 #
-# ⚠️ 시각이 중요한 작업이다. 장 마감(15:30) 전에 도착해야 종가로 살 수 있다.
+# ⚠️ 시각이 중요한 작업이다. 신정제 종가배팅은 15:00부터 관찰해 15:18~15:20에 사므로
+#    15:00 전에 도착해야 한다.
 #    그런데 GitHub 예약은 이 레포 실측으로 슬롯마다 1시간 23분 ~ 5시간 밀린다.
 #    (20~23시 UTC 슬롯 83~153분 / 03시 UTC 슬롯 288~300분)
 #    01시 UTC 슬롯은 표본이 없어 도착 시각을 장담할 수 없다.
 #
 #    → 주 경로는 repository_dispatch 다. 맥의 launchd 가 평일 15:00 정각에 찌른다.
-#      설치:  ./scripts/local/install-trigger.sh kcg 15:00
+#      설치:  ./scripts/local/install-trigger.sh kcg 14:40
 #
 #    아래 schedule 은 맥이 꺼져 있을 때를 위한 백업일 뿐이다. 엉뚱한 시각에
 #    도착하면 kcg_report.py 가 발송 창(14:00~16:30 KST)을 벗어났다고 보고
@@ -51,7 +52,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run 강창권 screener
+      - name: Run 강창권 + 신정제 screener
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

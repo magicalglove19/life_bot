@@ -1,9 +1,11 @@
-"""평일 15:00 KST — 강창권 상한가 후 눌림목 스크리너 (국내 KOSPI + KOSDAQ).
+"""평일 14:40 KST — 강창권 상한가 후 눌림목 + 신정제 종가배팅 (국내 KOSPI + KOSDAQ).
 
-상한가·장대양봉·급등·신고가가 나온 종목을 추적하다가, 그 뒤에 이어지는
-세 가지 일봉 조정 패턴(A/B/C)이 완성되는 날의 종가 매수 타점을 찾는다.
+한 번 받은 일봉으로 두 전략을 같이 판정해 한 메시지로 보낸다.
+  · 강창권  상한가·장대양봉·급등·신고가 이후 조정 패턴(A/B/C) 완성일 종가 매수
+  · 신정제  당일 강세(유형 1) / 신고가 후 기간조정 재상승(유형 2) — 15:18~15:20 매수,
+            다음 날 09:05 전 청산. 후보에만 네이버 뉴스(재료)·시총·수급을 붙인다.
 
-장 마감(15:30) 전에 도착해야 종가로 살 수 있어서 15:00에 보낸다.
+신정제 전략은 15:00부터 관찰하므로 그 전에 도착하도록 14:40에 찌른다.
 그 시점 가격은 아직 종가가 아니므로 잠정 판정이며, 확정 결과는 맥에서
 '상한가 스크리너 실행.command' 로 다시 본다.
 
@@ -18,7 +20,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import telegram
-from kcg import data, notify, ranking, screener, universe, watchlist
+from kcg import closing, data, enrich, notify, ranking, screener, universe, watchlist
 from kcg.config import Config
 
 KST = dt.timezone(dt.timedelta(hours=9))
@@ -103,7 +105,12 @@ def main() -> int:
     print(f"[kcg] 스캔 {res.scanned} · 매수 시그널 {len(res.buys)} · 조정 중 {len(res.tracking)}",
           flush=True)
 
-    body = notify.build(res, [], frames, cfg, detail_top=DETAIL_TOP)
+    picks = closing.scan(frames, meta, cfg)
+    enrich.enrich(picks)
+    picks = closing.rank(picks, cfg.closing)
+    print(f"[kcg] 종가배팅 {len(picks)}", flush=True)
+
+    body = notify.build(res, [], frames, cfg, detail_top=DETAIL_TOP, closing=picks)
     if dry:
         print(body)
         return 0

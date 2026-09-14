@@ -1,128 +1,146 @@
+# -*- coding: utf-8 -*-
 """변곡점 매수법 스캐너 (헤드리스).
-원본 GUI 앱(main.py)의 탐지 알고리즘을 참고하여 새로 구현.
-- 패턴 1: 거래량 감소 후 평균 이상 거래량 양봉
-- 패턴 2: 횡보 후 장대 양봉
-morning_digest.py에서 import해서 호출.
+- 패턴 1: 거래량 4일 연속 감소 후 10일 평균 이상 거래량의 양봉
+- 패턴 2: 횡보 구간을 장대양봉으로 고점 돌파
+
+■ 2026-09 백테스트 반영 사항
+1) 조회 기간 3mo → market_data(2y). 예전에는 3개월치만 받아서 120일선·ATR을
+   계산할 수 없었고, 그래서 하락추세 종목을 걸러내지 못했다.
+2) 횡보돌파의 '실제 돌파' 조건을 필수로. 예전 로직은 4개 조건 중 3개만 채우면
+   통과라서, 돌파가 없어도 '횡보 + 거래량 감소'만으로 신호가 났다.
+   1년 백테스트에서 이 패턴 신호의 57%가 그런 가짜였다.
+3) 종목당 개별 yfinance 호출 제거 → market_data.fetch()가 받아온 공용 데이터 사용.
+   타임아웃으로 리스트 앞부분만 스캔되고 끊기던 문제가 사라진다.
 """
 import sys
-from datetime import datetime, timedelta
-from pathlib import Path
 
+import numpy as np
 import pandas as pd
-import yfinance as yf
+
+PAT_VOLUME = "거래량폭증양봉"
+PAT_SIDEWAYS = "횡보돌파"
 
 
-def get_history(symbol: str, period: str = "3mo") -> pd.DataFrame | None:
-    try:
-        data = yf.download(symbol, period=period, progress=False, auto_adjust=True, threads=False)
-        if data is None or data.empty or len(data) < 30:
-            return None
-        if isinstance(data.columns, pd.MultiIndex):
-            data.columns = [c[0] if isinstance(c, tuple) else c for c in data.columns]
-        if data["Close"].isna().all() or data["Volume"].isna().all():
-            return None
-        return data
-    except Exception as e:
-        print(f"[inflection] {symbol} 조회 실패: {e}", file=sys.stderr)
+def _metrics(df: pd.DataFrame) -> dict | None:
+    """마지막 봉 기준 공용 지표."""
+    if df is None or len(df) < 130:
+        return None
+    c, h, l, v = df["Close"], df["High"], df["Low"], df["Volume"]
+    last = float(c.iloc[-1])
+    prev = float(c.iloc[-2])
+    if last <= 0 or prev <= 0:
+        return None
+    if float(v.tail(5).sum()) == 0:
         return None
 
+    vol_ma20 = float(v.rolling(20).mean().iloc[-1])
+    ma120 = float(c.rolling(120).mean().iloc[-1])
+    tr = pd.concat([h - l, (h - c.shift()).abs(), (l - c.shift()).abs()], axis=1).max(axis=1)
+    atr_pct = float(tr.rolling(14).mean().iloc[-1]) / last
 
-def detect_signal(data: pd.DataFrame) -> tuple[bool, str]:
-    if len(data) < 20:
-        return False, ""
-
-    # 최근 1개월 이내 데이터만 신호로 인정
-    last_date = data.index[-1]
-    one_month_ago = datetime.now() - timedelta(days=30)
-    if last_date.replace(tzinfo=None) < one_month_ago:
-        return False, ""
-
-    recent = data.tail(20).copy()
-    recent["VolMA"] = recent["Volume"].rolling(window=10).mean()
-    recent["IsGreen"] = recent["Close"] > recent["Open"]
-    recent["Size"] = (recent["Close"] - recent["Open"]).abs() / recent["Open"].replace(0, pd.NA)
-
-    signals = []
-    if _volume_pattern(recent):
-        signals.append("거래량증가양봉")
-    if _sideways_pattern(recent):
-        signals.append("횡보후장대양봉")
-    return (len(signals) > 0, ",".join(signals))
-
-
-def _volume_pattern(data: pd.DataFrame) -> bool:
-    if len(data) < 10:
-        return False
-    last = data.iloc[-1]
-    prev4 = data.iloc[-5:-1]
-    if not bool(last["IsGreen"]):
-        return False
-    vol_ma = last["VolMA"]
-    if pd.isna(vol_ma) or last["Volume"] <= vol_ma:
-        return False
-    # 이전 4일 거래량이 계속 감소했는지
-    vols = prev4["Volume"].tolist()
-    for i in range(len(vols) - 1):
-        if vols[i + 1] >= vols[i]:
-            return False
-    return True
-
-
-def _sideways_pattern(data: pd.DataFrame) -> bool:
-    if len(data) < 15:
-        return False
-    last = data.iloc[-1]
-    sideways = data.iloc[-10:-1]
-    size = last["Size"]
-    if pd.isna(size) or not bool(last["IsGreen"]) or float(size) < 0.03:
-        return False
-    high_range = sideways["High"].max() - sideways["Low"].min()
-    mean_close = sideways["Close"].mean()
-    if mean_close == 0 or pd.isna(mean_close):
-        return False
-    return (high_range / mean_close) < 0.1
-
-
-def scan_one(symbol: str) -> dict | None:
-    data = get_history(symbol)
-    if data is None:
-        return None
-    if data["Volume"].sum() == 0:
-        return None
-    has, signal_type = detect_signal(data)
-    if not has:
-        return None
-    last_close = float(data["Close"].iloc[-1])
-    prev_close = float(data["Close"].iloc[-2]) if len(data) >= 2 else last_close
-    if prev_close == 0:
-        return None
-    change_pct = (last_close - prev_close) / prev_close * 100
-    vol_ma = data["Volume"].rolling(window=10).mean().iloc[-1]
-    vol_ratio = float(data["Volume"].iloc[-1] / vol_ma) if vol_ma and not pd.isna(vol_ma) else 1.0
     return {
-        "symbol": symbol,
-        "price": last_close,
-        "change_pct": change_pct,
-        "volume_ratio": vol_ratio,
-        "signal": signal_type,
-        "date": data.index[-1].strftime("%Y-%m-%d"),
+        "price": last,
+        "change_pct": (last - prev) / prev * 100,
+        "volume_ratio": float(v.iloc[-1]) / vol_ma20 if vol_ma20 > 0 else 0.0,
+        "ma120": ma120,
+        "above_ma120": last > ma120,
+        "ma120_gap_pct": (last / ma120 - 1) * 100 if ma120 > 0 else 0.0,
+        "atr_pct": atr_pct * 100,
+        "dollar_vol": float((c * v).rolling(20).mean().iloc[-1]),
+        "date": df.index[-1].strftime("%Y-%m-%d"),
     }
 
 
-def scan_many(symbols: list[str], max_time_sec: int = 360) -> list[dict]:
-    """여러 종목 스캔. max_time_sec 초과 시 조기 종료."""
-    results = []
-    start = datetime.now()
-    for i, sym in enumerate(symbols):
-        elapsed = (datetime.now() - start).total_seconds()
-        if elapsed > max_time_sec:
-            print(f"[inflection] 타임아웃으로 {i}/{len(symbols)}에서 중단", file=sys.stderr)
+def _volume_pattern_at(df: pd.DataFrame, i: int) -> bool:
+    """i번째 봉에서 패턴1 성립 여부."""
+    if i < 10:
+        return False
+    o, c, v = df["Open"].values, df["Close"].values, df["Volume"].values
+    if not (c[i] > o[i]):
+        return False
+    vma10 = float(pd.Series(v[:i + 1]).rolling(10).mean().iloc[-1])
+    if np.isnan(vma10) or vma10 <= 0 or v[i] <= vma10:
+        return False
+    p = v[i - 4:i]
+    if len(p) != 4:
+        return False
+    return bool(p[1] < p[0] and p[2] < p[1] and p[3] < p[2])
+
+
+def _sideways_pattern_at(df: pd.DataFrame, i: int) -> bool:
+    """i번째 봉에서 패턴2 성립 여부.
+
+    필수: 장대양봉(body>2.5%)으로 직전 10봉 고점 돌파.
+    보조(점수): 횡보 CV<3%, 횡보 중 거래량 감소, 돌파 거래량 1.3배.
+    필수 + 보조 2개 이상이어야 신호.
+    """
+    if i < 25:
+        return False
+    o, h, c, v = (df[x].values for x in ["Open", "High", "Close", "Volume"])
+    if o[i] <= 0:
+        return False
+
+    sw_c, sw_h, sw_v = c[i - 10:i], h[i - 10:i], v[i - 10:i]
+    mean_c, mean_v = sw_c.mean(), sw_v.mean()
+    if mean_c <= 0 or mean_v <= 0:
+        return False
+
+    body = (c[i] - o[i]) / o[i]
+    # 필수 조건: 실제 돌파가 있어야 '횡보 돌파'다
+    if not (c[i] > o[i] and body > 0.025 and c[i] > sw_h.max()):
+        return False
+
+    vma20 = float(pd.Series(v[:i + 1]).rolling(20).mean().iloc[-1])
+    score = 1
+    if sw_c.std(ddof=1) / mean_c < 0.03:
+        score += 1
+    if not np.isnan(vma20) and mean_v < vma20:
+        score += 1
+    if v[i] > mean_v * 1.3:
+        score += 1
+    return score >= 3
+
+
+def detect(df: pd.DataFrame, lookback_bars: int = 3) -> list[str]:
+    """최근 lookback_bars 봉 안에 성립한 변곡점 패턴 이름 목록."""
+    if df is None or len(df) < 40:
+        return []
+    found = []
+    n = len(df)
+    for back in range(lookback_bars):
+        i = n - 1 - back
+        if i < 25:
             break
-        r = scan_one(sym)
-        if r:
-            results.append(r)
-    results.sort(key=lambda x: x["change_pct"], reverse=True)
-    return results
+        if PAT_VOLUME not in found and _volume_pattern_at(df, i):
+            found.append(PAT_VOLUME)
+        if PAT_SIDEWAYS not in found and _sideways_pattern_at(df, i):
+            found.append(PAT_SIDEWAYS)
+    return found
+
+
+def scan_df(symbol: str, df: pd.DataFrame, lookback_bars: int = 3) -> dict | None:
+    """공용 데이터로 한 종목 스캔."""
+    pats = detect(df, lookback_bars)
+    if not pats:
+        return None
+    m = _metrics(df)
+    if m is None:
+        return None
+    m.update({"symbol": symbol, "patterns": pats, "signal": ",".join(pats)})
+    return m
+
+
+def scan_store(store: dict[str, pd.DataFrame], lookback_bars: int = 3) -> list[dict]:
+    out = []
+    for sym, df in store.items():
+        try:
+            r = scan_df(sym, df, lookback_bars)
+            if r:
+                out.append(r)
+        except Exception as e:
+            print(f"[inflection] {sym} 실패: {e}", file=sys.stderr)
+    out.sort(key=lambda x: x["change_pct"], reverse=True)
+    return out
 
 
 def format_report(title: str, items: list[dict], limit: int = 10) -> str:
@@ -132,7 +150,8 @@ def format_report(title: str, items: list[dict], limit: int = 10) -> str:
         return "\n".join(lines)
     for r in items[:limit]:
         lines.append(
-            f"  • <b>{r['symbol']}</b> {r['change_pct']:+.1f}% · 거래량 {r['volume_ratio']:.1f}x · {r['signal']}"
+            f"  • <b>{r['symbol']}</b> {r['change_pct']:+.1f}% · "
+            f"거래량 {r['volume_ratio']:.1f}x · {r['signal']}"
         )
     if len(items) > limit:
         lines.append(f"  <i>...외 {len(items) - limit}개</i>")
@@ -140,7 +159,7 @@ def format_report(title: str, items: list[dict], limit: int = 10) -> str:
 
 
 if __name__ == "__main__":
-    # 단독 테스트: python inflection_scanner.py AAPL MSFT NVDA
-    test_symbols = sys.argv[1:] or ["AAPL", "NVDA", "TSLA"]
-    results = scan_many(test_symbols)
-    print(format_report("변곡점 매수 신호", results))
+    import market_data
+    syms = sys.argv[1:] or ["AAPL", "NVDA", "TSLA"]
+    store = market_data.fetch(syms)
+    print(format_report("변곡점 매수 신호", scan_store(store)))

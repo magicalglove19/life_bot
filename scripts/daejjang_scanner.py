@@ -184,8 +184,16 @@ def check_alignment(closes: np.ndarray) -> bool:
 
 
 def analyze(symbol: str) -> dict | None:
+    """단독 실행용 — 종목별로 직접 다운로드."""
     data = get_ohlcv(symbol)
     if data is None:
+        return None
+    return analyze_df(symbol, data)
+
+
+def analyze_df(symbol: str, data) -> dict | None:
+    """market_data.fetch()가 받아둔 공용 데이터로 분석 (다운로드 없음)."""
+    if data is None or len(data) < 210:
         return None
     closes = data["Close"].to_numpy()
     volumes = data["Volume"].to_numpy()
@@ -237,6 +245,19 @@ def analyze(symbol: str) -> dict | None:
         "price": last_close,
         "change_pct": change_pct,
     }
+
+
+def scan_store(store: dict) -> list[dict]:
+    """공용 데이터로 일괄 분석. 종목별 네트워크 호출이 없어 타임아웃이 없다."""
+    out = []
+    for sym, df in store.items():
+        try:
+            r = analyze_df(sym, df)
+            if r:
+                out.append(r)
+        except Exception as e:
+            print(f"[daejjang] {sym} 실패: {e}", file=sys.stderr)
+    return out
 
 
 def scan_many(symbols: list[str], max_time_sec: int = 360) -> list[dict]:

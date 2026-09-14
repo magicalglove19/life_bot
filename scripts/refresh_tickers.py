@@ -256,6 +256,20 @@ def main() -> int:
     return 0
 
 
+def _load_names(path) -> dict[str, str]:
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return {t["symbol"]: t.get("name", t["symbol"]) for t in data.get("tickers", [])}
+
+
+def load_names() -> dict[str, str]:
+    """{심볼: 종목명} — 한국/미국 통합. 리포트 표시용."""
+    names = _load_names(US_FILE)
+    names.update(_load_names(KR_FILE))
+    return names
+
+
 def load_kr_symbols() -> list[str]:
     """아침 스캐너에서 사용."""
     if not KR_FILE.exists():

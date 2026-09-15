@@ -72,6 +72,8 @@ class ScanResult:
     generated: str
     elapsed: float = 0.0
     last_bar: str = ""       # 판정의 기준이 된 마지막 거래일 (YYYY-MM-DD)
+    frames: dict = field(default_factory=dict, repr=False)   # {티커: OHLCV} — 다른 전략(쿨라매기)이 재사용
+    names: dict = field(default_factory=dict, repr=False)    # {티커: (종목명, 섹터)}
 
 
 def mark_extended(c: "Candidate", cfg: Config) -> None:
@@ -319,6 +321,8 @@ def scan(
         generated=dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
         elapsed=total_elapsed,
         last_bar=last_bar,
+        frames=frames,
+        names=meta,
     )
 
 

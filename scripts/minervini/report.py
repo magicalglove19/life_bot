@@ -448,6 +448,9 @@ table.tl td.t{color:var(--green);font-weight:650;}
 .fund{font-size:12.5px;display:flex;flex-wrap:wrap;gap:6px 18px;}
 .fund b{font-weight:700;}
 
+.divider{margin:56px 0 0;padding:18px 0 4px;border-top:3px double var(--line);scroll-margin-top:12px;}
+.divider span{font-size:19px;font-weight:750;letter-spacing:-.01em;}
+.divider p{color:var(--muted);font-size:12.5px;margin:4px 0 0;}
 .note{margin-top:36px;color:var(--muted);font-size:12px;line-height:1.75;
 border-top:1px solid var(--line);padding-top:16px;}
 """
@@ -679,7 +682,8 @@ def _detail_html(d: dict) -> str:
             + f'<div class="dgrid">{"".join(blocks)}{"".join(tail)}</div></div>')
 
 
-def save_html(path: str, regime, meta: dict, sections: list, sector_groups: list, details: list) -> str:
+def save_html(path: str, regime, meta: dict, sections: list, sector_groups: list, details: list,
+              tail: dict | None = None) -> str:
     """터미널 리포트 전체를 한 장의 HTML로."""
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
 
@@ -725,6 +729,19 @@ def save_html(path: str, regime, meta: dict, sections: list, sector_groups: list
         body.append(_section_html("detail", "🔎", "정밀 진단", f"상위 {len(details)}종목",
                                   meta.get("detail_desc", "8개 기준 · RS · VCP 수축 구조 · 타임라인 · 실행 계획"),
                                   "s-green", inner))
+
+    # 별개 전략 블록 (쿨라매기 등) — 미너비니 목록과 섞지 않고 구분선 아래에 따로 둔다
+    if tail and tail.get("sections"):
+        nav.append(f'<a href="#{tail["anchor"]}">{tail["icon"]} {_esc(tail["title"])}</a>')
+        body.append(f'<div class="divider" id="{tail["anchor"]}"><span>{tail["icon"]} {_esc(tail["title"])}</span>'
+                    f'<p>{_esc(tail.get("desc", ""))}</p></div>')
+        for sec in tail["sections"]:
+            inner = _table_html(sec["df"], sec.get("empty", "해당하는 종목이 없습니다."))
+            if sec.get("hint"):
+                inner = f'<p class="hint">{_esc(sec["hint"])}</p>' + inner
+            body.append(_section_html(sec["anchor"], sec["icon"], sec["title"],
+                                      sec.get("count", f'{len(sec["df"]) if sec["df"] is not None else 0}종목'),
+                                      sec["desc"], sec["klass"], inner))
 
     doc = f"""<title>미너비니 스크리너 리포트</title>
 <style>{_CSS}</style>

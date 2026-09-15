@@ -28,7 +28,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import telegram
-from minervini import screener
+from minervini import qullamaggie, screener
 from minervini.config import Config
 
 KST = dt.timezone(dt.timedelta(hours=9))
@@ -219,6 +219,71 @@ def build_messages(res) -> list[str]:
     return [part1, part2]
 
 
+# 쿨라매기 3중 이평 — 미너비니와 별개 전략이라 3편으로 따로 보낸다.
+# 백테스트: 2026 마크미니 스크리너/backtest_qull.py --years 5 --compare (S&P 500 현 구성종목, 롱)
+QULL_ON = os.environ.get("MINERVINI_QULL", "1") != "0"
+QULL_BACKTEST = "5년 786건 · 승률 38% · 거래당 +1.11% · 하락장(2022)엔 손실"
+QULL_LIMIT = 8
+
+
+def build_qull_message(res, cfg) -> str:
+    out = qullamaggie.scan_today(res.frames, res.names, cfg)
+    stamp = dt.datetime.now(KST).strftime("%m/%d (%a) %H:%M")
+    mine = {c.ticker: f"{c.vcp.status} {c.total_score:.0f}점" for c in res.candidates
+            if c.vcp.is_vcp and c.total_score >= MIN_SCORE}
+    s2 = {c.ticker for c in res.stage2}
+
+    def tag(tk):
+        if tk in mine:
+            return f" · <i>미너비니 {esc(mine[tk])}</i>"
+        return " · <i>미너비니 Stage 2</i>" if tk in s2 else ""
+
+    lines = [f"🏄 <b>쿨라매기 3중 이평</b> · {stamp}  <b>(3/3)</b>",
+             "<i>미너비니와 별개 전략 — 10EMA&gt;20EMA&gt;50SMA · 수축+거래량 마름 · 종가 돌파 · 청산 종가&lt;20EMA</i>"]
+
+    L = out["long_today"]
+    lines.append(f"\n<b>🏄 오늘 롱 신호</b> ({len(L)})" if L else "\n<b>🏄 오늘 롱 신호</b>")
+    if L:
+        for p in L[:QULL_LIMIT]:
+            lines.append(f"• <b>{esc(p.ticker)}</b> ${num(p.price)} · 돌파거래량 {num(p.vol_ratio, 1)}x{tag(p.ticker)}\n"
+                         f"   진입 {num(p.price)} / 손절 {num(p.stop)} (-{num(p.stop_pct, 1)}%) · 청산선 20EMA {num(p.exit_line)}"
+                         + (f" · 수량 {p.shares}" if p.shares else ""))
+    else:
+        lines.append("오늘 조건을 모두 채운 돌파 없음")
+    lines.append(f"<i>백테스트 {QULL_BACKTEST}</i>")
+
+    W = out["watch"]
+    lines.append(f"\n<b>👀 돌파 대기</b> ({len(W)}) — 트리거 5% 이내" if W else "\n<b>👀 돌파 대기</b>")
+    if W:
+        for p in W[:QULL_LIMIT]:
+            note = " · 첫반등 스킵 대상" if p.first_in_regime else ""
+            lines.append(f"• <b>{esc(p.ticker)}</b> ${num(p.price)} → 트리거 {num(p.trigger)} (+{num(p.dist_pct, 1)}%)"
+                         f" · 손절 {num(p.stop)}{note}{tag(p.ticker)}")
+        if len(W) > QULL_LIMIT:
+            lines.append(f"   … 외 {len(W) - QULL_LIMIT}건")
+    else:
+        lines.append("없음")
+
+    O = out["open_long"]
+    if O:
+        lines.append(f"\n<b>📌 규칙상 보유 중</b> ({len(O)}) — 종가가 청산선 아래면 청산")
+        for p in O[:QULL_LIMIT]:
+            gap = (p.exit_line / p.price - 1) * 100 if p.price else np.nan
+            lines.append(f"• <b>{esc(p.ticker)}</b> {p.entry_date:%m/%d} 진입 {num(p.trigger)} → ${num(p.price)}"
+                         f" ({num(p.open_ret_pct, 1)}%) · 청산선 {num(p.exit_line)} ({num(gap, 1)}%)")
+
+    if out["short_today"]:
+        lines.append(f"\n<i>숏 신호(참고, 백테스트 손실): {', '.join(esc(p.ticker) for p in out['short_today'][:10])}</i>")
+    # 넘치면 줄 단위로 뒤에서부터 뺀다 — 글자 단위로 자르면 HTML 태그가 끊겨 텔레그램이 거부한다
+    while len("\n".join(lines)) > MAX_PART_CHARS and len(lines) > 3:
+        lines.pop()
+        if lines[-1] != "<i>…이하 생략 (길이 제한)</i>":
+            lines.append("<i>…이하 생략 (길이 제한)</i>")
+            if len("\n".join(lines)) > MAX_PART_CHARS:
+                lines.pop(-2)
+    return "\n".join(lines)
+
+
 def main() -> int:
     dry = "--dry-run" in sys.argv    # 텔레그램으로 보내지 않고 화면에만 출력
     cfg = Config()
@@ -237,7 +302,16 @@ def main() -> int:
         return 1
 
     ok = True
-    for i, msg in enumerate(build_messages(res), 1):
+    messages = build_messages(res)
+    if QULL_ON:
+        try:
+            messages.append(build_qull_message(res, cfg))
+        except Exception as e:                  # 쿨라매기가 실패해도 미너비니 1·2편은 그대로 보낸다
+            print(f"[minervini] 쿨라매기 3편 생성 실패: {e}", file=sys.stderr)
+        else:
+            messages = [m.replace("<b>(1/2)</b>", "<b>(1/3)</b>").replace("<b>(2/2)</b>", "<b>(2/3)</b>")
+                        for m in messages]
+    for i, msg in enumerate(messages, 1):
         print(f"----- {i}편 ({len(msg)}자) -----\n{msg}\n")
         if dry:
             continue

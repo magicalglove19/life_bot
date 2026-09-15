@@ -10,6 +10,11 @@ def sma(series: pd.Series, window: int) -> pd.Series:
     return series.rolling(window, min_periods=window).mean()
 
 
+def ema(series: pd.Series, span: int) -> pd.Series:
+    """지수이동평균 (Pine ta.ema 와 같은 alpha = 2/(n+1))."""
+    return series.ewm(span=span, adjust=False, min_periods=span).mean()
+
+
 def atr(df: pd.DataFrame, window: int = 14) -> pd.Series:
     """Wilder ATR."""
     high, low, close = df["High"], df["Low"], df["Close"]

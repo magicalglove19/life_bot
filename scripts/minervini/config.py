@@ -134,12 +134,58 @@ class RiskConfig:
 
 
 @dataclass
+class QullConfig:
+    """쿨라매기(Kristjan Kullamägi) 3중 이동평균선 추세 돌파 전략.
+
+    기본값은 전달받은 전략 요약을 그대로 옮긴 것이다. 쿨라매기가 공개적으로 설명한
+    방식과 다른 부분(당일 저점 손절, ADR 손절 상한 등)은 옵션으로만 넣었다.
+    자세한 정의는 QULLAMAGGIE.md 참고. Pine Script 판과 수식이 1:1로 대응한다.
+    """
+
+    ema_fast: int = 10          # 단기 추세선
+    ema_mid: int = 20           # 중기 기준선 — 청산선
+    sma_slow: int = 50          # 장기 추세 중심축
+
+    # 횡보(변동성 수축) 구간: 신호 봉 '직전' N봉. 전반/후반으로 나눠 수축을 본다.
+    cons_bars: int = 20
+    contraction_ratio: float = 0.85   # 후반 변동폭 ≤ 전반 변동폭 × 이 값
+    max_range_pct: float = 25.0       # 횡보 전체 폭(고점 대비) 상한 %
+    dryup_ratio: float = 0.90         # 후반 평균 거래량 ≤ 전반 평균 거래량 × 이 값
+
+    # 돌파일 거래량 급증: "mult" = 평균 × K,  "std" = 평균 + k × 표준편차 (직전 봉 기준)
+    vol_mode: str = "mult"
+    vol_len: int = 20
+    vol_mult: float = 1.5
+    vol_std: float = 2.0
+
+    # 하락세 직후 첫 반등 스킵 — 신호 봉 직전 first_bounce_bars 봉 안에 역배열(숏은 정배열)이
+    # 있었으면 '하락 직후 반등'으로 보고 버린다.
+    # 신호를 '몇 번째인지' 세는 방식은 쓰지 않는다: 돌파가 종목당 2년에 한 번꼴이라 거의 모든
+    # 신호가 '첫 번째'가 되어 93~94%가 버려졌다. 창 방식 실측(S&P 500, 2년, 20일 뒤 종가):
+    #   10봉 → 7% 스킵, 스킵된 신호 평균 -0.31% vs 통과 +2.64%  (의도대로)
+    #   20봉+ → 27%+ 스킵, 스킵된 신호가 통과보다 나쁘지 않음  (멀쩡한 신호를 버림)
+    # 표본 26건이라 근거는 약하다. python3 backtest_qull.py 로 다시 재볼 것.
+    skip_first_signal: bool = True
+    first_bounce_bars: int = 10
+
+    # 손절: "opposite" = 횡보 반대편(롱=횡보 저점, 숏=횡보 고점)
+    #       "breakout" = 돌파선(롱=횡보 고점, 숏=횡보 저점) — 훨씬 타이트
+    #       "signal_bar" = 신호 봉의 저점(롱)/고점(숏) — 쿨라매기가 말하는 '당일 저점'
+    stop_mode: str = "opposite"
+    adr_stop_cap: float = 0.0   # >0이면 손절폭을 ADR(20일 평균 일중변동폭) × 이 값으로 제한. 0 = 끔
+
+    # 돌파 대기 목록: 정배열 + 수축 + 거래량 마름 상태에서 트리거까지 이 % 이내
+    watch_within_pct: float = 5.0
+
+
+@dataclass
 class Config:
     trend: TrendTemplateConfig = field(default_factory=TrendTemplateConfig)
     rs: RSConfig = field(default_factory=RSConfig)
     vcp: VCPConfig = field(default_factory=VCPConfig)
     fundamental: FundamentalConfig = field(default_factory=FundamentalConfig)
     risk: RiskConfig = field(default_factory=RiskConfig)
+    qull: QullConfig = field(default_factory=QullConfig)
 
     benchmark: str = "SPY"
     history_days: int = 500        # 252봉 RS + 200일선을 위해 넉넉히

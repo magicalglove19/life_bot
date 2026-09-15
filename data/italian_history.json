@@ -1,14 +1,4 @@
 [
-  "pioggia",
-  "vento",
-  "neve",
-  "estate",
-  "inverno",
-  "primavera",
-  "autunno",
-  "mangiare",
-  "bere",
-  "acqua",
   "pane",
   "uovo",
   "frutta",
@@ -498,5 +488,15 @@
   "forchetta",
   "coltello",
   "sciarpa",
-  "cappuccino"
+  "cappuccino",
+  "gatto",
+  "cane",
+  "caffè",
+  "tè",
+  "metro",
+  "paese",
+  "ragazzo",
+  "ragazza",
+  "lavoro",
+  "soldi"
 ]

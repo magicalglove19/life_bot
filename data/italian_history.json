@@ -1,14 +1,4 @@
 [
-  "pane",
-  "uovo",
-  "frutta",
-  "verdura",
-  "carne",
-  "pesce",
-  "vino",
-  "caffè",
-  "tavolo",
-  "sedia",
   "finestra",
   "porta",
   "letto",
@@ -498,5 +488,15 @@
   "ragazzo",
   "ragazza",
   "lavoro",
-  "soldi"
+  "soldi",
+  "macchina",
+  "pesce",
+  "pollo",
+  "riso",
+  "uovo",
+  "zuppa",
+  "orologio",
+  "chiave",
+  "carta",
+  "mercato"
 ]

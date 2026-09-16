@@ -110,8 +110,25 @@ class FundamentalConfig:
     """SEPA 펀더멘털 (Code 33) 파라미터."""
 
     quarters_required: int = 3     # 3분기 연속 가속
-    min_eps_growth: float = 20.0   # YoY EPS 성장률 최소 %
-    min_sales_growth: float = 10.0  # YoY 매출 성장률 최소 %
+
+    # 미너비니는 "최근 분기 EPS·매출이 30% 이상 급증"을 기술적 타점 전에 확인한다.
+    # mode: "tag"   = 통과 여부만 표시하고 걸러내지는 않음 (기본)
+    #       "filter"= 기준 미달 종목을 목록에서 제외
+    #       "off"   = 아예 안 봄
+    # 야후 무료 데이터는 분기 손익계산서를 5개만 줘서 전년동기 비교가 1분기만 가능한 종목이 많다.
+    # 그래서 '데이터 없음'은 기본적으로 통과 취급한다(require_data=True면 제외).
+    # 오늘 표본(Stage 2 통과 40종목): 30% 기준 둘 다 통과 28%, 20% 기준 40%, 10% 기준 62%.
+    mode: str = "tag"
+    min_eps_growth: float = 30.0    # YoY EPS 성장률 최소 %
+    min_sales_growth: float = 30.0  # YoY 매출 성장률 최소 %
+    require_data: bool = False
+
+    # 기관 매집 — U/D 거래량 비율 (상승일 거래량 ÷ 하락일 거래량)
+    # ud_mode 는 위와 같은 세 가지. 근거는 indicators.up_down_volume_ratio 주석 참고.
+    ud_mode: str = "tag"
+    ud_window: int = 50
+    ud_min: float = 1.5      # 이 값 이상이면 매집으로 본다
+    ud_strong: float = 2.0   # 이 값 이상은 '강한 매집' (실측에서 가장 뚜렷했던 구간)
 
 
 @dataclass
@@ -176,6 +193,20 @@ class QullConfig:
 
     # 돌파 대기 목록: 정배열 + 수축 + 거래량 마름 상태에서 트리거까지 이 % 이내
     watch_within_pct: float = 5.0
+
+    # ── Episodic Pivot (EP) — 실적·뉴스 촉매로 갭상승하는 첫날 ──
+    # 쿨라매기의 두 번째 셋업. 수축을 기다리지 않고 폭발하는 당일에 편승한다.
+    # 조용하던 종목이 갭으로 뛸 때가 핵심이라 '직전에 이미 많이 오른' 종목은 뺀다.
+    # 5년 실측(S&P 500, 갭상승 당일 종가 진입 · 손절 당일 저점 · 20EMA 청산):
+    #   갭 4% 기준 534건 +1.56% / 갭 5% 454건 +2.04% / 갭 6% 375건 +1.69%
+    #   갭 4~5% 구간만 떼면 평균 -1.15% 로 손실이라 하한을 5%로 뒀다.
+    ep_min_gap: float = 5.0        # 전일 종가 대비 시가 갭 최소 %
+    ep_vol_mult: float = 3.0       # 당일 거래량 ≥ 50봉 평균 × 이 값 (5배로 올리면 133건 +2.42%)
+    ep_require_green: bool = True  # 종가 > 시가 (갭을 지켜냈는지)
+    # '직전에 이미 오른 종목 제외'는 처음에 넣었다가 뺐다. 켜면 오히려 성적이 나빠졌다
+    # (갭5% 기준 497건 +2.68% → 454건 +2.04%). 0 이면 끔.
+    ep_prior_bars: int = 60
+    ep_max_prior_run: float = 0.0
 
 
 @dataclass

@@ -16,6 +16,7 @@ from . import fundamentals as fund
 from . import history, market, report, timing, trend_template, vcp
 from .config import Config
 from .data import _cache_file, download_prices
+from . import indicators
 from .indicators import percentile_rating, rs_score
 from .universe import load_universe
 
@@ -43,6 +44,11 @@ class Candidate:
     trend: object = None
     vcp: vcp.VCPResult = field(default_factory=vcp.VCPResult)
     fundamentals: fund.Fundamentals | None = None
+    ud_ratio: float = np.nan   # 기관 매집 — 상승일 거래량 ÷ 하락일 거래량 (최근 50봉)
+    ud_ok: bool = False
+    growth_ok = None           # 실적 급증 기준 통과 (True/False/None=데이터 없음)
+    growth_note: str = ""      # "EPS +35% · 매출 +31%" 또는 "데이터 없음"
+    drop_reason: str = ""      # 실적·매집 기준으로 빠졌다면 그 이유
     stage2_since = None      # Trend Template을 연속 통과하기 시작한 날
     stage2_days: int = 0
     setup_since = None       # VCP 셋업이 잡히기 시작한 날
@@ -74,6 +80,45 @@ class ScanResult:
     last_bar: str = ""       # 판정의 기준이 된 마지막 거래일 (YYYY-MM-DD)
     frames: dict = field(default_factory=dict, repr=False)   # {티커: OHLCV} — 다른 전략(쿨라매기)이 재사용
     names: dict = field(default_factory=dict, repr=False)    # {티커: (종목명, 섹터)}
+    quality_dropped: list = field(default_factory=list)      # 실적·매집 기준으로 빠진 종목
+
+
+def mark_quality(c: "Candidate", cfg: Config) -> None:
+    """미너비니가 기술적 타점 전에 확인하는 두 가지 — 실적 급증과 기관 매집."""
+    f = cfg.fundamental
+    c.ud_ok = bool(np.isfinite(c.ud_ratio) and c.ud_ratio >= f.ud_min)
+
+    fu = c.fundamentals
+    if f.mode == "off" or fu is None or fu.error:
+        c.growth_ok, c.growth_note = None, "데이터 없음"
+        return
+    eps, sales = fu.eps_yoy, fu.sales_yoy
+    if not (np.isfinite(eps) and np.isfinite(sales)):
+        c.growth_ok, c.growth_note = None, "데이터 없음"
+        return
+    c.growth_ok = bool(eps >= f.min_eps_growth and sales >= f.min_sales_growth)
+    c.growth_note = f"EPS {eps:+.0f}% · 매출 {sales:+.0f}%"
+
+
+def _quality_filtered(cands: list, cfg: Config) -> tuple:
+    """실적·매집 기준으로 걸러낸다. (남은 목록, 제외된 목록)"""
+    f = cfg.fundamental
+    keep, dropped = [], []
+    for c in cands:
+        out = []
+        if f.mode == "filter":
+            if c.growth_ok is False:
+                out.append("실적 미달")
+            elif c.growth_ok is None and f.require_data:
+                out.append("실적 데이터 없음")
+        if f.ud_mode == "filter" and not c.ud_ok:
+            out.append(f"매집 {c.ud_ratio:.2f}" if np.isfinite(c.ud_ratio) else "매집 없음")
+        if out:
+            c.drop_reason = " · ".join(out)
+            dropped.append(c)
+        else:
+            keep.append(c)
+    return keep, dropped
 
 
 def mark_extended(c: "Candidate", cfg: Config) -> None:
@@ -245,6 +290,7 @@ def scan(
     for c in stage2:
         c.vcp = vcp.detect(frames[c.ticker], cfg.vcp)
         c.high52_date = c.trend.metrics.get("high52_date")
+        c.ud_ratio = indicators.up_down_volume_ratio(frames[c.ticker], cfg.fundamental.ud_window)
         if c.vcp.breakout_date is not None:
             idx = frames[c.ticker].index
             try:
@@ -286,6 +332,15 @@ def scan(
         print(f"  {report.DIM}4/4 펀더멘털 조회 생략{report.RESET}")
 
     for c in candidates:
+        mark_quality(c, cfg)
+    quality_dropped = []
+    if cfg.fundamental.mode == "filter" or cfg.fundamental.ud_mode == "filter":
+        candidates, quality_dropped = _quality_filtered(candidates, cfg)
+        if verbose and quality_dropped:
+            report.progress_done(0.0, f"실적·매집 기준으로 {report.BOLD}{len(quality_dropped)}{report.RESET}종목 제외 "
+                                      f"{report.DIM}(남은 {len(candidates)}){report.RESET}")
+
+    for c in candidates:
         _position_sizing(c, cfg)
         c.total_score = _composite(c)
 
@@ -323,10 +378,11 @@ def scan(
         last_bar=last_bar,
         frames=frames,
         names=meta,
+        quality_dropped=quality_dropped,
     )
 
 
-def to_dataframe(candidates: list[Candidate]) -> pd.DataFrame:
+def to_dataframe(candidates: list[Candidate], ud_strong: float = 2.0) -> pd.DataFrame:
     rows = []
     for i, c in enumerate(candidates, 1):
         f = c.fundamentals
@@ -369,6 +425,9 @@ def to_dataframe(candidates: list[Candidate]) -> pd.DataFrame:
                 "52주고점일": history.fmt(c.high52_date),
                 "거래량마름": f"{v.dryup_ratio:.2f}" if (ok and np.isfinite(v.dryup_ratio)) else "-",
                 # 펀더멘털
+                "실적기준": {True: "통과", False: "미달"}.get(c.growth_ok, "데이터없음"),
+                "U/D": f"{c.ud_ratio:.2f}" if np.isfinite(c.ud_ratio) else "-",
+                "매집": "강함" if (np.isfinite(c.ud_ratio) and c.ud_ratio >= ud_strong) else ("있음" if c.ud_ok else "약함"),
                 "EPS성장%": f"{f.eps_yoy:+.0f}%" if f and np.isfinite(f.eps_yoy) else "-",
                 "매출성장%": f"{f.sales_yoy:+.0f}%" if f and np.isfinite(f.sales_yoy) else "-",
                 "Code33": f.code33 if f else "-",

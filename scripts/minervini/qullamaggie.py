@@ -121,6 +121,47 @@ def compute_signals(df: pd.DataFrame, q: QullConfig) -> pd.DataFrame:
     return out
 
 
+def compute_ep_signals(df: pd.DataFrame, q: QullConfig) -> pd.DataFrame:
+    """Episodic Pivot — 실적·뉴스 촉매로 갭상승하는 첫날에 편승한다.
+
+    compute_signals() 와 같은 모양의 표를 돌려주므로 simulate() 가 그대로 쓴다.
+    (돌파 셋업과 달리 수축을 기다리지 않는다. 손절은 갭상승 당일 저점.)
+    """
+    C, H, L, O = df["Close"], df["High"], df["Low"], df["Open"]
+    V = df["Volume"].astype(float)
+    out = pd.DataFrame(index=df.index)
+    out["ema_fast"] = ema(C, q.ema_fast)
+    out["ema_mid"] = ema(C, q.ema_mid)
+    out["sma_slow"] = sma(C, q.sma_slow)
+
+    prev_close = C.shift(1)
+    gap = (O / prev_close - 1.0) * 100.0
+    vavg = V.rolling(50, min_periods=50).mean().shift(1)
+    prior = (prev_close / C.shift(q.ep_prior_bars) - 1.0) * 100.0   # 직전 상승률 (갭 전날까지)
+
+    cond = (gap >= q.ep_min_gap) & (V >= vavg * q.ep_vol_mult)
+    if q.ep_max_prior_run > 0:      # 기본은 끔 — 켜면 실측에서 성적이 나빠졌다
+        cond = cond & (prior <= q.ep_max_prior_run)
+    if q.ep_require_green:
+        cond = cond & (C > O)
+    sig = cond.fillna(False).to_numpy()
+    prev = np.r_[False, sig[:-1]]
+
+    out["gap_pct"], out["vol_ratio"], out["prior_run"] = gap, V / vavg, prior
+    out["long_signal"] = sig & ~prev          # 이틀 연속이면 첫날만
+    out["short_signal"] = np.zeros(len(df), bool)
+    out["long_skipped_first"] = np.zeros(len(df), bool)
+    out["short_skipped_first"] = np.zeros(len(df), bool)
+    out["bull"] = (out["ema_fast"] > out["ema_mid"]) & (out["ema_mid"] > out["sma_slow"])
+    out["bear"] = (out["ema_fast"] < out["ema_mid"]) & (out["ema_mid"] < out["sma_slow"])
+    out["long_stop"] = L                       # 갭상승 당일 저점
+    out["short_stop"] = H
+    out["cons_high"], out["cons_low"] = np.nan, np.nan
+    out["range_pct"] = np.nan
+    out["open"], out["high"], out["low"], out["close"] = O, H, L, C
+    return out
+
+
 # ════════════════════════════════════════════════════════════════════
 #  체결 시뮬레이션 (한 종목)
 # ════════════════════════════════════════════════════════════════════
@@ -236,7 +277,9 @@ class QullPick:
     ticker: str
     name: str = ""
     sector: str = ""
-    kind: str = ""            # "long_today" | "short_today" | "watch" | "open_long" | "skipped_first"
+    kind: str = ""            # "long_today" | "short_today" | "watch" | "open_long" | "skipped_first" | "ep_today"
+    setup: str = "breakout"   # "breakout" (수축 후 돌파) | "ep" (갭상승 촉매)
+    gap_pct: float = np.nan   # EP 전용 — 전일 종가 대비 시가 갭
     price: float = np.nan
     trigger: float = np.nan   # 진입가(오늘 신호) 또는 돌파 트리거(대기)
     stop: float = np.nan
@@ -267,7 +310,7 @@ def _size(entry: float, stop: float, account: float, risk_pct: float, max_pos_pc
 def scan_today(frames: dict, meta: dict, cfg, open_lookback: int = 60) -> dict[str, list[QullPick]]:
     """frames = {티커: OHLCV}. 마지막 봉 기준으로 신호/대기/진행 중 거래를 뽑는다."""
     q = cfg.qull
-    res = {"long_today": [], "short_today": [], "watch": [], "open_long": [], "skipped_first": []}
+    res = {"long_today": [], "short_today": [], "watch": [], "open_long": [], "skipped_first": [], "ep_today": []}
     min_len = q.sma_slow + q.cons_bars + 5
     for tk, df in frames.items():
         if tk == cfg.benchmark or df is None or len(df) < min_len:
@@ -295,6 +338,18 @@ def scan_today(frames: dict, meta: dict, cfg, open_lookback: int = 60) -> dict[s
             res["short_today"].append(QullPick(kind="short_today", trigger=price,
                                                stop=float(last["short_stop"]), **base))
 
+        # Episodic Pivot — 오늘 갭상승 + 대량 거래로 터진 종목
+        eps = compute_ep_signals(df, q)
+        elast = eps.iloc[-1]
+        if bool(elast["long_signal"]):
+            st = float(elast["long_stop"])
+            res["ep_today"].append(QullPick(kind="ep_today", setup="ep", trigger=price, stop=st,
+                                            gap_pct=float(elast["gap_pct"]),
+                                            shares=_size(price, st, cfg.risk.account_size,
+                                                         cfg.risk.risk_per_trade_pct, cfg.risk.max_position_pct),
+                                            **{k: v for k, v in base.items() if k != "vol_ratio"},
+                                            vol_ratio=float(elast["vol_ratio"])))
+
         # 진행 중 롱: 최근 구간을 규칙대로 돌려 아직 청산 안 된 거래
         start = sig.index[max(0, len(sig) - open_lookback)]
         _, pos = simulate(sig, "long", "close", 0.0, start=start)
@@ -302,6 +357,11 @@ def scan_today(frames: dict, meta: dict, cfg, open_lookback: int = 60) -> dict[s
             res["open_long"].append(QullPick(kind="open_long", trigger=pos.entry, stop=pos.stop,
                                              entry_date=pos.entry_date,
                                              open_ret_pct=(price / pos.entry - 1) * 100, **base))
+        _, epos = simulate(eps, "long", "close", 0.0, start=start)
+        if epos is not None and epos.entry_date != eps.index[-1]:
+            res["open_long"].append(QullPick(kind="open_long", setup="ep", trigger=epos.entry, stop=epos.stop,
+                                             entry_date=epos.entry_date,
+                                             open_ret_pct=(price / epos.entry - 1) * 100, **base))
 
         # 돌파 대기: 오늘 포함 N봉이 수축·마름 상태이고 트리거(구간 고점)에 가깝다
         if bool(last["bull"]) and not bool(last["long_signal"]):
@@ -327,6 +387,7 @@ def scan_today(frames: dict, meta: dict, cfg, open_lookback: int = 60) -> dict[s
                                              **{k: v for k, v in base.items() if k != "range_pct"}))
 
     res["long_today"].sort(key=lambda p: -p.vol_ratio)
+    res["ep_today"].sort(key=lambda p: -p.gap_pct)
     res["short_today"].sort(key=lambda p: -p.vol_ratio)
     res["watch"].sort(key=lambda p: p.dist_pct)
     res["open_long"].sort(key=lambda p: -p.open_ret_pct)

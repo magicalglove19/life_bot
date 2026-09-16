@@ -83,8 +83,15 @@ def is_extended(c) -> bool:
 
 def stock_line(c, with_exec: bool = True) -> str:
     """종목 한 건. 실행 정보가 붙으면 2줄, 아니면 1줄."""
+    q = []
+    if c.growth_ok is True:
+        q.append("실적✓")
+    elif c.growth_ok is False:
+        q.append("실적✗")
+    if np.isfinite(c.ud_ratio):
+        q.append(f"매집 {num(c.ud_ratio, 2)}")
     head = (f"• <b>{esc(c.ticker)}</b> ${num(c.price)} · RS {num(c.rs_rating, 0)}"
-            f" · 점수 {num(c.total_score, 0)}")
+            f" · 점수 {num(c.total_score, 0)}" + (" · " + " ".join(q) if q else ""))
     if not with_exec:
         # 관심 목록 — 지금 실행할 자리인지(상태)를 같이 보여준다.
         bits = [esc(c.vcp.status), pivot_age(c)]
@@ -222,6 +229,7 @@ def build_messages(res) -> list[str]:
 # 쿨라매기 3중 이평 — 미너비니와 별개 전략이라 3편으로 따로 보낸다.
 # 백테스트: 2026 마크미니 스크리너/backtest_qull.py --years 5 --compare (S&P 500 현 구성종목, 롱)
 QULL_ON = os.environ.get("MINERVINI_QULL", "1") != "0"
+QULL_BACKTEST_EP = "EP 5년 474건 · 승률 37% · 거래당 +2.72% · PF 2.03"
 QULL_BACKTEST = "5년 786건 · 승률 38% · 거래당 +1.11% · 하락장(2022)엔 손실"
 QULL_LIMIT = 8
 
@@ -252,6 +260,17 @@ def build_qull_message(res, cfg) -> str:
         lines.append("오늘 조건을 모두 채운 돌파 없음")
     lines.append(f"<i>백테스트 {QULL_BACKTEST}</i>")
 
+    E = out["ep_today"]
+    lines.append(f"\n<b>⚡ EP — 갭상승 촉매</b> ({len(E)})" if E else "\n<b>⚡ EP — 갭상승 촉매</b>")
+    if E:
+        for p in E[:QULL_LIMIT]:
+            lines.append(f"• <b>{esc(p.ticker)}</b> ${num(p.price)} · 갭 +{num(p.gap_pct, 1)}% · 거래량 {num(p.vol_ratio, 1)}x{tag(p.ticker)}\n"
+                         f"   진입 {num(p.price)} / 손절 {num(p.stop)} (당일 저점, -{num(p.stop_pct, 1)}%)"
+                         + (f" · 수량 {p.shares}" if p.shares else ""))
+    else:
+        lines.append("오늘 갭상승 촉매 없음")
+    lines.append(f"<i>백테스트 {QULL_BACKTEST_EP}</i>")
+
     W = out["watch"]
     lines.append(f"\n<b>👀 돌파 대기</b> ({len(W)}) — 트리거 5% 이내" if W else "\n<b>👀 돌파 대기</b>")
     if W:
@@ -269,7 +288,7 @@ def build_qull_message(res, cfg) -> str:
         lines.append(f"\n<b>📌 규칙상 보유 중</b> ({len(O)}) — 종가가 청산선 아래면 청산")
         for p in O[:QULL_LIMIT]:
             gap = (p.exit_line / p.price - 1) * 100 if p.price else np.nan
-            lines.append(f"• <b>{esc(p.ticker)}</b> {p.entry_date:%m/%d} 진입 {num(p.trigger)} → ${num(p.price)}"
+            lines.append(f"• <b>{esc(p.ticker)}</b> [{'EP' if p.setup == 'ep' else '돌파'}] {p.entry_date:%m/%d} 진입 {num(p.trigger)} → ${num(p.price)}"
                          f" ({num(p.open_ret_pct, 1)}%) · 청산선 {num(p.exit_line)} ({num(gap, 1)}%)")
 
     if out["short_today"]:

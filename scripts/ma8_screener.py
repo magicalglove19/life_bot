@@ -1,6 +1,6 @@
 """월~금 13시경 — 유목민식 8일선/정배열 스크리너.
 
-패턴 A: 정배열 상태에서 5일선을 잠깐 이탈했다가 8일선에서 지지받는 종목
+패턴 A: 정배열 상태에서 5일선을 잠깐 이탈했다가 8일선에서 지지받는 종목 (EMA 기준)
 패턴 B: 역배열에서 정배열로 막 전환되기 직전인 종목 (골든크로스 임박)
 
 유니버스: 코스피+코스닥 시가총액 상위 300 (우선주/스팩/관리종목 제외)
@@ -28,10 +28,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import telegram
 
 # ----------------------------------------------------------------------
-# 파라미터 (로컬 screener.py와 동일하게 유지할 것 — 양쪽 다 단순이평 기준)
+# 파라미터 (패턴 A만 지수이평 EMA. 로컬 screener.py는 전부 단순이평이라 이제 다르다)
 # ----------------------------------------------------------------------
 UNIVERSE_SIZE = int(os.environ.get("SCREENER_UNIVERSE", "300"))
 MA_PERIODS = [5, 8, 10, 20, 60, 120]
+EMA_PERIODS = [5, 8, 10, 20, 60]     # 패턴 A 전용. 패턴 B는 단순이평(MA)을 쓴다.
 HISTORY_DAYS = 420
 MAX_WORKERS = 10
 PER_CALL_TIMEOUT = 20        # 종목 1개당 강제 시간제한(초)
@@ -41,7 +42,8 @@ MAX_FETCH_SEC = 900          # 수집 전체 예산(초). 넘으면 확보된 �
 TOP_N = 15                   # 패턴별 메시지 표시 개수
 
 # 패턴 A — 최근 300거래일·282종목 백테스트에서 MA 1,228건 횡보 46.3%,
-# EMA 1,597건 횡보 45.2%. 사실상 동률이라 이평을 갈아탈 근거가 못 된다.
+# EMA 1,597건 횡보 45.2%. 차이는 1.1%p로 작지만 EMA가 앞서 패턴 A만 EMA로 본다.
+# (패턴 B는 반대로 EMA가 더 나빠 단순이평을 쓴다 — 아래 패턴 B 주석 참고)
 A_PRIOR_UPTREND_LOOKBACK = 15
 A_BREAK_SEARCH_WINDOW = 6
 A_MA10_TOLERANCE = 0.985
@@ -218,30 +220,33 @@ def add_mas(df):
     df = df.copy()
     for p in MA_PERIODS:
         df[f"MA{p}"] = df["Close"].rolling(p).mean()
+    for p in EMA_PERIODS:
+        # 앞쪽 봉이 잘린 창에서도 값이 흔들리지 않도록 min_periods로 워밍업을 강제한다
+        df[f"EMA{p}"] = df["Close"].ewm(span=p, adjust=False, min_periods=p).mean()
     return df
 
 
 def check_pattern_a(df):
     if len(df) < max(A_PRIOR_UPTREND_LOOKBACK, 60) + 5:
         return None
-    d = df.dropna(subset=[f"MA{p}" for p in (5, 8, 10, 20, 60)])
+    d = df.dropna(subset=[f"EMA{p}" for p in (5, 8, 10, 20, 60)])
     if len(d) < A_PRIOR_UPTREND_LOOKBACK + A_BREAK_SEARCH_WINDOW + 2:
         return None
 
     last_n = d.tail(A_PRIOR_UPTREND_LOOKBACK + A_BREAK_SEARCH_WINDOW + 1)
 
     full_align = (
-        (last_n["Close"] > last_n["MA5"])
-        & (last_n["MA5"] > last_n["MA10"])
-        & (last_n["MA10"] > last_n["MA20"])
-        & (last_n["MA20"] > last_n["MA60"])
+        (last_n["Close"] > last_n["EMA5"])
+        & (last_n["EMA5"] > last_n["EMA10"])
+        & (last_n["EMA10"] > last_n["EMA20"])
+        & (last_n["EMA20"] > last_n["EMA60"])
     )
     if not full_align.head(A_PRIOR_UPTREND_LOOKBACK).any():
         return None
 
     recent = d.tail(A_BREAK_SEARCH_WINDOW + 1)
-    below5 = recent["Close"] < recent["MA5"]
-    prev_above5 = recent["Close"].shift(1) >= recent["MA5"].shift(1)
+    below5 = recent["Close"] < recent["EMA5"]
+    prev_above5 = recent["Close"].shift(1) >= recent["EMA5"].shift(1)
     break_events = recent[below5 & prev_above5]
     if break_events.empty:
         if not below5.tail(1).iloc[0]:
@@ -254,20 +259,20 @@ def check_pattern_a(df):
     if len(since_break) == 0:
         return None
 
-    if (since_break["Close"] < since_break["MA10"] * A_MA10_TOLERANCE).any():
+    if (since_break["Close"] < since_break["EMA10"] * A_MA10_TOLERANCE).any():
         return None
 
     today = d.iloc[-1]
 
-    gap8 = (today["Close"] - today["MA8"]) / today["MA8"]
+    gap8 = (today["Close"] - today["EMA8"]) / today["EMA8"]
     if abs(gap8) > A_MA8_BAND:
         return None
 
     tol = A_STRUCT_TOLERANCE
     if not (
-        today["MA8"] > today["MA10"] * tol
-        and today["MA10"] > today["MA20"] * tol
-        and today["MA20"] > today["MA60"] * tol
+        today["EMA8"] > today["EMA10"] * tol
+        and today["EMA10"] > today["EMA20"] * tol
+        and today["EMA20"] > today["EMA60"] * tol
     ):
         return None
 
@@ -275,8 +280,8 @@ def check_pattern_a(df):
         "break_day": break_day.date().isoformat(),
         "days_since_break": len(since_break) - 1,
         "gap_to_ma8_pct": round(gap8 * 100, 2),
-        "close": today["Close"], "ma5": round(today["MA5"], 1), "ma8": round(today["MA8"], 1),
-        "ma10": round(today["MA10"], 1), "ma20": round(today["MA20"], 1), "ma60": round(today["MA60"], 1),
+        "close": today["Close"], "ma5": round(today["EMA5"], 1), "ma8": round(today["EMA8"], 1),
+        "ma10": round(today["EMA10"], 1), "ma20": round(today["EMA20"], 1), "ma60": round(today["EMA60"], 1),
         "last_bar": d.index[-1].date(),
     }
 
@@ -376,7 +381,7 @@ def format_message(rows_a, rows_b, fetched, universe_size, bar_date, uni_source=
             when = "당일 이탈" if days == 0 else f"{days}일 전 이탈"
             lines.append(
                 f"• <b>{esc(r['종목명'])}</b> <code>{r['종목코드']}</code> · {fmt_num(r['close'])}원\n"
-                f"   8일선 {sign}{gap:.2f}% (MA8 {fmt_num(r['ma8'])}) · {when}"
+                f"   8일선 {sign}{gap:.2f}% (EMA8 {fmt_num(r['ma8'])}) · {when}"
             )
         if len(rows_a) > TOP_N:
             lines.append(f"   … 외 {len(rows_a) - TOP_N}건")

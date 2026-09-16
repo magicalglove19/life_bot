@@ -1,5 +1,7 @@
 """Telegram 메시지 전송 공용 모듈."""
+import html
 import os
+import re
 import sys
 import time
 import requests
@@ -10,6 +12,20 @@ REQUEST_TIMEOUT = 20    # 초
 MAX_ATTEMPTS = 3        # 429(확실한 거절)일 때만 소진된다
 RETRY_AFTER_DEFAULT = 3
 RETRY_AFTER_MAX = 30
+
+PARSE_ERROR = "parse_error"   # 서식 오류로 '확실히' 거절당한 상태
+TAG_RE = re.compile(r"</?(?:b|strong|i|em|u|ins|s|strike|del|code|pre|a|tg-spoiler|blockquote)\b[^>]*>",
+                    re.IGNORECASE)
+
+
+def _strip_tags(text: str) -> str:
+    """평문 재전송용. 지원 태그만 걷어내고 실체참조를 원문자로 되돌린다.
+
+    `<[^>]+>` 같은 범용 패턴은 쓰지 않는다. 애초에 이 경로로 오는 메시지에는
+    "거래량 1.0x<1.2x" 처럼 태그가 아닌 < 가 섞여 있어서, 그런 패턴은 본문을
+    통째로 먹어버린다.
+    """
+    return html.unescape(TAG_RE.sub("", text))
 
 
 def _split(text: str, max_len: int = MAX_LEN):
@@ -45,13 +61,23 @@ def send(text: str, parse_mode: str = "HTML") -> bool:
             "parse_mode": parse_mode,
             "disable_web_page_preview": True,
         }
-        if not _send_chunk(url, payload):
+        status = _send_chunk(url, payload)
+        if status == PARSE_ERROR:
+            # 서식 오류는 전달 자체가 안 된 것이 확실하므로 중복 위험이 없다.
+            # 태그 하나 때문에 브리핑 전체를 날리느니 평문으로라도 보낸다.
+            print("[telegram] 서식 오류 — 평문으로 재전송", file=sys.stderr)
+            fallback = {k: v for k, v in payload.items() if k != "parse_mode"}
+            fallback["text"] = _strip_tags(chunk)
+            status = _send_chunk(url, fallback)
+        if status is not True:
             ok = False
     return ok
 
 
 def _send_chunk(url: str, payload: dict) -> bool:
-    """조각 하나 전송. 중복 발송 방지가 최우선.
+    """조각 하나 전송. 성공 True, 실패 False, 서식 오류 PARSE_ERROR.
+
+    중복 발송 방지가 최우선.
 
     텔레그램은 메시지를 실제로 전달하고도 5xx나 타임아웃을 돌려주는 경우가 있다.
     그때 재전송하면 같은 내용이 두 번, 세 번 간다. 그래서 '확실히 전달되지 않은'
@@ -80,9 +106,11 @@ def _send_chunk(url: str, payload: dict) -> bool:
             time.sleep(wait)
             continue
 
-        # 4xx: 요청 자체가 잘못됨(파싱 오류 등) → 재시도해도 같은 결과
+        # 4xx: 요청 자체가 잘못됨(파싱 오류 등) → 같은 내용으로 재시도해도 같은 결과
         # 5xx: 전달됐을 수 있음 → 재전송하면 중복
-        print(f"[telegram] HTTP {r.status_code} (재전송 안 함): {r.text[:200]}", file=sys.stderr)
+        print(f"[telegram] HTTP {r.status_code}: {r.text[:200]}", file=sys.stderr)
+        if r.status_code == 400 and "parse" in r.text.lower() and "parse_mode" in payload:
+            return PARSE_ERROR
         return False
 
     return False

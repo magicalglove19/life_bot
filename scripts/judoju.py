@@ -12,6 +12,7 @@
 죽었고, 그때 이 API 로 옮겼다. 모집단은 코스피·코스닥 거래대금 상위 각 100종목이다.
 """
 import datetime as dt
+from datetime import date, timedelta
 import html as H
 import json
 import re
@@ -153,6 +154,54 @@ def fetch_all():
     return snap, [r[:5] for r in keep[:PB_POOL]]
 
 
+# ---------------------------------------------------------------- 만기일
+
+def expiry_info(today):
+    """한국 파생상품 만기일.
+
+    KOSPI200 선물·옵션 모두 그 달 **두 번째 목요일**에 만기가 온다.
+    3·6·9·12월은 개별주식 선물·옵션까지 같이 끝나 '네 마녀의 날'이 된다.
+
+    만기일 효과는 차익거래 바스켓(KOSPI200 구성종목)과 지수에 몰리고, 특히
+    장 마감 동시호가에 프로그램 매물이 쏟아진다. 이 봇이 보는 중소형 테마주에
+    직접 영향은 상대적으로 작지만, '그날 시장이 어땠는지'를 나중에 되짚으려면
+    기록이 남아 있어야 한다.
+
+    한계 — 두 번째 목요일이 휴장일이면 실제 만기는 직전 거래일로 당겨진다.
+    미래 날짜의 휴장 여부는 알 수 없으므로 여기서는 보정하지 않는다(몇 년에 한 번).
+    """
+    def second_thursday(y, m):
+        first = date(y, m, 1)
+        return first + timedelta(days=(3 - first.weekday()) % 7 + 7)
+
+    this_month = second_thursday(today.year, today.month)
+    if today <= this_month:
+        nxt = this_month
+    else:
+        y, m = (today.year + 1, 1) if today.month == 12 else (today.year, today.month + 1)
+        nxt = second_thursday(y, m)
+    return {"date": nxt, "days": (nxt - today).days,
+            "quad": nxt.month in (3, 6, 9, 12), "today": nxt == today}
+
+
+def expiry_line(today):
+    """리포트에 한 줄. 만기 당일과 이틀 전부터만 보여준다."""
+    e = expiry_info(today)
+    if e["today"]:
+        what = "선물·옵션 동시만기 (네 마녀)" if e["quad"] else "옵션 만기일"
+        return f"⚠️ 오늘 <b>{what}</b> — 장 막판 프로그램 매물 주의"
+    if 0 < e["days"] <= 2:
+        what = "동시만기" if e["quad"] else "옵션만기"
+        return f"📅 {what} D-{e['days']} ({e['date']:%m/%d} 목)"
+    return ""
+
+
+def expiry_tag(today):
+    """상태 파일에 남길 표식. 나중에 '만기일 주도주가 어땠나'를 직접 확인하려면 필요하다."""
+    e = expiry_info(today)
+    return ("quad" if e["quad"] else "month") if e["today"] else None
+
+
 # ---------------------------------------------------------------- 상태
 
 def load_state():
@@ -278,7 +327,7 @@ def label_of(cmap, code, cache, hot=()):
 
 def short(name):
     """'5G(5세대 이동통신)' → '5G'. 괄호 안 설명은 리포트에서 자리만 차지한다."""
-    return re.split(r"[(\[]", name, 1)[0].strip() or name
+    return re.split(r"[(\[]", name, maxsplit=1)[0].strip() or name
 
 
 def lead_themes(cmap, snap):
@@ -424,6 +473,10 @@ def build(state, ymd, slot, pullbacks=None, cmap=None):
     label = {"0930": "09:30", "1200": "12:00", "1500": "15:00"}[slot]
     lines = [f"📊 <b>{label} 주도주</b> · {timeutil.stamp('%m/%d (%a)')}", ""]
 
+    exp = expiry_line(timeutil.today())
+    if exp:
+        lines += [exp, ""]
+
     hot = lead_themes(cmap, snap)
     if hot:
         lines.append("🏷 주도 테마 — "
@@ -510,7 +563,8 @@ def main() -> int:
         return 0
 
     state["days"].setdefault(ymd, {})[slot] = {
-        "snap": snap, "at": now.strftime("%H:%M:%S")}
+        "snap": snap, "at": now.strftime("%H:%M:%S"),
+        "expiry": expiry_tag(now.date())}
     save_state(state)
 
     if slot == "0930":

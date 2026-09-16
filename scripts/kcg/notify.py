@@ -5,6 +5,7 @@
   · 정밀 진단       — 종목명과 점수
   · 보유 종목       — 손절·익절 신호가 뜬 것만 (positions.txt 를 넘겼을 때)
   · 신정제 종가배팅 — 종목명 · 유형 · 재료 한 줄 · 손절선(당일 저가)
+  · 일봉 스윙      — 종목명 · 타점 · 신고가/조정 · 손절선과 5일선
 """
 
 from __future__ import annotations
@@ -48,19 +49,42 @@ def _closing_block(picks: list, total: int, cfg: Config) -> str:
     return "\n".join(lines)
 
 
+def _swing_block(picks: list, total: int) -> str:
+    lines = ["📊 <b>일봉 스윙</b>  <i>신고가 주도주 눌림목 · 5일선 살아있는 동안 보유</i>"]
+    if not picks:
+        lines.append("없음")
+        return "\n".join(lines)
+    for p in picks:
+        lines.append(f"<b>{_esc(p.name)}</b> ({_esc(p.code)}) 타점{p.entry} · "
+                     f"{p.chg:+.1f}% · {p.value / 1e8:,.0f}억")
+        lines.append(f"  신고가 {p.peak_date} · {p.rest_bars}봉 조정 (-{p.depth:.0f}%)"
+                     + (" · 주봉 O" if p.weekly_ok else ""))
+        lines.append(f"  손절 {_won(p.stop_price)} ({_esc(p.stop_label)}, {p.stop_pct:+.1f}%) · "
+                     f"5일선 {_won(p.trail_price)} 이탈 시 매도")
+    if total > len(picks):
+        lines.append(f"<i>… 외 {total - len(picks)}종목</i>")
+    lines.append("<i>타점1은 1차 분할, 타점2가 메인. 5일선 살아있으면 손절선을 올리며 보유 · "
+                 "대량거래 음봉/윗꼬리 뜨면 즉시 매도</i>")
+    return "\n".join(lines)
+
+
 def build(res, holdings: list, frames: dict, cfg: Config, detail_top: int = 10,
-          closing: list | None = None) -> str:
+          closing: list | None = None, swing: list | None = None) -> str:
     # GitHub Actions 는 UTC 로 돈다. 국내장 도구이므로 항상 KST 로 찍는다.
     now = dt.datetime.now(KST).strftime("%m/%d %H:%M")
     head = f"매수 시그널 {len(res.buys)} · 조정 중 {len(res.tracking)}"
     if closing is not None:
         head += f" · 종가배팅 {len(closing)}"
+    if swing is not None:
+        head += f" · 스윙 {len(swing)}"
     blocks = [
-        f"📈 <b>강창권 눌림목 + 신정제 종가배팅</b>  {now}\n"
+        f"📈 <b>국내 스크리너</b>  {now}\n"
         f"<i>{cfg.market} {res.scanned}종목 · {head}</i>"
     ]
     if closing is not None:
         blocks.append(_closing_block(closing[:cfg.closing.top], len(closing), cfg))
+    if swing is not None:
+        blocks.append(_swing_block(swing[:cfg.swing.top], len(swing)))
 
     if res.buys:
         lines = ["🎯 <b>오늘 종가 매수</b>"]

@@ -152,9 +152,54 @@ class ClosingConfig:
 
 
 @dataclass
+class SwingConfig:
+    """일봉 스윙 — 신고가 주도주가 20일선 정배열을 지키며 눌린 자리를 산다.
+
+    타점 1  수급 음봉 — 거래량 급감 + 5일선 부근 짧은 캔들 (1차 분할)
+    타점 2  20일선 눌림 후 5일선 돌파 안착 (메인)
+
+    종가배팅과 달리 하루 만에 파는 게 아니라, 5일선이 살아 있는 동안 추세를 들고 간다.
+    """
+
+    # 주도주 자격 — 대량 거래를 동반한 신고가
+    high_lookback: int = 60           # 신고가 판정 봉 수 (60일 이상 신고가)
+    peak_within: int = 40             # 그 신고가가 최근 이 봉 수 안에 있어야 한다
+    peak_min_rest: int = 2            # 신고가 이후 최소 조정 봉 수 (당일 급등은 제외)
+    peak_vol_mult: float = 2.5        # 신고가 당시 거래량 / 그 시점 20일 평균
+    min_avg_value: float = 10e8       # 최근 20일 평균 거래대금 하한 (원)
+
+    # 정배열 · 눌림
+    ma_slope_bars: int = 5            # 20일선이 이 봉 수 동안 우상향
+    ma20_tolerance: float = 2.0       # 조정 중 종가가 20일선을 이 %까지는 밑돌아도 인정
+    max_depth: float = 15.0           # 신고가 고점 대비 조정 저점 하락률 상한 % (급락 제외)
+    rest_vol_ratio: float = 0.90      # 조정 구간 평균 거래량 / 신고가 직전 상승 구간 평균
+
+    # 타점 1 — 수급 음봉
+    t1_ma5_gap: float = 2.0           # 종가와 5일선 이격 절댓값 상한 %
+    t1_max_body: float = 2.0          # 짧은 캔들 — 몸통 % 상한
+    t1_max_range: float = 6.0         # 캔들 전체 길이 % 상한
+    t1_vol_ratio: float = 0.45        # 오늘 거래량 / 20일 평균 — 거래량 급감
+
+    # 타점 2 — 20일선 눌림 후 5일선 돌파
+    t2_touch_within: int = 7          # 최근 이 봉 수 안에 20일선 지지를 확인했어야 한다
+    t2_touch_tol: float = 2.0         # 저가가 20일선 +이 % 안으로 들어오면 지지 터치
+    t2_vol_mult: float = 0.8          # 돌파 당일 거래량 / 20일 평균
+    t2_max_ma5_gap: float = 8.0       # 5일선 위 이격이 이보다 크면 추격 (감점)
+
+    # 청산
+    stop_pct: float = 6.0             # 자동 손절 % (원문 5~7%)
+    trail_ma: int = 5                 # 추세 보유 기준선 — 이탈하면 매도
+    exit_vol_mult: float = 2.0        # 상승 중 대량 거래 음봉/윗꼬리 → 즉시 매도
+    exit_wick_ratio: float = 0.5      # 윗꼬리 / 캔들 길이 이 이상이면 위꼬리 캔들
+
+    top: int = 5                      # 텔레그램에 올릴 종목 수
+
+
+@dataclass
 class Config:
     trigger: TriggerConfig = field(default_factory=TriggerConfig)
     closing: ClosingConfig = field(default_factory=ClosingConfig)
+    swing: SwingConfig = field(default_factory=SwingConfig)
     pattern_a: PatternAConfig = field(default_factory=PatternAConfig)
     pattern_b: PatternBConfig = field(default_factory=PatternBConfig)
     pattern_c: PatternCConfig = field(default_factory=PatternCConfig)

@@ -15,6 +15,54 @@ import pandas as pd
 from .indicators import sma, slope_up
 
 
+QUAD_MONTHS = (3, 6, 9, 12)   # 쿼드러플 위칭 — 선물·옵션 네 종류가 같이 만기
+
+
+def monthly_opex(year: int, month: int) -> pd.Timestamp:
+    """미국 월물 옵션 만기일 = 그 달 세 번째 금요일."""
+    fridays = [d for d in pd.date_range(f"{year}-{month:02d}-01", periods=31, freq="D")
+               if d.month == month and d.weekday() == 4]
+    return pd.Timestamp(fridays[2])
+
+
+def _adjust_holiday(cand: pd.Timestamp, idx) -> pd.Timestamp:
+    """세 번째 금요일이 휴장(성금요일 등)이면 직전 거래일로 당긴다.
+
+    달력이 그 날짜까지 덮고 있을 때만 판단한다. 아직 오지 않은 날은 휴장인지 알 수 없으므로
+    그대로 둔다 (데이터 마지막 날로 당겨버리는 실수를 막는다)."""
+    if idx is None or not len(idx):
+        return cand
+    idx = pd.DatetimeIndex(idx).normalize()
+    if cand > idx[-1] or cand in idx:
+        return cand
+    prev = idx[idx <= cand]
+    return prev[-1] if len(prev) else cand
+
+
+def next_opex(today, trading_days=None) -> pd.Timestamp:
+    """오늘 이후(당일 포함) 가장 가까운 만기일."""
+    today = pd.Timestamp(today).normalize()
+    cand = _adjust_holiday(monthly_opex(today.year, today.month), trading_days)
+    if cand < today:
+        nxt = today + pd.DateOffset(months=1)
+        cand = _adjust_holiday(monthly_opex(nxt.year, nxt.month), trading_days)
+    return cand
+
+
+def opex_info(today, trading_days=None) -> dict:
+    """다음 만기일까지 남은 거래일 수와 쿼드위칭 여부."""
+    today = pd.Timestamp(today).normalize()
+    date = next_opex(today, trading_days)
+    idx = pd.DatetimeIndex(trading_days).normalize() if trading_days is not None and len(trading_days) else None
+    if idx is not None and date <= idx[-1]:
+        left = int(((idx > today) & (idx <= date)).sum())
+    else:
+        # 달력 밖(아직 안 온 날)은 영업일로 센다 — 휴일은 반영 못 하지만 하루 차이 수준
+        left = int(np.busday_count(today.date(), date.date()))
+    return {"date": date, "days": left, "quad": date.month in QUAD_MONTHS,
+            "near": left <= 5}
+
+
 @dataclass
 class MarketRegime:
     symbol: str = "SPY"
@@ -27,6 +75,9 @@ class MarketRegime:
     pct_from_high: float = np.nan
     breadth_stage2: float = np.nan   # 유니버스 중 Trend Template 통과 비율 %
     breadth_above_ma200: float = np.nan
+    opex_date = None         # 다음 옵션 만기일 (매월 세 번째 금요일)
+    opex_days: int = -1      # 만기까지 남은 거래일
+    opex_quad: bool = False  # 쿼드러플 위칭 (3·6·9·12월)
     light: str = "회색불"
     exposure: str = "-"
     comment: str = ""
@@ -37,6 +88,9 @@ def analyze(bench: pd.DataFrame | None, breadth_stage2: float, breadth_above_ma2
     if bench is None or len(bench) < 220:
         r.comment = "지수 데이터 부족 — 국면 판단 생략"
         return r
+
+    info = opex_info(bench.index[-1], bench.index)
+    r.opex_date, r.opex_days, r.opex_quad = info["date"], info["days"], info["quad"]
 
     close = bench["Close"].dropna()
     ma50, ma200 = sma(close, 50), sma(close, 200)

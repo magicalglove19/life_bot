@@ -144,6 +144,17 @@ def market_block(r) -> str:
                      f"200일선 위 {num(r.breadth_above_ma200, 0)}%")
         lines.append(f"<i>시장 폭 = 전체 중 상승추세 비율(RS 70 고정). "
                      f"내 기준(RS {num(CFG_MIN_RS, 0)})으로 거른 종목 수와는 다릅니다.</i>")
+    if getattr(r, "opex_date", None) is not None:
+        import pandas as pd
+
+        d = pd.Timestamp(r.opex_date)
+        when = "오늘" if r.opex_days == 0 else f"{r.opex_days}거래일 뒤"
+        quad = " · 쿼드위칭" if r.opex_quad else ""
+        line = f"📅 옵션 만기 <b>{d:%m/%d}</b> ({when}){quad}"
+        if r.opex_days <= 5:
+            line += ("\n<i>만기 5일 이내 진입은 5년 실측 +1.13%(손익비 1.21) vs 그 외 +1.63%(1.26). "
+                     "다만 90% 구간이 0을 포함해 단정은 못 합니다.</i>")
+        lines.append(line)
     if r.comment:
         lines.append(f"<i>{esc(r.comment)}</i>")
     return "\n".join(lines)

@@ -144,17 +144,14 @@ def market_block(r) -> str:
                      f"200일선 위 {num(r.breadth_above_ma200, 0)}%")
         lines.append(f"<i>시장 폭 = 전체 중 상승추세 비율(RS 70 고정). "
                      f"내 기준(RS {num(CFG_MIN_RS, 0)})으로 거른 종목 수와는 다릅니다.</i>")
-    if getattr(r, "opex_date", None) is not None:
+    # 만기 3거래일 전부터만 한 줄 (5년 실측상 손익비 차이가 단정할 수준이 아니라 설명은 생략)
+    if getattr(r, "opex_date", None) is not None and 0 <= r.opex_days <= OPEX_NOTICE_DAYS:
         import pandas as pd
 
         d = pd.Timestamp(r.opex_date)
         when = "오늘" if r.opex_days == 0 else f"{r.opex_days}거래일 뒤"
         quad = " · 쿼드위칭" if r.opex_quad else ""
-        line = f"📅 옵션 만기 <b>{d:%m/%d}</b> ({when}){quad}"
-        if r.opex_days <= 5:
-            line += ("\n<i>만기 5일 이내 진입은 5년 실측 +1.13%(손익비 1.21) vs 그 외 +1.63%(1.26). "
-                     "다만 90% 구간이 0을 포함해 단정은 못 합니다.</i>")
-        lines.append(line)
+        lines.append(f"📅 옵션 만기 <b>{d:%m/%d}</b> ({when}){quad}")
     if r.comment:
         lines.append(f"<i>{esc(r.comment)}</i>")
     return "\n".join(lines)
@@ -240,6 +237,7 @@ def build_messages(res) -> list[str]:
 # 쿨라매기 3중 이평 — 미너비니와 별개 전략이라 3편으로 따로 보낸다.
 # 백테스트: 2026 마크미니 스크리너/backtest_qull.py --years 5 --compare (S&P 500 현 구성종목, 롱)
 QULL_ON = os.environ.get("MINERVINI_QULL", "1") != "0"
+OPEX_NOTICE_DAYS = 3   # 옵션 만기 안내를 띄우기 시작할 남은 거래일
 QULL_BACKTEST_EP = "EP 5년 474건 · 승률 37% · 거래당 +2.72% · PF 2.03"
 QULL_BACKTEST = "5년 786건 · 승률 38% · 거래당 +1.11% · 하락장(2022)엔 손실"
 QULL_LIMIT = 8

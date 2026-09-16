@@ -27,9 +27,10 @@ MAGENTA = "\033[38;5;170m"
 GRAY = "\033[38;5;245m"
 WHITE = "\033[38;5;255m"
 
-# 옵션 만기 효과 — S&P 500 5년, 20일 신고가 대량돌파 9,499건의 20일 뒤 수익률로 실측
-OPEX_NOTE = ("만기 5일 이내 진입 +1.13%(승률 53.2%·손익비 1.21) vs 그 외 +1.63%(55.8%·1.26). "
-             "차이 -0.51%p인데 90% 구간이 -1.29~+0.30 으로 0을 포함해 단정할 수는 없음")
+# 옵션 만기: 만기 3거래일 전부터 한 줄만 알린다.
+# 5년 실측에서 만기 전 손익비 차이는 -0.51%p 뿐이고 90% 구간이 0을 포함해(-1.29~+0.30)
+# 단정할 수준이 아니었다. 그래서 설명을 붙이지 않고 날짜만 짧게 띄운다.
+OPEX_NOTICE_DAYS = 3
 
 LIGHT_COLOR = {"초록불": GREEN, "노란불": YELLOW, "주황불": ORANGE, "빨간불": RED, "회색불": GRAY}
 STATUS_COLOR = {"돌파": GREEN, "매수구간": CYAN, "형성중": GRAY, "피벗위(거래량부족)": YELLOW}
@@ -155,16 +156,13 @@ def print_regime(r) -> None:
     print(
         f"  시장 폭: Stage 2 통과 {r.breadth_stage2:.1f}%   200일선 위 {r.breadth_above_ma200:.1f}%"
     )
-    if getattr(r, "opex_date", None) is not None:
+    if getattr(r, "opex_date", None) is not None and 0 <= r.opex_days <= OPEX_NOTICE_DAYS:
         import pandas as _pd
 
-        oc = ORANGE if r.opex_days <= 5 else DIM
-        quad = f"  {ORANGE}쿼드위칭{RESET}" if r.opex_quad else ""
         d = _pd.Timestamp(r.opex_date)
         when = "오늘" if r.opex_days == 0 else f"{r.opex_days}거래일 뒤"
-        print(f"  📅 옵션 만기 {oc}{d:%m/%d}({'월화수목금토일'[d.weekday()]}){RESET} · {oc}{when}{RESET}{quad}")
-        if r.opex_days <= 5:
-            print(f"     {DIM}{OPEX_NOTE}{RESET}")
+        quad = " · 쿼드위칭" if r.opex_quad else ""
+        print(f"  {ORANGE}📅 옵션 만기 {d:%m/%d}({'월화수목금토일'[d.weekday()]}) · {when}{quad}{RESET}")
     print(f"  판정: {color}{BOLD}{r.light}{RESET}  →  권장 노출도 {BOLD}{r.exposure}{RESET}")
     print(f"  {DIM}{r.comment}{RESET}")
 
@@ -579,18 +577,22 @@ def _section_html(anchor, icon, title, count, desc, klass, inner) -> str:
             f'<p class="sdesc">{_esc(desc)}</p>{inner}</section>')
 
 
+def _opex_line(r) -> str:
+    """만기 3거래일 전부터만 한 줄. 평소에는 아예 표시하지 않는다."""
+    inner = _opex_html(r)
+    return f'<div class="line">{inner}</div>' if inner else ""
+
+
 def _opex_html(r) -> str:
     """옵션 만기일 안내 — 필터가 아니라 참고용."""
     import pandas as pd
 
-    if getattr(r, "opex_date", None) is None:
+    if getattr(r, "opex_date", None) is None or not (0 <= r.opex_days <= OPEX_NOTICE_DAYS):
         return ""
     d = pd.Timestamp(r.opex_date)
     when = "오늘" if r.opex_days == 0 else f"{r.opex_days}거래일 뒤"
-    quad = ' <b class="warn">쿼드위칭</b>' if r.opex_quad else ""
-    cls = ' class="warn"' if r.opex_days <= 5 else ""
-    note = f'<span class="date"> · {_esc(OPEX_NOTE)}</span>' if r.opex_days <= 5 else ""
-    return f'<span>📅 옵션 만기 <b{cls}>{d:%m/%d}</b> · {when}{quad}</span>{note}'
+    quad = " · 쿼드위칭" if r.opex_quad else ""
+    return f'<span class="warn">📅 옵션 만기 <b>{d:%m/%d}</b> · {when}{quad}</span>'
 
 
 def _regime_html(r) -> str:
@@ -608,7 +610,7 @@ def _regime_html(r) -> str:
 <div class="flags">{fl}</div>
 <div class="line"><span>Stage 2 통과 <b>{r.breadth_stage2:.1f}%</b></span>
 <span>200일선 위 <b>{r.breadth_above_ma200:.1f}%</b></span></div>
-<div class="line">{_opex_html(r)}</div>
+{_opex_line(r)}
 <div class="line"><span class="light {_LIGHT_CLASS.get(r.light, 'l-gray')}">{_esc(r.light)}</span>
 <span>권장 노출도 <b>{_esc(r.exposure)}</b></span></div>
 <div class="sdesc" style="padding:0;margin:2px 0 0">{_esc(r.comment)}</div></div>"""

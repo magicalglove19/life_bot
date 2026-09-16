@@ -54,6 +54,16 @@ B_CONVERGE_LOOKBACK = 20
 B_WAS_BEARISH_THRESHOLD = 0.92
 B_WAS_BEARISH_LOOKBACK = 60
 B_MA20_RISE_LOOKBACK = 5
+# 오래 하락한 종목의 크로스는 횡보로 끝나기 쉬워서 두 가지를 더 본다.
+# 2023-09~2026-09 시총 상위 282종목 백테스트. 신호가 뜬 날 종가 매수 → 20거래일 관찰,
+# 그동안 최고수익이 +10% 미만이면 '횡보'로 본다. 조건을 모두 만족한 첫날을 신호로 센다.
+#   단순이평(MA)  필터 전 413건 횡보 46.0%·수익중앙 +1.0% → 필터 후 291건 횡보 43.3%·+0.7%
+#   지수이평(EMA) 필터 전 188건 횡보 43.6%·수익중앙 +1.0% → 필터 후 150건 횡보 46.0%·-0.1%
+# EMA로 바꾸면 신호가 절반으로 줄고 이 필터가 오히려 역효과였다. 8일선 지지는 다들 같은
+# 선을 보기 때문에 반응이 나오는 기법이라, HTS 기본값이자 원 기법 기준인 단순이평을 쓴다.
+# 박스권(40·60일 고가) 돌파도 봤지만 개선이 작거나 오히려 나빠서 뺐다.
+B_MA20_MIN_SLOPE = 0.015     # MA20이 5일간 +1.5% 이상 — 멈춘 게 아니라 오르는 중
+B_MA120_ROOM = 1.10          # 종가가 MA120 아래라면 MA120까지 10% 넘게 남아 있을 것
 
 ROOT = Path(__file__).resolve().parent.parent
 SAVED_UNIVERSE = ROOT / "data" / "kr_top300.json"   # refresh-tickers가 주 1회 갱신
@@ -305,8 +315,19 @@ def check_pattern_b(df):
     if not (today["Close"] > today["MA20"]):
         return None
 
+    ma20_slope = ma20_series.iloc[-1] / ma20_series.iloc[0] - 1
+    if ma20_slope < B_MA20_MIN_SLOPE:
+        return None
+
+    ma120 = today.get("MA120")
+    if pd.isna(ma120):
+        return None
+    if not (today["Close"] > ma120 or ma120 > today["Close"] * B_MA120_ROOM):
+        return None                       # 바로 위에서 MA120이 누르고 있다
+
     return {
         "ratio_ma20_ma60": round(ratio_now, 4),
+        "ma20_slope_pct": round(ma20_slope * 100, 2),
         "close": today["Close"], "ma5": round(today["MA5"], 1), "ma10": round(today["MA10"], 1),
         "ma20": round(today["MA20"], 1), "ma60": round(today["MA60"], 1),
         "last_bar": d.index[-1].date(),
@@ -370,7 +391,7 @@ def format_message(rows_a, rows_b, fetched, universe_size, bar_date, uni_source=
             label = "골든크로스 완료" if ratio >= 1 else "전환 임박"
             lines.append(
                 f"• <b>{esc(r['종목명'])}</b> <code>{r['종목코드']}</code> · {fmt_num(r['close'])}원\n"
-                f"   MA20/MA60 {ratio:.3f} · {label}"
+                f"   MA20/MA60 {ratio:.3f} · {label} · MA20 5일 +{r['ma20_slope_pct']:.1f}%"
             )
         if len(rows_b) > TOP_N:
             lines.append(f"   … 외 {len(rows_b) - TOP_N}건")

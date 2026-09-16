@@ -154,7 +154,7 @@ def main() -> int:
         f"<b>💰 종목당 계좌의 {signal_rank.POSITION_MAX_PCT}% 이하</b> · "
         f"손절 -{signal_rank.STOP_PCT}% (갭 하락 시 더 잃을 수 있음)",
         "<i>점수 = RS40 + ATR25 + 거래량15 + 120MA10 + 거래대금5 + 패턴5. "
-        f"{signal_rank.HOLD_DAYS}거래일 보유 기준. SPY 50일선<200일선이면 매수 중단. 매수 추천 아님.</i>",
+        f"{signal_rank.HOLD_DAYS}거래일 보유 기준. SPY 50일선&lt;200일선이면 매수 중단. 매수 추천 아님.</i>",
     ]
 
     if "--dry-run" in sys.argv:

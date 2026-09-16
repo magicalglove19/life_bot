@@ -28,6 +28,7 @@ ATR≥6% + 거래량≥1.5x 였고, 그마저 하락장 기여는 +0.24%p로 사
   · ATR≥6% + 거래량≥1.5x 만 적용, 거래대금은 체결 가능성용 하한
   · 근거가 약하다는 것을 리포트에 명시한다
 """
+import html
 import sys
 
 import numpy as np
@@ -258,7 +259,7 @@ def format_report(title: str, result: dict, is_kr: bool = False,
     if off:
         picks = picks[:REGIME_OFF_WATCH]
         lines = [f"<b>━━━ 🔴 시장 하락추세 — 신규 매수 쉬는 구간 ━━━</b>",
-                 f"<i>SPY {REGIME_FAST}일선 {regime['ma_fast']:,.1f} < {REGIME_SLOW}일선 "
+                 f"<i>SPY {REGIME_FAST}일선 {regime['ma_fast']:,.1f} &lt; {REGIME_SLOW}일선 "
                  f"{regime['ma_slow']:,.1f}. 다시 위로 올라서면 매수 후보를 보냅니다.</i>",
                  f"<i>관찰용 상위 {len(picks)}개 (패턴 {total}종목 중)</i>"]
     else:
@@ -268,22 +269,24 @@ def format_report(title: str, result: dict, is_kr: bool = False,
     if not picks:
         lines.append(f"  <i>{MIN_SCORE}점 이상 없음 — 쉬는 날</i>")
     for i, m in enumerate(picks, 1):
-        label = m["symbol"]
+        label = html.escape(m["symbol"])
         if is_kr and m.get("name"):
-            label += f" {m['name']}"
+            label += f" {html.escape(m['name'])}"
         mark = "👀" if off else "✅" if not m["fails"] else "⚠️" if len(m["fails"]) == 1 else "▫️"
         stop = m["price"] * (1 - STOP_PCT / 100)
         lines.append(
             f"{i}. {mark} <b>{label}</b> <b>{m['score']}점</b> "
             f"{_fmt_price(m, is_kr)} ({m['change_pct']:+.1f}%) · 손절 {_fmt_price(dict(m, price=stop), is_kr)}"
         )
-        pats = "+".join(PATTERN_SHORT.get(p, p) for p in m["patterns"])
+        pats = html.escape("+".join(PATTERN_SHORT.get(p, p) for p in m["patterns"]))
         detail = (f"    RS{m['rs126']:+.0f} ATR{m['atr_pct']:.1f}% "
                   f"거래량{m['volume_ratio']:.1f}x · {pats}")
+        # 미달 사유에는 "거래량 1.0x<1.2x" 처럼 < 가 들어간다. 그대로 보내면
+        # 텔레그램 HTML 파서가 태그 시작으로 읽고 400으로 거절해 발송 전체가 죽는다.
         if m["fails"]:
-            detail += f" · <i>{m['fails'][0]}</i>"
+            detail += f" · <i>{html.escape(m['fails'][0])}</i>"
         if tags and m["symbol"] in tags:
-            detail += f" · <i>{tags[m['symbol']]}</i>"
+            detail += f" · <i>{html.escape(tags[m['symbol']])}</i>"
         lines.append(detail)
 
     return "\n".join(lines)

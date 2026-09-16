@@ -28,7 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import telegram
 
 # ----------------------------------------------------------------------
-# 파라미터 (로컬 screener.py는 단순이평 기준이라 이 파일과 더 이상 같지 않다)
+# 파라미터 (로컬 screener.py와 동일하게 유지할 것 — 양쪽 다 단순이평 기준)
 # ----------------------------------------------------------------------
 UNIVERSE_SIZE = int(os.environ.get("SCREENER_UNIVERSE", "300"))
 MA_PERIODS = [5, 8, 10, 20, 60, 120]
@@ -41,7 +41,7 @@ MAX_FETCH_SEC = 900          # 수집 전체 예산(초). 넘으면 확보된 �
 TOP_N = 15                   # 패턴별 메시지 표시 개수
 
 # 패턴 A — 최근 300거래일·282종목 백테스트에서 MA 1,228건 횡보 46.3%,
-# EMA 1,597건 횡보 45.2%로 EMA가 근소하게 나았다(사실상 동률).
+# EMA 1,597건 횡보 45.2%. 사실상 동률이라 이평을 갈아탈 근거가 못 된다.
 A_PRIOR_UPTREND_LOOKBACK = 15
 A_BREAK_SEARCH_WINDOW = 6
 A_MA10_TOLERANCE = 0.985

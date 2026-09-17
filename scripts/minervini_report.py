@@ -1,4 +1,4 @@
-"""월~토 05:30 KST — 마크 미너비니 SEPA 스크리너 (미국주식 S&P 500).
+"""월~토 05:30 KST — 마크 미너비니 SEPA 스크리너 (기본 S&P 500, MINERVINI_UNIVERSE 로 변경).
 
 아침 브리핑(morning-stocks, 05:00 KST)과 같은 시간대에 도착한다.
 미국장 마감 직후라 당일 종가가 확정된 상태로 판정한다.
@@ -28,7 +28,8 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import telegram
-from minervini import qullamaggie, screener
+from minervini import qullamaggie, report, screener
+from minervini.universe import UNIVERSE_TITLE
 from minervini.config import Config
 
 KST = dt.timezone(dt.timedelta(hours=9))
@@ -37,6 +38,8 @@ KST = dt.timezone(dt.timedelta(hours=9))
 ACCOUNT = float(os.environ.get("MINERVINI_ACCOUNT", "100000"))
 RISK_PCT = float(os.environ.get("MINERVINI_RISK", "1.25"))
 MIN_SCORE = float(os.environ.get("MINERVINI_MIN_SCORE", "75"))
+# 스캔 대상. 기본 S&P 500. sp1500 이면 중·소형까지 (4년 실측상 신호는 3배, 평균 성과는 낮음)
+UNIVERSE = os.environ.get("MINERVINI_UNIVERSE", "sp500")
 
 CFG_MIN_RS = Config().trend.min_rs_rating   # 화면 설명용 (config.py 가 진짜 기준)
 
@@ -154,6 +157,8 @@ def market_block(r) -> str:
         lines.append(f"📅 옵션 만기 <b>{d:%m/%d}</b> ({when}){quad}")
     if r.comment:
         lines.append(f"<i>{esc(r.comment)}</i>")
+    if report.red_light(r):
+        lines.append(f"<b>{esc(report.RED_WARNING)}</b>")
     return "\n".join(lines)
 
 
@@ -188,7 +193,7 @@ def build_messages(res) -> list[str]:
 
     # ---------- 1편: 국면 + 지금 실행할 자리 ----------
     head1 = (f"🇺🇸 <b>미너비니 스크리너</b> · {stamp}  <b>(1/2)</b>\n"
-             f"S&amp;P 500 {res.scanned}종목 스캔 · RS {num(CFG_MIN_RS, 0)}+ Stage 2 통과 {len(res.stage2)}"
+             f"{esc(UNIVERSE_TITLE.get(UNIVERSE, UNIVERSE))} {res.scanned}종목 스캔 · RS {num(CFG_MIN_RS, 0)}+ Stage 2 통과 {len(res.stage2)}"
              f" · 종합 {num(MIN_SCORE, 0)}점 이상 {len(cands)}종목")
     blocks1 = [
         head1,
@@ -257,6 +262,8 @@ def build_qull_message(res, cfg) -> str:
 
     lines = [f"🏄 <b>쿨라매기 3중 이평</b> · {stamp}  <b>(3/3)</b>",
              "<i>미너비니와 별개 전략 — 10EMA&gt;20EMA&gt;50SMA · 수축+거래량 마름 · 종가 돌파 · 청산 종가&lt;20EMA</i>"]
+    if report.red_light(res.regime):
+        lines.append(f"<b>{esc(report.RED_WARNING)}</b>")
 
     L = out["long_today"]
     lines.append(f"\n<b>🏄 오늘 롱 신호</b> ({len(L)})" if L else "\n<b>🏄 오늘 롱 신호</b>")
@@ -322,7 +329,7 @@ def main() -> int:
     cfg.vcp.max_pct_above_pivot = MAX_PCT_ABOVE_PIVOT
 
     try:
-        res = screener.scan(cfg, universe_name="sp500", verbose="--verbose" in sys.argv)
+        res = screener.scan(cfg, universe_name=UNIVERSE, verbose="--verbose" in sys.argv)
     except Exception as e:
         if not dry:
             telegram.send(f"⚠️ <b>미너비니 스크리너 실패</b>\n{esc(e)}")

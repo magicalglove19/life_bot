@@ -18,7 +18,7 @@ from .config import Config
 from .data import _cache_file, download_prices
 from . import indicators
 from .indicators import percentile_rating, rs_score
-from .universe import load_universe
+from .universe import INDEX_LABEL, load_universe
 
 # 시장 폭(breadth)을 잴 때 쓰는 고정 RS 기준.
 # 시장 국면은 '시장이 어떤 상태인가'를 재는 것이지 '내 필터가 몇 개를 남기는가'가 아니다.
@@ -35,6 +35,7 @@ class Candidate:
     ticker: str
     name: str = ""
     sector: str = ""
+    size: str = ""             # 대형/중형/소형 (소속 지수 기준)
     price: float = np.nan
     rs_rating: float = np.nan
     rs_raw: float = np.nan
@@ -212,6 +213,7 @@ def scan(
     uni = load_universe(universe_name, custom_file, limit)
     tickers = uni["ticker"].tolist()
     meta = {r.ticker: (r.name, r.sector) for r in uni.itertuples()}
+    size_of = dict(zip(uni["ticker"], uni["index"])) if "index" in uni.columns else {}
 
     # 캐시 키: 유니버스별로 분리해야 서로 덮어쓰지 않는다
     if custom_file:
@@ -270,6 +272,7 @@ def scan(
         stage2.append(
             Candidate(
                 ticker=tk,
+                size=INDEX_LABEL.get(size_of.get(tk, ""), ""),
                 name=name,
                 sector=sector,
                 price=m["price"],
@@ -395,6 +398,7 @@ def to_dataframe(candidates: list[Candidate], ud_strong: float = 2.0) -> pd.Data
                 "티커": c.ticker,
                 "종목명": c.name,
                 "섹터": c.sector,
+                "규모": c.size or "-",
                 "현재가": f"{c.price:,.2f}",
                 "RS등급": int(c.rs_rating) if np.isfinite(c.rs_rating) else "",
                 "52주고점대비": f"{c.pct_from_high:+.1f}%",

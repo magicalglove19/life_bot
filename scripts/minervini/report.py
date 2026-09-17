@@ -32,6 +32,16 @@ WHITE = "\033[38;5;255m"
 # 단정할 수준이 아니었다. 그래서 설명을 붙이지 않고 날짜만 짧게 띄운다.
 OPEX_NOTICE_DAYS = 3
 
+# 빨간불 경고 — 4년 되감기(2022~2026)에서 빨간불에 나온 당일 돌파는
+# S&P 1500 23건 평균 -1.49% (90% 구간 -2.81~-0.17) 로 확실히 손실이었다.
+# 주황불은 오히려 +2.35%(S&P 500, 승률 71%)라 막지 않는다.
+RED_WARNING = "🔴 빨간불 — 신규 매수 자제. 빨간불에 나온 돌파는 4년 실측 평균 -1.5%로 손실이었습니다"
+
+
+def red_light(regime) -> bool:
+    return getattr(regime, "light", "") == "빨간불"
+
+
 LIGHT_COLOR = {"초록불": GREEN, "노란불": YELLOW, "주황불": ORANGE, "빨간불": RED, "회색불": GRAY}
 STATUS_COLOR = {"돌파": GREEN, "매수구간": CYAN, "형성중": GRAY, "피벗위(거래량부족)": YELLOW}
 
@@ -164,6 +174,8 @@ def print_regime(r) -> None:
         quad = " · 쿼드위칭" if r.opex_quad else ""
         print(f"  {ORANGE}📅 옵션 만기 {d:%m/%d}({'월화수목금토일'[d.weekday()]}) · {when}{quad}{RESET}")
     print(f"  판정: {color}{BOLD}{r.light}{RESET}  →  권장 노출도 {BOLD}{r.exposure}{RESET}")
+    if red_light(r):
+        print(f"  {RED}{BOLD}{RED_WARNING}{RESET}")
     print(f"  {DIM}{r.comment}{RESET}")
 
 
@@ -613,7 +625,8 @@ def _regime_html(r) -> str:
 {_opex_line(r)}
 <div class="line"><span class="light {_LIGHT_CLASS.get(r.light, 'l-gray')}">{_esc(r.light)}</span>
 <span>권장 노출도 <b>{_esc(r.exposure)}</b></span></div>
-<div class="sdesc" style="padding:0;margin:2px 0 0">{_esc(r.comment)}</div></div>"""
+<div class="sdesc" style="padding:0;margin:2px 0 0">{_esc(r.comment)}</div>
+{('<div class="line"><b class="neg">' + _esc(RED_WARNING) + '</b></div>') if red_light(r) else ''}</div>"""
 
 
 def _sector_html(groups) -> str:

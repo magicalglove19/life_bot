@@ -1,14 +1,4 @@
 [
-  "posta",
-  "lettera",
-  "pacco",
-  "francobollo",
-  "indirizzo",
-  "-numero",
-  "fax",
-  "parco",
-  "giornale",
-  "treno",
   "aeroporto",
   "bagno",
   "ascensore",
@@ -498,5 +488,15 @@
   "cena",
   "mappa",
   "cameriere",
-  "orario"
+  "orario",
+  "pizzeria",
+  "biblioteca",
+  "farmacia",
+  "supermercato",
+  "ufficio",
+  "giardino",
+  "ospedale",
+  "posta",
+  "trattoria",
+  "cappotto"
 ]

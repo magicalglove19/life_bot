@@ -126,7 +126,7 @@ def main() -> int:
         return 1
 
     sections = [
-        f"☀️ <b>아침 브리핑</b> · {timeutil.stamp()} {timeutil.stamp('%H:%M')} KST",
+        f"💜🎀 ☀️ <b>아침 브리핑</b> 🎀💜 · {timeutil.stamp()} {timeutil.stamp('%H:%M')} KST",
         f"<i>🇺🇸 미국 · {signal_rank.MIN_SCORE}점 이상 최대 {TOP_N}개 · "
         f"{signal_rank.HOLD_DAYS}거래일 보유 기준</i>",
         "",

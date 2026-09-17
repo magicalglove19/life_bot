@@ -245,7 +245,8 @@ PATTERN_SHORT = {
 
 def format_report(title: str, result: dict, is_kr: bool = False,
                   limit: int = 15, tags: dict[str, str] | None = None,
-                  regime: dict | None = None) -> str:
+                  regime: dict | None = None, min_score: int = MIN_SCORE,
+                  subtitle: str | None = None) -> str:
     """종목당 2줄. 1줄: 순위·티커·점수·가격·손절가  2줄: 핵심 지표·패턴·미달 사유.
 
     ✅ 관문 전부 통과 / ⚠️ 1개 미달 / ▫️ 2개 이상 미달. MIN_SCORE 미만은 싣지 않는다.
@@ -253,7 +254,7 @@ def format_report(title: str, result: dict, is_kr: bool = False,
     """
     passed, near = result["passed"], result["near"]
     total = len(passed) + len(near) + len(result.get("rest", []))
-    picks = top_n(result, limit)
+    picks = top_n(result, limit, min_score)
     off = regime is not None and not regime["on"]
 
     if off:
@@ -264,10 +265,11 @@ def format_report(title: str, result: dict, is_kr: bool = False,
                  f"<i>관찰용 상위 {len(picks)}개 (패턴 {total}종목 중)</i>"]
     else:
         lines = [f"<b>{title}</b>",
-                 f"<i>패턴 {total}종목 중 {MIN_SCORE}점 이상 {len(picks)}개 · ✅통과 {len(passed)}</i>"]
+                 subtitle or f"<i>패턴 {total}종목 중 {min_score}점 이상 {len(picks)}개 · ✅통과 {len(passed)}</i>"]
 
     if not picks:
-        lines.append(f"  <i>{MIN_SCORE}점 이상 없음 — 쉬는 날</i>")
+        lines.append(f"  <i>{min_score}점 이상 없음 — 쉬는 날</i>" if not subtitle
+                     else "  <i>해당 종목 없음 — 쉬는 날</i>")
     for i, m in enumerate(picks, 1):
         label = html.escape(m["symbol"])
         if is_kr and m.get("name"):

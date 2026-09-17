@@ -1,0 +1,52 @@
+name: inflection-kr
+
+# 한국장 변곡점 매수 후보 — 평일 14:20 KST 도착 목표 (장중 잠정 판정).
+#
+# ⚠️ 종가 전에 도착해야 의미가 있다. GitHub 예약 실행은 이 레포 실측으로
+#    1시간 23분 ~ 5시간 밀리므로 예약(schedule)을 두지 않는다.
+#    → 맥의 launchd 가 평일 14:17 에 repository_dispatch 로 찌른다 (실행 ~2분).
+#      설치:  ./scripts/local/install-trigger.sh inflection-kr 14:17
+#    맥이 꺼져 있으면 그날은 오지 않는다.
+#    늦게 도착한 실행은 inflection_kr.py 가 발송 창(13:50~15:20 KST) 밖이라고 보고 건너뛴다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '발송 창(13:50~15:20 KST)·휴장일 검사 무시하고 강제 발송'
+        required: false
+        default: true
+        type: boolean
+  repository_dispatch:
+    types: [inflection-kr]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: inflection-kr
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run 한국 변곡점
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          INFLECTION_KR_FORCE: ${{ (github.event_name == 'workflow_dispatch' && inputs.force) && '1' || '0' }}
+        run: python scripts/inflection_kr.py

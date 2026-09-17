@@ -1,14 +1,4 @@
 [
-  "finestra",
-  "porta",
-  "letto",
-  "armadio",
-  "scrivania",
-  "lampada",
-  "televisore",
-  "telefono",
-  "computer",
-  "internet",
   "posta",
   "lettera",
   "pacco",
@@ -498,5 +488,15 @@
   "orologio",
   "chiave",
   "carta",
-  "mercato"
+  "mercato",
+  "treno",
+  "autobus",
+  "aeroporto",
+  "ristorante",
+  "colazione",
+  "pranzo",
+  "cena",
+  "mappa",
+  "cameriere",
+  "orario"
 ]

@@ -1,14 +1,4 @@
 [
-  "aeroporto",
-  "bagno",
-  "ascensore",
-  "camera",
-  "telefono cellulare",
-  "carta di credito",
-  "denaro",
-  "famiglia",
-  "lavoro",
-  "viaggio",
   "hotel",
   "ristorante",
   "bar",
@@ -498,5 +488,15 @@
   "ospedale",
   "posta",
   "trattoria",
-  "cappotto"
+  "cappotto",
+  "scuola",
+  "professore",
+  "studente",
+  "città",
+  "viaggio",
+  "biglietto",
+  "montagna",
+  "mare",
+  "spiaggia",
+  "taxi"
 ]

@@ -1,14 +1,4 @@
 [
-  "costa",
-  "isola",
-  "faro",
-  "giorno",
-  "notte",
-  "sole",
-  "pioggia",
-  "mattina",
-  "pomeriggio",
-  "sera",
   "per favore",
   "grazie",
   "mi dispiace",
@@ -498,5 +488,15 @@
   "pioggia",
   "vento",
   "maglietta",
-  "scarpa"
+  "scarpa",
+  "tempo",
+  "cibo",
+  "mela",
+  "latte",
+  "zucchero",
+  "villaggio",
+  "via",
+  "minuto",
+  "pasto",
+  "doccia"
 ]

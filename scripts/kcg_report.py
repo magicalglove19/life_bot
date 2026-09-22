@@ -32,7 +32,7 @@ UNIVERSE = int(os.environ.get("KCG_UNIVERSE", "0"))      # 0 이면 전 종목 (
 MIN_SCORE = float(os.environ.get("KCG_MIN_SCORE", "60"))
 MARKET = os.environ.get("KCG_MARKET", "ALL")
 WORKERS = int(os.environ.get("KCG_WORKERS", "4"))        # 크게 잡으면 네이버가 막는다
-DETAIL_TOP = int(os.environ.get("KCG_DETAIL_TOP", "10"))
+DETAIL_TOP = int(os.environ.get("KCG_DETAIL_TOP", "8"))   # 폰에서는 10개 미만만
 
 # 도착 허용 시간대 (KST). 예약 크론 '40 1 * * 1-5' 은 GitHub 예약 큐가
 # 평균 4시간 20분 밀리는 것을 역산한 값이라, 큐가 빠른 날에는 10:40 에 실행된다.

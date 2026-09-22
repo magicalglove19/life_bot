@@ -2,7 +2,7 @@
 
 폰으로는 종목명만 알면 된다. 조건별 판정과 일봉 흐름은 맥에서 리포트를 열어 본다.
   · 오늘 종가 매수  — 종목명
-  · 정밀 진단       — 종목명과 점수
+  · 정밀 진단       — 종목명과 점수 (점수 상위 몇 개만, 나머지는 맥에서 리포트로 본다)
   · 보유 종목       — 손절·익절 신호가 뜬 것만 (positions.txt 를 넘겼을 때)
   · 신정제 종가배팅 — 종목명 · 유형 · 재료 한 줄 · 손절선(당일 저가)
   · 일봉 스윙      — 종목명 · 타점 · 신고가/조정 · 손절선과 5일선
@@ -75,8 +75,10 @@ def _threeline_block(picks: list, total: int) -> str:
         lines.append("없음")
         return "\n".join(lines)
     for p in picks:
-        lines.append(f"<b>{_esc(p.name)}</b> ({_esc(p.code)}) 조건{p.entry}·{_esc(p.label)} · "
-                     f"{p.chg:+.1f}%")
+        shape = (f"갭 {p.gap:+.1f}% 음봉" if p.entry == "A"
+                 else f"윗꼬리 캔들의 {p.wick * 100:.0f}%")
+        lines.append(f"<b>{_esc(p.name)}</b> ({_esc(p.code)}) 2일차 조건{p.entry} · "
+                     f"{shape} · {p.chg:+.1f}%")
         lines.append(f"  기준봉 {p.base_date} {p.base_value / 1e8:,.0f}억 ({p.base_chg:+.0f}%) · "
                      f"{_esc(p.setup_label)}")
         if p.news:
@@ -91,7 +93,7 @@ def _threeline_block(picks: list, total: int) -> str:
     return "\n".join(lines)
 
 
-def build(res, holdings: list, frames: dict, cfg: Config, detail_top: int = 10,
+def build(res, holdings: list, frames: dict, cfg: Config, detail_top: int = 8,
           closing: list | None = None, swing: list | None = None,
           threeline: list | None = None) -> str:
     # GitHub Actions 는 UTC 로 돈다. 국내장 도구이므로 항상 KST 로 찍는다.

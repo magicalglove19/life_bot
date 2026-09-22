@@ -1,0 +1,71 @@
+name: gangnam-us
+
+# 강남자리(데이짱 강남 기법) 미국 — 한국 시간 06:00 도착 목표 (전일 미국장 마감 후).
+#
+# ✅ 한국판과 달리 시각이 급하지 않다. 미국장 마감(06:00 KST 겨울 / 05:00 여름) 후
+#    다음 개장까지 창이 넓어서 예약 지연(실측 최악 4시간 20분)도 발송 창
+#    (05:00~09:00 KST) 안에 들어온다. 그래서 예약이 주 경로다.
+#    맥이 켜져 있는 날 더 정확히 받고 싶으면 트리거도 함께 설치한다:
+#      ./scripts/local/install-trigger.sh gangnam-us 06:00
+#    (트리거는 월~금 설치라 토요일 06:00 분은 예약으로만 온다)
+#
+# ⚠️ 미국은 기관·외국인 수급과 실적을 확인할 수 없고, 백테스트에서도 한국과 달리
+#    효과가 확인되지 않았다. 그래서 메시지에 참고용이라는 경고가 붙는다.
+
+on:
+  schedule:
+    - cron: '0 21 * * 1-5'      # 미국 월~금 마감 후 = 한국 다음날 06:00
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '발송 창(05:00~09:00 KST)·요일 검사 무시하고 강제 발송'
+        required: false
+        default: true
+        type: boolean
+  repository_dispatch:
+    types: [gangnam-us]
+
+permissions:
+  contents: write            # 발송 기록(data/gangnam_state.json) 커밋
+
+concurrency:
+  group: gangnam-us
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run 강남자리 (미국)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GANGNAM_FORCE: ${{ (github.event_name == 'workflow_dispatch' && inputs.force) && '1' || '0' }}
+        run: python scripts/gangnam.py --market us
+
+      - name: 발송 기록 커밋
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/gangnam_state.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "gangnam-us: 발송 기록 [skip ci]"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            git push
+          fi

@@ -1,14 +1,4 @@
 [
-  "madre",
-  "padre",
-  "città",
-  "paese",
-  "straniero",
-  "vacanza",
-  "ristorante",
-  "casa",
-  "strada",
-  "negozio",
   "scuola",
   "biblioteca",
   "ospedale",
@@ -498,5 +488,15 @@
   "cellulare",
   "biglietteria",
   "sconto",
-  "cittadina"
+  "cittadina",
+  "penna",
+  "libro",
+  "vino",
+  "amico",
+  "amica",
+  "telefono",
+  "stazione",
+  "cappello",
+  "bottiglia",
+  "fiume"
 ]

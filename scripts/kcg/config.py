@@ -196,8 +196,49 @@ class SwingConfig:
 
 
 @dataclass
+class ThreeLineConfig:
+    """세 줄 기법 — 바닥권에서 대량 거래대금(세력 개입)이 터진 다음 날 종가 매수.
+
+    1일차  기준봉: 거래대금 500억 이상 + 200일선 바닥권 / 50일 하향추세선 / 이평선 밀집 돌파
+    2일차  오늘: 갭상승 음봉 또는 긴 윗꼬리 → 종가(15:20~15:30) 매수
+
+    200일선·50일선은 이 모듈에서 직접 계산한다 (indicators.py 는 건드리지 않는다).
+    """
+
+    # 1일차 기준봉
+    base_value: float = 500e8         # 거래대금 하한 (원) — 원문 500억, 최소 150억
+    base_value_min: float = 150e8     # 이 아래는 아예 후보가 아니다 (감점 구간 하한)
+    base_min_chg: float = 7.0         # 기준봉 등락률 하한 % (등락률 상위권 대용)
+    base_vol_mult: float = 3.0        # 기준봉 거래량 / 20일 평균 (감점 항목)
+    base_within: int = 1              # 기준봉은 오늘 기준 며칠 전까지 인정하나 (2일차 = 1)
+
+    # 위치 — 셋 중 하나만 만족하면 된다
+    ma_long: int = 200                # 장기 이평선 (월봉 10이평 = 일봉 200일선)
+    ma_mid: int = 50                  # 중기 이평선 · 하향 추세선
+    bottom_band: float = 15.0         # 200일선 대비 ±이 % 안이면 '바닥권'
+    mid_slope_bars: int = 20          # 50일선이 이 기간 동안 하락 중이었나 (하향 추세선)
+    cluster_spread: float = 7.0       # 5·20·50·200일선이 이 % 안에 모이면 '이평선 밀집'
+
+    # 2일차 캔들
+    gap_pct: float = 3.0              # 갭상승 판정 (시가 / 전일 종가 - 1)
+    wick_ratio: float = 0.40          # 윗꼬리 / 캔들 전체 길이
+    wick_pct: float = 2.0             # 윗꼬리 길이 (종가 대비 %)
+    max_drop: float = 7.0             # 오늘 종가가 기준봉 종가 대비 이 % 넘게 밀리면 탈락
+
+    # 정성 필터
+    require_news: bool = True         # 재료 확인 (조회 실패 시엔 통과)
+    sector_peers: int = 2             # 같은 업종에서 이만큼 동반 상승하면 주도 테마로 본다
+    sector_chg: float = 5.0           # 동반 상승 판정 등락률 %
+
+    max_stop_pct: float = 15.0        # 기준봉 저가까지의 손절폭이 이보다 깊으면 감점
+
+    top: int = 5
+
+
+@dataclass
 class Config:
     trigger: TriggerConfig = field(default_factory=TriggerConfig)
+    threeline: ThreeLineConfig = field(default_factory=ThreeLineConfig)
     closing: ClosingConfig = field(default_factory=ClosingConfig)
     swing: SwingConfig = field(default_factory=SwingConfig)
     pattern_a: PatternAConfig = field(default_factory=PatternAConfig)

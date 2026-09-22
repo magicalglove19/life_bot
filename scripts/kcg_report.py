@@ -5,6 +5,7 @@
   · 신정제  당일 강세(유형 1) / 신고가 후 기간조정 재상승(유형 2) — 15:18~15:20 매수,
             다음 날 09:05 전 청산. 후보에만 네이버 뉴스(재료)·시총·수급을 붙인다.
   · 스윙    대량 거래 신고가 주도주의 눌림목(타점 1·2) — 5일선이 살아있는 동안 추세 보유
+  · 세 줄   바닥권 대량 거래대금 기준봉의 다음 날(갭상승 음봉 / 긴 윗꼬리) — 종가 매수
 
 신정제 전략은 15:00부터 관찰하므로 그 전에 도착하도록 14:40에 찌른다.
 그 시점 가격은 아직 종가가 아니므로 잠정 판정이며, 확정 결과는 맥에서
@@ -21,7 +22,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import telegram
-from kcg import closing, data, enrich, notify, ranking, screener, swing, universe, watchlist
+from kcg import (closing, data, enrich, notify, ranking, screener, swing, threeline, universe,
+                 watchlist)
 from kcg.config import Config
 
 KST = dt.timezone(dt.timedelta(hours=9))
@@ -114,7 +116,13 @@ def main() -> int:
     swings = swing.scan(frames, meta, cfg)
     print(f"[kcg] 스윙 {len(swings)}", flush=True)
 
-    body = notify.build(res, [], frames, cfg, detail_top=DETAIL_TOP, closing=picks, swing=swings)
+    lines3 = threeline.scan(frames, meta, cfg)
+    enrich.enrich(lines3)
+    lines3 = threeline.rank(lines3, cfg.threeline)
+    print(f"[kcg] 세 줄 {len(lines3)}", flush=True)
+
+    body = notify.build(res, [], frames, cfg, detail_top=DETAIL_TOP, closing=picks, swing=swings,
+                        threeline=lines3)
     if dry:
         print(body)
         return 0

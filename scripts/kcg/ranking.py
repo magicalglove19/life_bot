@@ -13,15 +13,21 @@ from __future__ import annotations
 import datetime as dt
 import json
 import os
-import re
 
 import requests
 
 CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "cache")
-_HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) kcg-screener/1.0"}
-_QUANT = "https://finance.naver.com/sise/sise_quant.naver?sosok={}"
-_MARCAP = "https://finance.naver.com/sise/sise_market_sum.naver?sosok={}&page={}"
-_CODE = re.compile(r"code=(\d{6})")
+_HEADERS = {
+    "User-Agent": ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+                   "(KHTML, like Gecko) Chrome/125.0 Safari/537.36"),
+    "Referer": "https://m.stock.naver.com/",
+}
+# finance.naver.com 의 시세 페이지(sise_quant / sise_market_sum)는 2026-09 부터
+# 302 로 막혔다. 모바일 증권 API 는 열려 있고, 한 번에 종목별 거래대금·시총을 함께 준다.
+_API = "https://m.stock.naver.com/api/stocks/marketValue/{market}?page={page}&pageSize={size}"
+_MARKETS = ("KOSPI", "KOSDAQ")
+_PAGE = 100
+_MAX_PAGES = 30          # 100종목 × 30 = 시장당 3,000종목까지 (현재 코스피 2.5천/코스닥 1.8천)
 
 
 def _cache_path() -> str:
@@ -29,33 +35,53 @@ def _cache_path() -> str:
     return os.path.join(CACHE_DIR, f"rank_{dt.date.today().isoformat()}.json")
 
 
-def _codes(url: str) -> list[str]:
-    r = requests.get(url, headers=_HEADERS, timeout=15)
-    r.encoding = "euc-kr"
-    return list(dict.fromkeys(_CODE.findall(r.text)))
+def _fetch_market(market: str) -> list[tuple[str, float]]:
+    """[(종목코드, 오늘 거래대금)] — API 응답 순서가 곧 시가총액 순이다."""
+    out: list[tuple[str, float]] = []
+    for page in range(1, _MAX_PAGES + 1):
+        r = requests.get(_API.format(market=market, page=page, size=_PAGE),
+                         headers=_HEADERS, timeout=15)
+        r.raise_for_status()
+        stocks = r.json().get("stocks", [])
+        for st in stocks:
+            code = str(st.get("itemCode", "")).strip()
+            if len(code) != 6 or not code.isdigit():
+                continue
+            try:
+                value = float(st.get("accumulatedTradingValueRaw") or 0)
+            except (TypeError, ValueError):
+                value = 0.0
+            out.append((code, value))
+        if len(stocks) < _PAGE:
+            break
+    return out
 
 
 def fetch(marcap_pages: int = 8, use_cache: bool = True) -> dict[str, list[str]]:
-    """{'value': 거래대금 상위, 'marcap': 시총 상위} — 당일 캐시."""
+    """{'value': 거래대금 상위, 'marcap': 시총 상위} — 당일 캐시.
+
+    marcap_pages 는 옛 시그니처 호환용으로 남겨 두었다 (지금은 전 종목을 받는다).
+    """
     path = _cache_path()
     if use_cache and os.path.exists(path):
         try:
             with open(path, encoding="utf-8") as fh:
-                return json.load(fh)
+                cached = json.load(fh)
+            if cached.get("value") or cached.get("marcap"):
+                return cached
         except Exception:
             pass
 
-    out = {"value": [], "marcap": []}
+    rows: list[tuple[str, float]] = []
     try:
-        for sosok in (0, 1):                      # 0=코스피 1=코스닥
-            out["value"] += _codes(_QUANT.format(sosok))
-        for sosok in (0, 1):
-            for page in range(1, marcap_pages + 1):
-                out["marcap"] += _codes(_MARCAP.format(sosok, page))
+        for market in _MARKETS:
+            rows += _fetch_market(market)
     except Exception:
         pass                                       # 순위를 못 받으면 호출 쪽에서 전체로 되돌린다
 
-    out = {k: list(dict.fromkeys(v)) for k, v in out.items()}
+    marcap = list(dict.fromkeys(code for code, _ in rows))
+    value = [code for code, _ in sorted(rows, key=lambda x: x[1], reverse=True)]
+    out = {"value": list(dict.fromkeys(value)), "marcap": marcap}
     if out["value"] or out["marcap"]:
         with open(path, "w", encoding="utf-8") as fh:
             json.dump(out, fh, ensure_ascii=False)
@@ -83,6 +109,8 @@ def pick(rows: list[dict], top: int, must_have: list[str] | None = None,
             if len(picked) >= top:
                 break
 
-    if not picked:                                 # 순위 소스가 죽으면 전체로 되돌린다
+    # 순위 소스가 죽으면 관심종목 몇 개만 남는다. 그 상태로 스캔하면 아무것도 안 나오므로
+    # 차라리 전체를 본다 (느리지만 정확하다).
+    if len(picked) < min(top, len(rows)) * 0.5:
         return rows
     return list(picked.values())

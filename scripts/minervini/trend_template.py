@@ -29,8 +29,17 @@ CRITERIA_LABELS = [
     "5. 주가 > 50일선",
     "6. 52주 저점 대비 +30% 이상",
     "7. 52주 고점 대비 -25% 이내",
-    "8. RS 등급 70 이상",
+    "8. RS 등급 기준 이상",
 ]
+
+
+def labels(cfg: TrendTemplateConfig) -> list[str]:
+    """설정값이 반영된 기준 라벨. RS 하한은 config 에서 바뀌므로 고정 문구로 두면 거짓말이 된다."""
+    out = list(CRITERIA_LABELS)
+    out[5] = f"6. 52주 저점 대비 +{cfg.min_pct_above_52w_low:.0f}% 이상"
+    out[6] = f"7. 52주 고점 대비 -{cfg.max_pct_below_52w_high:.0f}% 이내"
+    out[7] = f"8. RS 등급 {cfg.min_rs_rating:.0f} 이상"
+    return out
 
 
 @dataclass
@@ -92,7 +101,8 @@ def evaluate(m: dict, rs_rating: float, cfg: TrendTemplateConfig) -> TrendResult
         bool(np.isfinite(rs_rating)) and rs_rating >= cfg.min_rs_rating,
     ]
     passed = int(sum(checks))
-    failed = [CRITERIA_LABELS[i] for i, c in enumerate(checks) if not c]
+    lbl = labels(cfg)
+    failed = [lbl[i] for i, c in enumerate(checks) if not c]
     return TrendResult(
         ticker=m["ticker"],
         ok=all(checks),

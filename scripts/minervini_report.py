@@ -28,7 +28,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import telegram
-from minervini import qullamaggie, report, screener
+from minervini import nearmiss, qullamaggie, report, screener
 from minervini.universe import UNIVERSE_TITLE
 from minervini.config import Config
 
@@ -48,6 +48,8 @@ SECTION_LIMIT = 8       # 섹션당 최대 종목 수
 TIGHT_LAST_DEPTH = 8.0  # 초타이트 판정: 마지막 수축 %
 MAX_DAYS_PAST_PIVOT = 5  # 피벗을 넘은 지 이 거래일을 넘기면 연장(쫓아가는 매수)
 MAX_PCT_ABOVE_PIVOT = 5.0  # 피벗 위로 이 %를 넘게 올라가 있어도 연장 (오늘 돌파라도)
+
+LAST_BAR = {"v": ""}   # 판정의 기준이 된 마지막 거래일 (market_block 에서 쓴다)
 
 LIGHT_EMOJI = {"초록불": "🟢", "노란불": "🟡", "주황불": "🟠", "빨간불": "🔴", "회색불": "⚪"}
 
@@ -157,6 +159,16 @@ def market_block(r) -> str:
         lines.append(f"📅 옵션 만기 <b>{d:%m/%d}</b> ({when}){quad}")
     if r.comment:
         lines.append(f"<i>{esc(r.comment)}</i>")
+    if LAST_BAR["v"]:
+        gap = ""
+        try:
+            d = dt.date.fromisoformat(LAST_BAR["v"])
+            n = (dt.datetime.now(KST).date() - d).days
+            if n >= 2:
+                gap = f" ← {n}일 전 종가 (야후 데이터 기준)"
+        except ValueError:
+            pass
+        lines.append(f"<i>판정 기준 거래일 {esc(LAST_BAR['v'])}{esc(gap)}</i>")
     if report.red_light(r):
         lines.append(f"<b>{esc(report.RED_WARNING)}</b>")
     return "\n".join(lines)
@@ -171,7 +183,41 @@ def trim(parts: list[str]) -> str:
     return text
 
 
-def build_messages(res) -> list[str]:
+_MARK = {True: "✔", False: "✗", None: "—"}
+
+
+def funnel(res, n_picks: int) -> str:
+    """스캔 → 추세 → VCP → 타점 → 추천 으로 몇 개가 남았는지."""
+    n_vcp = sum(1 for c in res.stage2 if c.vcp.is_vcp)
+    n_timing = sum(1 for c in res.stage2
+                   if c.vcp.status in ("돌파", "매수구간") and not c.extended)
+    return (f"스캔 {res.scanned} → 추세 {len(res.stage2)} → VCP {n_vcp} "
+            f"→ 타점 {n_timing} → 추천 {n_picks}")
+
+
+def near_block(res, cfg, acted: set, n_picks: int) -> str:
+    """'한 끗 차이' — 다섯 관문 중 하나만 놓친 종목을, 무엇을 놓쳤는지와 함께.
+
+    아무것도 안 잡히는 날 '시장에 자리가 없는 것'과 '기준이 좁은 것'을 구분해 준다.
+    """
+    rows = nearmiss.collect(res.stage2 + res.near_pool, cfg, exclude=acted)
+    lines = [f"<b>⚠️ 한 끗 차이</b> ({len(rows)})" if rows else "<b>⚠️ 한 끗 차이</b>",
+             f"<i>다섯 관문 중 {cfg.near.max_fail}개만 놓친 종목 · {funnel(res, n_picks)}</i>"]
+    if not rows:
+        lines.append("한 개 차이로 걸린 종목도 없음 — 오늘은 시장에 자리가 없는 날")
+        return "\n".join(lines)
+    for r in rows[:NEAR_LIMIT]:
+        c = r.cand
+        marks = " ".join(f"{g.label}{_MARK[g.ok]}" for g in r.gates)
+        lines.append(f"• <b>{esc(c.ticker)}</b> ${num(c.price)} · RS {num(c.rs_rating, 0)} — {marks}\n"
+                     f"   ✗ {esc(r.summary())}")
+    if len(rows) > NEAR_LIMIT:
+        lines.append(f"   … 외 {len(rows) - NEAR_LIMIT}건")
+    return "\n".join(lines)
+
+
+def build_messages(res, cfg) -> list[str]:
+    LAST_BAR["v"] = res.last_bar or ""
     setups = [c for c in res.candidates if c.vcp.is_vcp]
     cands = [c for c in setups if c.total_score >= MIN_SCORE]
 
@@ -205,6 +251,13 @@ def build_messages(res) -> list[str]:
         section("🎯 매수구간 대기 — 리스크 0.5배만 (피벗 6% 이내)", buyzone,
                 empty="없음", note=BACKTEST_SETUP),
     ]
+    # 이 섹션만 점수 하한이 걸린다. 자리는 맞는데 점수가 모자라 빠진 것을 숨기면
+    # '오늘은 자리가 없다'로 오해하게 된다.
+    below = sorted([c for c in setups if c.vcp.status == "매수구간" and c.total_score < MIN_SCORE],
+                   key=lambda c: -c.total_score)
+    if below:
+        names = ", ".join(f"{esc(c.ticker)}({num(c.total_score, 1)})" for c in below[:10])
+        blocks1.append(f"<i>점수 하한({num(MIN_SCORE, 0)}점) 때문에 빠진 매수구간 {len(below)}종목: {names}</i>")
     if stale_brk:
         names = ", ".join(f"{esc(c.ticker)}({esc(c.extended_reason)})" for c in stale_brk[:8])
         blocks1.append(f"<i>연장이라 제외 — {MAX_DAYS_PAST_PIVOT}일 초과 또는 피벗 +{MAX_PCT_ABOVE_PIVOT:.0f}% 초과: {names}</i>")
@@ -225,6 +278,9 @@ def build_messages(res) -> list[str]:
         section("💎 초타이트 엄선 (마지막 수축 8% 이내 + 거래량 마름)", tight, with_exec=False,
                 empty="없음"),
     ]
+    if cfg.near.enabled:
+        acted = {c.ticker for c in today_brk + recent_brk + buyzone}
+        blocks.append(near_block(res, cfg, acted, len(cands)))
     if stage2_line:
         blocks.append(stage2_line)
     blocks.append(
@@ -246,6 +302,7 @@ OPEX_NOTICE_DAYS = 3   # 옵션 만기 안내를 띄우기 시작할 남은 거�
 QULL_BACKTEST_EP = "EP 5년 474건 · 승률 37% · 거래당 +2.72% · PF 2.03"
 QULL_BACKTEST = "5년 786건 · 승률 38% · 거래당 +1.11% · 하락장(2022)엔 손실"
 QULL_LIMIT = 8
+NEAR_LIMIT = 6   # '한 끗 차이'에 실을 최대 종목 수
 
 
 def build_qull_message(res, cfg) -> str:
@@ -337,7 +394,7 @@ def main() -> int:
         return 1
 
     ok = True
-    messages = build_messages(res)
+    messages = build_messages(res, cfg)
     if QULL_ON:
         try:
             messages.append(build_qull_message(res, cfg))

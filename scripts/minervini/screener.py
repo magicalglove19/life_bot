@@ -82,6 +82,7 @@ class ScanResult:
     frames: dict = field(default_factory=dict, repr=False)   # {티커: OHLCV} — 다른 전략(쿨라매기)이 재사용
     names: dict = field(default_factory=dict, repr=False)    # {티커: (종목명, 섹터)}
     quality_dropped: list = field(default_factory=list)      # 실적·매집 기준으로 빠진 종목
+    near_pool: list = field(default_factory=list)            # Trend Template을 한 개 차이로 놓친 종목 ('한 끗 차이' 섹션용)
 
 
 def mark_quality(c: "Candidate", cfg: Config) -> None:
@@ -262,14 +263,19 @@ def scan(
     ratings = percentile_rating(pd.Series(raw_scores))
 
     # --- Trend Template 판정 ---
+    # 통과한 것(stage2)과 '한 개 차이로 떨어진 것'(near_pool)을 같이 담는다.
+    # 뒤쪽은 왜 떨어졌는지 보여주기 위한 용도라 점수·수량 계산에는 넣지 않는다.
     stage2: list[Candidate] = []
+    near_pool: list[Candidate] = []
+    near_min = cfg.near.min_trend_passed if cfg.near.enabled else 99
     for tk, m in metrics.items():
         rating = float(ratings.get(tk, np.nan))
         tr = trend_template.evaluate(m, rating, cfg.trend)
-        if not tr.ok:
+        if not tr.ok and tr.passed < near_min:
             continue
+        bucket = stage2 if tr.ok else near_pool
         name, sector = meta.get(tk, (tk, ""))
-        stage2.append(
+        bucket.append(
             Candidate(
                 ticker=tk,
                 size=INDEX_LABEL.get(size_of.get(tk, ""), ""),
@@ -290,7 +296,7 @@ def scan(
                                   f"{report.DIM}(스캔 {len(metrics)}){report.RESET}")
         print(f"  {report.DIM}3/4{report.RESET} VCP 패턴 탐지")
 
-    for c in stage2:
+    for c in stage2 + near_pool:
         c.vcp = vcp.detect(frames[c.ticker], cfg.vcp)
         c.high52_date = c.trend.metrics.get("high52_date")
         c.ud_ratio = indicators.up_down_volume_ratio(frames[c.ticker], cfg.fundamental.ud_window)
@@ -326,15 +332,16 @@ def scan(
     if with_fundamentals and candidates:
         if verbose:
             print(f"  {report.DIM}4/4{report.RESET} 펀더멘털(Code 33) 확인")
-        fmap = fund.fetch_many([c.ticker for c in candidates], cfg.fundamental.quarters_required, use_cache=use_cache, verbose=verbose)
-        for c in candidates:
+        want = list(dict.fromkeys([c.ticker for c in candidates] + [c.ticker for c in near_pool]))
+        fmap = fund.fetch_many(want, cfg.fundamental.quarters_required, use_cache=use_cache, verbose=verbose)
+        for c in candidates + near_pool:
             c.fundamentals = fmap.get(c.ticker)
             if c.fundamentals and c.fundamentals.sector and not c.sector:
                 c.sector = c.fundamentals.sector
     elif verbose:
         print(f"  {report.DIM}4/4 펀더멘털 조회 생략{report.RESET}")
 
-    for c in candidates:
+    for c in candidates + near_pool:
         mark_quality(c, cfg)
     quality_dropped = []
     if cfg.fundamental.mode == "filter" or cfg.fundamental.ud_mode == "filter":
@@ -382,6 +389,7 @@ def scan(
         frames=frames,
         names=meta,
         quality_dropped=quality_dropped,
+        near_pool=near_pool,
     )
 
 

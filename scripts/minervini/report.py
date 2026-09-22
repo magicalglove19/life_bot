@@ -145,6 +145,21 @@ def table(headers: list[str], rows: list[list], aligns: str | None = None, color
     return "\n".join(out)
 
 
+def last_bar_line(last_bar: str, today=None) -> str:
+    """판정의 기준이 된 거래일. 야후가 당일 봉을 아직 안 채웠으면 며칠 전 종가로 판정된다."""
+    import datetime as _dt
+
+    if not last_bar:
+        return ""
+    today = today or _dt.date.today()
+    try:
+        gap = (today - _dt.date.fromisoformat(last_bar)).days
+    except ValueError:
+        return ""
+    note = f"  {YELLOW}← {gap}일 전 종가입니다 (야후 데이터 기준){RESET}" if gap >= 2 else ""
+    return f"  {DIM}판정 기준 거래일{RESET} {BOLD}{last_bar}{RESET}{note}"
+
+
 def print_regime(r) -> None:
     color = LIGHT_COLOR.get(r.light, "")
     print()
@@ -201,7 +216,8 @@ def render_detail(
     values: list,
     labels: list,
     rs_rating: float,
-    v,                      # VCPResult
+    rs_min: float = 70.0,   # 설정된 RS 하한 (고정 문구로 두면 --min-rs 를 바꿔도 거짓말이 된다)
+    v=None,                 # VCPResult
     total_score=None,
     rank=None,
     fundamentals=None,
@@ -254,7 +270,7 @@ def render_detail(
     if np.isfinite(rs_rating):
         rc = rs_color(rs_rating)
         print(f"{thin} {BOLD}RS 등급{RESET}  {rc}{BOLD}{rs_rating:>3.0f}{RESET}  {bar(rs_rating / 100, 24, rc)}"
-              f"  {DIM}상위 {100 - rs_rating:.0f}% · 기준 70{RESET}")
+              f"  {DIM}상위 {100 - rs_rating:.0f}% · 기준 {rs_min:.0f}{RESET}")
         print(thin)
 
     st_color = STATUS_COLOR.get(v.status, GRAY)

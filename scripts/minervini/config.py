@@ -132,6 +132,21 @@ class FundamentalConfig:
 
 
 @dataclass
+class NearMissConfig:
+    """'한 끗 차이' — 관문을 하나만 놓친 종목을 이유와 함께 보여준다.
+
+    기준을 조이면 통과 종목이 0이 되는 날이 생기는데, 통과한 것만 보면
+    '시장에 자리가 없는 날'과 '내 기준이 좁은 날'을 구분할 수 없다.
+    그래서 아깝게 걸린 종목을 무엇 때문에 걸렸는지와 함께 남긴다.
+    """
+
+    enabled: bool = True
+    min_trend_passed: int = 7   # Trend Template 8개 중 이만큼 통과하면 후보 풀에 넣는다
+    max_fail: int = 1           # 다섯 관문 중 이 개수까지 놓친 종목만 보여준다
+    limit: int = 12             # 표에 실을 최대 종목 수
+
+
+@dataclass
 class RiskConfig:
     """미너비니식 리스크 관리."""
 
@@ -215,6 +230,7 @@ class Config:
     rs: RSConfig = field(default_factory=RSConfig)
     vcp: VCPConfig = field(default_factory=VCPConfig)
     fundamental: FundamentalConfig = field(default_factory=FundamentalConfig)
+    near: NearMissConfig = field(default_factory=NearMissConfig)
     risk: RiskConfig = field(default_factory=RiskConfig)
     qull: QullConfig = field(default_factory=QullConfig)
 

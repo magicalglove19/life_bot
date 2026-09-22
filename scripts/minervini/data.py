@@ -40,6 +40,21 @@ def _purge_old(tag: str, keep_days: int = 5) -> None:
             os.remove(os.path.join(CACHE_DIR, fn))
 
 
+def _clean(sub: pd.DataFrame) -> pd.DataFrame:
+    """종가 없는 봉을 잘라낸다.
+
+    야후는 장이 열린 당일(또는 직전일)에 거래량만 채우고 OHLC는 비워둔 행을 주는 때가 있다.
+    dropna(how="all")은 거래량이 있으면 그 행을 남기기 때문에, 마지막 봉의 종가가 NaN인
+    DataFrame이 그대로 흘러들어간다. 그러면 VCP 판정의 close가 NaN이 되어
+    `close > pivot`도 `distance <= 6`도 전부 False — 모든 종목이 조용히 '형성중'이 된다.
+    실제로 2026-09-22 스캔에서 503종목 전부가 이 행 하나 때문에 매수구간·돌파 0이 됐다.
+    """
+    sub = sub.dropna(how="all")
+    if "Close" in sub.columns:
+        sub = sub[sub["Close"].notna()]
+    return sub
+
+
 def _split_frames(raw: pd.DataFrame, tickers: list[str]) -> dict[str, pd.DataFrame]:
     """yfinance의 MultiIndex 결과를 {티커: OHLCV DataFrame}으로 분해."""
     out: dict[str, pd.DataFrame] = {}
@@ -54,11 +69,11 @@ def _split_frames(raw: pd.DataFrame, tickers: list[str]) -> dict[str, pd.DataFra
             sub = raw[tk]
             if not set(_REQUIRED).issubset(sub.columns):
                 continue
-            sub = sub[_REQUIRED].dropna(how="all")
+            sub = _clean(sub[_REQUIRED])
             if not sub.empty:
                 out[tk] = sub
     elif len(tickers) == 1 and set(_REQUIRED).issubset(raw.columns):
-        sub = raw[_REQUIRED].dropna(how="all")
+        sub = _clean(raw[_REQUIRED])
         if not sub.empty:
             out[tickers[0]] = sub
     return out
@@ -90,7 +105,8 @@ def download_prices(
             if set(tickers).issubset(set(cached.get("requested", []))) and long_enough:
                 if verbose:
                     print(f"  {report.GREEN}✔{report.RESET} 오늘자 캐시 재사용 {report.DIM}({os.path.basename(cache_path)}){report.RESET}")
-                return {t: f for t, f in cached["frames"].items() if t in set(tickers)}
+                # 예전 캐시에는 종가 없는 봉이 들어 있을 수 있어 읽을 때도 정리한다
+                return {t: _clean(f) for t, f in cached["frames"].items() if t in set(tickers)}
             if verbose and not long_enough:
                 print(f"  {report.DIM}캐시가 요청 기간보다 짧아 다시 받습니다 "
                       f"({cached.get('start', '기간 정보 없음')} → {start.isoformat()} 필요){report.RESET}")

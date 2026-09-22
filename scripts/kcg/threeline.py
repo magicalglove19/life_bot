@@ -26,7 +26,8 @@ SETUP_LABEL = {
     "추세돌파": "50일 하향추세선 돌파",
     "밀집돌파": "이평선 밀집 돌파",
 }
-ENTRY_LABEL = {"A": "갭상승 음봉", "B": "긴 윗꼬리"}
+ENTRY_LABEL = {"A": "갭상승 후 음봉", "B": "윗꼬리가 길게 달린 캔들"}
+ENTRY_SHORT = {"A": "갭상승 후 음봉", "B": "긴 윗꼬리 캔들"}   # 표 칸에 들어갈 짧은 형태
 
 
 @dataclass
@@ -64,6 +65,10 @@ class ThreeLinePick:
     @property
     def label(self) -> str:
         return ENTRY_LABEL.get(self.entry, "")
+
+    @property
+    def short_label(self) -> str:
+        return ENTRY_SHORT.get(self.entry, "")
 
     @property
     def setup_label(self) -> str:
@@ -241,7 +246,7 @@ def to_dataframe(picks: list[ThreeLinePick]) -> pd.DataFrame:
             "1일차 거래대금(억)": round(p.base_value / 1e8),
             "1일차 등락": round(p.base_chg, 1),
             "1일차 자리": p.setup_label,
-            "2일차 조건": f"{p.entry} {p.label}",
+            "2일차 조건": f"{p.entry} · {p.label}",
             "2일차 종가(매수가)": round(p.price),
             "2일차 등락": round(p.chg, 2),
             "2일차 갭": round(p.gap, 1),

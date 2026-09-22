@@ -75,10 +75,10 @@ def _threeline_block(picks: list, total: int) -> str:
         lines.append("없음")
         return "\n".join(lines)
     for p in picks:
-        shape = (f"갭 {p.gap:+.1f}% 음봉" if p.entry == "A"
-                 else f"윗꼬리 캔들의 {p.wick * 100:.0f}%")
-        lines.append(f"<b>{_esc(p.name)}</b> ({_esc(p.code)}) 2일차 조건{p.entry} · "
-                     f"{shape} · {p.chg:+.1f}%")
+        shape = (f"갭상승 후 음봉 (갭 {p.gap:+.1f}%)" if p.entry == "A"
+                 else f"윗꼬리가 길게 달린 캔들 (캔들의 {p.wick * 100:.0f}%)")
+        lines.append(f"<b>{_esc(p.name)}</b> ({_esc(p.code)}) {p.chg:+.1f}%\n"
+                     f"  2일차 조건{p.entry} · {shape}")
         lines.append(f"  기준봉 {p.base_date} {p.base_value / 1e8:,.0f}억 ({p.base_chg:+.0f}%) · "
                      f"{_esc(p.setup_label)}")
         if p.news:

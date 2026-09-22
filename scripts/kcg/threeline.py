@@ -118,8 +118,8 @@ def _wick(row) -> tuple[float, float]:
     return (wick / rng if rng > 0 else 0.0), (wick / c * 100.0 if c > 0 else 0.0)
 
 
-W = {"손절폭": 2, "기준봉 거래대금": 3, "기준봉 상승": 1, "기준봉 거래량": 1, "자리 (바닥권·돌파)": 3,
-     "2일차 캔들": 3, "기준봉 지지": 2, "섹터 동반 상승": 1}
+W = {"손절폭": 2, "1일차 거래대금": 3, "1일차 등락률": 1, "1일차 거래량": 1, "1일차 자리": 3,
+     "2일차 캔들": 3, "2일차 기준봉 지지": 2, "섹터 동반 상승": 1}
 
 
 def detect(df: pd.DataFrame, code: str, info: dict, cfg: ThreeLineConfig,
@@ -159,20 +159,20 @@ def detect(df: pd.DataFrame, code: str, info: dict, cfg: ThreeLineConfig,
     p.stop_pct = (p.base_low / close - 1.0) * 100.0
 
     p.checks = [
-        Check("기준봉 거래대금", base_value >= cfg.base_value,
+        Check("1일차 거래대금", base_value >= cfg.base_value,
               f"{p.base_date} {base_value / 1e8:,.0f}억 "
               f"(기준 {cfg.base_value / 1e8:,.0f}억)"),
-        Check("기준봉 상승", np.isfinite(base_chg) and base_chg >= cfg.base_min_chg,
+        Check("1일차 등락률", np.isfinite(base_chg) and base_chg >= cfg.base_min_chg,
               f"{base_chg:+.1f}% (기준 +{cfg.base_min_chg:.0f}%)"),
-        Check("기준봉 거래량", np.isfinite(base_vol_mult) and base_vol_mult >= cfg.base_vol_mult,
+        Check("1일차 거래량", np.isfinite(base_vol_mult) and base_vol_mult >= cfg.base_vol_mult,
               f"20일 평균의 {base_vol_mult:.1f}배 (기준 {cfg.base_vol_mult:.0f}배)", critical=False),
-        Check("자리 (바닥권·돌파)", bool(setups),
+        Check("1일차 자리", bool(setups),
               setup_detail if setups else f"200일선 이격 {g200:+.1f}% — 바닥권도 돌파도 아님"),
         Check("2일차 캔들", bool(entry),
               (f"갭 {gap:+.1f}% 음봉" if entry == "A" else
                f"윗꼬리 캔들 (캔들의 {wick_ratio * 100:.0f}% · {wick_pct:.1f}%)") if entry
               else f"갭 {gap:+.1f}% · 윗꼬리 {wick_ratio * 100:.0f}% — 둘 다 아님"),
-        Check("기준봉 지지", close >= base_close * (1 - cfg.max_drop / 100.0),
+        Check("2일차 기준봉 지지", close >= base_close * (1 - cfg.max_drop / 100.0),
               f"종가 {close:,.0f} vs 기준봉 종가 {base_close:,.0f} "
               f"({gap_pct(close, base_close):+.1f}%, 허용 -{cfg.max_drop:.0f}%)"),
         Check("손절폭", abs(p.stop_pct) <= cfg.max_stop_pct,
@@ -236,16 +236,16 @@ def to_dataframe(picks: list[ThreeLinePick]) -> pd.DataFrame:
             "종목명": p.name,
             "시장": p.market,
             "업종": p.sector,
-            "조건": f"{p.entry} {p.label}",
-            "자리": p.setup_label,
             "점수": p.score,
-            "현재가": round(p.price),
-            "등락률": round(p.chg, 2),
-            "기준봉일": p.base_date,
-            "기준봉거래대금(억)": round(p.base_value / 1e8),
-            "기준봉등락": round(p.base_chg, 1),
-            "갭": round(p.gap, 1),
-            "윗꼬리": round(p.wick * 100),
+            "1일차(기준봉)": p.base_date,
+            "1일차 거래대금(억)": round(p.base_value / 1e8),
+            "1일차 등락": round(p.base_chg, 1),
+            "1일차 자리": p.setup_label,
+            "2일차 조건": f"{p.entry} {p.label}",
+            "2일차 종가(매수가)": round(p.price),
+            "2일차 등락": round(p.chg, 2),
+            "2일차 갭": round(p.gap, 1),
+            "2일차 윗꼬리(%)": round(p.wick * 100),
             "200일선이격": round(p.ma200_gap, 1) if np.isfinite(p.ma200_gap) else None,
             "손절(기준봉저가)": round(p.base_low),
             "손절폭": round(p.stop_pct, 1),

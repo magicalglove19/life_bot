@@ -1,14 +1,4 @@
 [
-  "per favore",
-  "grazie",
-  "mi dispiace",
-  "scusa",
-  "dottore",
-  "infermiera",
-  "medicina",
-  "amico",
-  "sorella",
-  "fratello",
   "madre",
   "padre",
   "città",
@@ -498,5 +488,15 @@
   "via",
   "minuto",
   "pasto",
-  "doccia"
+  "doccia",
+  "acqua",
+  "pane",
+  "frutta",
+  "valigia",
+  "banca",
+  "autostrada",
+  "cellulare",
+  "biglietteria",
+  "sconto",
+  "cittadina"
 ]

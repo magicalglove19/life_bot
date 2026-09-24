@@ -1,14 +1,4 @@
 [
-  "scuola",
-  "biblioteca",
-  "ospedale",
-  "polizia",
-  "ufficio postale",
-  "banca",
-  "stazione",
-  "libro",
-  "giardino",
-  "bicicletta",
   "passeggiata",
   "ristorante",
   "gelato",
@@ -498,5 +488,15 @@
   "stazione",
   "cappello",
   "bottiglia",
-  "fiume"
+  "fiume",
+  "casa",
+  "famiglia",
+  "bambino",
+  "bambina",
+  "giornale",
+  "strada",
+  "camera",
+  "parco",
+  "piscina",
+  "neve"
 ]

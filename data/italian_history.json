@@ -1,14 +1,4 @@
 [
-  "passeggiata",
-  "ristorante",
-  "gelato",
-  " spiaggia",
-  "fotografia",
-  "musica",
-  "amore",
-  "fiore",
-  "albero",
-  "uccello",
   "gatto",
   "cane",
   "amore",
@@ -498,5 +488,15 @@
   "camera",
   "parco",
   "piscina",
-  "neve"
+  "neve",
+  "porta",
+  "sedia",
+  "tavolo",
+  "finestra",
+  "lampada",
+  "zaino",
+  "occhiali",
+  "bottone",
+  "cuscino",
+  "cintura"
 ]

@@ -11,14 +11,15 @@ name: judoju-us
 #
 # 시각 계산 (cron 은 UTC)
 #    미국 마감 16:00 ET = 20:00 UTC(서머타임) / 21:00 UTC(겨울)
-#    20:50 UTC 예약 + 이 대역 실측 지연(약 1시간 36분) → 약 22:26 UTC 실행
-#      = 서머타임 18:26 ET / 겨울 17:26 ET  — 둘 다 마감 후 ✅
-#      = 한국 시간 다음날 아침 07:26 쯤 도착
+#    20:30 UTC 예약 + 이 대역 실측 지연(약 1시간 36분) → 약 22:06 UTC 실행
+#      = 서머타임 18:06 ET / 겨울 17:06 ET  — 둘 다 마감 후 ✅
+#      = 한국 시간 다음날 아침 07:06 쯤 도착
+#    지연이 거의 없어 마감 전에 돌면 '미국장 마감 대기' 단계가 16:05 ET 까지 기다린다.
 #    혹시 장중에 돌더라도 judoju_us.py 가 미완결 세션을 저장하지 않고 건너뛴다.
 
 on:
   schedule:
-    - cron: '50 20 * * 1-5'     # 미국 월~금 마감 후 (지연 감안, 겨울에도 실행은 마감 뒤)
+    - cron: '30 20 * * 1-5'     # 미국 월~금 마감 무렵 (마감 전이면 아래 대기 단계가 기다림)
   repository_dispatch:
     types: [judoju-us]
   workflow_dispatch:
@@ -49,8 +50,21 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 15         # 일봉 60종목 조회에 30초 남짓, 넉넉히
+    timeout-minutes: 135        # 마감 대기 최대 120분 + 일봉 조회 30초 남짓
     steps:
+      - name: 미국장 마감 대기
+        if: github.event_name == 'schedule'
+        run: |
+          # 예약을 마감 무렵으로 앞당겨 뒀다. 평소엔 GitHub 지연(1.6시간+) 덕에 마감 뒤에 돌지만,
+          # 지연이 거의 없는 날엔 마감 전일 수 있다. 그럴 땐 16:05 ET 까지 기다린다(서머타임 자동 반영).
+          now=$(TZ=America/New_York date +%s)
+          target=$(TZ=America/New_York date -d 'today 16:05' +%s)
+          dow=$(TZ=America/New_York date +%u)
+          if [ "$dow" -le 5 ] && [ "$now" -lt "$target" ] && [ $((target - now)) -le 7200 ]; then
+            echo "미국장 마감 전 — $(( (target - now) / 60 ))분 대기"
+            sleep $((target - now))
+          fi
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5

@@ -14,7 +14,7 @@ name: gangnam-us
 
 on:
   schedule:
-    - cron: '50 20 * * 1-5'     # 미국 월~금 마감 후 = 한국 다음날 05:50
+    - cron: '30 20 * * 1-5'     # 미국 월~금 마감 무렵 = 한국 다음날 05:30
   workflow_dispatch:
     inputs:
       force:
@@ -35,8 +35,21 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 140        # 마감 대기 최대 120분 포함
     steps:
+      - name: 미국장 마감 대기
+        if: github.event_name == 'schedule'
+        run: |
+          # 예약을 마감 무렵으로 앞당겨 뒀다. 평소엔 GitHub 지연(1.6시간+) 덕에 마감 뒤에 돌지만,
+          # 지연이 거의 없는 날엔 마감 전일 수 있다. 그럴 땐 16:05 ET 까지 기다린다(서머타임 자동 반영).
+          now=$(TZ=America/New_York date +%s)
+          target=$(TZ=America/New_York date -d 'today 16:05' +%s)
+          dow=$(TZ=America/New_York date +%u)
+          if [ "$dow" -le 5 ] && [ "$now" -lt "$target" ] && [ $((target - now)) -le 7200 ]; then
+            echo "미국장 마감 전 — $(( (target - now) / 60 ))분 대기"
+            sleep $((target - now))
+          fi
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5

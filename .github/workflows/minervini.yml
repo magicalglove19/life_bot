@@ -2,10 +2,10 @@ name: minervini
 
 on:
   schedule:
-    # 05:20 KST (월~토) = 20:20 UTC (Sun~Fri, DOW 0-5)
-    # 아침 브리핑(morning-stocks, 04:50 KST)과 같은 시간대에 도착한다.
-    # 미국장 마감(16:00 ET = 20:00 UTC) 뒤 20분 — 예약 지연(1.6시간+)이 더해져 실제 실행은 충분히 늦다.
-    - cron: '20 20 * * 0-5'
+    # 05:00 KST (월~토) = 20:00 UTC (Sun~Fri, DOW 0-5)
+    # 아침 브리핑(morning-stocks, 04:30 KST)과 같은 시간대에 도착한다.
+    # 미국장 마감(서머타임 20:00 / 겨울 21:00 UTC) 무렵. 마감 전이면 '미국장 마감 대기' 단계가 기다린다.
+    - cron: '0 20 * * 0-5'
   workflow_dispatch:
   repository_dispatch:
     types: [minervini]
@@ -16,8 +16,21 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 145        # 마감 대기 최대 120분 포함
     steps:
+      - name: 미국장 마감 대기
+        if: github.event_name == 'schedule'
+        run: |
+          # 예약을 마감 무렵으로 앞당겨 뒀다. 평소엔 GitHub 지연(1.6시간+) 덕에 마감 뒤에 돌지만,
+          # 지연이 거의 없는 날엔 마감 전일 수 있다. 그럴 땐 16:05 ET 까지 기다린다(서머타임 자동 반영).
+          now=$(TZ=America/New_York date +%s)
+          target=$(TZ=America/New_York date -d 'today 16:05' +%s)
+          dow=$(TZ=America/New_York date +%u)
+          if [ "$dow" -le 5 ] && [ "$now" -lt "$target" ] && [ $((target - now)) -le 7200 ]; then
+            echo "미국장 마감 전 — $(( (target - now) / 60 ))분 대기"
+            sleep $((target - now))
+          fi
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5

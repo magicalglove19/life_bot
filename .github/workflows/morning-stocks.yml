@@ -2,10 +2,10 @@ name: morning-stocks
 
 on:
   schedule:
-    # 04:50 KST (월~토) = 19:50 UTC (Sun~Fri, DOW 0-5)
-    # 스캔 20분 + GH Actions 지연 30분 여유 → 06:00 KST 이전 도착 목표
+    # 04:30 KST (월~토) = 19:30 UTC (Sun~Fri, DOW 0-5)
+    # 마감 전 예약이지만 GH Actions 지연(1.6시간+)으로 실제론 마감 뒤에 돈다. 아니면 대기 단계가 기다린다.
     # 토요일 실행분은 금요일 미국장 마감(토 새벽) 데이터를 다룸
-    - cron: '50 19 * * 0-5'
+    - cron: '30 19 * * 0-5'
   workflow_dispatch:  # 수동 실행 가능
   repository_dispatch:
     types: [morning-stocks]
@@ -16,8 +16,21 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 160        # 마감 대기 최대 120분 포함
     steps:
+      - name: 미국장 마감 대기
+        if: github.event_name == 'schedule'
+        run: |
+          # 예약을 마감 무렵으로 앞당겨 뒀다. 평소엔 GitHub 지연(1.6시간+) 덕에 마감 뒤에 돌지만,
+          # 지연이 거의 없는 날엔 마감 전일 수 있다. 그럴 땐 16:05 ET 까지 기다린다(서머타임 자동 반영).
+          now=$(TZ=America/New_York date +%s)
+          target=$(TZ=America/New_York date -d 'today 16:05' +%s)
+          dow=$(TZ=America/New_York date +%u)
+          if [ "$dow" -le 5 ] && [ "$now" -lt "$target" ] && [ $((target - now)) -le 7200 ]; then
+            echo "미국장 마감 전 — $(( (target - now) / 60 ))분 대기"
+            sleep $((target - now))
+          fi
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5

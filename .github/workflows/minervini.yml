@@ -2,10 +2,10 @@ name: minervini
 
 on:
   schedule:
-    # 05:30 KST (월~토) = 20:30 UTC (Sun~Fri, DOW 0-5)
-    # 아침 브리핑(morning-stocks, 05:00 KST)과 같은 시간대에 도착한다.
-    # 미국장 마감(16:00 ET = 20:00 UTC)이 확정된 뒤 30분 여유를 두고 시작.
-    - cron: '30 20 * * 0-5'
+    # 05:20 KST (월~토) = 20:20 UTC (Sun~Fri, DOW 0-5)
+    # 아침 브리핑(morning-stocks, 04:50 KST)과 같은 시간대에 도착한다.
+    # 미국장 마감(16:00 ET = 20:00 UTC) 뒤 20분 — 예약 지연(1.6시간+)이 더해져 실제 실행은 충분히 늦다.
+    - cron: '20 20 * * 0-5'
   workflow_dispatch:
   repository_dispatch:
     types: [minervini]

@@ -14,7 +14,7 @@ name: gangnam-us
 
 on:
   schedule:
-    - cron: '0 21 * * 1-5'      # 미국 월~금 마감 후 = 한국 다음날 06:00
+    - cron: '50 20 * * 1-5'     # 미국 월~금 마감 후 = 한국 다음날 05:50
   workflow_dispatch:
     inputs:
       force:

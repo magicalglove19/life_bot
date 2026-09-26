@@ -2,10 +2,10 @@ name: morning-stocks
 
 on:
   schedule:
-    # 05:00 KST (월~토) = 20:00 UTC (Sun~Fri, DOW 0-5)
+    # 04:50 KST (월~토) = 19:50 UTC (Sun~Fri, DOW 0-5)
     # 스캔 20분 + GH Actions 지연 30분 여유 → 06:00 KST 이전 도착 목표
     # 토요일 실행분은 금요일 미국장 마감(토 새벽) 데이터를 다룸
-    - cron: '0 20 * * 0-5'
+    - cron: '50 19 * * 0-5'
   workflow_dispatch:  # 수동 실행 가능
   repository_dispatch:
     types: [morning-stocks]

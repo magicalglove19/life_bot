@@ -1,14 +1,4 @@
 [
-  "pane",
-  "vino",
-  "formaggio",
-  "prosciutto",
-  "uovo",
-  "carne",
-  "pesce",
-  "mela",
-  "uomo",
-  "donna",
   "bambino",
   "amica",
   "cucina",
@@ -498,5 +488,15 @@
   "bicicletta",
   "libreria",
   "lago",
-  "notte"
+  "notte",
+  "mercato",
+  "cappuccino",
+  "chiave",
+  "orologio",
+  "vestito",
+  "piano",
+  "mano",
+  "piede",
+  "coda",
+  "sci"
 ]

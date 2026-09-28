@@ -1,14 +1,4 @@
 [
-  "bambino",
-  "amica",
-  "cucina",
-  "tavolo",
-  "sedia",
-  "finestra",
-  "porta",
-  "computer",
-  "internet",
-  "email",
   "foto",
   "macchina",
   "aereo",
@@ -498,5 +488,15 @@
   "mano",
   "piede",
   "coda",
-  "sci"
+  "sci",
+  "macchina",
+  "treno",
+  "autobus",
+  "ristorante",
+  "colazione",
+  "pranzo",
+  "cena",
+  "mappa",
+  "portafoglio",
+  "carta"
 ]

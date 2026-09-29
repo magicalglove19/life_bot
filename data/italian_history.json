@@ -1,14 +1,4 @@
 [
-  "foto",
-  "macchina",
-  "aereo",
-  "nave",
-  "tavolo",
-  "sedia",
-  "porta",
-  "telefono",
-  "carta",
-  "denaro",
   "ristorazione",
   "cena",
   "colazione",
@@ -498,5 +488,15 @@
   "cena",
   "mappa",
   "portafoglio",
-  "carta"
+  "carta",
+  "fratello",
+  "sorella",
+  "lavoro",
+  "dottore",
+  "ospedale",
+  "farmacia",
+  "polizia",
+  "aeroporto",
+  "metropolitana",
+  "passeggero"
 ]

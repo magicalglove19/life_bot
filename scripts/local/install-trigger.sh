@@ -4,6 +4,7 @@
 #   ./scripts/local/install-trigger.sh kcg 15:00
 #   ./scripts/local/install-trigger.sh judoju 12:00 1200
 #   ./scripts/local/install-trigger.sh kcg 15:00 --uninstall
+#   ./scripts/local/install-trigger.sh gangnam-us 05:20 --days=2,3,4,5,6   # 화~토 (1=월 … 6=토, 0=일)
 #
 # ⚠️ trigger.sh 를 이 레포(~/Desktop 아래)에서 직접 실행하면 안 된다.
 #    macOS TCC 가 launchd 에이전트의 Desktop 접근을 막아서
@@ -17,9 +18,11 @@ EVENT="${1:-}"
 AT="${2:-}"
 SLOT=""
 UNINSTALL=0
+DAYS="1,2,3,4,5"               # 기본 월~금
 for arg in "${@:3}"; do
   case "$arg" in
     --uninstall) UNINSTALL=1 ;;
+    --days=*) DAYS="${arg#--days=}" ;;
     *) SLOT="$arg" ;;
   esac
 done
@@ -71,15 +74,11 @@ cat > "$PLIST" <<PLIST_EOF
     <string>$STAGED</string>
     <string>$EVENT</string>$([ -n "$SLOT" ] && printf '\n    <string>%s</string>' "$SLOT")
   </array>
-  <!-- 월~금 $AT. 그 시각에 맥이 자고 있었다면 깨어날 때 실행되고,
+  <!-- 요일($DAYS) $AT. 그 시각에 맥이 자고 있었다면 깨어날 때 실행되고,
        늦게 도착한 실행은 워크플로 쪽 시간대 가드가 걸러낸다. -->
   <key>StartCalendarInterval</key>
   <array>
-    <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>$HOUR</integer><key>Minute</key><integer>$MIN</integer></dict>
-    <dict><key>Weekday</key><integer>2</integer><key>Hour</key><integer>$HOUR</integer><key>Minute</key><integer>$MIN</integer></dict>
-    <dict><key>Weekday</key><integer>3</integer><key>Hour</key><integer>$HOUR</integer><key>Minute</key><integer>$MIN</integer></dict>
-    <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>$HOUR</integer><key>Minute</key><integer>$MIN</integer></dict>
-    <dict><key>Weekday</key><integer>5</integer><key>Hour</key><integer>$HOUR</integer><key>Minute</key><integer>$MIN</integer></dict>
+$(IFS=','; for d in $DAYS; do printf '    <dict><key>Weekday</key><integer>%s</integer><key>Hour</key><integer>%s</integer><key>Minute</key><integer>%s</integer></dict>\n' "$d" "$HOUR" "$MIN"; done)
   </array>
   <key>StandardOutPath</key><string>$LOG</string>
   <key>StandardErrorPath</key><string>$LOG</string>
@@ -92,7 +91,7 @@ launchctl unload "$PLIST" 2>/dev/null || true
 launchctl load "$PLIST"
 
 echo "✅ 설치 완료: $LABEL"
-echo "   예약:   월~금 $AT  → repository_dispatch \"$EVENT\"${SLOT:+ (슬롯 $SLOT)}"
+echo "   예약:   요일 $DAYS $AT  → repository_dispatch \"$EVENT\"${SLOT:+ (슬롯 $SLOT)}"
 echo "   실행기: $STAGED"
 echo "   로그:   $LOG"
 echo "   해제:   $0 $EVENT $AT --uninstall"

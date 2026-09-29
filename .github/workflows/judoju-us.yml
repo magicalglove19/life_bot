@@ -3,6 +3,7 @@ name: judoju-us
 # 미국 주도주 스냅샷 — 나스닥 스크리너 + 야후 일봉이 전부다.
 # API 키도 계좌도 필요 없고, 시크릿은 기존 텔레그램 두 개를 그대로 쓴다.
 #
+# (2026-09-29) 예약 지연이 4시간 20분까지 늘어 맥 트리거(05:25 KST)를 주 경로로 추가했다. 아래는 예전 설명.
 # ✅ 한국판(judoju.yml)과 달리 예약 지연을 걱정하지 않아도 된다.
 #    한국판은 12:00 스냅샷이 12:00 에 찍혀야 해서 repository_dispatch 가
 #    주 경로였다. 이쪽은 '미국장 마감 후 ~ 다음 개장 전' 아무 때나 돌면 되고
@@ -42,6 +43,7 @@ on:
 
 permissions:
   contents: write               # 상태 파일 커밋
+  actions: read             # 오늘 이미 보낸 실행이 있는지 조회
 
 concurrency:
   group: judoju-us
@@ -53,10 +55,9 @@ jobs:
     timeout-minutes: 135        # 마감 대기 최대 120분 + 일봉 조회 30초 남짓
     steps:
       - name: 미국장 마감 대기
-        if: github.event_name == 'schedule'
+        if: github.event_name != 'workflow_dispatch'
         run: |
-          # 예약을 마감 무렵으로 앞당겨 뒀다. 평소엔 GitHub 지연(1.6시간+) 덕에 마감 뒤에 돌지만,
-          # 지연이 거의 없는 날엔 마감 전일 수 있다. 그럴 땐 16:05 ET 까지 기다린다(서머타임 자동 반영).
+          # 맥 트리거와 앞당긴 예약은 마감 전에 도착할 수 있다(겨울엔 마감이 한국 06:00). 그럴 땐 16:05 ET 까지 기다린다(서머타임 자동 반영).
           now=$(TZ=America/New_York date +%s)
           target=$(TZ=America/New_York date -d 'today 16:05' +%s)
           dow=$(TZ=America/New_York date +%u)
@@ -65,17 +66,37 @@ jobs:
             sleep $((target - now))
           fi
 
+      - name: 오늘 이미 보냈는지 확인
+        if: github.event_name != 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # 맥 트리거(repository_dispatch)와 예약(schedule)이 둘 다 돈다. 예약은 몇 시간씩 밀려서
+          # 보통 맥 트리거가 먼저 보낸다. 오늘(KST) 먼저 성공한 실행이 있으면 나머지 단계를 건너뛴다.
+          since=$(date -u -d "$(TZ=Asia/Seoul date +%F) 00:00 +0900" +%Y-%m-%dT%H:%M:%SZ)
+          n=$(gh run list -R "$GITHUB_REPOSITORY" -w "$GITHUB_WORKFLOW" --status success \
+                --created ">=$since" --json databaseId \
+                -q "[.[] | select(.databaseId != $GITHUB_RUN_ID)] | length")
+          if [ "${n:-0}" -gt 0 ]; then
+            echo "오늘 이미 성공한 실행이 있어 건너뜁니다."
+            echo "SKIP=1" >> "$GITHUB_ENV"
+          fi
+
       - uses: actions/checkout@v4
+        if: env.SKIP != '1'
 
       - uses: actions/setup-python@v5
+        if: env.SKIP != '1'
         with:
           python-version: '3.11'
           cache: pip
 
       - name: Install deps
+        if: env.SKIP != '1'
         run: pip install requests      # common/telegram.py 가 쓴다
 
       - name: Run 미국 주도주 스냅샷
+        if: env.SKIP != '1'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -85,7 +106,7 @@ jobs:
         run: python scripts/judoju_us.py
 
       - name: 상태 커밋
-        if: always()
+        if: always() && env.SKIP != '1'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

@@ -8,6 +8,9 @@
   ④ 메이저 수급 : 최근 3거래일 기관·외국인이 모두 순매수 (한국만, 네이버 증권)
   ⑤ 실적 턴어라운드는 확인하지 않는다 — 메시지에서 직접 확인하라고 안내한다.
 
+자리가 만들어진 지 1주일(달력 7일)이 넘은 종목은 보내지 않는다. 조건은 며칠씩 이어지는데,
+뒤늦게 알림을 받아 따라 사면 이미 자리를 벗어난 뒤일 수 있다.
+
 기준값은 한국 241종목 2023-09~2026-09 백테스트에서 두 해 모두 고르게 좋았던 조합이다.
 20거래일 보유 승률 61%(손절 -10% 적용), 같은 기간 아무 종목이나 산 경우 45%.
 미국은 같은 규칙이 기준선보다 나빴다(수급·실적을 볼 수 없다). 그래서 미국 메시지에는
@@ -44,6 +47,8 @@ TREND_LOOKBACK = 20         # 60·120일선이 20거래일 전보다 올라와 �
 OVERHEAD_LOOKBACK = 250     # 약 1년치 매물대
 OVERHEAD_MAX = 0.15         # 현재가 위에서 거래된 물량이 15% 이하
 SUPPLY_DAYS = 3             # 기관·외국인 순매수 확인 기간
+MAX_AGE_DAYS = 7            # 자리가 만들어진 지 1주일이 넘으면 보내지 않는다 (지나간 기회)
+MAX_STREAK_SCAN = 60        # 자리 시작일을 찾아 거슬러 올라갈 최대 거래일
 STOP_LOSS = 0.10            # 손절 -10% (백테스트에서 5~8%보다 좋았다)
 
 MIN_BARS = max(MA_PERIODS) + TREND_LOOKBACK + 1
@@ -84,8 +89,54 @@ def load_universe(filename: str) -> list[dict]:
     return data["tickers"]
 
 
+def _ma_table(closes: np.ndarray) -> dict[int, np.ndarray]:
+    """closes 와 같은 길이로 맞춘 이동평균 (앞쪽은 NaN)."""
+    table = {}
+    for period in MA_PERIODS:
+        arr = np.full(len(closes), np.nan)
+        arr[period - 1:] = sma(closes, period)
+        table[period] = arr
+    return table
+
+
+def _setup_at(table, closes: np.ndarray, volumes: np.ndarray, i: int) -> dict | None:
+    """i일 기준 가격 조건 ①②③ 판정."""
+    if i - TREND_LOOKBACK < 0:
+        return None
+    values = [table[p][i] for p in MA_PERIODS]
+    if any(np.isnan(v) for v in values):
+        return None
+    if np.isnan(table[60][i - TREND_LOOKBACK]) or np.isnan(table[120][i - TREND_LOOKBACK]):
+        return None
+
+    price = closes[i]
+
+    # ① 양지 차트
+    yangji = (table[20][i] > table[60][i] > table[120][i]
+              and table[60][i] > table[60][i - TREND_LOOKBACK]
+              and table[120][i] > table[120][i - TREND_LOOKBACK])
+
+    # ② 발 아래 수렴
+    ma_high, ma_low = max(values), min(values)
+    converged = ma_high <= price * (1 + HEADROOM) and ma_low >= price * (1 - CONVERGENCE_RANGE)
+
+    # ③ 상방 공간 — 현재가보다 위에서 거래된 물량 비율
+    start = max(0, i - OVERHEAD_LOOKBACK)
+    window_close = closes[start:i]
+    window_volume = volumes[start:i]
+    total = window_volume.sum()
+    overhead = float(window_volume[window_close > price].sum() / total) if total > 0 else 1.0
+
+    return {
+        "ok": bool(yangji and converged and overhead <= OVERHEAD_MAX),
+        "price": float(price),
+        "ma_spread": float((ma_high - ma_low) / price),
+        "overhead": overhead,
+    }
+
+
 def analyze(symbol: str, df) -> dict | None:
-    """가격 조건 ①②③ 판정. 조건을 못 갖추면 None."""
+    """가격 조건 ①②③ 판정 + 이 자리가 언제 만들어졌는지. 조건을 못 갖추면 None."""
     if df is None or len(df) < MIN_BARS:
         return None
     closes = df["Close"].to_numpy(dtype=float)
@@ -93,41 +144,33 @@ def analyze(symbol: str, df) -> dict | None:
     if np.isnan(closes[-1]):
         return None
 
-    mas = {}
-    for period in MA_PERIODS:
-        series = sma(closes, period)
-        if len(series) <= TREND_LOOKBACK:
-            return None
-        mas[period] = series
-
-    price = closes[-1]
-    values = [mas[p][-1] for p in MA_PERIODS]
-
-    # ① 양지 차트
-    yangji = (mas[20][-1] > mas[60][-1] > mas[120][-1]
-              and mas[60][-1] > mas[60][-1 - TREND_LOOKBACK]
-              and mas[120][-1] > mas[120][-1 - TREND_LOOKBACK])
-
-    # ② 발 아래 수렴
-    ma_high, ma_low = max(values), min(values)
-    converged = ma_high <= price * (1 + HEADROOM) and ma_low >= price * (1 - CONVERGENCE_RANGE)
-
-    # ③ 상방 공간 — 현재가보다 위에서 거래된 물량 비율
-    window_close = closes[-(OVERHEAD_LOOKBACK + 1):-1]
-    window_volume = volumes[-(OVERHEAD_LOOKBACK + 1):-1]
-    total = window_volume.sum()
-    overhead = float(window_volume[window_close > price].sum() / total) if total > 0 else 1.0
-
-    if not (yangji and converged and overhead <= OVERHEAD_MAX):
+    table = _ma_table(closes)
+    last = len(closes) - 1
+    current = _setup_at(table, closes, volumes, last)
+    if not current or not current["ok"]:
         return None
+
+    # 자리가 며칠째 이어지는지 — 오래된 자리는 이미 지나간 기회라 발송에서 뺀다
+    first = last
+    for i in range(last - 1, max(last - MAX_STREAK_SCAN, TREND_LOOKBACK), -1):
+        past = _setup_at(table, closes, volumes, i)
+        if not past or not past["ok"]:
+            break
+        first = i
+
+    since = df.index[first].date()
+    last_date = df.index[last].date()
 
     return {
         "symbol": symbol,
-        "price": float(price),
-        "stop_price": float(price * (1 - STOP_LOSS)),
-        "ma_spread": float((ma_high - ma_low) / price),
-        "overhead": overhead,
-        "date": df.index[-1].date().isoformat(),
+        "price": current["price"],
+        "stop_price": current["price"] * (1 - STOP_LOSS),
+        "ma_spread": current["ma_spread"],
+        "overhead": current["overhead"],
+        "date": last_date.isoformat(),
+        "since": since.isoformat(),
+        "age_days": (last_date - since).days,      # 달력 기준
+        "streak": last - first + 1,                # 거래일 기준
     }
 
 
@@ -179,6 +222,8 @@ def build_message(market: str, picks: list[dict], names: dict[str, str], now: dt
         lines.append(f"{i}. <b>{name}</b> ({code})")
         lines.append(f"   현재가 {money(p['price'], market)} · 손절가 {money(p['stop_price'], market)} (-10%)")
         lines.append(f"   위쪽 매물 {p['overhead'] * 100:.1f}% · 이평선 폭 {p['ma_spread'] * 100:.1f}%")
+        since = dt.date.fromisoformat(p["since"])
+        lines.append(f"   자리 완성 {since:%m/%d} ({p['streak']}거래일째)")
         if p.get("supply"):
             s = p["supply"]
             lines.append(f"   기관 {shares(s['organ'])} · 외국인 {shares(s['foreign'])} (3일)")
@@ -249,6 +294,12 @@ def main() -> int:
     picks = [r for r in (analyze(sym, store.get(sym)) for sym in symbols) if r]
     print(f"[gangnam] 가격 조건 통과 {len(picks)}종목")
 
+    stale = [p for p in picks if p["age_days"] > MAX_AGE_DAYS]
+    picks = [p for p in picks if p["age_days"] <= MAX_AGE_DAYS]
+    if stale:
+        print(f"[gangnam] 자리가 만들어진 지 {MAX_AGE_DAYS}일이 넘어 제외 {len(stale)}종목: "
+              + ", ".join(f"{p['symbol']}({p['age_days']}일)" for p in stale[:10]))
+
     # 데이터가 오래됐으면(휴장 등) 어제 자리로 알림이 가지 않게 막는다
     if picks and not (dry or force):
         latest = max(p["date"] for p in picks)
@@ -272,7 +323,7 @@ def main() -> int:
         print(f"[gangnam] {conf['label']} 강남자리 없음 — 발송하지 않습니다.")
         return 0
 
-    picks.sort(key=lambda p: p["overhead"])  # 가벼운(매물 적은) 순
+    picks.sort(key=lambda p: (p["age_days"], p["overhead"]))  # 갓 만들어진 자리 · 가벼운 순
     text = build_message(market, picks, names, now)
 
     if dry:

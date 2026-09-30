@@ -274,10 +274,17 @@ def format_report(title: str, result: dict, is_kr: bool = False,
         label = html.escape(m["symbol"])
         if is_kr and m.get("name"):
             label += f" {html.escape(m['name'])}"
-        mark = "👀" if off else "✅" if not m["fails"] else "⚠️" if len(m["fails"]) == 1 else "▫️"
+        # 기호만 있으면 뜻을 외워야 해서 글자로도 적는다.
+        if off:
+            mark, status = "👀", "관찰"
+        elif not m["fails"]:
+            mark, status = "✅", "관문 통과"
+        else:
+            mark = "⚠️" if len(m["fails"]) == 1 else "▫️"
+            status = f"{len(m['fails'])}개 미달"
         stop = m["price"] * (1 - STOP_PCT / 100)
         lines.append(
-            f"{i}. {mark} <b>{label}</b> <b>{m['score']}점</b> "
+            f"{i}. {mark} <b>{label}</b> <i>{status}</i> <b>{m['score']}점</b> "
             f"{_fmt_price(m, is_kr)} ({m['change_pct']:+.1f}%) · 손절 {_fmt_price(dict(m, price=stop), is_kr)}"
         )
         pats = html.escape("+".join(PATTERN_SHORT.get(p, p) for p in m["patterns"]))
@@ -286,7 +293,7 @@ def format_report(title: str, result: dict, is_kr: bool = False,
         # 미달 사유에는 "거래량 1.0x<1.2x" 처럼 < 가 들어간다. 그대로 보내면
         # 텔레그램 HTML 파서가 태그 시작으로 읽고 400으로 거절해 발송 전체가 죽는다.
         if m["fails"]:
-            detail += f" · <i>{html.escape(m['fails'][0])}</i>"
+            detail += f" · <i>{html.escape(', '.join(m['fails']))}</i>"
         if tags and m["symbol"] in tags:
             detail += f" · <i>{html.escape(tags[m['symbol']])}</i>"
         lines.append(detail)

@@ -86,6 +86,15 @@ def is_extended(c) -> bool:
     return c.extended
 
 
+def is_stale(c) -> bool:
+    """타점을 넘은 지 1주일(기본 5거래일)을 넘겼는가 — 목록에서 빼는 기준.
+
+    피벗 위로 멀리 올라간 것(거리 연장)과는 구분한다. 거리 연장은 오늘 돌파한 종목에도
+    붙을 수 있어서 지우지 않고 ⚠연장 표시만 남긴다.
+    """
+    return c.days_past_pivot > MAX_DAYS_PAST_PIVOT
+
+
 def stock_line(c, with_exec: bool = True) -> str:
     """종목 한 건. 실행 정보가 붙으면 2줄, 아니면 1줄."""
     q = []
@@ -219,7 +228,10 @@ def near_block(res, cfg, acted: set, n_picks: int) -> str:
 def build_messages(res, cfg) -> list[str]:
     LAST_BAR["v"] = res.last_bar or ""
     setups = [c for c in res.candidates if c.vcp.is_vcp]
-    cands = [c for c in setups if c.total_score >= MIN_SCORE]
+    scored = [c for c in setups if c.total_score >= MIN_SCORE]
+    # 타점을 넘은 지 1주일 지난 자리는 목록에서 뺀다 — 이미 쫓아가는 매수다.
+    cands = [c for c in scored if not is_stale(c)]
+    stale_picks = [c for c in scored if is_stale(c)]
 
     # 당일 돌파는 점수 하한을 적용하지 않는다 — 오늘 터진 자리는 점수와 무관하게 봐야 한다.
     today_brk = [c for c in setups
@@ -258,6 +270,10 @@ def build_messages(res, cfg) -> list[str]:
     if below:
         names = ", ".join(f"{esc(c.ticker)}({num(c.total_score, 1)})" for c in below[:10])
         blocks1.append(f"<i>점수 하한({num(MIN_SCORE, 0)}점) 때문에 빠진 매수구간 {len(below)}종목: {names}</i>")
+    if stale_picks:
+        names = ", ".join(f"{esc(c.ticker)}({c.days_past_pivot}일)"
+                          for c in sorted(stale_picks, key=lambda x: x.days_past_pivot)[:10])
+        blocks1.append(f"<i>타점 {MAX_DAYS_PAST_PIVOT}거래일 초과로 뺀 {len(stale_picks)}종목: {names}</i>")
     if stale_brk:
         names = ", ".join(f"{esc(c.ticker)}({esc(c.extended_reason)})" for c in stale_brk[:8])
         blocks1.append(f"<i>연장이라 제외 — {MAX_DAYS_PAST_PIVOT}일 초과 또는 피벗 +{MAX_PCT_ABOVE_PIVOT:.0f}% 초과: {names}</i>")

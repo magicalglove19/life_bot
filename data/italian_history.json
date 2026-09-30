@@ -1,14 +1,4 @@
 [
-  "ristorazione",
-  "cena",
-  "colazione",
-  "pranzo",
-  "camera",
-  "lettore",
-  "musica classica",
-  "parco",
-  "fiorella",
-  "bambola",
   "torta",
   "caffè",
   "tè",
@@ -498,5 +488,15 @@
   "polizia",
   "aeroporto",
   "metropolitana",
-  "passeggero"
+  "passeggero",
+  "città",
+  "piazza",
+  "biglietto",
+  "orario",
+  "taxi",
+  "cameriere",
+  "menu",
+  "conto",
+  "panino",
+  "albergo"
 ]

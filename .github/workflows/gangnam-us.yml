@@ -12,9 +12,10 @@ name: gangnam-us
 # ⚠️ 미국은 기관·외국인 수급과 실적을 확인할 수 없고, 백테스트에서도 한국과 달리
 #    효과가 확인되지 않았다. 그래서 메시지에 참고용이라는 경고가 붙는다.
 
+# ⛔ 2026-10-01 자동 발송 중단 — 하락 초입(단기 이평선을 깨고 내려오는 종목)을 매수 후보로
+#    보내고 있었다. 다시 켜려면 규칙을 고치고 미국 백테스트로 기준선보다 나은지 확인한 뒤
+#    schedule·repository_dispatch 를 되살리고 맥 트리거를 다시 설치한다.
 on:
-  schedule:
-    - cron: '30 20 * * 1-5'     # 미국 월~금 마감 무렵 = 한국 다음날 05:30
   workflow_dispatch:
     inputs:
       force:
@@ -22,8 +23,6 @@ on:
         required: false
         default: true
         type: boolean
-  repository_dispatch:
-    types: [gangnam-us]
 
 permissions:
   contents: write            # 발송 기록(data/gangnam_state.json) 커밋

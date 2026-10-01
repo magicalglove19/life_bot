@@ -1,14 +1,4 @@
 [
-  "torta",
-  "caffè",
-  "tè",
-  "soggiorno",
-  "stanza",
-  "cucina",
-  "frigorifero",
-  "giorno",
-  "mese",
-  "anno",
   "settimana",
   "ora",
   "minuto",
@@ -498,5 +488,15 @@
   "menu",
   "conto",
   "panino",
-  "albergo"
+  "albergo",
+  "scuola",
+  "bar",
+  "gelato",
+  "supermercato",
+  "ufficio",
+  "studente",
+  "insegnante",
+  "cielo",
+  "vento",
+  "bicchiere"
 ]

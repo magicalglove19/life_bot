@@ -1,14 +1,4 @@
 [
-  "settimana",
-  "ora",
-  "minuto",
-  "secondo",
-  "lunedì",
-  "martedì",
-  "mercoledì",
-  "famiglia",
-  "viaggio",
-  "hotel",
   "passeggero",
   "biglietto",
   "aeroporto",
@@ -498,5 +488,15 @@
   "insegnante",
   "cielo",
   "vento",
-  "bicchiere"
+  "bicchiere",
+  "museo",
+  "aperto",
+  "chiuso",
+  "cibo",
+  "sale",
+  "zucchero",
+  "bacio",
+  "sorriso",
+  "montagna",
+  "spiaggia"
 ]

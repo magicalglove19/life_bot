@@ -119,7 +119,7 @@ def main() -> int:
     import FinanceDataReader as fdr
     bench = fdr.DataReader(BENCH, (now.date() - dt.timedelta(days=HISTORY_DAYS)).isoformat())["Close"]
 
-    patterns = merge_patterns(store)
+    patterns = merge_patterns(store, is_kr=True)
     result = signal_rank.rank(store, bench, patterns, is_kr=True,
                               names=refresh_tickers.load_names())
     passed = result["passed"]

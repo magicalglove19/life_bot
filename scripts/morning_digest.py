@@ -9,7 +9,7 @@
 
 새 구조:
   1) market_data.fetch()로 시장별 시세를 한 번에 받는다 (종목별 호출 → 타임아웃 해소)
-  2) 변곡점 2종 + 차트패턴 3종을 같은 데이터로 탐지
+  2) 변곡점 2종 + 차트패턴 3종(+ 미국은 두번째 정배열)을 같은 데이터로 탐지
   3) signal_rank의 관문(RS·ATR·거래량·120MA·거래대금)을 통과한 종목만 발송
   4) 강남자리 점수는 참고 태그로 붙인다 (백테스트에 포함되지 않아 관문에서 제외)
   5) 한국은 발송하지 않는다. 코스피 296종목으로 따로 검증한 결과 세 구간 모두
@@ -57,8 +57,8 @@ def _run_with_timeout(fn, timeout_sec: float):
     return box.get("value")
 
 
-def merge_patterns(store: dict) -> dict[str, list[str]]:
-    """변곡점 2종 + 차트패턴 3종을 종목별로 합친다."""
+def merge_patterns(store: dict, is_kr: bool = False) -> dict[str, list[str]]:
+    """변곡점 2종 + 차트패턴 3종을 종목별로 합친다. 미국은 두번째 정배열도 (한국은 미검증)."""
     merged: dict[str, list[str]] = {}
 
     for sym, df in store.items():
@@ -70,7 +70,7 @@ def merge_patterns(store: dict) -> dict[str, list[str]]:
         if pats:
             merged.setdefault(sym, []).extend(pats)
 
-    for sym, pats in chart_patterns.detect_store(store, signal_rank.LOOKBACK_BARS).items():
+    for sym, pats in chart_patterns.detect_store(store, signal_rank.LOOKBACK_BARS, us=not is_kr).items():
         for p in pats:
             if p not in merged.setdefault(sym, []):
                 merged[sym].append(p)
@@ -99,7 +99,7 @@ def scan_market(symbols: list[str], bench_symbol: str, is_kr: bool) -> tuple[dic
         raise RuntimeError(f"벤치마크 {bench_symbol} 데이터 없음")
     bench = bench_df["Close"]
 
-    patterns = merge_patterns(store)
+    patterns = merge_patterns(store, is_kr=is_kr)
     print(f"[morning] 패턴 발생 {len(patterns)}종목 / 수신 {len(store)}종목")
 
     result = signal_rank.rank(store, bench, patterns, is_kr=is_kr,

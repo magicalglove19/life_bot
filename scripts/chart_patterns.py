@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""차트 패턴 스캔 — 컵위드핸들 / 더블바텀 / 갭상승.
+"""차트 패턴 스캔 — 컵위드핸들 / 더블바텀 / 갭상승 / 두번째 정배열(미국만).
 로컬 'Chart Pattern Analyzer' 앱(pattern_detectors.py)과 같은 로직.
 
 ■ 2026-09 변경
@@ -21,12 +21,14 @@ PATTERN_EMOJI = {
     "컵위드핸들": "☕",
     "더블 바텀": "〰️",
     "갭 상승": "🚀",
+    "두번째 정배열": "📈",
 }
 
 
 def detect_store(store: dict[str, pd.DataFrame],
-                 lookback_bars: int = LOOKBACK_BARS) -> dict[str, list[str]]:
-    """{심볼: [패턴명, ...]} — 최근 lookback_bars 거래일 내 확정된 패턴만."""
+                 lookback_bars: int = LOOKBACK_BARS, us: bool = True) -> dict[str, list[str]]:
+    """{심볼: [패턴명, ...]} — 최근 lookback_bars 거래일 내 확정된 패턴만.
+    us=True 면 미국에서만 검증된 신호(두번째 정배열)도 함께 본다."""
     out: dict[str, list[str]] = {}
     for sym, df in store.items():
         if df is None or len(df) < 60:
@@ -35,7 +37,7 @@ def detect_store(store: dict[str, pd.DataFrame],
             # 거래일 기준 lookback을 달력일로 환산 (주말·휴일 포함)
             k = min(lookback_bars, len(df) - 1)
             days = max(1, (df.index[-1] - df.index[-1 - k]).days)
-            matches = scan_dataframe(sym, df, lookback_days=days)
+            matches = scan_dataframe(sym, df, lookback_days=days, us_only=us)
         except Exception as e:
             print(f"[chart_patterns] {sym} 실패: {e}", file=sys.stderr)
             continue

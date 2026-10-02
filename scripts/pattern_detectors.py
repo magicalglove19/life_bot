@@ -4,6 +4,7 @@
 - Double Bottom (더블 바텀)
 - V-Line (V자 반등)  ※ 기본 비활성 — 아래 참조
 - Gap Up (갭 상승)
+- 두번째 정배열 (미국 전용, 2026-10 추가)
 chart_patterns.py / confluence.py에서 import해서 사용.
 
 ■ 2026-09 백테스트 반영 사항
@@ -226,12 +227,72 @@ def detect_gap_up(df, threshold=0.03):
     return results
 
 
+MA_SET = (5, 20, 60, 120)   # 정배열 = 5일 > 20일 > 60일 > 120일선
+
+
+def detect_second_alignment(df, min_break=3, min_first=10, max_gap=60, pre_quiet=40):
+    """두 번째 정배열: 정배열 → 이탈 → 다시 정배열에 들어온 날 (미국 전용).
+
+      a. 첫 정배열: 그 전 pre_quiet 거래일 동안 정배열이 아니었고, min_first 일 이상 유지
+      b. 이탈: min_break 일 이상 정배열이 풀림 (그보다 짧은 이탈은 흔들림으로 보고 이어붙임)
+      c. 재진입: 이탈 후 max_gap 거래일 안에 다시 정배열 → 이 날이 발생일 (그날 확정, 룩어헤드 없음)
+    정배열은 이평선끼리의 순서만 본다 (종가 > 5일선 조건은 너무 자주 깨진다).
+
+    2021~2026 S&P500 백테스트(20거래일, SPY 대비, 60점+시장필터): +5.02%p · 승률 57.3% (96건).
+    같은 필터의 나머지 정배열 진입은 +1.46%p · 48.6%. 보유 5~60일 전부, 6년 중 5년 앞섰다(2026 제외).
+    상위 5건 제외 +2.61%p, 주 단위 군집 부트스트랩 90% 구간 +2.65~+7.58%p, 기준값 16조합 전부 +3.2~+5.6%p.
+    60점 필터 없이는 +0.29%p 로 엣지가 거의 없다 → 관문·점수를 거치는 이 파이프라인에서만 쓴다.
+    한계: 연 15건 정도로 표본이 작고, 현재 구성종목만 쓴 생존편향이 모멘텀형 신호에 더 유리할 수 있다.
+    한국은 검증하지 않았다 → scan_dataframe(us_only=True) 일 때만 돈다.
+    재현: 'Chart Pattern Analyzer' 앱 폴더 backtest/bt2.py, an2.py
+    """
+    close = df['Close']
+    mas = [close.rolling(p).mean() for p in MA_SET]
+    al = pd.Series(True, index=close.index)
+    for fast, slow in zip(mas, mas[1:]):
+        al &= fast > slow
+    al = al.fillna(False).values
+    first_valid = int(mas[-1].notna().values.argmax()) - 1
+
+    runs = []                    # 짧은 이탈은 이어붙인 정배열 구간 [시작, 끝]
+    i, n = 0, len(al)
+    while i < n:
+        if not al[i]:
+            i += 1
+            continue
+        j = i
+        while j + 1 < n and al[j + 1]:
+            j += 1
+        if runs and i - runs[-1][1] - 1 < min_break:
+            runs[-1][1] = j
+        else:
+            runs.append([i, j])
+        i = j + 1
+
+    results = []
+    for k in range(1, len(runs)):
+        (p_s, p_e), (s, _) = runs[k - 1], runs[k]
+        # 첫 구간 앞은 120일선이 계산되기 시작한 날부터만 '정배열 아님'이 확인된다
+        quiet = p_s - (runs[k - 2][1] if k >= 2 else first_valid) - 1
+        gap = s - p_e - 1
+        if quiet < pre_quiet or p_e - p_s + 1 < min_first or gap > max_gap:
+            continue
+        results.append({
+            'date': df.index[s],
+            'pattern': '두번째 정배열',
+            'detail': f'첫 정배열 {df.index[p_s]:%m-%d}~{df.index[p_e]:%m-%d} ({p_e - p_s + 1}일) → '
+                      f'{gap}일 이탈 → 재진입 {df.index[s]:%m-%d}'
+        })
+    return results
+
+
 # V라인은 세 시장 구간 모두에서 SPY 대비 열위였으므로 기본 목록에서 제외한다.
 DETECTORS = [detect_double_bottom, detect_cup_with_handle, detect_gap_up]
 ALL_DETECTORS = DETECTORS + [detect_v_line]
+US_ONLY_DETECTORS = [detect_second_alignment]   # 미국에서만 검증된 신호
 
 
-def scan_dataframe(ticker, df, lookback_days=7, as_of=None, include_vline=False):
+def scan_dataframe(ticker, df, lookback_days=7, as_of=None, include_vline=False, us_only=False):
     """df 전체에서 패턴을 찾은 뒤, 발생일이 최근 lookback_days 이내인 것만 반환한다."""
     if df is None or len(df) < 60:
         return []
@@ -241,6 +302,8 @@ def scan_dataframe(ticker, df, lookback_days=7, as_of=None, include_vline=False)
     cutoff = as_of - pd.Timedelta(days=lookback_days)
 
     detectors = ALL_DETECTORS if include_vline else DETECTORS
+    if us_only:
+        detectors = detectors + US_ONLY_DETECTORS
     matches = []
     seen = set()
     for detector in detectors:

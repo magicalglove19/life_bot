@@ -3,7 +3,7 @@
 - Cup with Handle (컵위드핸들)
 - Double Bottom (더블 바텀)
 - V-Line (V자 반등)  ※ 기본 비활성 — 아래 참조
-- Gap Up (갭 상승)
+- Gap Up (갭 상승) — 미국은 강화 조건(detect_gap_up_strict, 2026-10)
 - 두번째 정배열 (미국 전용, 2026-10 추가)
 chart_patterns.py / confluence.py에서 import해서 사용.
 
@@ -205,7 +205,8 @@ def detect_v_line(df, decline_days=10, drop_pct=0.08, rally_days=10, rally_pct=0
 
 def detect_gap_up(df, threshold=0.03):
     """전일 종가 대비 시가가 threshold 이상 갭으로 뜨고, 당일 저가가
-    전일 종가를 채우지 않은 경우(갭이 메워지지 않음)를 감지한다."""
+    전일 종가를 채우지 않은 경우(갭이 메워지지 않음)를 감지한다.
+    한국용. 미국은 detect_gap_up_strict 를 쓴다 (scan_dataframe(us_only=True))."""
     results = []
     close = df['Close']
     open_ = df['Open']
@@ -224,6 +225,56 @@ def detect_gap_up(df, threshold=0.03):
                 'pattern': '갭 상승',
                 'detail': f'{gap*100:.1f}% 갭업 (전일종가 {prev_close:.2f} → 시가 {today_open:.2f})'
             })
+    return results
+
+
+def detect_gap_up_strict(df, threshold=0.05, vol_mult=1.5, close_hold=0.5, big_gap=0.10):
+    """주도주 갭상승 (길 모랄레스 Buyable Gap-Up) — 미국 전용. 'Chart Pattern Analyzer' 앱 v2.3 과 같은 조건.
+
+    조건 네 개를 모두 만족해야 한다:
+      a. 갭 >= threshold
+      b. 당일 거래량 >= 직전 5일 거래량 이동평균 * vol_mult
+      c. 종가가 당일 봉 상단 (장중 레인지의 close_hold 이상에서 마감)
+      d. 당일 저가 > 전일 종가 (갭이 메워지지 않음)
+
+    2021~2026 S&P500 백테스트(20거래일 보유, SPY 대비, 60점 필터·시장필터 적용):
+    예전 조건(갭 3%, b·c 없음) +3.50%p · 승률 48.9% (1,264건) → 이 조건 +5.37%p · 51.4% (249건).
+    상위 5% 제외 시 +0.06%p vs +1.82%p 로, 차이가 소수 대박이 아니라 신호의 질에서 온다.
+    한국(KOSPI+KOSDAQ)에선 낫지 않았고(+0.52 vs +0.57%p) 갭 10% 이상은 -1.85%p 라 한국은 예전 조건을 쓴다.
+    """
+    results = []
+    close, open_, high, low, vol = df['Close'], df['Open'], df['High'], df['Low'], df['Volume']
+    vma5 = vol.rolling(5).mean().shift(1)
+
+    for i in range(6, len(df)):
+        prev_close = close.iloc[i - 1]
+        if prev_close <= 0:
+            continue
+        today_open = open_.iloc[i]
+        today_low = low.iloc[i]
+        gap = (today_open - prev_close) / prev_close
+        if gap < threshold or today_low <= prev_close:
+            continue
+
+        base_vol = vma5.iloc[i]
+        if not (base_vol > 0) or vol.iloc[i] < base_vol * vol_mult:
+            continue
+        vr = vol.iloc[i] / base_vol
+
+        rng = high.iloc[i] - today_low
+        if rng <= 0:
+            continue
+        hold = (close.iloc[i] - today_low) / rng
+        if hold < close_hold:
+            continue
+
+        grade = '대형갭 ' if gap >= big_gap else ''
+        results.append({
+            'date': df.index[i],
+            'pattern': '갭 상승',
+            'detail': f'{grade}{gap*100:.1f}% 갭업 · 거래량 {vr:.1f}x · '
+                      f'종가 봉상단 {hold*100:.0f}% (전일종가 {prev_close:.2f} → 시가 {today_open:.2f})'
+        })
     return results
 
 
@@ -302,8 +353,8 @@ def scan_dataframe(ticker, df, lookback_days=7, as_of=None, include_vline=False,
     cutoff = as_of - pd.Timedelta(days=lookback_days)
 
     detectors = ALL_DETECTORS if include_vline else DETECTORS
-    if us_only:
-        detectors = detectors + US_ONLY_DETECTORS
+    if us_only:     # 미국: 갭상승은 강화 조건, 두번째 정배열 추가 (둘 다 미국에서만 검증)
+        detectors = [detect_gap_up_strict if d is detect_gap_up else d for d in detectors] + US_ONLY_DETECTORS
     matches = []
     seen = set()
     for detector in detectors:

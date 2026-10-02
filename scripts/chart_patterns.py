@@ -28,7 +28,7 @@ PATTERN_EMOJI = {
 def detect_store(store: dict[str, pd.DataFrame],
                  lookback_bars: int = LOOKBACK_BARS, us: bool = True) -> dict[str, list[str]]:
     """{심볼: [패턴명, ...]} — 최근 lookback_bars 거래일 내 확정된 패턴만.
-    us=True 면 미국에서만 검증된 신호(두번째 정배열)도 함께 본다."""
+    us=True 면 미국 기준: 갭상승은 강화 조건, 두번째 정배열 추가 (둘 다 미국에서만 검증)."""
     out: dict[str, list[str]] = {}
     for sym, df in store.items():
         if df is None or len(df) < 60:

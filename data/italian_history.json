@@ -1,14 +1,4 @@
 [
-  "passeggero",
-  "biglietto",
-  "aeroporto",
-  "bagaglio",
-  "carta di credito",
-  "ristorazione",
-  "guida",
-  "amicizia",
-  "speranza",
-  "felicità",
   "sole",
   "pioggia",
   "vento",
@@ -498,5 +488,15 @@
   "bacio",
   "sorriso",
   "montagna",
-  "spiaggia"
+  "spiaggia",
+  "acqua",
+  "pane",
+  "frutta",
+  "pesce",
+  "luna",
+  "sole",
+  "fiori",
+  "cucina",
+  "pasto",
+  "mare"
 ]

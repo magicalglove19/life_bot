@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""차트 패턴 스캔 — 컵위드핸들 / 더블바텀 / 갭상승 / 두번째 정배열(미국만).
+"""차트 패턴 스캔 — 컵위드핸들 / 더블바텀 / 갭상승 / 트리플바텀·두번째 정배열(미국만).
 로컬 'Chart Pattern Analyzer' 앱(pattern_detectors.py)과 같은 로직.
 
 ■ 2026-09 변경
@@ -20,6 +20,7 @@ LOOKBACK_BARS = 3
 PATTERN_EMOJI = {
     "컵위드핸들": "☕",
     "더블 바텀": "〰️",
+    "트리플 바텀": "〰️",
     "갭 상승": "🚀",
     "두번째 정배열": "📈",
 }
@@ -28,7 +29,7 @@ PATTERN_EMOJI = {
 def detect_store(store: dict[str, pd.DataFrame],
                  lookback_bars: int = LOOKBACK_BARS, us: bool = True) -> dict[str, list[str]]:
     """{심볼: [패턴명, ...]} — 최근 lookback_bars 거래일 내 확정된 패턴만.
-    us=True 면 미국 기준: 갭상승은 강화 조건, 두번째 정배열 추가 (둘 다 미국에서만 검증)."""
+    us=True 면 미국 기준: 갭상승은 강화 조건, 두번째 정배열·트리플 바텀 추가 (미국에서만 백테스트)."""
     out: dict[str, list[str]] = {}
     for sym, df in store.items():
         if df is None or len(df) < 60:

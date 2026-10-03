@@ -2,6 +2,7 @@
 """차트 패턴 감지 로직 (Chart Pattern Analyzer 앱과 동일 기준).
 - Cup with Handle (컵위드핸들)
 - Double Bottom (더블 바텀)
+- Triple Bottom (트리플 바텀, 미국 전용, 2026-10 추가)
 - V-Line (V자 반등)  ※ 기본 비활성 — 아래 참조
 - Gap Up (갭 상승) — 미국은 강화 조건(detect_gap_up_strict, 2026-10)
 - 두번째 정배열 (미국 전용, 2026-10 추가)
@@ -278,6 +279,60 @@ def detect_gap_up_strict(df, threshold=0.05, vol_mult=1.5, close_hold=0.5, big_g
     return results
 
 
+def detect_triple_bottom(df, tol=0.04, min_rise=0.08, min_gap=10, max_gap=90):
+    """트리플 바텀 (미국 전용, 2026-10 사용자 요청으로 추가).
+
+    저점 3개가 서로 tol(4%) 이내, 이웃한 저점 사이마다 min_rise(8%) 이상 반등,
+    저점 간격 min_gap~max_gap 봉. 세 번째 저점 이후 넥라인(저점들 사이 최고 종가)을 돌파하면 신호.
+    더블 바텀과 같은 룩어헤드 보정: 발생일 = max(돌파일, 세 번째 저점 확정일).
+
+    2021~2026 S&P500 백테스트(20거래일, SPY 대비, 60점+시장필터): +4.30%p · 승률 51.9% (162건).
+    같은 방식의 더블 바텀 +2.89%p · 51.5%, 신호 없이 60점+시장필터만 +2.47%p · 50.5%.
+    평균은 낫지만 승률은 동전 던지기 수준이고 2026년(+10.05%p, 44건) 비중이 커서 근거가 약하다.
+    필터 없이는 +0.16%p · 48.8%. 재현: 'Chart Pattern Analyzer' 앱 폴더 backtest/bt3.py
+    """
+    results = []
+    close = df['Close']
+    vals = close.values
+    minima = find_local_minima(close, window=MIN_W)
+
+    def chains(chain):
+        if len(chain) == 3:
+            yield chain
+            return
+        last = chain[-1]
+        for nxt in minima:
+            if nxt - last < min_gap:
+                continue
+            if nxt - last > max_gap:
+                break
+            lows = [vals[x] for x in chain] + [vals[nxt]]
+            lo = min(lows)
+            if lo <= 0 or (max(lows) - lo) / lo > tol:
+                continue
+            base = min(vals[last], vals[nxt])
+            if (vals[last:nxt + 1].max() - base) / base < min_rise:
+                continue
+            yield from chains(chain + [nxt])
+
+    for m in minima:
+        for i1, i2, i3 in chains([m]):
+            neck = vals[i1:i3 + 1].max()
+            after = np.nonzero(vals[i3 + 1:] > neck)[0]
+            if not len(after):
+                continue
+            # 세 번째 저점은 i3+MIN_W 이 되어야 저점으로 확정된다
+            known = max(i3 + 1 + int(after[0]), i3 + MIN_W)
+            if known >= len(close):
+                continue
+            results.append({
+                'date': close.index[known],
+                'pattern': '트리플 바텀',
+                'detail': f'저점 {vals[i1]:.2f}/{vals[i2]:.2f}/{vals[i3]:.2f}, 넥라인 {neck:.2f} 돌파'
+            })
+    return results
+
+
 MA_SET = (5, 20, 60, 120)   # 정배열 = 5일 > 20일 > 60일 > 120일선
 
 
@@ -340,7 +395,7 @@ def detect_second_alignment(df, min_break=3, min_first=10, max_gap=60, pre_quiet
 # V라인은 세 시장 구간 모두에서 SPY 대비 열위였으므로 기본 목록에서 제외한다.
 DETECTORS = [detect_double_bottom, detect_cup_with_handle, detect_gap_up]
 ALL_DETECTORS = DETECTORS + [detect_v_line]
-US_ONLY_DETECTORS = [detect_second_alignment]   # 미국에서만 검증된 신호
+US_ONLY_DETECTORS = [detect_second_alignment, detect_triple_bottom]   # 미국에서만 백테스트한 신호
 
 
 def scan_dataframe(ticker, df, lookback_days=7, as_of=None, include_vline=False, us_only=False):
@@ -353,7 +408,7 @@ def scan_dataframe(ticker, df, lookback_days=7, as_of=None, include_vline=False,
     cutoff = as_of - pd.Timedelta(days=lookback_days)
 
     detectors = ALL_DETECTORS if include_vline else DETECTORS
-    if us_only:     # 미국: 갭상승은 강화 조건, 두번째 정배열 추가 (둘 다 미국에서만 검증)
+    if us_only:     # 미국: 갭상승은 강화 조건, 두번째 정배열·트리플 바텀 추가 (미국에서만 백테스트)
         detectors = [detect_gap_up_strict if d is detect_gap_up else d for d in detectors] + US_ONLY_DETECTORS
     matches = []
     seen = set()

@@ -58,6 +58,7 @@ def save_state(st: dict) -> None:
     open_ = [t for t in st["trades"] if t["status"] == "open"]
     done = [t for t in st["trades"] if t["status"] != "open"][-200:]
     st["trades"] = done + open_
+    st["skipped"] = st.get("skipped", [])[-300:]
     days = sorted(st["signals"])[-30:]
     st["signals"] = {d: st["signals"][d] for d in days}
     STATE.parent.mkdir(parents=True, exist_ok=True)
@@ -221,6 +222,10 @@ def main() -> int:
         sent_today.append(key)
     for code, sig, key in skipped:
         sent_today.append("~" + key)          # 상한으로 거른 것도 같은 봉으로 다시 판정하지 않는다
+        # 알림은 안 보내도 사후 검증(신호 후 1·3·5·10일 수익률) 표본으로 남긴다
+        st.setdefault("skipped", []).append(dict(
+            code=code, name=names[code][0], signal_time=sig["time"].isoformat(),
+            signal_close=float(sig["close"]), poc=float(sig["poc"]), rv_box=float(sig["rv_box"])))
 
     if not (sig_texts or events):
         if dry:

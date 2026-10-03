@@ -1,0 +1,74 @@
+name: dupont-kr
+
+# 듀퐁 1시간봉 박스 돌파 (국내, 관찰 단계) — 평일 10:01 ~ 15:01 KST 매시.
+#
+# ⚠️ 정각이 생명이다. 방금 마감된 1시간봉을 판정하므로 GitHub 예약(이 레포 실측 1.5~5시간 지연)은
+#    쓸 수 없다. 예약(schedule)은 일부러 두지 않았다 — 늦게 돌면 scripts/dupont_report.py 가
+#    '지난 봉'이라고 보고 새 신호를 내지 않으니 의미가 없다.
+#
+#    → 외부 스케줄러(cron-job.org)가 repository_dispatch 로 찌른다. 맥이 잠들어도 된다.
+#      event_type: dupont-kr / 일정: 월~금 10·11·12·13·14·15시 1분, 타임존 Asia/Seoul
+#      (설정 방법은 SETUP.md 의 kcg 항목과 같고 Body 만 {"event_type":"dupont-kr"})
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '실행 창(10:00~15:45 KST)·지난 봉 검사 무시'
+        required: false
+        default: false
+        type: boolean
+  repository_dispatch:
+    types: [dupont-kr]
+
+permissions:
+  contents: write            # 가상 매매 장부(data/dupont_state.json) 커밋
+
+concurrency:
+  group: dupont-kr
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install deps
+        run: pip install yfinance pandas numpy requests
+
+      # 어제까지의 야후 1시간봉은 하루 한 번만 받는다 (첫 실행이 저장, 나머지 다섯 번은 복원)
+      - name: KST 날짜
+        id: day
+        run: echo "day=$(TZ=Asia/Seoul date +%Y%m%d)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v4
+        with:
+          path: scripts/cache/dupont
+          key: dupont-yahoo-${{ steps.day.outputs.day }}
+
+      - name: Run 듀퐁 박스 돌파
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DUPONT_FORCE: ${{ (github.event_name == 'workflow_dispatch' && inputs.force) && '1' || '0' }}
+        run: python scripts/dupont_report.py
+
+      - name: 장부 커밋
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/dupont_state.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "dupont-kr: 가상 매매 장부 [skip ci]"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            git push
+          fi

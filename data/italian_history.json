@@ -1,14 +1,4 @@
 [
-  "sole",
-  "pioggia",
-  "vento",
-  "neve",
-  "vuoto",
-  "paura",
-  "sogno",
-  "stazione",
-  "treno",
-  "autobus",
   "fermata",
   "biglietto",
   "capitano",
@@ -498,5 +488,15 @@
   "fiori",
   "cucina",
   "pasto",
-  "mare"
+  "mare",
+  "libro",
+  "penna",
+  "telefono",
+  "auto",
+  "forno",
+  "verdura",
+  "vino",
+  "tè",
+  "bottiglia",
+  "valigia"
 ]

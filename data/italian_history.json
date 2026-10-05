@@ -1,14 +1,4 @@
 [
-  "fermata",
-  "biglietto",
-  "capitano",
-  "nave",
-  "porto",
-  "turista",
-  "mappa",
-  "libro",
-  "scuola",
-  "insegnante",
   "studente",
   "amico",
   "città",
@@ -498,5 +488,15 @@
   "vino",
   "tè",
   "bottiglia",
-  "valigia"
+  "valigia",
+  "casa",
+  "strada",
+  "parco",
+  "stazione",
+  "panchina",
+  "amico",
+  "bagno",
+  "corsa",
+  "tempo",
+  "viaggio"
 ]

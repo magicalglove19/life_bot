@@ -237,13 +237,15 @@ python3 scripts/gangnam.py --market us --dry-run --force
 네이버는 최근 약 6거래일치만 줘서 7일 박스를 혼자 못 그린다. 09~14시 봉은 두 출처 값이 같다.
 실시간 판정이 백테스트와 같은지 원본의 `check_live_parity.py` 로 3년치 20,338봉을 대조해 불일치 0건을 확인했다.
 
-**트리거**: cron-job.org → `repository_dispatch` (`{"event_type":"dupont-kr"}`), 월~금 10~15시 매시 1분, Asia/Seoul.
-GitHub 예약은 늦게 돌아서 쓰지 않는다. 마감 50분이 지난 봉으로는 새 신호를 내지 않는다.
+**트리거**: 외부 스케줄러 없이 GitHub 만 쓴다. 새벽 예약(05:00, 예비 07:00 KST)으로 작업을 미리 띄우면
+`scripts/dupont_day.py` 가 켜진 채로 정각(10:01~15:01)마다 판정한다. 작업 하나는 6시간까지만 돌아서,
+시간이 다 되면 자기 자신을 다시 띄우고 끝낸다. 마감 50분이 지난 봉으로는 새 신호를 내지 않는다.
 
 ```bash
 python3 scripts/dupont_report.py --asof=2026-10-02T10:01            # 그 시각으로 재현 (발송 안 함)
 DUPONT_SIM=1 DUPONT_STATE=/tmp/s.json python3 scripts/dupont_report.py --asof=...   # 장부를 이어 쓰며 재현
-./scripts/local/trigger.sh dupont-kr                                 # 지금 실행 (장중에만 판정)
+./scripts/local/trigger.sh dupont-kr                                 # 지금 한 번 판정 (장중에만)
+python3 scripts/dupont_day.py --plan=2026-10-07T05:40                 # 그 시각에 시작한 루프가 할 일
 ```
 
 `scripts/dupont/` 의 `levels.py` `live.py` `naver.py` 는 원본을 벤더링한 것이라 원본이 바뀌면 복사해 오면 됩니다.

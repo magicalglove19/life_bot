@@ -2,19 +2,31 @@ name: dupont-kr
 
 # 듀퐁 1시간봉 박스 돌파 (국내, 관찰 단계) — 평일 10:01 ~ 15:01 KST 매시.
 #
-# ⚠️ 정각이 생명이다. 방금 마감된 1시간봉을 판정하므로 GitHub 예약(이 레포 실측 1.5~5시간 지연)은
-#    쓸 수 없다. 예약(schedule)은 일부러 두지 않았다 — 늦게 돌면 scripts/dupont_report.py 가
-#    '지난 봉'이라고 보고 새 신호를 내지 않으니 의미가 없다.
+# 정각이 생명이다 (방금 마감된 1시간봉을 판정). 외부 스케줄러 없이 GitHub 만으로 맞춘다:
+#   · 새벽 예약(05:00, 예비 07:00 KST)으로 작업을 미리 띄우고 scripts/dupont_day.py 가 정각까지 잠든다.
+#     GitHub 예약은 이 레포 실측으로 1.5~5시간 늦게 시작되지만 새벽에 띄우면 장 전에 켜진다.
+#   · 작업 하나는 6시간까지만 돌 수 있어서, 시간이 다 되면 workflow_dispatch(mode=loop)로
+#     자기 자신을 다시 띄우고 끝낸다. concurrency 가 하나씩만 돌리므로 겹치지 않는다.
+#   · 예비 예약이 뒤늦게 시작돼도 지나간 슬롯은 건너뛰고, 이미 판정한 봉은 장부로 걸러져 중복 발송이 없다.
+#   · 공개 레포라 하루 종일 켜 두어도 Actions 사용 시간 비용이 없다.
 #
-#    → 외부 스케줄러(cron-job.org)가 repository_dispatch 로 찌른다. 맥이 잠들어도 된다.
-#      event_type: dupont-kr / 일정: 월~금 10·11·12·13·14·15시 1분, 타임존 Asia/Seoul
-#      (설정 방법은 SETUP.md 의 kcg 항목과 같고 Body 만 {"event_type":"dupont-kr"})
+# 한 번만 판정하려면 repository_dispatch(dupont-kr) 나 수동 실행(mode=once)을 쓴다.
+#   ./scripts/local/trigger.sh dupont-kr
 
 on:
+  schedule:
+    - cron: '0 20 * * 0-4'     # 05:00 KST 월~금
+    - cron: '0 22 * * 0-4'     # 07:00 KST 예비 (앞 작업이 돌고 있으면 대기했다가 할 일 없이 끝남)
   workflow_dispatch:
     inputs:
+      mode:
+        description: 'loop = 오늘 남은 정각을 모두 / once = 지금 한 번'
+        required: false
+        default: once
+        type: choice
+        options: [once, loop]
       force:
-        description: '실행 창(10:00~15:45 KST)·지난 봉 검사 무시'
+        description: '(once) 실행 창·지난 봉 검사 무시'
         required: false
         default: false
         type: boolean
@@ -23,6 +35,7 @@ on:
 
 permissions:
   contents: write            # 가상 매매 장부(data/dupont_state.json) 커밋
+  actions: write             # 루프 작업이 자기 자신을 다시 띄움
 
 concurrency:
   group: dupont-kr
@@ -31,7 +44,9 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 355
+    env:
+      LOOP: ${{ (github.event_name == 'schedule' || inputs.mode == 'loop') && '1' || '0' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -43,7 +58,7 @@ jobs:
       - name: Install deps
         run: pip install yfinance pandas numpy requests
 
-      # 어제까지의 야후 1시간봉은 하루 한 번만 받는다 (첫 실행이 저장, 나머지 다섯 번은 복원)
+      # 어제까지의 야후 1시간봉은 하루 한 번만 받는다
       - name: KST 날짜
         id: day
         run: echo "day=$(TZ=Asia/Seoul date +%Y%m%d)" >> "$GITHUB_OUTPUT"
@@ -52,7 +67,21 @@ jobs:
           path: scripts/cache/dupont
           key: dupont-yahoo-${{ steps.day.outputs.day }}
 
-      - name: Run 듀퐁 박스 돌파
+      - name: git 설정
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: 하루 루프 (정각마다 판정)
+        if: env.LOOP == '1'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/dupont_day.py
+
+      - name: 한 번 판정
+        if: env.LOOP != '1'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -62,8 +91,6 @@ jobs:
       - name: 장부 커밋
         if: always()
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/dupont_state.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "변경 없음"

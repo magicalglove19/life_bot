@@ -45,7 +45,6 @@ CFG_MIN_RS = Config().trend.min_rs_rating   # 화면 설명용 (config.py 가 �
 
 MAX_PART_CHARS = 3400   # 텔레그램 4096자 한도에 여유를 둔 편당 상한
 SECTION_LIMIT = 8       # 섹션당 최대 종목 수
-TIGHT_LAST_DEPTH = 8.0  # 초타이트 판정: 마지막 수축 %
 MAX_DAYS_PAST_PIVOT = 5  # 피벗을 넘은 지 이 거래일을 넘기면 연장(쫓아가는 매수)
 MAX_PCT_ABOVE_PIVOT = 5.0  # 피벗 위로 이 %를 넘게 올라가 있어도 연장 (오늘 돌파라도)
 
@@ -235,9 +234,13 @@ def build_messages(res, cfg) -> list[str]:
 
     buyzone = [c for c in cands if c.vcp.status == "매수구간"]
     fresh = [c for c in cands if c.setup_days and c.setup_days <= 3]
+    # 초타이트 기준은 config.vcp 한 곳에서 가져온다 (콘솔 리포트와 같은 값).
+    # 셋업이 오래 끈 자리는 뺀다 — 수축이 '감기는 중'이 아니라 베이스가 풀리는 쪽이다.
+    # 셋업 일수가 0이면 '모르는 것'이라 거르지 않는다.
     tight = [c for c in cands
-             if c.vcp.depths and c.vcp.depths[-1] <= TIGHT_LAST_DEPTH
-             and np.isfinite(c.vcp.dryup_ratio) and c.vcp.dryup_ratio <= 0.85]
+             if c.vcp.depths and c.vcp.depths[-1] <= cfg.vcp.tight_last_depth
+             and np.isfinite(c.vcp.dryup_ratio) and c.vcp.dryup_ratio <= cfg.vcp.max_dryup_ratio
+             and not c.setup_days >= cfg.vcp.tight_max_setup_days]
 
     now = dt.datetime.now(KST)
     stamp = now.strftime("%m/%d (%a) %H:%M")
@@ -285,7 +288,8 @@ def build_messages(res, cfg) -> list[str]:
     blocks = [
         head2,
         section("🆕 새로 등장한 셋업 (3일 이내)", fresh, with_exec=False, empty="없음"),
-        section("💎 초타이트 엄선 (마지막 수축 8% 이내 + 거래량 마름)", tight, with_exec=False,
+        section(f"💎 초타이트 엄선 (마지막 수축 {cfg.vcp.tight_last_depth:.0f}% 이내 + 거래량 마름 "
+                f"+ 셋업 {cfg.vcp.tight_max_setup_days}일 미만)", tight, with_exec=False,
                 empty="없음"),
     ]
     if cfg.near.enabled:

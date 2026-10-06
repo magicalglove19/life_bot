@@ -11,7 +11,8 @@ name: dupont-kr
 #   · 공개 레포라 하루 종일 켜 두어도 Actions 사용 시간 비용이 없다.
 #
 # 한 번만 판정하려면 repository_dispatch(dupont-kr) 나 수동 실행(mode=once)을 쓴다.
-#   ./scripts/local/trigger.sh dupont-kr
+#   ./scripts/local/trigger.sh dupont-kr          # 지금 한 번
+#   ./scripts/local/trigger.sh dupont-kr loop     # 오늘 남은 정각 모두 (새벽 예약이 빠졌을 때)
 
 on:
   schedule:
@@ -46,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 355
     env:
-      LOOP: ${{ (github.event_name == 'schedule' || inputs.mode == 'loop') && '1' || '0' }}
+      LOOP: ${{ (github.event_name == 'schedule' || inputs.mode == 'loop' || github.event.client_payload.slot == 'loop') && '1' || '0' }}
     steps:
       - uses: actions/checkout@v4
 

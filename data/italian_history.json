@@ -1,14 +1,4 @@
 [
-  "studente",
-  "amico",
-  "città",
-  "strada",
-  "negozio",
-  "ufficio",
-  "ristorante",
-  "spiaggia",
-  "montagna",
-  "fiume",
   "lago",
   "isola",
   "casa vacanze",
@@ -498,5 +488,15 @@
   "bagno",
   "corsa",
   "tempo",
-  "viaggio"
+  "viaggio",
+  "finestra",
+  "sedia",
+  "tavolo",
+  "porta",
+  "zaino",
+  "occhiali",
+  "cappello",
+  "sciarpa",
+  "ombrello",
+  "computer"
 ]

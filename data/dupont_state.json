@@ -1,0 +1,98 @@
+{
+ "trades": [
+  {
+   "code": "066570",
+   "name": "LG전자",
+   "src": "",
+   "signal_time": "2026-10-06T09:00:00+09:00",
+   "level": 221000.0,
+   "poc": 214000.0,
+   "rv_box": 4.431896459690068,
+   "signal_close": 228500.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-10-06T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false
+  },
+  {
+   "code": "006400",
+   "name": "삼성SDI",
+   "src": "",
+   "signal_time": "2026-10-06T09:00:00+09:00",
+   "level": 542000.0,
+   "poc": 515187.5,
+   "rv_box": 3.73240010432554,
+   "signal_close": 553000.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-10-06T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false
+  }
+ ],
+ "signals": {
+  "2026-10-06": [
+   "066570|09",
+   "006400|09",
+   "~009150|09",
+   "~247540|09",
+   "~068270|09",
+   "~373220|09"
+  ]
+ },
+ "skipped": [
+  {
+   "code": "009150",
+   "name": "삼성전기",
+   "signal_time": "2026-10-06T09:00:00+09:00",
+   "signal_close": 1673000.0,
+   "poc": 1510437.5,
+   "rv_box": 3.5022356738467963
+  },
+  {
+   "code": "247540",
+   "name": "에코프로비엠",
+   "signal_time": "2026-10-06T09:00:00+09:00",
+   "signal_close": 122500.0,
+   "poc": 104948.75,
+   "rv_box": 3.1722697359961365
+  },
+  {
+   "code": "068270",
+   "name": "셀트리온",
+   "signal_time": "2026-10-06T09:00:00+09:00",
+   "signal_close": 185200.0,
+   "poc": 178653.75,
+   "rv_box": 2.4203109435731167
+  },
+  {
+   "code": "373220",
+   "name": "LG에너지솔루션",
+   "signal_time": "2026-10-06T09:00:00+09:00",
+   "signal_close": 375000.0,
+   "poc": 351900.0,
+   "rv_box": 2.03635214621819
+  }
+ ]
+}

@@ -1,9 +1,8 @@
 """평일 10:01~15:01 매시 — 듀퐁 1시간봉 박스 돌파 (국내, 관찰 단계).
 
-방금 마감된 1시간봉 하나를 판정한다. 직전 7거래일 박스를 거래량 1.5배로 뚫고
+방금 마감된 1시간봉 하나를 판정한다. 일이 없어도 매 정각 '신호 없음'과 보유 현황을 짧게 보낸다. 직전 7거래일 박스를 거래량 1.5배로 뚫고
 20일선 위에서 마감하면 매수 신호. 신호는 가상으로 매매해 장부에 남기고,
 1차 목표·손절·최종 목표·시간 청산·돌파 실패를 그때그때 알린다.
-일어난 일이 없으면 아무것도 보내지 않는다.
 
   10:01 → 09시 봉   11:01 → 10시 봉   …   15:01 → 14시 봉 (장 마감 전 매수 가능)
 
@@ -152,6 +151,24 @@ def ledger(st: dict) -> str:
             f" · 누적 {sum(r):+.1f}R · 보유 {len(op)}건")
 
 
+def holdings(st: dict, ok: dict) -> str:
+    """보유 중인 가상 매매의 지금 손익 (마지막으로 마감된 봉 종가 기준)."""
+    out = []
+    for t in st["trades"]:
+        if t["status"] != "open":
+            continue
+        nm = html.escape(t["name"])
+        b = ok.get(t["code"])
+        if t["entry"] is None or b is None or b.empty:
+            out.append(f"{nm} 진입 대기")
+            continue
+        px = float(b["Close"].iloc[-1])
+        r = (px - t["entry"]) / t["risk"]
+        half = " · 50% 익절함" if t["half"] else ""
+        out.append(f"{nm} {won(px)} ({pct(px, t['entry'])}, {r:+.2f}R{half})")
+    return "💼 보유: " + " / ".join(out) if out else "💼 보유 없음"
+
+
 # ── 실행 ─────────────────────────────────────────────
 
 def main() -> int:
@@ -227,14 +244,24 @@ def main() -> int:
             code=code, name=names[code][0], signal_time=sig["time"].isoformat(),
             signal_close=float(sig["close"]), poc=float(sig["poc"]), rv_box=float(sig["rv_box"])))
 
-    if not (sig_texts or events):
-        if dry:
-            print("[dupont] 보낼 내용 없음\n" + ledger(st))
-        if not dry or SIM:
-            save_state(st)
-        return 0
+    judged = [live.regular(b).index[-1] for b in ok.values()
+              if not live.regular(b).empty and live.regular(b).index[-1].date() == now.date()]
+    bar_lbl = f"{max(judged).hour}시 봉" if judged else "오늘 마감된 봉 없음(휴장?)"
 
-    parts = [f"📐 <b>듀퐁 박스 돌파</b> {now:%m/%d %H:%M} · 🧪 관찰 단계(가상 매매)"]
+    if not (sig_texts or events):
+        # 일이 없어도 매 정각 짧게 알린다 — 봇이 살아 있다는 확인 겸 보유 현황
+        body = "\n".join([f"📐 듀퐁 {now:%H:%M} · {bar_lbl} 판정 — 신호 없음 ({checked}종목)",
+                           holdings(st, ok), ledger(st)])
+        if dry:
+            print(body)
+            if SIM:
+                save_state(st)
+            return 0
+        ok_sent = telegram.send(body)
+        save_state(st)
+        return 0 if ok_sent else 1
+
+    parts = [f"📐 <b>듀퐁 박스 돌파</b> {now:%m/%d %H:%M} · {bar_lbl} 판정 · 🧪 관찰 단계(가상 매매)"]
     if sig_texts:
         parts.append("\n\n".join(sig_texts))
         if skipped:
@@ -242,7 +269,7 @@ def main() -> int:
             parts.append(f"<i>하루 상한으로 제외: {extra}</i>")
     if events:
         parts.append("\n".join(events))
-    parts.append(ledger(st))
+    parts.append(holdings(st, ok) + "\n" + ledger(st))
     body = "\n\n".join(parts)
 
     if dry:

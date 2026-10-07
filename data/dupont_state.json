@@ -49,7 +49,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-07T11:00:00+09:00",
+   "last_bar": "2026-10-07T12:00:00+09:00",
    "days": [
     "2026-10-06",
     "2026-10-07"
@@ -77,11 +77,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-07T11:00:00+09:00",
+   "last_bar": "2026-10-07T12:00:00+09:00",
    "days": [
     "2026-10-07"
    ],
-   "fake_checked": 1,
+   "fake_checked": 2,
    "fake_warned": false
   }
  ],

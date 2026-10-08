@@ -1,14 +1,4 @@
 [
-  "barca",
-  "vino",
-  "pizza",
-  "ristorante",
-  "otel",
-  "camera",
-  "bagno",
-  "amico",
-  "sorella",
-  "fratello",
   "madre",
   "padre",
   "nonno",
@@ -498,5 +488,15 @@
   "cuscino",
   "lampada",
   "cappotto",
-  "calcio"
+  "calcio",
+  "caffè",
+  "latte",
+  "chiave",
+  "pasta",
+  "pizza",
+  "giorno",
+  "notte",
+  "mercato",
+  "orologio",
+  "vestito"
 ]

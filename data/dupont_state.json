@@ -49,10 +49,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-07T14:00:00+09:00",
+   "last_bar": "2026-10-08T09:00:00+09:00",
    "days": [
     "2026-10-06",
-    "2026-10-07"
+    "2026-10-07",
+    "2026-10-08"
    ],
    "fake_checked": 3,
    "fake_warned": false
@@ -77,11 +78,37 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-07T14:00:00+09:00",
+   "last_bar": "2026-10-08T09:00:00+09:00",
    "days": [
-    "2026-10-07"
+    "2026-10-07",
+    "2026-10-08"
    ],
    "fake_checked": 3,
+   "fake_warned": false
+  },
+  {
+   "code": "051910",
+   "name": "LG화학",
+   "src": "",
+   "signal_time": "2026-10-08T09:00:00+09:00",
+   "level": 280000.0,
+   "poc": 250712.5,
+   "rv_box": 5.302389102564767,
+   "signal_close": 283500.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-10-08T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
    "fake_warned": false
   }
  ],
@@ -96,6 +123,9 @@
   ],
   "2026-10-07": [
    "373220|10"
+  ],
+  "2026-10-08": [
+   "051910|09"
   ]
  },
  "skipped": [

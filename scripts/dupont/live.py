@@ -92,8 +92,14 @@ def evaluate(reg: pd.DataFrame, i: int, rule=RULE):
 
 # ── 가상 매매 ─────────────────────────────────────────────
 
-def new_trade(code: str, name: str, src: str, sig: dict) -> dict:
-    return dict(code=code, name=name, src=src, signal_time=sig["time"].isoformat(),
+def stop_price(entry: float, poc: float, max_stop: float | None) -> float:
+    """손절가 = POC. 단 max_stop(예: 0.08)을 주면 진입가 대비 그보다 멀지 않게 끌어올린다."""
+    return max(poc, entry * (1 - max_stop)) if max_stop else poc
+
+
+def new_trade(code: str, name: str, src: str, sig: dict, max_stop: float | None = None) -> dict:
+    """max_stop 없이 만들면 백테스트와 같은 규칙(손절 = POC)이다."""
+    return dict(code=code, name=name, src=src, signal_time=sig["time"].isoformat(), max_stop=max_stop,
                 level=float(sig["box_hi"]), poc=float(sig["poc"]), rv_box=float(sig["rv_box"]),
                 signal_close=float(sig["close"]),
                 entry=None, entry_time=None, stop=None, t1=None, t2=None, risk=None,
@@ -120,12 +126,13 @@ def step(tr: dict, bars: pd.DataFrame, rule=RULE) -> list[tuple[str, dict]]:
                 ev.append(("fake", dict(time=t, close=b["Close"])))
         if tr["entry"] is None:
             tr["entry"], tr["entry_time"] = float(b["Open"]), t.isoformat()
-            risk = tr["entry"] - tr["poc"]
-            if risk <= 0:
+            if tr["entry"] <= tr["poc"]:
                 tr.update(status="cancelled", exit_reason="시가가 POC 아래 — 진입 취소", exit_time=t.isoformat())
                 ev.append(("cancel", dict(time=t)))
                 break
-            tr.update(stop=tr["poc"], risk=risk, t1=tr["entry"] + rule["t1_r"] * risk,
+            stop = stop_price(tr["entry"], tr["poc"], tr.get("max_stop"))
+            risk = tr["entry"] - stop
+            tr.update(stop=stop, risk=risk, t1=tr["entry"] + rule["t1_r"] * risk,
                       t2=tr["entry"] + rule["t2_r"] * risk)
         elif b["Open"] <= tr["stop"]:
             _exit(tr, b["Open"], t, "갭손절" if not tr["half"] else "본전(갭)")

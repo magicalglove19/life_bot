@@ -34,6 +34,7 @@ STATE = Path(os.environ.get("DUPONT_STATE", ROOT / "data" / "dupont_state.json")
 SIM = os.environ.get("DUPONT_SIM") == "1"     # --asof 재현 때 상태 파일을 이어 쓴다 (발송은 안 함)
 CACHE = Path(__file__).resolve().parent / "cache" / "dupont"
 
+MAX_STOP = float(os.environ.get("DUPONT_MAX_STOP", "0.08"))   # 손절은 POC, 단 진입가 -8% 보다 멀면 -8%
 MAX_PER_DAY = int(os.environ.get("DUPONT_MAX_PER_DAY", "2"))   # 하루 새 신호 상한 (거래량 배수 큰 순)
 WORKERS = 4
 
@@ -110,15 +111,20 @@ def pct(a: float, b: float) -> str:
     return f"{(a / b - 1) * 100:+.1f}%"
 
 
-def signal_text(name, code, tag, sig) -> str:
-    risk = sig["close"] - sig["poc"]
+def signal_text(name, code, sig) -> str:
+    stop = live.stop_price(sig["close"], sig["poc"], MAX_STOP)
+    risk = sig["close"] - stop
     h = sig["time"].hour
+    if stop > sig["poc"]:
+        stop_lbl = f"손절 {won(stop)} ({pct(stop, sig['close'])} · 중앙선 {won(sig['poc'])} 은 {pct(sig['poc'], sig['close'])}로 멀어서)"
+    else:
+        stop_lbl = f"손절 {won(stop)} (중앙선, {pct(stop, sig['close'])})"
     lines = [
-        f"🟢 <b>{html.escape(name)}</b> {code}{tag}",
+        f"🟢 <b>{html.escape(name)}</b> {code}",
         f"{h}시 봉 종가 {won(sig['close'])} — 7일 박스 상단 {won(sig['box_hi'])} 돌파",
         f"거래량 {sig['rv_box']:.1f}배{' 💪' if sig['rv_box'] >= 2 else ''} · 박스 폭 {sig['width_atr']:.1f} ATR"
         f" · POC 왕복 {sig['cross']}회",
-        f"손절 {won(sig['poc'])} (중앙선, {pct(sig['poc'], sig['close'])})",
+        stop_lbl,
         f"1차 {won(sig['close'] + risk)} (+1R, 50%) · 최종 {won(sig['close'] + 3 * risk)} (+3R)",
     ]
     return "\n".join(lines)
@@ -129,7 +135,7 @@ def event_text(tr: dict, kind: str, info: dict) -> str:
     h = info["time"].hour
     if kind == "fake":
         return (f"⚠️ {nm} 돌파 실패 경고 — {h}시 봉 종가 {won(info['close'])} 가 "
-                f"박스 상단 {won(tr['level'])} 아래 (손절가 {won(tr['poc'])} 은 그대로)")
+                f"박스 상단 {won(tr['level'])} 아래 (손절가 {won(tr['stop'] or live.stop_price(tr['signal_close'], tr['poc'], tr.get('max_stop')))} 은 그대로)")
     if kind == "cancel":
         return f"⛔ {nm} 진입 취소 — 다음 봉 시가가 이미 중앙선 아래"
     if kind == "t1":
@@ -243,9 +249,8 @@ def main() -> int:
     sig_texts = []
     for code, sig, key in take:
         name, _, uni = names[code]
-        tag = " · 확장종목" if uni == "top300" else ""
-        sig_texts.append(signal_text(name, code, tag, sig))
-        tr = live.new_trade(code, name, "", sig)
+        sig_texts.append(signal_text(name, code, sig))
+        tr = live.new_trade(code, name, "", sig, MAX_STOP)
         tr["uni"] = uni
         st["trades"].append(tr)
         sent_today.append(key)

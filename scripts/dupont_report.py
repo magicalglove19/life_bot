@@ -23,12 +23,13 @@ import yfinance as yf
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import telegram
 from dupont import live, naver
-from dupont.universe import BASE, ETFS
+from dupont import universe
 
 logging.getLogger("yfinance").setLevel(logging.CRITICAL)   # 코스닥을 .KS 로 먼저 찔러 보는 404 소음
 
 KST = dt.timezone(dt.timedelta(hours=9))
 ROOT = Path(__file__).resolve().parent.parent
+TOP300 = ROOT / "data" / "kr_top300.json"
 STATE = Path(os.environ.get("DUPONT_STATE", ROOT / "data" / "dupont_state.json"))
 SIM = os.environ.get("DUPONT_SIM") == "1"     # --asof 재현 때 상태 파일을 이어 쓴다 (발송은 안 함)
 CACHE = Path(__file__).resolve().parent / "cache" / "dupont"
@@ -179,6 +180,14 @@ def main() -> int:
     if asof:                                  # 테스트용: --asof=2026-10-02T11:01 (자동으로 --dry-run)
         now = dt.datetime.fromisoformat(asof).replace(tzinfo=KST)
         dry = True
+    today = f"{now:%Y-%m-%d}"
+    if "--warm" in sys.argv:                  # 장 전에 어제까지의 야후 1시간봉을 미리 받아 둔다
+        names = universe.load(today, TOP300)
+        with ThreadPoolExecutor(WORKERS) as ex:
+            got = list(ex.map(lambda c: not yahoo_hourly(c, names[c][1], now.date()).empty, names))
+        print(f"[dupont] 야후 캐시 {sum(got)}/{len(names)}종목")
+        return 0
+
     if not (dry or force):
         if now.weekday() > 4:
             print(f"[dupont] 주말({now:%m/%d}) — 건너뜁니다.")
@@ -191,11 +200,11 @@ def main() -> int:
     today = f"{now:%Y-%m-%d}"
     sent_today = st["signals"].setdefault(today, [])
 
-    names = {c: (n, s, "") for c, (n, s) in BASE.items()}
+    names = universe.load(today, TOP300)
     # 감시 목록에서 빠진 종목도 보유 중이면 끝까지 추적한다
     for tr in st["trades"]:
         if tr["status"] == "open" and tr["code"] not in names:
-            names[tr["code"]] = (tr["name"], None, "")
+            names[tr["code"]] = (tr["name"], None, tr.get("uni", "base40"))
     with ThreadPoolExecutor(WORKERS) as ex:
         bars = dict(ex.map(lambda c: fetch(c, names[c][1], now), names))
     ok = {c: b for c, b in bars.items() if b is not None and not b.empty}
@@ -233,15 +242,18 @@ def main() -> int:
 
     sig_texts = []
     for code, sig, key in take:
-        name, _, tag = names[code]
+        name, _, uni = names[code]
+        tag = " · 확장종목" if uni == "top300" else ""
         sig_texts.append(signal_text(name, code, tag, sig))
-        st["trades"].append(live.new_trade(code, name, tag.strip(" ·"), sig))
+        tr = live.new_trade(code, name, "", sig)
+        tr["uni"] = uni
+        st["trades"].append(tr)
         sent_today.append(key)
     for code, sig, key in skipped:
         sent_today.append("~" + key)          # 상한으로 거른 것도 같은 봉으로 다시 판정하지 않는다
         # 알림은 안 보내도 사후 검증(신호 후 1·3·5·10일 수익률) 표본으로 남긴다
         st.setdefault("skipped", []).append(dict(
-            code=code, name=names[code][0], signal_time=sig["time"].isoformat(),
+            code=code, name=names[code][0], uni=names[code][2], signal_time=sig["time"].isoformat(),
             signal_close=float(sig["close"]), poc=float(sig["poc"]), rv_box=float(sig["rv_box"])))
 
     judged = [live.regular(b).index[-1] for b in ok.values()
@@ -250,8 +262,14 @@ def main() -> int:
 
     if not (sig_texts or events):
         # 일이 없어도 매 정각 짧게 알린다 — 봇이 살아 있다는 확인 겸 보유 현황
-        body = "\n".join([f"📐 듀퐁 {now:%H:%M} · {bar_lbl} 판정 — 신호 없음 ({checked}종목)",
-                           holdings(st, ok), ledger(st)])
+        if skipped:                           # 신호는 있었지만 하루 상한에 다 걸린 경우
+            extra = ", ".join(html.escape(names[c][0]) for c, _, _ in skipped[:5])
+            more = f" 외 {len(skipped) - 5}건" if len(skipped) > 5 else ""
+            head = (f"📐 듀퐁 {now:%H:%M} · {bar_lbl} 판정 — 신호 {len(skipped)}건, "
+                    f"하루 상한({MAX_PER_DAY}건) 도달로 장부에만 기록: {extra}{more}")
+        else:
+            head = f"📐 듀퐁 {now:%H:%M} · {bar_lbl} 판정 — 신호 없음 ({checked}종목)"
+        body = "\n".join([head, holdings(st, ok), ledger(st)])
         if dry:
             print(body)
             if SIM:
@@ -265,8 +283,9 @@ def main() -> int:
     if sig_texts:
         parts.append("\n\n".join(sig_texts))
         if skipped:
-            extra = ", ".join(html.escape(names[c][0]) for c, _, _ in skipped)
-            parts.append(f"<i>하루 상한으로 제외: {extra}</i>")
+            extra = ", ".join(html.escape(names[c][0]) for c, _, _ in skipped[:5])
+            more = f" 외 {len(skipped) - 5}건" if len(skipped) > 5 else ""
+            parts.append(f"<i>하루 상한으로 제외(장부에만 기록): {extra}{more}</i>")
     if events:
         parts.append("\n".join(events))
     parts.append(holdings(st, ok) + "\n" + ledger(st))

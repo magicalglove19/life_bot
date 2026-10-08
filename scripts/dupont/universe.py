@@ -44,3 +44,27 @@ BASE = {
 }
 
 ETFS = {"069500", "229200"}
+
+# 2026-10-12(월)부터 시총 상위 300종목으로 넓힌다 (data/kr_top300.json, refresh-tickers 가 주 1회 갱신).
+# 300종목 중 기존 40종목 밖은 백테스트로 검증하지 않은 종목이다 → 장부에 'top300' 으로 남겨 따로 본다.
+import os
+WIDE_FROM = os.environ.get("DUPONT_WIDE_FROM", "2026-10-12")   # 테스트 때만 앞당긴다
+
+
+def load(today: str, top300_path) -> dict:
+    """{code: (이름, 'KS'|'KQ', 'base40'|'top300')}"""
+    out = {c: (n, s, "base40") for c, (n, s) in BASE.items()}
+    if today < WIDE_FROM:
+        return out
+    import json
+    try:
+        rows = json.loads(top300_path.read_text(encoding="utf-8"))["tickers"]
+    except Exception:
+        return out
+    for r in rows:
+        code, sfx = r["symbol"].split(".")
+        name = r["name"]
+        if code in out or name.endswith(("우", "우B", "우C")) or "우(" in name:   # 우선주 제외
+            continue
+        out[code] = (name, sfx, "top300")
+    return out

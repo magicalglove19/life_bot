@@ -76,6 +76,7 @@ def main() -> int:
         print(f"[dupont-day] 주말({start:%m/%d}) — 끝냅니다.")
         return 0
     print(f"[dupont-day] 시작 {start:%H:%M} KST", flush=True)
+    sh(sys.executable, "scripts/dupont_report.py", "--warm")   # 첫 판정이 늦지 않게 야후 1시간봉을 미리 받는다
     for t, what in plan(start):
         if what == "skip":
             continue

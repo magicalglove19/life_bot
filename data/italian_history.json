@@ -1,14 +1,4 @@
 [
-  "madre",
-  "padre",
-  "nonno",
-  "nonna",
-  "cugino",
-  "cugina",
-  "zia",
-  "pane",
-  "acqua",
-  "uomo",
   "donna",
   "bambino",
   "giardino",
@@ -498,5 +488,15 @@
   "notte",
   "mercato",
   "orologio",
-  "vestito"
+  "vestito",
+  "banca",
+  "treno",
+  "autobus",
+  "colazione",
+  "pranzo",
+  "cena",
+  "carne",
+  "birra",
+  "forchetta",
+  "scala"
 ]

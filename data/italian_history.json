@@ -1,14 +1,4 @@
 [
-  "donna",
-  "bambino",
-  "giardino",
-  "pescato",
-  "vino rosso",
-  "formaggio",
-  "olio",
-  "libro",
-  "telefono",
-  "computer",
   "ospedale",
   "farmacia",
   "polizia",
@@ -498,5 +488,15 @@
   "carne",
   "birra",
   "forchetta",
-  "scala"
+  "scala",
+  "macchina",
+  "uovo",
+  "formaggio",
+  "coltello",
+  "cucchiaio",
+  "cappuccino",
+  "scarpa",
+  "maglietta",
+  "pantaloni",
+  "borsa"
 ]

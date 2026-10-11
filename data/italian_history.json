@@ -1,14 +1,4 @@
 [
-  "ospedale",
-  "farmacia",
-  "polizia",
-  "dottore",
-  "infermiere",
-  "ambulanza",
-  "urgenza",
-  "casa",
-  "strada",
-  "parco",
   "ospite",
   "tavolo",
   "sedia",
@@ -498,5 +488,15 @@
   "scarpa",
   "maglietta",
   "pantaloni",
-  "borsa"
+  "borsa",
+  "città",
+  "via",
+  "spuntino",
+  "orario",
+  "biglietto",
+  "metropolitana",
+  "collina",
+  "succo",
+  "mela",
+  "cioccolato"
 ]

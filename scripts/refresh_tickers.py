@@ -1,7 +1,6 @@
 """주 1회 실행 — 한국 300 + 미국 400 시가총액 상위 종목 갱신.
 data/kr_top300.json, data/us_top400.json에 저장.
 """
-import html as H
 import json
 import re
 import sys
@@ -23,10 +22,9 @@ US_TOP_N = 400
 
 
 NAVER_UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
-NAVER_URL = "https://finance.naver.com/sise/sise_market_sum.naver?sosok={sosok}&page={page}"
-_NAVER_LINK = re.compile(r'code=(\d{6})"[^>]*class="tltle">([^<]+)</a>')
-_NAVER_NUM = re.compile(r'<td class="number">(.*?)</td>', re.S)
-NAVER_PAGES = 8          # 시장당 8페이지 × 50종목. ETF를 걸러내므로 넉넉히 받는다
+# 2026-10 네이버 금융 PC 시가총액 페이지가 클라이언트 렌더링으로 바뀌어 HTML에 표가 없다 → 모바일 JSON API 사용.
+NAVER_URL = "https://m.stock.naver.com/api/stocks/marketValue/{market}?page={page}&pageSize=100"
+NAVER_PAGES = 4          # 시장당 4페이지 × 100종목. ETF를 걸러내므로 넉넉히 받는다
 
 # 네이버 시가총액 페이지에는 ETF·ETN·스팩이 섞여 있다. FinanceDataReader의
 # 종목 리스트에는 이것들이 없으므로, 대체 경로에서도 같은 구성이 되도록 걸러낸다.
@@ -39,38 +37,28 @@ def _is_naver_noise(name: str) -> bool:
     return any(k in name for k in _NAVER_NOISE)
 
 
-def _naver_clean(cell: str) -> str:
-    return H.unescape(re.sub(r"<[^>]+>", " ", cell)).replace(",", "").replace("%", "").strip()
-
-
 def _naver_page(sosok: int, page: int) -> list[dict]:
-    """네이버 시가총액 페이지 한 장. 컬럼 순서는
-    현재가 · 전일비 · 등락률 · 액면가 · 시가총액(억) · 상장주식수 · ... 이다."""
-    url = NAVER_URL.format(sosok=sosok, page=page)
+    """네이버 시가총액 순위 한 페이지. marketValue 단위는 억원."""
+    url = NAVER_URL.format(market="KOSDAQ" if sosok else "KOSPI", page=page)
     raw = urllib.request.urlopen(
         urllib.request.Request(url, headers=NAVER_UA), timeout=20
     ).read()
-    text = raw.decode("euc-kr", errors="replace")
-
     out = []
-    for row in re.findall(r"<tr[^>]*>(.*?)</tr>", text, re.S):
-        m = _NAVER_LINK.search(row)
-        if not m:
+    for st in json.loads(raw).get("stocks") or []:
+        if st.get("stockEndType") != "stock":       # ETF·ETN 제외
             continue
-        nums = [_naver_clean(x) for x in _NAVER_NUM.findall(row)]
-        if len(nums) < 5:
+        name = (st.get("stockName") or "").strip()
+        code = st.get("itemCode") or ""
+        if not (len(code) == 6 and code.isdigit()) or _is_naver_noise(name):
             continue
         try:
-            cap = int(float(nums[4])) * 100_000_000     # 억원 → 원 (FDR Marcap과 단위 통일)
-        except ValueError:
+            cap = int(float(st["marketValue"].replace(",", ""))) * 100_000_000   # 억원 → 원 (FDR Marcap과 단위 통일)
+        except (KeyError, ValueError):
             continue
         if cap <= 0:
             continue
-        name = H.unescape(m.group(2)).strip()
-        if _is_naver_noise(name):
-            continue
         out.append({
-            "symbol": f"{m.group(1)}{'.KQ' if sosok else '.KS'}",
+            "symbol": f"{code}{'.KQ' if sosok else '.KS'}",
             "name": name,
             "market": "KOSDAQ" if sosok else "KOSPI",
             "market_cap": cap,
@@ -131,6 +119,9 @@ def _refresh_korea_fdr() -> list[dict]:
 
     df = df.dropna(subset=[cap_col])
     df = df[df[cap_col] > 0]
+    # 장중·지연 상태(lateInfoMsgCd ME005)에는 Marcap이 전부 NaN으로 온다 → 네이버로 넘긴다.
+    if len(df) < KR_TOP_N:
+        raise RuntimeError(f"FinanceDataReader: 시총 있는 종목 {len(df)}개뿐")
     df = df.sort_values(by=cap_col, ascending=False).head(KR_TOP_N)
 
     records = []

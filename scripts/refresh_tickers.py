@@ -148,74 +148,89 @@ def _refresh_korea_fdr() -> list[dict]:
     return records
 
 
+# NASDAQ 전체 목록에는 우선주·채권·유닛도 모회사 시총을 달고 섞여 있다.
+_US_NOISE = re.compile(r"Preferred|Notes|Debenture|\bUnits?\b|ZONES|Warrant|Rights|%", re.I)
+# "Alphabet Inc. Class A Common Stock" → "Alphabet Inc." (같은 회사 다른 주식 중복 제거·이름 정리용)
+_US_SUFFIX = re.compile(r"\s+(Class [A-Z]\b.*|(Common|Capital|Ordinary) (Stock|Shares).*|American Depositary.*|Depositary.*)$", re.I)
+
+
+def _dedupe_us(records: list[dict]) -> list[dict]:
+    """시총 내림차순 입력에서 파생 증권을 빼고, 회사당 시총 큰 주식 하나만 남긴다."""
+    seen, out = set(), []
+    for r in records:
+        if _US_NOISE.search(r["name"]):
+            continue
+        name = _US_SUFFIX.sub("", r["name"]).strip()
+        if name.lower() in seen:
+            continue
+        seen.add(name.lower())
+        out.append({**r, "name": name})
+    return out
+
+
 def refresh_us() -> list[dict]:
-    """stockanalysis.com 공개 페이지에서 시총 상위 400 파싱.
-    실패 시 NASDAQ 공식 screener API로 폴백.
+    """NASDAQ 공식 screener API(NASDAQ·NYSE·AMEX 전 종목)에서 시총 상위 400.
+    실패 시 stockanalysis.com 공개 페이지로 폴백 (2026-10부터 전 세계 상위 100개만 보여서 보조용).
     """
     import requests
     from bs4 import BeautifulSoup
 
-    # 1차: stockanalysis.com (공개 HTML 테이블, 로봇 비차단)
+    # 1차: NASDAQ screener API
+    # exchange=NASDAQ,NYSE 파라미터를 붙이면 2026-10부터 rows가 0개로 온다 → 빼고 전체를 받아 정렬.
     try:
-        records = []
-        for page in range(1, 5):  # 100 per page * 4 = 400
-            url = f"https://stockanalysis.com/list/biggest-companies/"
-            headers = {"User-Agent": "Mozilla/5.0 (compatible; LifeBot/1.0)"}
-            r = requests.get(url, headers=headers, timeout=20)
-            r.raise_for_status()
-            soup = BeautifulSoup(r.text, "lxml")
-            table = soup.find("table")
-            if not table:
-                break
-            rows = table.find_all("tr")[1:]  # 헤더 제외
-            for row in rows:
-                cells = [c.get_text(strip=True) for c in row.find_all(["td", "th"])]
-                if len(cells) < 3:
-                    continue
-                # 컬럼 추정: [No, Symbol, Name, MarketCap, ...]
-                symbol = cells[1] if len(cells) > 1 else ""
-                name = cells[2] if len(cells) > 2 else ""
-                if symbol and symbol.isalpha() and len(symbol) <= 6:
-                    records.append({"symbol": symbol, "name": name})
-            break  # stockanalysis는 단일 페이지에 많은 항목
-        if records:
-            return records[:US_TOP_N]
-    except Exception as e:
-        print(f"[refresh] US stockanalysis 실패: {e}", file=sys.stderr)
-
-    # 2차 폴백: NASDAQ screener API
-    try:
-        url = (
-            "https://api.nasdaq.com/api/screener/stocks"
-            f"?tableonly=true&limit={US_TOP_N}&offset=0&exchange=NASDAQ,NYSE"
-            "&download=true"
-        )
+        url = "https://api.nasdaq.com/api/screener/stocks?tableonly=true&limit=25&offset=0&download=true"
         headers = {
             "User-Agent": "Mozilla/5.0",
             "Accept": "application/json",
         }
-        r = requests.get(url, headers=headers, timeout=20)
+        r = requests.get(url, headers=headers, timeout=30)
         r.raise_for_status()
-        data = r.json()
-        rows = data.get("data", {}).get("rows", []) or data.get("data", {}).get("table", {}).get("rows", [])
+        data = r.json().get("data") or {}
+        rows = data.get("rows") or (data.get("table") or {}).get("rows") or []
         records = []
         for row in rows:
-            sym = row.get("symbol", "").strip()
-            cap_raw = row.get("marketCap", "0").replace("$", "").replace(",", "").replace("B", "e9").replace("M", "e6")
+            sym = (row.get("symbol") or "").strip()
+            cap_raw = (row.get("marketCap") or "0").replace("$", "").replace(",", "")
             try:
                 cap = float(cap_raw) if cap_raw else 0.0
             except ValueError:
                 cap = 0.0
-            if sym and sym.isalpha():
+            if sym and sym.isalpha() and cap > 0:
                 records.append({"symbol": sym, "name": row.get("name", ""), "market_cap": cap})
-        records.sort(key=lambda r: r.get("market_cap", 0), reverse=True)
-        return records[:US_TOP_N]
+        records.sort(key=lambda r: r["market_cap"], reverse=True)
+        records = _dedupe_us(records)
+        if len(records) >= US_TOP_N:
+            return records[:US_TOP_N]
+        print(f"[refresh] US NASDAQ API 결과 부족: {len(records)}개", file=sys.stderr)
     except Exception as e:
         print(f"[refresh] US NASDAQ API 실패: {e}", file=sys.stderr)
-        raise
+
+    # 2차 폴백: stockanalysis.com — 종목코드는 /stocks/<sym>/ 링크에서 읽는다 (미국 상장만).
+    try:
+        url = "https://stockanalysis.com/list/biggest-companies/"
+        headers = {"User-Agent": "Mozilla/5.0 (compatible; LifeBot/1.0)"}
+        r = requests.get(url, headers=headers, timeout=20)
+        r.raise_for_status()
+        table = BeautifulSoup(r.text, "lxml").find("table")
+        records = []
+        for a in (table.select('a[href^="/stocks/"]') if table else []):
+            symbol = a["href"].strip("/").split("/")[-1].upper()
+            title = a.find(attrs={"title": True})
+            name = title["title"] if title else ""
+            if symbol.isalpha() and len(symbol) <= 6:
+                records.append({"symbol": symbol, "name": name})
+        if records:
+            print(f"[refresh] US stockanalysis 폴백: {len(records)}개", file=sys.stderr)
+            return records[:US_TOP_N]
+    except Exception as e:
+        print(f"[refresh] US stockanalysis 실패: {e}", file=sys.stderr)
+
+    raise RuntimeError("US 종목 리스트를 가져오지 못함 (기존 파일 유지)")
 
 
 def save(records: list[dict], path: Path) -> None:
+    if not records:
+        raise RuntimeError(f"{path.name}: 0개라 저장 안 함 (기존 파일 유지)")
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "updated_at": timeutil.now().isoformat(timespec="seconds"),

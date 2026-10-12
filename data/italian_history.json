@@ -1,7 +1,4 @@
 [
-  "ospite",
-  "tavolo",
-  "sedia",
   "finestra",
   "porta",
   "scala",
@@ -498,5 +495,8 @@
   "collina",
   "succo",
   "mela",
-  "cioccolato"
+  "cioccolato",
+  "bambino",
+  "passeggiata",
+  "vecchio"
 ]

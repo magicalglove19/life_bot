@@ -1,14 +1,4 @@
 [
-  "finestra",
-  "porta",
-  "scala",
-  "soffitto",
-  "caffè",
-  "colazione",
-  "pranzo",
-  "cena",
-  "bicchiere",
-  "zucchero",
   "sale",
   "chiave",
   "maglietta",
@@ -498,5 +488,15 @@
   "cioccolato",
   "bambino",
   "passeggiata",
-  "vecchio"
+  "vecchio",
+  "scuola",
+  "quaderno",
+  "matita",
+  "gelato",
+  "bicchiere",
+  "scontrino",
+  "farmacia",
+  "supermercato",
+  "aeroporto",
+  "cameriere"
 ]

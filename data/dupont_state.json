@@ -171,12 +171,13 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-13T14:00:00+09:00",
+   "last_bar": "2026-10-14T09:00:00+09:00",
    "days": [
     "2026-10-07",
     "2026-10-08",
     "2026-10-12",
-    "2026-10-13"
+    "2026-10-13",
+    "2026-10-14"
    ],
    "fake_checked": 3,
    "fake_warned": false
@@ -193,18 +194,19 @@
    "signal_close": 16740.0,
    "entry": 16740.0,
    "entry_time": "2026-10-13T10:00:00+09:00",
-   "stop": 16112.625,
+   "stop": 16740.0,
    "t1": 17367.375,
    "t2": 18622.125,
    "risk": 627.375,
-   "half": false,
+   "half": true,
    "status": "open",
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-13T14:00:00+09:00",
+   "last_bar": "2026-10-14T09:00:00+09:00",
    "days": [
-    "2026-10-13"
+    "2026-10-13",
+    "2026-10-14"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -231,12 +233,67 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-13T14:00:00+09:00",
+   "last_bar": "2026-10-14T09:00:00+09:00",
    "days": [
-    "2026-10-13"
+    "2026-10-13",
+    "2026-10-14"
    ],
    "fake_checked": 3,
    "fake_warned": true,
+   "uni": "top300"
+  },
+  {
+   "code": "011200",
+   "name": "HMM",
+   "src": "",
+   "signal_time": "2026-10-14T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 22350.0,
+   "poc": 21865.625,
+   "rv_box": 10.049194348069019,
+   "signal_close": 23400.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-10-14T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "base40"
+  },
+  {
+   "code": "000240",
+   "name": "한국앤컴퍼니",
+   "src": "",
+   "signal_time": "2026-10-14T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 26700.0,
+   "poc": 26438.75,
+   "rv_box": 2.9999373237229707,
+   "signal_close": 27200.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-10-14T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
    "uni": "top300"
   }
  ],
@@ -272,6 +329,11 @@
    "005830|09",
    "~032640|14",
    "~032640|14"
+  ],
+  "2026-10-14": [
+   "011200|09",
+   "000240|09",
+   "~021240|09"
   ]
  },
  "skipped": [
@@ -387,6 +449,15 @@
    "signal_close": 14720.0,
    "poc": 14527.875,
    "rv_box": 2.1179739633800225
+  },
+  {
+   "code": "021240",
+   "name": "코웨이",
+   "uni": "top300",
+   "signal_time": "2026-10-14T09:00:00+09:00",
+   "signal_close": 104200.0,
+   "poc": 102688.75,
+   "rv_box": 1.7670093825495814
   }
  ]
 }

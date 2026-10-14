@@ -1,14 +1,4 @@
 [
-  "sale",
-  "chiave",
-  "maglietta",
-  "ombrello",
-  "gatto",
-  "cane",
-  "macchina",
-  "cibo",
-  "libreria",
-  "mercato",
   "pasta",
   "pesce",
   "banca",
@@ -498,5 +488,15 @@
   "farmacia",
   "supermercato",
   "aeroporto",
-  "cameriere"
+  "cameriere",
+  "ristorante",
+  "menu",
+  "acqua",
+  "cibo",
+  "pollo",
+  "pane",
+  "burro",
+  "zucchero",
+  "sale",
+  "pepe"
 ]

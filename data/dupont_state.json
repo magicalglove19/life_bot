@@ -182,6 +182,37 @@
    "exit_price": 26438.75
   },
   {
+   "code": "300720",
+   "name": "한일시멘트",
+   "src": "",
+   "signal_time": "2026-10-13T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 16530.0,
+   "poc": 16112.625,
+   "rv_box": 8.903747449801353,
+   "signal_close": 16740.0,
+   "entry": 16740.0,
+   "entry_time": "2026-10-13T10:00:00+09:00",
+   "stop": 16740.0,
+   "t1": 17367.375,
+   "t2": 18622.125,
+   "risk": 627.375,
+   "half": true,
+   "status": "closed",
+   "r": 0.5,
+   "exit_reason": "본전",
+   "exit_time": "2026-10-14T13:00:00+09:00",
+   "last_bar": "2026-10-14T13:00:00+09:00",
+   "days": [
+    "2026-10-13",
+    "2026-10-14"
+   ],
+   "fake_checked": 3,
+   "fake_warned": false,
+   "uni": "top300",
+   "exit_price": 16740.0
+  },
+  {
    "code": "373220",
    "name": "LG에너지솔루션",
    "src": "",
@@ -201,7 +232,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-14T12:00:00+09:00",
+   "last_bar": "2026-10-14T13:00:00+09:00",
    "days": [
     "2026-10-07",
     "2026-10-08",
@@ -211,36 +242,6 @@
    ],
    "fake_checked": 3,
    "fake_warned": false
-  },
-  {
-   "code": "300720",
-   "name": "한일시멘트",
-   "src": "",
-   "signal_time": "2026-10-13T09:00:00+09:00",
-   "max_stop": 0.08,
-   "level": 16530.0,
-   "poc": 16112.625,
-   "rv_box": 8.903747449801353,
-   "signal_close": 16740.0,
-   "entry": 16740.0,
-   "entry_time": "2026-10-13T10:00:00+09:00",
-   "stop": 16740.0,
-   "t1": 17367.375,
-   "t2": 18622.125,
-   "risk": 627.375,
-   "half": true,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-10-14T12:00:00+09:00",
-   "days": [
-    "2026-10-13",
-    "2026-10-14"
-   ],
-   "fake_checked": 3,
-   "fake_warned": false,
-   "uni": "top300"
   },
   {
    "code": "005830",
@@ -263,7 +264,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-14T12:00:00+09:00",
+   "last_bar": "2026-10-14T13:00:00+09:00",
    "days": [
     "2026-10-13",
     "2026-10-14"
@@ -293,7 +294,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-14T12:00:00+09:00",
+   "last_bar": "2026-10-14T13:00:00+09:00",
    "days": [
     "2026-10-14"
    ],

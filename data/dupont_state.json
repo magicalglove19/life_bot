@@ -201,7 +201,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-14T11:00:00+09:00",
+   "last_bar": "2026-10-14T12:00:00+09:00",
    "days": [
     "2026-10-07",
     "2026-10-08",
@@ -233,7 +233,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-14T11:00:00+09:00",
+   "last_bar": "2026-10-14T12:00:00+09:00",
    "days": [
     "2026-10-13",
     "2026-10-14"
@@ -263,7 +263,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-14T11:00:00+09:00",
+   "last_bar": "2026-10-14T12:00:00+09:00",
    "days": [
     "2026-10-13",
     "2026-10-14"
@@ -293,11 +293,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-14T11:00:00+09:00",
+   "last_bar": "2026-10-14T12:00:00+09:00",
    "days": [
     "2026-10-14"
    ],
-   "fake_checked": 2,
+   "fake_checked": 3,
    "fake_warned": false,
    "uni": "base40"
   }

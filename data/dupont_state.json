@@ -265,10 +265,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-14T14:00:00+09:00",
+   "last_bar": "2026-10-15T09:00:00+09:00",
    "days": [
     "2026-10-13",
-    "2026-10-14"
+    "2026-10-14",
+    "2026-10-15"
    ],
    "fake_checked": 3,
    "fake_warned": true,
@@ -295,13 +296,68 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-14T14:00:00+09:00",
+   "last_bar": "2026-10-15T09:00:00+09:00",
    "days": [
-    "2026-10-14"
+    "2026-10-14",
+    "2026-10-15"
    ],
    "fake_checked": 3,
    "fake_warned": false,
    "uni": "base40"
+  },
+  {
+   "code": "012750",
+   "name": "에스원",
+   "src": "",
+   "signal_time": "2026-10-15T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 87700.0,
+   "poc": 86256.25,
+   "rv_box": 19.70696692555963,
+   "signal_close": 95600.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-10-15T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "top300"
+  },
+  {
+   "code": "032640",
+   "name": "LG유플러스",
+   "src": "",
+   "signal_time": "2026-10-15T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 14830.0,
+   "poc": 14512.875,
+   "rv_box": 3.543984346848739,
+   "signal_close": 14880.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-10-15T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "top300"
   }
  ],
  "signals": {
@@ -341,6 +397,11 @@
    "011200|09",
    "000240|09",
    "~021240|09"
+  ],
+  "2026-10-15": [
+   "012750|09",
+   "032640|09",
+   "~033780|09"
   ]
  },
  "skipped": [
@@ -465,6 +526,15 @@
    "signal_close": 104200.0,
    "poc": 102688.75,
    "rv_box": 1.7670093825495814
+  },
+  {
+   "code": "033780",
+   "name": "KT&G",
+   "uni": "base40",
+   "signal_time": "2026-10-15T09:00:00+09:00",
+   "signal_close": 188200.0,
+   "poc": 176233.75,
+   "rv_box": 3.1767129658181914
   }
  ]
 }

@@ -1,14 +1,4 @@
 [
-  "pasta",
-  "pesce",
-  "banca",
-  "orologio",
-  "cappotto",
-  "scarpa",
-  "cintura",
-  "zaino",
-  "cuscino",
-  "lampada",
   "sciarpa",
   "pantaloni",
   "giacca",
@@ -498,5 +488,15 @@
   "burro",
   "zucchero",
   "sale",
-  "pepe"
+  "pepe",
+  "libro",
+  "penna",
+  "telefono",
+  "cielo",
+  "sole",
+  "pioggia",
+  "freddo",
+  "caldo",
+  "carta",
+  "cucina"
 ]

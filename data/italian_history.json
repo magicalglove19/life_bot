@@ -1,14 +1,4 @@
 [
-  "sciarpa",
-  "pantaloni",
-  "giacca",
-  "cappello",
-  "treno",
-  "autobus",
-  "aeroporto",
-  "valigia",
-  "biglietto",
-  "piscina",
   "bar",
   "cappuccino",
   "università",
@@ -498,5 +488,15 @@
   "freddo",
   "caldo",
   "carta",
-  "cucina"
+  "cucina",
+  "biblioteca",
+  "parco",
+  "museo",
+  "spiaggia",
+  "montagna",
+  "cavallo",
+  "bicicletta",
+  "piscina",
+  "lago",
+  "vino"
 ]

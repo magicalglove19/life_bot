@@ -261,11 +261,11 @@
    "t2": 237501.25,
    "risk": 14033.75,
    "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-10-16T12:00:00+09:00",
+   "status": "closed",
+   "r": -1.0,
+   "exit_reason": "손절",
+   "exit_time": "2026-10-16T13:00:00+09:00",
+   "last_bar": "2026-10-16T13:00:00+09:00",
    "days": [
     "2026-10-13",
     "2026-10-14",
@@ -274,7 +274,8 @@
    ],
    "fake_checked": 3,
    "fake_warned": true,
-   "uni": "top300"
+   "uni": "top300",
+   "exit_price": 181366.25
   },
   {
    "code": "011200",
@@ -297,7 +298,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T12:00:00+09:00",
+   "last_bar": "2026-10-16T13:00:00+09:00",
    "days": [
     "2026-10-14",
     "2026-10-15",
@@ -328,7 +329,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T12:00:00+09:00",
+   "last_bar": "2026-10-16T13:00:00+09:00",
    "days": [
     "2026-10-15",
     "2026-10-16"
@@ -358,7 +359,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T12:00:00+09:00",
+   "last_bar": "2026-10-16T13:00:00+09:00",
    "days": [
     "2026-10-15",
     "2026-10-16"
@@ -388,7 +389,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T12:00:00+09:00",
+   "last_bar": "2026-10-16T13:00:00+09:00",
    "days": [
     "2026-10-16"
    ],
@@ -417,7 +418,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T12:00:00+09:00",
+   "last_bar": "2026-10-16T13:00:00+09:00",
    "days": [
     "2026-10-16"
    ],

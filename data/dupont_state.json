@@ -265,7 +265,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T10:00:00+09:00",
+   "last_bar": "2026-10-16T11:00:00+09:00",
    "days": [
     "2026-10-13",
     "2026-10-14",
@@ -297,7 +297,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T10:00:00+09:00",
+   "last_bar": "2026-10-16T11:00:00+09:00",
    "days": [
     "2026-10-14",
     "2026-10-15",
@@ -328,7 +328,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T10:00:00+09:00",
+   "last_bar": "2026-10-16T11:00:00+09:00",
    "days": [
     "2026-10-15",
     "2026-10-16"
@@ -358,7 +358,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T10:00:00+09:00",
+   "last_bar": "2026-10-16T11:00:00+09:00",
    "days": [
     "2026-10-15",
     "2026-10-16"
@@ -388,11 +388,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T10:00:00+09:00",
+   "last_bar": "2026-10-16T11:00:00+09:00",
    "days": [
     "2026-10-16"
    ],
-   "fake_checked": 1,
+   "fake_checked": 2,
    "fake_warned": false,
    "uni": "base40"
   },
@@ -417,11 +417,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T10:00:00+09:00",
+   "last_bar": "2026-10-16T11:00:00+09:00",
    "days": [
     "2026-10-16"
    ],
-   "fake_checked": 1,
+   "fake_checked": 2,
    "fake_warned": false,
    "uni": "top300"
   }

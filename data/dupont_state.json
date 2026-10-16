@@ -265,7 +265,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T09:00:00+09:00",
+   "last_bar": "2026-10-16T10:00:00+09:00",
    "days": [
     "2026-10-13",
     "2026-10-14",
@@ -297,7 +297,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T09:00:00+09:00",
+   "last_bar": "2026-10-16T10:00:00+09:00",
    "days": [
     "2026-10-14",
     "2026-10-15",
@@ -328,7 +328,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T09:00:00+09:00",
+   "last_bar": "2026-10-16T10:00:00+09:00",
    "days": [
     "2026-10-15",
     "2026-10-16"
@@ -358,7 +358,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T09:00:00+09:00",
+   "last_bar": "2026-10-16T10:00:00+09:00",
    "days": [
     "2026-10-15",
     "2026-10-16"
@@ -377,20 +377,22 @@
    "poc": 181413.75,
    "rv_box": 5.880856177703539,
    "signal_close": 191600.0,
-   "entry": null,
-   "entry_time": null,
-   "stop": null,
-   "t1": null,
-   "t2": null,
-   "risk": null,
+   "entry": 191600.0,
+   "entry_time": "2026-10-16T10:00:00+09:00",
+   "stop": 181413.75,
+   "t1": 201786.25,
+   "t2": 222158.75,
+   "risk": 10186.25,
    "half": false,
    "status": "open",
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T09:00:00+09:00",
-   "days": [],
-   "fake_checked": 0,
+   "last_bar": "2026-10-16T10:00:00+09:00",
+   "days": [
+    "2026-10-16"
+   ],
+   "fake_checked": 1,
    "fake_warned": false,
    "uni": "base40"
   },
@@ -404,20 +406,22 @@
    "poc": 182125.0,
    "rv_box": 5.431779257849667,
    "signal_close": 188300.0,
-   "entry": null,
-   "entry_time": null,
-   "stop": null,
-   "t1": null,
-   "t2": null,
-   "risk": null,
+   "entry": 188250.0,
+   "entry_time": "2026-10-16T10:00:00+09:00",
+   "stop": 182125.0,
+   "t1": 194375.0,
+   "t2": 206625.0,
+   "risk": 6125.0,
    "half": false,
    "status": "open",
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-10-16T09:00:00+09:00",
-   "days": [],
-   "fake_checked": 0,
+   "last_bar": "2026-10-16T10:00:00+09:00",
+   "days": [
+    "2026-10-16"
+   ],
+   "fake_checked": 1,
    "fake_warned": false,
    "uni": "top300"
   }
@@ -482,7 +486,10 @@
    "~271560|09",
    "~030000|09",
    "~036460|09",
-   "~323410|09"
+   "~323410|09",
+   "~251270|10",
+   "~280360|10",
+   "~041510|10"
   ]
  },
  "skipped": [
@@ -751,6 +758,33 @@
    "signal_close": 20400.0,
    "poc": 19886.5,
    "rv_box": 1.809154315868525
+  },
+  {
+   "code": "251270",
+   "name": "넷마블",
+   "uni": "top300",
+   "signal_time": "2026-10-16T10:00:00+09:00",
+   "signal_close": 35850.0,
+   "poc": 33844.375,
+   "rv_box": 3.3035489437112346
+  },
+  {
+   "code": "280360",
+   "name": "롯데웰푸드",
+   "uni": "top300",
+   "signal_time": "2026-10-16T10:00:00+09:00",
+   "signal_close": 125100.0,
+   "poc": 119535.0,
+   "rv_box": 2.2862109187384214
+  },
+  {
+   "code": "041510",
+   "name": "에스엠",
+   "uni": "top300",
+   "signal_time": "2026-10-16T10:00:00+09:00",
+   "signal_close": 85400.0,
+   "poc": 78151.25,
+   "rv_box": 1.709038740429248
   }
  ]
 }

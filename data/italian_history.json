@@ -1,14 +1,4 @@
 [
-  "bar",
-  "cappuccino",
-  "università",
-  "professore",
-  "città",
-  "piazza",
-  "negozio",
-  "cameriere",
-  "menù",
-  "tè",
   "latte",
   "orario",
   "biglietteria",
@@ -498,5 +488,15 @@
   "bicicletta",
   "piscina",
   "lago",
-  "vino"
+  "vino",
+  "casa",
+  "famiglia",
+  "amico",
+  "stazione",
+  "autostrada",
+  "moto",
+  "dottore",
+  "ospedale",
+  "paese",
+  "pasto"
 ]

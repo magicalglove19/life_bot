@@ -1,14 +1,4 @@
 [
-  "latte",
-  "orario",
-  "biglietteria",
-  "autista",
-  "scuola",
-  "penna",
-  "cielo",
-  "sole",
-  "luna",
-  "neve",
   "pioggia",
   "vento",
   "cucina",
@@ -498,5 +488,15 @@
   "dottore",
   "ospedale",
   "paese",
-  "pasto"
+  "pasto",
+  "giardino",
+  "sedia",
+  "tavolo",
+  "porta",
+  "finestra",
+  "ombrello",
+  "cappello",
+  "zaino",
+  "cane",
+  "gatto"
 ]

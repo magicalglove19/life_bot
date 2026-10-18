@@ -1,14 +1,4 @@
 [
-  "pioggia",
-  "vento",
-  "cucina",
-  "mano",
-  "gelato",
-  "museo",
-  "bicicletta",
-  "vacanza",
-  "viaggio",
-  "parcheggio",
   "ristorante",
   "birra",
   "frutta",
@@ -498,5 +488,15 @@
   "cappello",
   "zaino",
   "cane",
-  "gatto"
+  "gatto",
+  "caffè",
+  "frutta",
+  "pesce",
+  "latte",
+  "zucchero",
+  "bottiglia",
+  "chiave",
+  "sedia",
+  "lampada",
+  "cuscino"
 ]

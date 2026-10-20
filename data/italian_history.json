@@ -1,14 +1,4 @@
 [
-  "ristorante",
-  "birra",
-  "frutta",
-  "mappa",
-  "pulchra",
-  "fermata",
-  "campo",
-  "amico",
-  "bagaglio",
-  "stazione",
   "pasto",
   "uovo",
   "acqua",
@@ -498,5 +488,15 @@
   "chiave",
   "sedia",
   "lampada",
-  "cuscino"
+  "cuscino",
+  "banca",
+  "treno",
+  "autobus",
+  "orologio",
+  "strada",
+  "libreria",
+  "valigia",
+  "documento",
+  "passeggero",
+  "sconto"
 ]

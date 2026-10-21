@@ -1,14 +1,4 @@
 [
-  "pasto",
-  "uovo",
-  "acqua",
-  "pane",
-  "sacco",
-  "tempo",
-  "collo",
-  "libro",
-  "telefono",
-  "studente",
   "famiglia",
   "vino",
   "bambino",
@@ -498,5 +488,15 @@
   "valigia",
   "documento",
   "passeggero",
-  "sconto"
+  "sconto",
+  "piazza",
+  "negozio",
+  "cena",
+  "pranzo",
+  "colazione",
+  "mappa",
+  "valle",
+  "luna",
+  "fermata",
+  "giro"
 ]

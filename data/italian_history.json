@@ -1,14 +1,4 @@
 [
-  "famiglia",
-  "vino",
-  "bambino",
-  "auto",
-  "cortile",
-  "bottiglia",
-  "sapore",
-  "casa",
-  "strada",
-  "parco",
   "lago",
   "montagna",
   "cucchiaio",
@@ -498,5 +488,15 @@
   "valle",
   "luna",
   "fermata",
-  "giro"
+  "giro",
+  "macchina",
+  "città",
+  "lavoro",
+  "mercato",
+  "vestito",
+  "scarpa",
+  "cappotto",
+  "colore",
+  "rosso",
+  "blu"
 ]

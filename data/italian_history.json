@@ -1,14 +1,4 @@
 [
-  "lago",
-  "montagna",
-  "cucchiaio",
-  "forchetta",
-  "burro",
-  "formaggio",
-  "carne",
-  "buongiorno",
-  "arrivederci",
-  "sedia",
   "tavolo",
   "porta",
   "finestra",
@@ -498,5 +488,15 @@
   "cappotto",
   "colore",
   "rosso",
-  "blu"
+  "blu",
+  "biglietto",
+  "orario",
+  "trattoria",
+  "gelateria",
+  "pizzeria",
+  "bagno",
+  "conto",
+  "cambio",
+  "valuta",
+  "tassa"
 ]

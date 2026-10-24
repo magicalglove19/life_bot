@@ -1,14 +1,4 @@
 [
-  "caffè",
-  "lavoro",
-  "ufficio",
-  "computer",
-  "ragazzo",
-  "ragazza",
-  "supermercato",
-  "macchina",
-  "cibo",
-  "banco",
   "chiave",
   "orologio",
   "mercato",
@@ -498,5 +488,15 @@
   "passeggio",
   "banco",
   "cittadino",
-  "gelato"
+  "gelato",
+  "pane",
+  "acqua",
+  "mela",
+  "birra",
+  "pollo",
+  "uovo",
+  "pasta",
+  "riso",
+  "sale",
+  "pepe"
 ]

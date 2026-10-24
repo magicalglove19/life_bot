@@ -1,14 +1,4 @@
 [
-  "tavolo",
-  "porta",
-  "finestra",
-  "dottore",
-  "farmacia",
-  "ospedale",
-  "polizia",
-  "gatto",
-  "cane",
-  "pizza",
   "caffè",
   "lavoro",
   "ufficio",
@@ -498,5 +488,15 @@
   "conto",
   "cambio",
   "valuta",
-  "tassa"
+  "tassa",
+  "scuola",
+  "bambino",
+  "madre",
+  "padre",
+  "fratello",
+  "sorella",
+  "passeggio",
+  "banco",
+  "cittadino",
+  "gelato"
 ]

@@ -1,14 +1,4 @@
 [
-  "chiave",
-  "orologio",
-  "mercato",
-  "pasta",
-  "pollo",
-  "pesce",
-  "scarpa",
-  "treno",
-  "autobus",
-  "aeroporto",
   "colazione",
   "pranzo",
   "cena",
@@ -498,5 +488,15 @@
   "pasta",
   "riso",
   "sale",
-  "pepe"
+  "pepe",
+  "telefono",
+  "computer",
+  "cappuccino",
+  "pizza",
+  "cucina",
+  "cibo",
+  "cucchiaio",
+  "forchetta",
+  "coltello",
+  "bottone"
 ]

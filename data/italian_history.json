@@ -1,14 +1,4 @@
 [
-  "colazione",
-  "pranzo",
-  "cena",
-  "mela",
-  "zucchero",
-  "occhiali",
-  "cappotto",
-  "giorno",
-  "notte",
-  "perché",
   "dove",
   "quanto",
   "andare",
@@ -498,5 +488,15 @@
   "cucchiaio",
   "forchetta",
   "coltello",
-  "bottone"
+  "bottone",
+  "libro",
+  "penna",
+  "villaggio",
+  "fiume",
+  "montagna",
+  "cielo",
+  "sole",
+  "stella",
+  "tempo",
+  "viaggio"
 ]

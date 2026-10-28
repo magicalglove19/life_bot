@@ -1,14 +1,4 @@
 [
-  "dove",
-  "quanto",
-  "andare",
-  "venire",
-  "parlare",
-  "capire",
-  "comprare",
-  "cielo",
-  "città",
-  "negozio",
   "cassa",
   "scuola",
   "biglietto",
@@ -498,5 +488,15 @@
   "sole",
   "stella",
   "tempo",
-  "viaggio"
+  "viaggio",
+  "casa",
+  "amico",
+  "amica",
+  "famiglia",
+  "parco",
+  "stazione",
+  "vino",
+  "museo",
+  "piscina",
+  "carta"
 ]

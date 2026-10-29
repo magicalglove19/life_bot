@@ -1,14 +1,4 @@
 [
-  "cassa",
-  "scuola",
-  "biglietto",
-  "cappello",
-  "maglietta",
-  "pantaloni",
-  "bagno",
-  "gelato",
-  "sveglia",
-  "zaino",
   "luna",
   "sole",
   "pioggia",
@@ -498,5 +488,15 @@
   "vino",
   "museo",
   "piscina",
-  "carta"
+  "carta",
+  "gatto",
+  "cane",
+  "porta",
+  "finestra",
+  "tavolo",
+  "camera",
+  "letto",
+  "cappello",
+  "occhiali",
+  "pasto"
 ]

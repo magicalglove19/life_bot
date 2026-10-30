@@ -1,14 +1,4 @@
 [
-  "luna",
-  "sole",
-  "pioggia",
-  "cucina",
-  "piscina",
-  "latte",
-  "sale",
-  "stanza",
-  "sala",
-  "bicchiere",
   "caramella",
   "freddo",
   "biscotto",
@@ -498,5 +488,15 @@
   "letto",
   "cappello",
   "occhiali",
-  "pasto"
+  "pasto",
+  "caffè",
+  "ristorante",
+  "chiave",
+  "sedia",
+  "lampada",
+  "zaino",
+  "bicicletta",
+  "cuscino",
+  "piano",
+  "porta"
 ]

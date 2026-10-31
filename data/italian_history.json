@@ -1,14 +1,4 @@
 [
-  "caramella",
-  "freddo",
-  "biscotto",
-  "ombrello",
-  "fiore",
-  "albero",
-  "valigia",
-  "amico",
-  "grazie",
-  "scusa",
   "acqua",
   "pane",
   "frutta",
@@ -498,5 +488,15 @@
   "bicicletta",
   "cuscino",
   "piano",
-  "porta"
+  "porta",
+  "autobus",
+  "treno",
+  "orologio",
+  "farmacia",
+  "ospedale",
+  "dottore",
+  "quartiere",
+  "valigia",
+  "aeroporto",
+  "taxi"
 ]

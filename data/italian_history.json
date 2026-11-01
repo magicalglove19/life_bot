@@ -1,14 +1,4 @@
 [
-  "acqua",
-  "pane",
-  "frutta",
-  "arancia",
-  "pepe",
-  "isola",
-  "autunno",
-  "libro",
-  "penna",
-  "telefono",
   "vino",
   "birra",
   "limone",
@@ -498,5 +488,15 @@
   "quartiere",
   "valigia",
   "aeroporto",
-  "taxi"
+  "taxi",
+  "giornale",
+  "aereo",
+  "mappa",
+  "cestino",
+  "cassa",
+  "freddo",
+  "caldo",
+  "nuovo",
+  "piccolo",
+  "grande"
 ]

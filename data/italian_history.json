@@ -1,14 +1,4 @@
 [
-  "vino",
-  "birra",
-  "limone",
-  "banana",
-  "stazione",
-  "cuscino",
-  "bottiglia",
-  "casa",
-  "famiglia",
-  "bambino",
   "madre",
   "padre",
   "nonno",
@@ -498,5 +488,15 @@
   "caldo",
   "nuovo",
   "piccolo",
-  "grande"
+  "grande",
+  "città",
+  "negozio",
+  "mercato",
+  "albero",
+  "fiori",
+  "sorriso",
+  "vestito",
+  "scarpa",
+  "cintura",
+  "bottiglia"
 ]

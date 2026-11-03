@@ -1,14 +1,4 @@
 [
-  "madre",
-  "padre",
-  "nonno",
-  "nonna",
-  "strada",
-  "parco",
-  "libreria",
-  "sedia",
-  "tavolo",
-  "finestra",
   "porta",
   "lampada",
   "cucchiaio",
@@ -498,5 +488,15 @@
   "vestito",
   "scarpa",
   "cintura",
-  "bottiglia"
+  "bottiglia",
+  "strada",
+  "macchina",
+  "lago",
+  "isola",
+  "campo",
+  "pesce",
+  "succo",
+  "nuvola",
+  "orario",
+  "banca"
 ]

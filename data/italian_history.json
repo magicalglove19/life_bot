@@ -1,14 +1,4 @@
 [
-  "porta",
-  "lampada",
-  "cucchiaio",
-  "forchetta",
-  "coltello",
-  "sciarpa",
-  "cappuccino",
-  "gatto",
-  "cane",
-  "caffè",
   "tè",
   "metro",
   "paese",
@@ -498,5 +488,15 @@
   "succo",
   "nuvola",
   "orario",
-  "banca"
+  "banca",
+  "gelato",
+  "bacio",
+  "scuola",
+  "lavoro",
+  "bambino",
+  "genitore",
+  "libreria",
+  "cittadino",
+  "supermercato",
+  "cittadina"
 ]

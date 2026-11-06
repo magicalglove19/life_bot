@@ -1,14 +1,4 @@
 [
-  "riso",
-  "uovo",
-  "zuppa",
-  "orologio",
-  "chiave",
-  "carta",
-  "mercato",
-  "treno",
-  "autobus",
-  "aeroporto",
   "ristorante",
   "colazione",
   "pranzo",
@@ -498,5 +488,15 @@
   "frutta",
   "paese",
   "mare",
-  "auto"
+  "auto",
+  "telefono",
+  "bagno",
+  "cucina",
+  "cappotto",
+  "giardino",
+  "bicchiere",
+  "forchetta",
+  "colazione",
+  "medico",
+  "biglietto"
 ]

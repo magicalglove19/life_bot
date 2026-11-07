@@ -1,14 +1,4 @@
 [
-  "ristorante",
-  "colazione",
-  "pranzo",
-  "cena",
-  "mappa",
-  "cameriere",
-  "orario",
-  "pizzeria",
-  "biblioteca",
-  "farmacia",
   "supermercato",
   "ufficio",
   "giardino",
@@ -498,5 +488,15 @@
   "forchetta",
   "colazione",
   "medico",
-  "biglietto"
+  "biglietto",
+  "pasta",
+  "pizza",
+  "birra",
+  "cappuccino",
+  "metropolitana",
+  "banco",
+  "cibo",
+  "prezzo",
+  "sconto",
+  "tempo"
 ]

@@ -1,14 +1,4 @@
 [
-  "supermercato",
-  "ufficio",
-  "giardino",
-  "ospedale",
-  "posta",
-  "trattoria",
-  "cappotto",
-  "scuola",
-  "professore",
-  "studente",
   "città",
   "viaggio",
   "biglietto",
@@ -498,5 +488,15 @@
   "cibo",
   "prezzo",
   "sconto",
-  "tempo"
+  "tempo",
+  "casa",
+  "amico",
+  "famiglia",
+  "lavoro",
+  "studente",
+  "stazione",
+  "parcheggio",
+  "vino",
+  "mela",
+  "libro"
 ]

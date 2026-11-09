@@ -1,14 +1,4 @@
 [
-  "città",
-  "viaggio",
-  "biglietto",
-  "montagna",
-  "mare",
-  "spiaggia",
-  "taxi",
-  "gelato",
-  "cucina",
-  "bagno",
   "cielo",
   "sole",
   "nuvola",
@@ -498,5 +488,15 @@
   "parcheggio",
   "vino",
   "mela",
-  "libro"
+  "libro",
+  "gatto",
+  "cane",
+  "tavolo",
+  "finestra",
+  "cielo",
+  "sole",
+  "pioggia",
+  "neve",
+  "villaggio",
+  "pasto"
 ]

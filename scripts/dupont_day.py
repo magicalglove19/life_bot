@@ -17,6 +17,9 @@ import sys
 import time
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import telegram
+
 KST = dt.timezone(dt.timedelta(hours=9))
 ROOT = Path(__file__).resolve().parent.parent
 SLOTS = [(10, 1), (11, 1), (12, 1), (13, 1), (14, 1), (15, 1)]
@@ -77,21 +80,26 @@ def main() -> int:
         return 0
     print(f"[dupont-day] 시작 {start:%H:%M} KST", flush=True)
     sh(sys.executable, "scripts/dupont_report.py", "--warm")   # 첫 판정이 늦지 않게 야후 1시간봉을 미리 받는다
+    failed = []
     for t, what in plan(start):
         if what == "skip":
             continue
         if what == "handoff":
             hand_off()
-            return 0
+            return 1 if failed else 0
         wait = (t - dt.datetime.now(KST)).total_seconds()
         if wait > 0:
             print(f"[dupont-day] {t:%H:%M} 까지 {wait / 60:.0f}분 대기", flush=True)
             time.sleep(wait)
         sh("git", "pull", "--rebase", "--autostash", "-q", "origin", "main")   # 다른 작업이 올린 장부 반영
-        sh(sys.executable, "scripts/dupont_report.py")
+        r = sh(sys.executable, "scripts/dupont_report.py")
+        if r.returncode != 0:
+            # 판정 실패를 조용히 넘기면 안 된다 (2026-10-19~11-10 3주간 아무도 모르게 멈췄다)
+            failed.append(f"{t:%H:%M}")
+            telegram.send(f"⚠️ 듀퐁 {t:%H:%M} 판정 실패 (종료 코드 {r.returncode}) — GitHub Actions 로그 확인 필요")
         commit_state()
-    print("[dupont-day] 오늘 끝", flush=True)
-    return 0
+    print(f"[dupont-day] 오늘 끝 (실패 {len(failed)}회)", flush=True)
+    return 1 if failed else 0           # 실패가 있었으면 Actions 에 빨간불
 
 
 if __name__ == "__main__":

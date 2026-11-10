@@ -40,6 +40,8 @@ def regular(bars: pd.DataFrame) -> pd.DataFrame:
 
 def completed(bars: pd.DataFrame, now: dt.datetime) -> pd.DataFrame:
     """지금 시각 기준으로 끝난 봉만. 15시 봉은 15:30 에 끝난다."""
+    if bars.empty or not isinstance(bars.index, pd.DatetimeIndex):
+        return bars.iloc[0:0]
     end = bars.index + pd.Timedelta(hours=1)
     end = end.where(bars.index.hour != 15, bars.index + pd.Timedelta(minutes=30))
     return bars[end <= now]

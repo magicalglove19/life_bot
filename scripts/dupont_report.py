@@ -98,6 +98,9 @@ def fetch(code: str, suffix: str | None, now: dt.datetime):
         print(f"[dupont] {code} 시세 실패: {e}", file=sys.stderr)
         return code, None
     bars = live.merge_bars(y, n, now.date())
+    # 신규 상장 등으로 시세가 하나도 없는 종목 (2026-10-18 본시스템즈 하나 때문에 판정 전체가 3주간 멈췄다)
+    if bars.empty or not isinstance(bars.index, pd.DatetimeIndex):
+        return code, None
     return code, live.completed(bars, now)
 
 
@@ -217,11 +220,19 @@ def main() -> int:
     print(f"[dupont] {now:%H:%M} 시세 {len(ok)}/{len(names)}종목", flush=True)
 
     # 1) 보유 중인 가상 매매 관리
-    events = []
+    events, backlog = [], []
     for tr in st["trades"]:
         if tr["status"] == "open" and tr["code"] in ok:
             for kind, info in live.step(tr, ok[tr["code"]]):
-                events.append(event_text(tr, kind, info))
+                if info["time"].date() < now.date():
+                    # 봇이 멈춰 있던 동안 지나간 일 — 지금 일처럼 알리지 않고 날짜를 붙여 한 줄로 정산
+                    what = {"t1": "1차 목표", "fake": "돌파 실패", "cancel": "진입 취소"}.get(kind) or tr["exit_reason"]
+                    r = f" {tr['r']:+.2f}R" if kind == "exit" else ""
+                    backlog.append(f"{html.escape(tr['name'])} {what} {info['time']:%m/%d}{r}")
+                else:
+                    events.append(event_text(tr, kind, info))
+    if backlog:
+        events.append("🗂 <i>멈췄던 기간 정산(장부 반영): " + " · ".join(backlog) + "</i>")
 
     # 2) 방금 마감된 봉 판정
     holding = {t["code"] for t in st["trades"] if t["status"] == "open"}

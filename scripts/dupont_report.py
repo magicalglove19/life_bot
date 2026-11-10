@@ -43,6 +43,9 @@ WINDOW_START = (10, 0)
 WINDOW_END = (15, 45)
 # 방금 마감된 봉이 이보다 오래됐으면 새 신호를 내지 않는다 (트리거가 늦게 왔을 때 지난 봉으로 신호 금지).
 STALE_MIN = 50
+# 시장 국면: KODEX 200 이 전일 기준 20일선 아래면 신호에 경고만 붙인다 (막지는 않음).
+# 2026-10~11 급락장(-30%) 관찰에서 신호가 대부분 손실이었지만, 백테스트 3년에서는 필터 효과가 엇갈려 확정하지 않았다.
+BENCH = "069500"
 
 
 # ── 상태 ─────────────────────────────────────────────
@@ -112,6 +115,24 @@ def won(x: float) -> str:
 
 def pct(a: float, b: float) -> str:
     return f"{(a / b - 1) * 100:+.1f}%"
+
+
+def market_regime(bars, today: dt.date):
+    """KODEX 200 의 전일 종가와 20일선. (종가, 20일선) 또는 시세가 없으면 None."""
+    if bars is None:
+        return None
+    reg = live.regular(bars)
+    c = reg["Close"].groupby(reg.index.date).last()
+    c = c[c.index < today]
+    if len(c) < 20:
+        return None
+    return float(c.iloc[-1]), float(c.iloc[-20:].mean())
+
+
+def regime_line(rg) -> str | None:
+    if rg and rg[0] < rg[1]:
+        return f"⚠️ <b>시장 하락 국면</b> — KODEX 200 전일 {won(rg[0])}, 20일선 {won(rg[1])} 대비 {pct(rg[0], rg[1])}"
+    return None
 
 
 def signal_text(name, code, sig) -> str:
@@ -257,12 +278,14 @@ def main() -> int:
     print(f"[dupont] 판정 {checked}종목 · 신호 {len(cands)} · 발송 {len(take)} · 상한 초과 {len(skipped)}"
           f" · 보유 이벤트 {len(events)}", flush=True)
 
+    rg = market_regime(ok.get(BENCH), now.date())
+    market = None if rg is None else ("down" if rg[0] < rg[1] else "up")
     sig_texts = []
     for code, sig, key in take:
         name, _, uni = names[code]
         sig_texts.append(signal_text(name, code, sig))
         tr = live.new_trade(code, name, "", sig, MAX_STOP)
-        tr["uni"] = uni
+        tr["uni"], tr["market"] = uni, market
         st["trades"].append(tr)
         sent_today.append(key)
     for code, sig, key in skipped:
@@ -270,7 +293,8 @@ def main() -> int:
         # 알림은 안 보내도 사후 검증(신호 후 1·3·5·10일 수익률) 표본으로 남긴다
         st.setdefault("skipped", []).append(dict(
             code=code, name=names[code][0], uni=names[code][2], signal_time=sig["time"].isoformat(),
-            signal_close=float(sig["close"]), poc=float(sig["poc"]), rv_box=float(sig["rv_box"])))
+            signal_close=float(sig["close"]), poc=float(sig["poc"]), rv_box=float(sig["rv_box"]),
+            market=market))
 
     judged = [live.regular(b).index[-1] for b in ok.values()
               if not live.regular(b).empty and live.regular(b).index[-1].date() == now.date()]
@@ -297,6 +321,8 @@ def main() -> int:
 
     parts = [f"📐 <b>듀퐁 박스 돌파</b> {now:%m/%d %H:%M} · {bar_lbl} 판정 · 🧪 관찰 단계(가상 매매)"]
     if sig_texts:
+        if regime_line(rg):
+            parts.append(regime_line(rg))
         parts.append("\n\n".join(sig_texts))
         if skipped:
             extra = ", ".join(html.escape(names[c][0]) for c, _, _ in skipped[:5])

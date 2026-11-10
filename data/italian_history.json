@@ -1,14 +1,4 @@
 [
-  "cielo",
-  "sole",
-  "nuvola",
-  "pioggia",
-  "vento",
-  "maglietta",
-  "scarpa",
-  "tempo",
-  "cibo",
-  "mela",
   "latte",
   "zucchero",
   "villaggio",
@@ -498,5 +488,15 @@
   "pioggia",
   "neve",
   "villaggio",
-  "pasto"
+  "pasto",
+  "caffè",
+  "ristorante",
+  "sedia",
+  "cucchiaio",
+  "zaino",
+  "chiave",
+  "porta",
+  "cameriere",
+  "conto",
+  "menù"
 ]

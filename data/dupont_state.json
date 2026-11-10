@@ -294,19 +294,22 @@
    "t2": 28003.125,
    "risk": 1534.375,
    "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-10-16T14:00:00+09:00",
+   "status": "closed",
+   "r": -0.06517311608961303,
+   "exit_reason": "시간청산",
+   "exit_time": "2026-10-20T14:00:00+09:00",
+   "last_bar": "2026-10-20T14:00:00+09:00",
    "days": [
     "2026-10-14",
     "2026-10-15",
-    "2026-10-16"
+    "2026-10-16",
+    "2026-10-19",
+    "2026-10-20"
    ],
    "fake_checked": 3,
    "fake_warned": false,
-   "uni": "base40"
+   "uni": "base40",
+   "exit_price": 23300.0
   },
   {
    "code": "012750",
@@ -325,18 +328,22 @@
    "t2": 118792.0,
    "risk": 7664.0,
    "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-10-16T14:00:00+09:00",
+   "status": "closed",
+   "r": 0.1304801670146138,
+   "exit_reason": "시간청산",
+   "exit_time": "2026-10-21T14:00:00+09:00",
+   "last_bar": "2026-10-21T14:00:00+09:00",
    "days": [
     "2026-10-15",
-    "2026-10-16"
+    "2026-10-16",
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21"
    ],
    "fake_checked": 3,
    "fake_warned": false,
-   "uni": "top300"
+   "uni": "top300",
+   "exit_price": 96800.0
   },
   {
    "code": "032640",
@@ -355,18 +362,20 @@
    "t2": 15941.375,
    "risk": 357.125,
    "half": true,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-10-16T14:00:00+09:00",
+   "status": "closed",
+   "r": 2.0,
+   "exit_reason": "최종목표",
+   "exit_time": "2026-10-19T11:00:00+09:00",
+   "last_bar": "2026-10-19T11:00:00+09:00",
    "days": [
     "2026-10-15",
-    "2026-10-16"
+    "2026-10-16",
+    "2026-10-19"
    ],
    "fake_checked": 3,
    "fake_warned": false,
-   "uni": "top300"
+   "uni": "top300",
+   "exit_price": 15941.375
   },
   {
    "code": "068270",
@@ -380,22 +389,27 @@
    "signal_close": 191600.0,
    "entry": 191600.0,
    "entry_time": "2026-10-16T10:00:00+09:00",
-   "stop": 181413.75,
+   "stop": 191600.0,
    "t1": 201786.25,
    "t2": 222158.75,
    "risk": 10186.25,
-   "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-10-16T14:00:00+09:00",
+   "half": true,
+   "status": "closed",
+   "r": 0.5,
+   "exit_reason": "본전",
+   "exit_time": "2026-10-22T09:00:00+09:00",
+   "last_bar": "2026-10-22T09:00:00+09:00",
    "days": [
-    "2026-10-16"
+    "2026-10-16",
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21",
+    "2026-10-22"
    ],
    "fake_checked": 3,
    "fake_warned": false,
-   "uni": "base40"
+   "uni": "base40",
+   "exit_price": 191600.0
   },
   {
    "code": "097950",
@@ -414,17 +428,21 @@
    "t2": 206625.0,
    "risk": 6125.0,
    "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-10-16T14:00:00+09:00",
+   "status": "closed",
+   "r": -1.0,
+   "exit_reason": "손절",
+   "exit_time": "2026-10-21T09:00:00+09:00",
+   "last_bar": "2026-10-21T09:00:00+09:00",
    "days": [
-    "2026-10-16"
+    "2026-10-16",
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21"
    ],
    "fake_checked": 3,
    "fake_warned": true,
-   "uni": "top300"
+   "uni": "top300",
+   "exit_price": 182125.0
   }
  ],
  "signals": {
@@ -491,7 +509,8 @@
    "~251270|10",
    "~280360|10",
    "~041510|10"
-  ]
+  ],
+  "2026-11-10": []
  },
  "skipped": [
   {

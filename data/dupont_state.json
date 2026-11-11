@@ -443,6 +443,62 @@
    "fake_warned": true,
    "uni": "top300",
    "exit_price": 182125.0
+  },
+  {
+   "code": "003380",
+   "name": "하림지주",
+   "src": "",
+   "signal_time": "2026-11-11T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 12020.0,
+   "poc": 11618.375,
+   "rv_box": 6.4444969545321245,
+   "signal_close": 12250.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-11T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "022100",
+   "name": "포스코DX",
+   "src": "",
+   "signal_time": "2026-11-11T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 21550.0,
+   "poc": 19247.25,
+   "rv_box": 1.7814192773496147,
+   "signal_close": 21750.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-11T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
   }
  ],
  "signals": {
@@ -510,7 +566,11 @@
    "~280360|10",
    "~041510|10"
   ],
-  "2026-11-10": []
+  "2026-11-10": [],
+  "2026-11-11": [
+   "003380|09",
+   "022100|09"
+  ]
  },
  "skipped": [
   {

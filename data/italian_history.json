@@ -1,14 +1,4 @@
 [
-  "latte",
-  "zucchero",
-  "villaggio",
-  "via",
-  "minuto",
-  "pasto",
-  "doccia",
-  "acqua",
-  "pane",
-  "frutta",
   "valigia",
   "banca",
   "autostrada",
@@ -498,5 +488,15 @@
   "porta",
   "cameriere",
   "conto",
-  "menù"
+  "menù",
+  "treno",
+  "autobus",
+  "orologio",
+  "cappello",
+  "pantaloni",
+  "maglietta",
+  "borsa",
+  "occhiali",
+  "fiume",
+  "spiaggia"
 ]

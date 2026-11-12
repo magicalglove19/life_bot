@@ -1,14 +1,4 @@
 [
-  "valigia",
-  "banca",
-  "autostrada",
-  "cellulare",
-  "biglietteria",
-  "sconto",
-  "cittadina",
-  "penna",
-  "libro",
-  "vino",
   "amico",
   "amica",
   "telefono",
@@ -498,5 +488,15 @@
   "borsa",
   "occhiali",
   "fiume",
-  "spiaggia"
+  "spiaggia",
+  "dottore",
+  "storia",
+  "ospedale",
+  "biblioteca",
+  "parola",
+  "bicicletta",
+  "viaggio",
+  "regalo",
+  "festa",
+  "montagna"
 ]

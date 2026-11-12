@@ -496,7 +496,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-12T12:00:00+09:00",
+   "last_bar": "2026-11-12T13:00:00+09:00",
    "days": [
     "2026-11-11",
     "2026-11-12"
@@ -527,11 +527,39 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-12T12:00:00+09:00",
+   "last_bar": "2026-11-12T13:00:00+09:00",
    "days": [
     "2026-11-12"
    ],
    "fake_checked": 3,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "036460",
+   "name": "한국가스공사",
+   "src": "",
+   "signal_time": "2026-11-12T13:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 38000.0,
+   "poc": 37275.0,
+   "rv_box": 6.995670907349767,
+   "signal_close": 38050.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-12T13:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -610,7 +638,9 @@
    "~085620|14"
   ],
   "2026-11-12": [
-   "035900|09"
+   "035900|09",
+   "036460|13",
+   "~280360|13"
   ]
  },
  "skipped": [
@@ -925,6 +955,16 @@
    "signal_close": 20600.0,
    "poc": 18887.5,
    "rv_box": 2.7108218441735796,
+   "market": "down"
+  },
+  {
+   "code": "280360",
+   "name": "롯데웰푸드",
+   "uni": "top300",
+   "signal_time": "2026-11-12T13:00:00+09:00",
+   "signal_close": 131000.0,
+   "poc": 119022.5,
+   "rv_box": 1.787352071005917,
    "market": "down"
   }
  ]

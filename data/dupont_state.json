@@ -496,7 +496,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-12T13:00:00+09:00",
+   "last_bar": "2026-11-12T14:00:00+09:00",
    "days": [
     "2026-11-11",
     "2026-11-12"
@@ -527,7 +527,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-12T13:00:00+09:00",
+   "last_bar": "2026-11-12T14:00:00+09:00",
    "days": [
     "2026-11-12"
    ],
@@ -546,20 +546,22 @@
    "poc": 37275.0,
    "rv_box": 6.995670907349767,
    "signal_close": 38050.0,
-   "entry": null,
-   "entry_time": null,
-   "stop": null,
-   "t1": null,
-   "t2": null,
-   "risk": null,
+   "entry": 37900.0,
+   "entry_time": "2026-11-12T14:00:00+09:00",
+   "stop": 37275.0,
+   "t1": 38525.0,
+   "t2": 39775.0,
+   "risk": 625.0,
    "half": false,
    "status": "open",
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-12T13:00:00+09:00",
-   "days": [],
-   "fake_checked": 0,
+   "last_bar": "2026-11-12T14:00:00+09:00",
+   "days": [
+    "2026-11-12"
+   ],
+   "fake_checked": 1,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"

@@ -496,11 +496,40 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-11T14:00:00+09:00",
+   "last_bar": "2026-11-12T09:00:00+09:00",
    "days": [
-    "2026-11-11"
+    "2026-11-11",
+    "2026-11-12"
    ],
    "fake_checked": 3,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "035900",
+   "name": "JYP Ent.",
+   "src": "",
+   "signal_time": "2026-11-12T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 42425.0,
+   "poc": 39362.8125,
+   "rv_box": 25.562693037776206,
+   "signal_close": 45900.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-12T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -577,6 +606,9 @@
    "022100|09",
    "~347850|10",
    "~085620|14"
+  ],
+  "2026-11-12": [
+   "035900|09"
   ]
  },
  "skipped": [

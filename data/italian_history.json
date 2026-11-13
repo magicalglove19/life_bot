@@ -1,14 +1,4 @@
 [
-  "amico",
-  "amica",
-  "telefono",
-  "stazione",
-  "cappello",
-  "bottiglia",
-  "fiume",
-  "casa",
-  "famiglia",
-  "bambino",
   "bambina",
   "giornale",
   "strada",
@@ -498,5 +488,15 @@
   "viaggio",
   "regalo",
   "festa",
-  "montagna"
+  "montagna",
+  "città",
+  "trattoria",
+  "autunno",
+  "estate",
+  "primavera",
+  "inverno",
+  "fratello",
+  "sorella",
+  "mercato",
+  "luna"
 ]

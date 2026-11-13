@@ -528,7 +528,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-13T11:00:00+09:00",
+   "last_bar": "2026-11-13T12:00:00+09:00",
    "days": [
     "2026-11-11",
     "2026-11-12",
@@ -560,7 +560,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-13T11:00:00+09:00",
+   "last_bar": "2026-11-13T12:00:00+09:00",
    "days": [
     "2026-11-12",
     "2026-11-13"
@@ -591,11 +591,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-13T11:00:00+09:00",
+   "last_bar": "2026-11-13T12:00:00+09:00",
    "days": [
     "2026-11-13"
    ],
-   "fake_checked": 2,
+   "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -621,11 +621,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-13T11:00:00+09:00",
+   "last_bar": "2026-11-13T12:00:00+09:00",
    "days": [
     "2026-11-13"
    ],
-   "fake_checked": 2,
+   "fake_checked": 3,
    "fake_warned": true,
    "uni": "top300",
    "market": "down"
@@ -714,7 +714,8 @@
    "~178320|09",
    "~086790|09",
    "~097230|10",
-   "~028050|10"
+   "~028050|10",
+   "~138930|12"
   ]
  },
  "skipped": [
@@ -1079,6 +1080,16 @@
    "signal_close": 68900.0,
    "poc": 66306.25,
    "rv_box": 1.9038286415745176,
+   "market": "down"
+  },
+  {
+   "code": "138930",
+   "name": "BNK금융지주",
+   "uni": "top300",
+   "signal_time": "2026-11-13T12:00:00+09:00",
+   "signal_close": 13690.0,
+   "poc": 12788.5,
+   "rv_box": 1.8280466656382282,
    "market": "down"
   }
  ]

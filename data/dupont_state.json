@@ -476,6 +476,38 @@
    "exit_price": 11618.375
   },
   {
+   "code": "036460",
+   "name": "한국가스공사",
+   "src": "",
+   "signal_time": "2026-11-12T13:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 38000.0,
+   "poc": 37275.0,
+   "rv_box": 6.995670907349767,
+   "signal_close": 38050.0,
+   "entry": 37900.0,
+   "entry_time": "2026-11-12T14:00:00+09:00",
+   "stop": 37900.0,
+   "t1": 38525.0,
+   "t2": 39775.0,
+   "risk": 625.0,
+   "half": true,
+   "status": "closed",
+   "r": 0.5,
+   "exit_reason": "본전",
+   "exit_time": "2026-11-13T09:00:00+09:00",
+   "last_bar": "2026-11-13T09:00:00+09:00",
+   "days": [
+    "2026-11-12",
+    "2026-11-13"
+   ],
+   "fake_checked": 2,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down",
+   "exit_price": 37900.0
+  },
+  {
    "code": "022100",
    "name": "포스코DX",
    "src": "",
@@ -496,10 +528,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-12T14:00:00+09:00",
+   "last_bar": "2026-11-13T09:00:00+09:00",
    "days": [
     "2026-11-11",
-    "2026-11-12"
+    "2026-11-12",
+    "2026-11-13"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -527,9 +560,10 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-12T14:00:00+09:00",
+   "last_bar": "2026-11-13T09:00:00+09:00",
    "days": [
-    "2026-11-12"
+    "2026-11-12",
+    "2026-11-13"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -537,31 +571,57 @@
    "market": "down"
   },
   {
-   "code": "036460",
-   "name": "한국가스공사",
+   "code": "277810",
+   "name": "레인보우로보틱스",
    "src": "",
-   "signal_time": "2026-11-12T13:00:00+09:00",
+   "signal_time": "2026-11-13T09:00:00+09:00",
    "max_stop": 0.08,
-   "level": 38000.0,
-   "poc": 37275.0,
-   "rv_box": 6.995670907349767,
-   "signal_close": 38050.0,
-   "entry": 37900.0,
-   "entry_time": "2026-11-12T14:00:00+09:00",
-   "stop": 37275.0,
-   "t1": 38525.0,
-   "t2": 39775.0,
-   "risk": 625.0,
+   "level": 363000.0,
+   "poc": 334093.75,
+   "rv_box": 4.980750074386473,
+   "signal_close": 383000.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
    "half": false,
    "status": "open",
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-12T14:00:00+09:00",
-   "days": [
-    "2026-11-12"
-   ],
-   "fake_checked": 1,
+   "last_bar": "2026-11-13T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "108490",
+   "name": "로보티즈",
+   "src": "",
+   "signal_time": "2026-11-13T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 250500.0,
+   "poc": 216506.25,
+   "rv_box": 2.6322673321454144,
+   "signal_close": 255000.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-13T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -643,6 +703,12 @@
    "035900|09",
    "036460|13",
    "~280360|13"
+  ],
+  "2026-11-13": [
+   "277810|09",
+   "108490|09",
+   "~178320|09",
+   "~086790|09"
   ]
  },
  "skipped": [
@@ -967,6 +1033,26 @@
    "signal_close": 131000.0,
    "poc": 119022.5,
    "rv_box": 1.787352071005917,
+   "market": "down"
+  },
+  {
+   "code": "178320",
+   "name": "서진시스템",
+   "uni": "top300",
+   "signal_time": "2026-11-13T09:00:00+09:00",
+   "signal_close": 33200.0,
+   "poc": 28407.5,
+   "rv_box": 2.6250194320262676,
+   "market": "down"
+  },
+  {
+   "code": "086790",
+   "name": "하나금융지주",
+   "uni": "base40",
+   "signal_time": "2026-11-13T09:00:00+09:00",
+   "signal_close": 124900.0,
+   "poc": 118355.0,
+   "rv_box": 2.0423297611916365,
    "market": "down"
   }
  ]

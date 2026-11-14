@@ -1,14 +1,4 @@
 [
-  "bambina",
-  "giornale",
-  "strada",
-  "camera",
-  "parco",
-  "piscina",
-  "neve",
-  "porta",
-  "sedia",
-  "tavolo",
   "finestra",
   "lampada",
   "zaino",
@@ -498,5 +488,15 @@
   "fratello",
   "sorella",
   "mercato",
-  "luna"
+  "luna",
+  "strada",
+  "negozio",
+  "città",
+  "passeggiata",
+  "orario",
+  "valigia",
+  "mappa",
+  "aeroporto",
+  "ponte",
+  "scatola"
 ]

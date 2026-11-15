@@ -1,14 +1,4 @@
 [
-  "finestra",
-  "lampada",
-  "zaino",
-  "occhiali",
-  "bottone",
-  "cuscino",
-  "cintura",
-  "caffè",
-  "cane",
-  "gatto",
   "pasta",
   "formaggio",
   "birra",
@@ -498,5 +488,15 @@
   "mappa",
   "aeroporto",
   "ponte",
-  "scatola"
+  "scatola",
+  "gelato",
+  "pesce",
+  "pollo",
+  "formaggio",
+  "verdura",
+  "scuola",
+  "professore",
+  "bambino",
+  "lampada",
+  "computer"
 ]

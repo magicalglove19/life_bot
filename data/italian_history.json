@@ -1,14 +1,4 @@
 [
-  "pasta",
-  "formaggio",
-  "birra",
-  "bicicletta",
-  "libreria",
-  "lago",
-  "notte",
-  "mercato",
-  "cappuccino",
-  "chiave",
   "orologio",
   "vestito",
   "piano",
@@ -498,5 +488,15 @@
   "professore",
   "bambino",
   "lampada",
-  "computer"
+  "computer",
+  "acqua",
+  "latte",
+  "pane",
+  "penna",
+  "zucchero",
+  "frutta",
+  "uovo",
+  "burro",
+  "carta",
+  "macchina"
 ]

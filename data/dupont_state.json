@@ -528,11 +528,12 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-13T14:00:00+09:00",
+   "last_bar": "2026-11-16T09:00:00+09:00",
    "days": [
     "2026-11-11",
     "2026-11-12",
-    "2026-11-13"
+    "2026-11-13",
+    "2026-11-16"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -560,10 +561,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-13T14:00:00+09:00",
+   "last_bar": "2026-11-16T09:00:00+09:00",
    "days": [
     "2026-11-12",
-    "2026-11-13"
+    "2026-11-13",
+    "2026-11-16"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -591,9 +593,10 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-13T14:00:00+09:00",
+   "last_bar": "2026-11-16T09:00:00+09:00",
    "days": [
-    "2026-11-13"
+    "2026-11-13",
+    "2026-11-16"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -621,12 +624,69 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-13T14:00:00+09:00",
+   "last_bar": "2026-11-16T09:00:00+09:00",
    "days": [
-    "2026-11-13"
+    "2026-11-13",
+    "2026-11-16"
    ],
    "fake_checked": 3,
    "fake_warned": true,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "028050",
+   "name": "삼성E&A",
+   "src": "",
+   "signal_time": "2026-11-16T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 69700.0,
+   "poc": 66422.5,
+   "rv_box": 1.969435616989901,
+   "signal_close": 69900.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-16T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "279570",
+   "name": "케이뱅크",
+   "src": "",
+   "signal_time": "2026-11-16T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 5300.0,
+   "poc": 5136.875,
+   "rv_box": 1.6417588879172573,
+   "signal_close": 5350.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-16T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
    "uni": "top300",
    "market": "down"
   }
@@ -716,6 +776,11 @@
    "~097230|10",
    "~028050|10",
    "~138930|12"
+  ],
+  "2026-11-16": [
+   "028050|09",
+   "279570|09",
+   "~105560|09"
   ]
  },
  "skipped": [
@@ -1090,6 +1155,16 @@
    "signal_close": 13690.0,
    "poc": 12788.5,
    "rv_box": 1.8280466656382282,
+   "market": "down"
+  },
+  {
+   "code": "105560",
+   "name": "KB금융",
+   "uni": "base40",
+   "signal_time": "2026-11-16T09:00:00+09:00",
+   "signal_close": 160550.0,
+   "poc": 152992.5,
+   "rv_box": 1.5764282132324319,
    "market": "down"
   }
  ]

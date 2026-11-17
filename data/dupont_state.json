@@ -588,11 +588,11 @@
    "t2": 26908.0,
    "risk": 1736.0,
    "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-17T13:00:00+09:00",
+   "status": "closed",
+   "r": -0.37442396313364057,
+   "exit_reason": "시간청산",
+   "exit_time": "2026-11-17T14:00:00+09:00",
+   "last_bar": "2026-11-17T14:00:00+09:00",
    "days": [
     "2026-11-11",
     "2026-11-12",
@@ -603,7 +603,8 @@
    "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
-   "market": "down"
+   "market": "down",
+   "exit_price": 21050.0
   },
   {
    "code": "035900",
@@ -626,7 +627,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-17T13:00:00+09:00",
+   "last_bar": "2026-11-17T14:00:00+09:00",
    "days": [
     "2026-11-12",
     "2026-11-13",
@@ -659,7 +660,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-17T13:00:00+09:00",
+   "last_bar": "2026-11-17T14:00:00+09:00",
    "days": [
     "2026-11-16",
     "2026-11-17"
@@ -690,7 +691,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-17T13:00:00+09:00",
+   "last_bar": "2026-11-17T14:00:00+09:00",
    "days": [
     "2026-11-16",
     "2026-11-17"
@@ -721,7 +722,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-17T13:00:00+09:00",
+   "last_bar": "2026-11-17T14:00:00+09:00",
    "days": [
     "2026-11-17"
    ],

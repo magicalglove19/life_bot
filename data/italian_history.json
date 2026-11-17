@@ -1,14 +1,4 @@
 [
-  "orologio",
-  "vestito",
-  "piano",
-  "mano",
-  "piede",
-  "coda",
-  "sci",
-  "macchina",
-  "treno",
-  "autobus",
   "ristorante",
   "colazione",
   "pranzo",
@@ -498,5 +488,15 @@
   "uovo",
   "burro",
   "carta",
-  "macchina"
+  "macchina",
+  "gelateria",
+  "telefono",
+  "università",
+  "museo",
+  "parco",
+  "piscina",
+  "cucina",
+  "farmacia",
+  "taxi",
+  "biglietto"
 ]

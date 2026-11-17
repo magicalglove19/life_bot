@@ -540,6 +540,38 @@
    "exit_price": 235060.0
   },
   {
+   "code": "277810",
+   "name": "레인보우로보틱스",
+   "src": "",
+   "signal_time": "2026-11-13T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 363000.0,
+   "poc": 334093.75,
+   "rv_box": 4.980750074386473,
+   "signal_close": 383000.0,
+   "entry": 383500.0,
+   "entry_time": "2026-11-13T10:00:00+09:00",
+   "stop": 352820.0,
+   "t1": 414180.0,
+   "t2": 475540.0,
+   "risk": 30680.0,
+   "half": false,
+   "status": "closed",
+   "r": -1.1734028683181226,
+   "exit_reason": "갭손절",
+   "exit_time": "2026-11-17T09:00:00+09:00",
+   "last_bar": "2026-11-17T09:00:00+09:00",
+   "days": [
+    "2026-11-13",
+    "2026-11-16"
+   ],
+   "fake_checked": 3,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down",
+   "exit_price": 347500.0
+  },
+  {
    "code": "022100",
    "name": "포스코DX",
    "src": "",
@@ -560,12 +592,13 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-16T14:00:00+09:00",
+   "last_bar": "2026-11-17T10:00:00+09:00",
    "days": [
     "2026-11-11",
     "2026-11-12",
     "2026-11-13",
-    "2026-11-16"
+    "2026-11-16",
+    "2026-11-17"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -593,42 +626,12 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-16T14:00:00+09:00",
+   "last_bar": "2026-11-17T10:00:00+09:00",
    "days": [
     "2026-11-12",
     "2026-11-13",
-    "2026-11-16"
-   ],
-   "fake_checked": 3,
-   "fake_warned": false,
-   "uni": "top300",
-   "market": "down"
-  },
-  {
-   "code": "277810",
-   "name": "레인보우로보틱스",
-   "src": "",
-   "signal_time": "2026-11-13T09:00:00+09:00",
-   "max_stop": 0.08,
-   "level": 363000.0,
-   "poc": 334093.75,
-   "rv_box": 4.980750074386473,
-   "signal_close": 383000.0,
-   "entry": 383500.0,
-   "entry_time": "2026-11-13T10:00:00+09:00",
-   "stop": 352820.0,
-   "t1": 414180.0,
-   "t2": 475540.0,
-   "risk": 30680.0,
-   "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-16T14:00:00+09:00",
-   "days": [
-    "2026-11-13",
-    "2026-11-16"
+    "2026-11-16",
+    "2026-11-17"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -656,9 +659,10 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-16T14:00:00+09:00",
+   "last_bar": "2026-11-17T10:00:00+09:00",
    "days": [
-    "2026-11-16"
+    "2026-11-16",
+    "2026-11-17"
    ],
    "fake_checked": 3,
    "fake_warned": true,
@@ -677,20 +681,49 @@
    "signal_close": 5350.0,
    "entry": 5350.0,
    "entry_time": "2026-11-16T10:00:00+09:00",
-   "stop": 5136.875,
+   "stop": 5350.0,
    "t1": 5563.125,
    "t2": 5989.375,
    "risk": 213.125,
+   "half": true,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-17T10:00:00+09:00",
+   "days": [
+    "2026-11-16",
+    "2026-11-17"
+   ],
+   "fake_checked": 3,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "0126Z0",
+   "name": "삼성에피스홀딩스",
+   "src": "",
+   "signal_time": "2026-11-17T10:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 372500.0,
+   "poc": 354562.5,
+   "rv_box": 2.4213898486923533,
+   "signal_close": 374000.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
    "half": false,
    "status": "open",
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-16T14:00:00+09:00",
-   "days": [
-    "2026-11-16"
-   ],
-   "fake_checked": 3,
+   "last_bar": "2026-11-17T10:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -788,6 +821,9 @@
    "~105560|09",
    "~069960|13",
    "~069960|13"
+  ],
+  "2026-11-17": [
+   "0126Z0|10"
   ]
  },
  "skipped": [

@@ -725,7 +725,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-18T12:00:00+09:00",
+   "last_bar": "2026-11-18T13:00:00+09:00",
    "days": [
     "2026-11-12",
     "2026-11-13",
@@ -759,11 +759,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-18T12:00:00+09:00",
+   "last_bar": "2026-11-18T13:00:00+09:00",
    "days": [
     "2026-11-18"
    ],
-   "fake_checked": 1,
+   "fake_checked": 2,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -789,11 +789,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-18T12:00:00+09:00",
+   "last_bar": "2026-11-18T13:00:00+09:00",
    "days": [
     "2026-11-18"
    ],
-   "fake_checked": 1,
+   "fake_checked": 2,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -897,7 +897,8 @@
   ],
   "2026-11-18": [
    "041510|11",
-   "097950|11"
+   "097950|11",
+   "~352820|13"
   ]
  },
  "skipped": [
@@ -1302,6 +1303,16 @@
    "signal_close": 89600.0,
    "poc": 82952.5,
    "rv_box": 2.5347407479963358,
+   "market": "down"
+  },
+  {
+   "code": "352820",
+   "name": "하이브",
+   "uni": "top300",
+   "signal_time": "2026-11-18T13:00:00+09:00",
+   "signal_close": 165100.0,
+   "poc": 155846.25,
+   "rv_box": 2.2149964428764948,
    "market": "down"
   }
  ]

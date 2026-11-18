@@ -721,11 +721,11 @@
    "t2": 56916.0,
    "risk": 3672.0,
    "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-18T13:00:00+09:00",
+   "status": "closed",
+   "r": 0.23148148148148148,
+   "exit_reason": "시간청산",
+   "exit_time": "2026-11-18T14:00:00+09:00",
+   "last_bar": "2026-11-18T14:00:00+09:00",
    "days": [
     "2026-11-12",
     "2026-11-13",
@@ -736,7 +736,8 @@
    "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
-   "market": "down"
+   "market": "down",
+   "exit_price": 46750.0
   },
   {
    "code": "041510",
@@ -759,11 +760,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-18T13:00:00+09:00",
+   "last_bar": "2026-11-18T14:00:00+09:00",
    "days": [
     "2026-11-18"
    ],
-   "fake_checked": 2,
+   "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -789,11 +790,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-18T13:00:00+09:00",
+   "last_bar": "2026-11-18T14:00:00+09:00",
    "days": [
     "2026-11-18"
    ],
-   "fake_checked": 2,
+   "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -898,7 +899,9 @@
   "2026-11-18": [
    "041510|11",
    "097950|11",
-   "~352820|13"
+   "~352820|13",
+   "~022100|14",
+   "~950260|14"
   ]
  },
  "skipped": [
@@ -1313,6 +1316,26 @@
    "signal_close": 165100.0,
    "poc": 155846.25,
    "rv_box": 2.2149964428764948,
+   "market": "down"
+  },
+  {
+   "code": "022100",
+   "name": "포스코DX",
+   "uni": "top300",
+   "signal_time": "2026-11-18T14:00:00+09:00",
+   "signal_close": 22100.0,
+   "poc": 21236.875,
+   "rv_box": 3.4349267709647524,
+   "market": "down"
+  },
+  {
+   "code": "950260",
+   "name": "인제니아테라퓨틱스(Reg.S)",
+   "uni": "top300",
+   "signal_time": "2026-11-18T14:00:00+09:00",
+   "signal_close": 22950.0,
+   "poc": 20352.75,
+   "rv_box": 1.5542783475342674,
    "market": "down"
   }
  ]

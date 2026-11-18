@@ -10,6 +10,7 @@ import io
 import json
 import os
 import re
+import sys
 import time
 
 import pandas as pd
@@ -20,6 +21,11 @@ _URL = "https://kind.krx.co.kr/corpgeneral/corpList.do?method=download&marketTyp
 _MARKETS = {"KOSPI": "stockMkt", "KOSDAQ": "kosdaqMkt"}
 _HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) kcg-screener/1.0"}
 _CACHE_TTL = 7 * 24 * 3600      # 상장 종목은 자주 안 바뀐다
+_RETRIES = 3                    # KIND 가 datacenter IP 를 즉시 끊는 날이 있다
+_BACKOFF = 2.0
+
+# 패키지에 같이 넣어둔 상장목록 스냅샷. KIND 가 안 될 때 쓴다.
+_SNAPSHOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "universe_snapshot.json")
 
 _PREFERRED = re.compile(r"(우|우B|우C|\d우)$")
 
@@ -32,14 +38,38 @@ def _cache_path() -> str:
 def _load_cache() -> list[dict] | None:
     path = _cache_path()
     if os.path.exists(path) and (time.time() - os.path.getmtime(path)) < _CACHE_TTL:
-        with open(path, encoding="utf-8") as fh:
-            return json.load(fh)
+        try:
+            with open(path, encoding="utf-8") as fh:
+                return json.load(fh)
+        except Exception:
+            return None
     return None
 
 
+def _load_snapshot() -> list[dict] | None:
+    """KIND 가 죽은 날의 최후 수단. 신규 상장만 빠지고 나머지는 그대로다."""
+    try:
+        with open(_SNAPSHOT, encoding="utf-8") as fh:
+            rows = json.load(fh)
+        return rows or None
+    except Exception:
+        return None
+
+
 def _fetch(market: str) -> list[dict]:
-    html = requests.get(_URL.format(_MARKETS[market]), headers=_HEADERS, timeout=30).text
-    table = pd.read_html(io.StringIO(html))[0]
+    """KIND 상장법인목록. 연결이 바로 끊기는 경우가 있어 짧게 재시도한다."""
+    table, last = None, None
+    for attempt in range(_RETRIES):
+        try:
+            html = requests.get(_URL.format(_MARKETS[market]), headers=_HEADERS, timeout=30).text
+            table = pd.read_html(io.StringIO(html))[0]
+            break
+        except Exception as exc:
+            last = exc
+            if attempt + 1 < _RETRIES:
+                time.sleep(_BACKOFF * (attempt + 1))
+    if table is None:
+        raise RuntimeError(f"KIND {market} 상장목록 실패: {last}")
     rows = []
     for _, r in table.iterrows():
         code = str(r["종목코드"]).strip().zfill(6)
@@ -59,11 +89,19 @@ def load(market: str = "ALL", use_cache: bool = True, exclude_spac: bool = True,
     """{'code','name','market','sector'} 딕셔너리 리스트를 반환한다."""
     rows = _load_cache() if use_cache else None
     if rows is None:
-        rows = []
-        for mk in _MARKETS:
-            rows.extend(_fetch(mk))
-        with open(_cache_path(), "w", encoding="utf-8") as fh:
-            json.dump(rows, fh, ensure_ascii=False, indent=1)
+        try:
+            rows = []
+            for mk in _MARKETS:
+                rows.extend(_fetch(mk))
+            with open(_cache_path(), "w", encoding="utf-8") as fh:
+                json.dump(rows, fh, ensure_ascii=False, indent=1)
+        except Exception as exc:
+            # 여기서 터지면 스크리너가 통째로 죽는다 (2026-11-18 실제로 그랬다).
+            # 상장목록은 하루 이틀 묵어도 판정에 영향이 없으니 스냅샷으로 계속 간다.
+            rows = _load_snapshot()
+            if not rows:
+                raise
+            print(f"[universe] KIND 실패({exc}) — 스냅샷 {len(rows)}종목으로 진행", file=sys.stderr)
 
     if market != "ALL":
         rows = [r for r in rows if r["market"] == market.upper()]

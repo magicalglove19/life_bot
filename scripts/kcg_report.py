@@ -134,4 +134,19 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except SystemExit:
+        raise
+    except BaseException as exc:                     # noqa: BLE001
+        # 조용히 죽으면 "왜 안 왔지?" 로만 남는다. 실패도 텔레그램으로 알린다.
+        import html
+        import traceback
+        traceback.print_exc()
+        if "--dry-run" not in sys.argv:
+            try:
+                telegram.send("❌ <b>국내 스크리너 실패</b>\n"
+                              f"<code>{html.escape(f'{type(exc).__name__}: {exc}'[:400])}</code>")
+            except Exception:
+                pass
+        sys.exit(1)

@@ -3,12 +3,14 @@ name: kcg
 # 강창권 상한가 후 눌림목 + 신정제 종가배팅 — 평일 14:40 KST 국내 스크리너.
 #
 # ⚠️ 시각이 중요한 작업이다. 신정제 종가배팅은 15:00부터 관찰해 15:18~15:20에 사므로
-#    15:00 전에 도착해야 한다.
+#    늦어도 14:50 까지는 도착해야 한다. 실행 시간 예산이 10분뿐이라는 뜻이다.
+#    (실측: 14:40 발사 → 14:50 도착. 유니버스를 줄이기 전에는 12~13분이 걸려
+#     14:56~15:01 에 도착하는 날이 있었다.)
 #    그런데 GitHub 예약은 이 레포 실측으로 슬롯마다 1시간 23분 ~ 5시간 밀린다.
 #    (20~23시 UTC 슬롯 83~153분 / 03시 UTC 슬롯 288~300분)
 #    01시 UTC 슬롯은 표본이 없어 도착 시각을 장담할 수 없다.
 #
-#    → 주 경로는 repository_dispatch 다. 맥의 launchd 가 평일 15:00 정각에 찌른다.
+#    → 주 경로는 repository_dispatch 다. 맥의 launchd 가 평일 14:40 에 찌른다.
 #      설치:  ./scripts/local/install-trigger.sh kcg 14:40
 #
 #    아래 schedule 은 맥이 꺼져 있을 때를 위한 백업일 뿐이다. 엉뚱한 시각에
@@ -56,6 +58,11 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # 전 종목(2,553개)을 받으면 10~13분이 걸려 15:00 을 넘기는 날이 생긴다.
+          # 거래대금 상위 1,600개면 유동성 기준(20일 평균 10억)을 통과하는 종목의
+          # 99% 를 덮으면서 수집 시간이 절반으로 줄어든다. (2026-11-18 실측)
+          KCG_UNIVERSE: '1600'
+          KCG_WORKERS: '5'            # 6 을 넘기면 네이버가 막는다
           # 수동 실행(workflow_dispatch)은 기본으로 시간대 가드를 무시한다.
           KCG_FORCE: ${{ (github.event_name == 'workflow_dispatch' && inputs.force) && '1' || '0' }}
         run: python scripts/kcg_report.py

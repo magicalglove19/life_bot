@@ -1,14 +1,4 @@
 [
-  "ristorante",
-  "colazione",
-  "pranzo",
-  "cena",
-  "mappa",
-  "portafoglio",
-  "carta",
-  "fratello",
-  "sorella",
-  "lavoro",
   "dottore",
   "ospedale",
   "farmacia",
@@ -498,5 +488,15 @@
   "cucina",
   "farmacia",
   "taxi",
-  "biglietto"
+  "biglietto",
+  "cappuccino",
+  "bottiglia",
+  "poltrona",
+  "cuscino",
+  "sciarpa",
+  "cintura",
+  "piatto",
+  "forno",
+  "ventola",
+  "cittadino"
 ]

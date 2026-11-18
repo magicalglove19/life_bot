@@ -725,7 +725,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-18T10:00:00+09:00",
+   "last_bar": "2026-11-18T11:00:00+09:00",
    "days": [
     "2026-11-12",
     "2026-11-13",
@@ -734,6 +734,62 @@
     "2026-11-18"
    ],
    "fake_checked": 3,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "041510",
+   "name": "에스엠",
+   "src": "",
+   "signal_time": "2026-11-18T11:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 82700.0,
+   "poc": 77163.75,
+   "rv_box": 4.5047972684592406,
+   "signal_close": 86000.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-18T11:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "097950",
+   "name": "CJ제일제당",
+   "src": "",
+   "signal_time": "2026-11-18T11:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 182900.0,
+   "poc": 177535.0,
+   "rv_box": 1.7242774693322216,
+   "signal_close": 183300.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-18T11:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -835,7 +891,10 @@
   "2026-11-17": [
    "0126Z0|10"
   ],
-  "2026-11-18": []
+  "2026-11-18": [
+   "041510|11",
+   "097950|11"
+  ]
  },
  "skipped": [
   {

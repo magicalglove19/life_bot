@@ -106,10 +106,10 @@ git push -u origin main
 |---|---|---|
 | 05:00 | 월~토 | morning-stocks |
 | 09:00 | 매일 | italian |
-| 13시경 | 월~금 | ma8-screener |
 | 14:00 | 매일 | us-news |
 | 05:30 | 월~토 | minervini |
 | — | 수동 | kid-english (예약 해제) |
+| — | 수동 | ma8-screener (예약 해제 — 맥 유목민 스크리너 14:40으로 대체) |
 | 일요일 00:00 | 주 1회 | refresh-tickers |
 | 09:30·12:00·15:00 | 월~금 | judoju (외부 트리거 권장 — 아래 참고) |
 | 15:00 | 월~금 | kcg — 강창권 상한가 후 눌림목 (국내) |

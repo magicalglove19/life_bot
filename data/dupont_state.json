@@ -760,7 +760,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-19T11:00:00+09:00",
+   "last_bar": "2026-11-19T12:00:00+09:00",
    "days": [
     "2026-11-18",
     "2026-11-19"
@@ -791,7 +791,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-19T11:00:00+09:00",
+   "last_bar": "2026-11-19T12:00:00+09:00",
    "days": [
     "2026-11-18",
     "2026-11-19"
@@ -822,11 +822,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-19T11:00:00+09:00",
+   "last_bar": "2026-11-19T12:00:00+09:00",
    "days": [
     "2026-11-19"
    ],
-   "fake_checked": 1,
+   "fake_checked": 2,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -852,11 +852,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-19T11:00:00+09:00",
+   "last_bar": "2026-11-19T12:00:00+09:00",
    "days": [
     "2026-11-19"
    ],
-   "fake_checked": 1,
+   "fake_checked": 2,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"

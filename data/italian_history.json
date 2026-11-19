@@ -1,14 +1,4 @@
 [
-  "dottore",
-  "ospedale",
-  "farmacia",
-  "polizia",
-  "aeroporto",
-  "metropolitana",
-  "passeggero",
-  "città",
-  "piazza",
-  "biglietto",
   "orario",
   "taxi",
   "cameriere",
@@ -498,5 +488,15 @@
   "piatto",
   "forno",
   "ventola",
-  "cittadino"
+  "cittadino",
+  "casa",
+  "amico",
+  "famiglia",
+  "lavoro",
+  "ufficio",
+  "stazione",
+  "tempo",
+  "vino",
+  "birra",
+  "paese"
 ]

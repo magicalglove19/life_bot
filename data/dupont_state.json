@@ -751,18 +751,19 @@
    "signal_close": 86000.0,
    "entry": 86000.0,
    "entry_time": "2026-11-18T12:00:00+09:00",
-   "stop": 79120.0,
+   "stop": 86000.0,
    "t1": 92880.0,
    "t2": 106640.0,
    "risk": 6880.0,
-   "half": false,
+   "half": true,
    "status": "open",
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-18T15:00:00+09:00",
+   "last_bar": "2026-11-19T10:00:00+09:00",
    "days": [
-    "2026-11-18"
+    "2026-11-18",
+    "2026-11-19"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -790,11 +791,68 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-18T15:00:00+09:00",
+   "last_bar": "2026-11-19T10:00:00+09:00",
    "days": [
-    "2026-11-18"
+    "2026-11-18",
+    "2026-11-19"
    ],
    "fake_checked": 3,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "008770",
+   "name": "호텔신라",
+   "src": "",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 36500.0,
+   "poc": 35021.875,
+   "rv_box": 25.56072666702582,
+   "signal_close": 39200.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-19T10:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "352820",
+   "name": "하이브",
+   "src": "",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 167300.0,
+   "poc": 155400.0,
+   "rv_box": 10.257805595868364,
+   "signal_close": 176200.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-19T10:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -905,7 +963,20 @@
    "~022100|14",
    "~950260|14"
   ],
-  "2026-11-19": []
+  "2026-11-19": [
+   "008770|10",
+   "352820|10",
+   "~090430|10",
+   "~051900|10",
+   "~004170|10",
+   "~001040|10",
+   "~010170|10",
+   "~000120|10",
+   "~323410|10",
+   "~145020|10",
+   "~012750|10",
+   "~271560|10"
+  ]
  },
  "skipped": [
   {
@@ -1359,6 +1430,106 @@
    "signal_close": 22950.0,
    "poc": 20352.75,
    "rv_box": 1.5542783475342674,
+   "market": "down"
+  },
+  {
+   "code": "090430",
+   "name": "아모레퍼시픽",
+   "uni": "top300",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "signal_close": 136900.0,
+   "poc": 128600.0,
+   "rv_box": 9.441410239049219,
+   "market": "down"
+  },
+  {
+   "code": "051900",
+   "name": "LG생활건강",
+   "uni": "top300",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "signal_close": 253000.0,
+   "poc": 226918.75,
+   "rv_box": 5.585399308507624,
+   "market": "down"
+  },
+  {
+   "code": "004170",
+   "name": "신세계",
+   "uni": "top300",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "signal_close": 288500.0,
+   "poc": 241025.0,
+   "rv_box": 5.0762068045871915,
+   "market": "down"
+  },
+  {
+   "code": "001040",
+   "name": "CJ",
+   "uni": "top300",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "signal_close": 120200.0,
+   "poc": 111433.75,
+   "rv_box": 5.069516063459105,
+   "market": "down"
+  },
+  {
+   "code": "010170",
+   "name": "대한광통신",
+   "uni": "top300",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "signal_close": 14140.0,
+   "poc": 13383.25,
+   "rv_box": 4.823715992796353,
+   "market": "down"
+  },
+  {
+   "code": "000120",
+   "name": "CJ대한통운",
+   "uni": "top300",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "signal_close": 71500.0,
+   "poc": 67768.75,
+   "rv_box": 3.766521100011803,
+   "market": "down"
+  },
+  {
+   "code": "323410",
+   "name": "카카오뱅크",
+   "uni": "top300",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "signal_close": 21575.0,
+   "poc": 20977.5,
+   "rv_box": 3.3429460970790945,
+   "market": "down"
+  },
+  {
+   "code": "145020",
+   "name": "휴젤",
+   "uni": "top300",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "signal_close": 205500.0,
+   "poc": 193900.0,
+   "rv_box": 2.9741016557009616,
+   "market": "down"
+  },
+  {
+   "code": "012750",
+   "name": "에스원",
+   "uni": "top300",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "signal_close": 107300.0,
+   "poc": 98218.75,
+   "rv_box": 2.7297755627290172,
+   "market": "down"
+  },
+  {
+   "code": "271560",
+   "name": "오리온",
+   "uni": "top300",
+   "signal_time": "2026-11-19T10:00:00+09:00",
+   "signal_close": 118500.0,
+   "poc": 114102.5,
+   "rv_box": 1.5761025314440376,
    "market": "down"
   }
  ]

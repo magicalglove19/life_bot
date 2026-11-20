@@ -760,7 +760,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-20T10:00:00+09:00",
+   "last_bar": "2026-11-20T11:00:00+09:00",
    "days": [
     "2026-11-18",
     "2026-11-19",
@@ -792,7 +792,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-20T10:00:00+09:00",
+   "last_bar": "2026-11-20T11:00:00+09:00",
    "days": [
     "2026-11-18",
     "2026-11-19",
@@ -824,7 +824,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-20T10:00:00+09:00",
+   "last_bar": "2026-11-20T11:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20"
@@ -855,7 +855,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-20T10:00:00+09:00",
+   "last_bar": "2026-11-20T11:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20"
@@ -886,11 +886,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-20T10:00:00+09:00",
+   "last_bar": "2026-11-20T11:00:00+09:00",
    "days": [
     "2026-11-20"
    ],
-   "fake_checked": 1,
+   "fake_checked": 2,
    "fake_warned": true,
    "uni": "top300",
    "market": "down"
@@ -916,12 +916,12 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-20T10:00:00+09:00",
+   "last_bar": "2026-11-20T11:00:00+09:00",
    "days": [
     "2026-11-20"
    ],
-   "fake_checked": 1,
-   "fake_warned": false,
+   "fake_checked": 2,
+   "fake_warned": true,
    "uni": "top300",
    "market": "down"
   }
@@ -1050,7 +1050,8 @@
   "2026-11-20": [
    "090430|09",
    "024110|09",
-   "~195940|10"
+   "~195940|10",
+   "~293490|11"
   ]
  },
  "skipped": [
@@ -1635,6 +1636,16 @@
    "signal_close": 38250.0,
    "poc": 36358.125,
    "rv_box": 2.1370793004327284,
+   "market": "down"
+  },
+  {
+   "code": "293490",
+   "name": "카카오게임즈",
+   "uni": "top300",
+   "signal_time": "2026-11-20T11:00:00+09:00",
+   "signal_close": 12630.0,
+   "poc": 11652.0,
+   "rv_box": 2.03790201578707,
    "market": "down"
   }
  ]

@@ -760,10 +760,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-19T14:00:00+09:00",
+   "last_bar": "2026-11-20T09:00:00+09:00",
    "days": [
     "2026-11-18",
-    "2026-11-19"
+    "2026-11-19",
+    "2026-11-20"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -791,10 +792,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-19T14:00:00+09:00",
+   "last_bar": "2026-11-20T09:00:00+09:00",
    "days": [
     "2026-11-18",
-    "2026-11-19"
+    "2026-11-19",
+    "2026-11-20"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -822,9 +824,10 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-19T14:00:00+09:00",
+   "last_bar": "2026-11-20T09:00:00+09:00",
    "days": [
-    "2026-11-19"
+    "2026-11-19",
+    "2026-11-20"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -852,11 +855,68 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-19T14:00:00+09:00",
+   "last_bar": "2026-11-20T09:00:00+09:00",
    "days": [
-    "2026-11-19"
+    "2026-11-19",
+    "2026-11-20"
    ],
    "fake_checked": 3,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "090430",
+   "name": "아모레퍼시픽",
+   "src": "",
+   "signal_time": "2026-11-20T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 141600.0,
+   "poc": 130443.75,
+   "rv_box": 2.592461202162021,
+   "signal_close": 143600.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-20T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "024110",
+   "name": "기업은행",
+   "src": "",
+   "signal_time": "2026-11-20T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 19310.0,
+   "poc": 19032.125,
+   "rv_box": 1.5581621425414787,
+   "signal_close": 19370.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-20T09:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -982,6 +1042,10 @@
    "~271560|10",
    "~145020|14",
    "~145020|14"
+  ],
+  "2026-11-20": [
+   "090430|09",
+   "024110|09"
   ]
  },
  "skipped": [

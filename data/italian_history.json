@@ -1,14 +1,4 @@
 [
-  "orario",
-  "taxi",
-  "cameriere",
-  "menu",
-  "conto",
-  "panino",
-  "albergo",
-  "scuola",
-  "bar",
-  "gelato",
   "supermercato",
   "ufficio",
   "studente",
@@ -498,5 +488,15 @@
   "tempo",
   "vino",
   "birra",
-  "paese"
+  "paese",
+  "libro",
+  "matita",
+  "tavolo",
+  "gatto",
+  "cane",
+  "cielo",
+  "sole",
+  "pioggia",
+  "finestra",
+  "forchetta"
 ]

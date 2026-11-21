@@ -1,14 +1,4 @@
 [
-  "supermercato",
-  "ufficio",
-  "studente",
-  "insegnante",
-  "cielo",
-  "vento",
-  "bicchiere",
-  "museo",
-  "aperto",
-  "chiuso",
   "cibo",
   "sale",
   "zucchero",
@@ -498,5 +488,15 @@
   "sole",
   "pioggia",
   "finestra",
-  "forchetta"
+  "forchetta",
+  "caffè",
+  "ristorante",
+  "menu",
+  "conto",
+  "sedia",
+  "cucchiaio",
+  "zaino",
+  "chiave",
+  "pasto",
+  "dolce"
 ]

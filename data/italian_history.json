@@ -1,14 +1,4 @@
 [
-  "cibo",
-  "sale",
-  "zucchero",
-  "bacio",
-  "sorriso",
-  "montagna",
-  "spiaggia",
-  "acqua",
-  "pane",
-  "frutta",
   "pesce",
   "luna",
   "sole",
@@ -498,5 +488,15 @@
   "zaino",
   "chiave",
   "pasto",
-  "dolce"
+  "dolce",
+  "pasta",
+  "pizza",
+  "cappello",
+  "scarpa",
+  "maglietta",
+  "occhiali",
+  "orologio",
+  "porta",
+  "letto",
+  "fiume"
 ]

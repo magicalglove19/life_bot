@@ -825,7 +825,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-23T13:00:00+09:00",
+   "last_bar": "2026-11-23T14:00:00+09:00",
    "days": [
     "2026-11-18",
     "2026-11-19",
@@ -858,7 +858,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-23T13:00:00+09:00",
+   "last_bar": "2026-11-23T14:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -890,7 +890,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-23T13:00:00+09:00",
+   "last_bar": "2026-11-23T14:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -922,13 +922,41 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-23T13:00:00+09:00",
+   "last_bar": "2026-11-23T14:00:00+09:00",
    "days": [
     "2026-11-20",
     "2026-11-23"
    ],
    "fake_checked": 3,
    "fake_warned": true,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "001430",
+   "name": "세아베스틸지주",
+   "src": "",
+   "signal_time": "2026-11-23T14:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 32400.0,
+   "poc": 30982.5,
+   "rv_box": 4.013199351541327,
+   "signal_close": 32800.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-23T14:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
    "uni": "top300",
    "market": "down"
   }
@@ -1062,7 +1090,9 @@
    "~195940|13",
    "~293490|13"
   ],
-  "2026-11-23": []
+  "2026-11-23": [
+   "001430|14"
+  ]
  },
  "skipped": [
   {

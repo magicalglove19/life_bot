@@ -740,6 +740,71 @@
    "exit_price": 46750.0
   },
   {
+   "code": "097950",
+   "name": "CJ제일제당",
+   "src": "",
+   "signal_time": "2026-11-18T11:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 182900.0,
+   "poc": 177535.0,
+   "rv_box": 1.7242774693322216,
+   "signal_close": 183300.0,
+   "entry": 183300.0,
+   "entry_time": "2026-11-18T12:00:00+09:00",
+   "stop": 177535.0,
+   "t1": 189065.0,
+   "t2": 200595.0,
+   "risk": 5765.0,
+   "half": false,
+   "status": "closed",
+   "r": -1.0,
+   "exit_reason": "손절",
+   "exit_time": "2026-11-23T09:00:00+09:00",
+   "last_bar": "2026-11-23T09:00:00+09:00",
+   "days": [
+    "2026-11-18",
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-23"
+   ],
+   "fake_checked": 3,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down",
+   "exit_price": 177535.0
+  },
+  {
+   "code": "024110",
+   "name": "기업은행",
+   "src": "",
+   "signal_time": "2026-11-20T09:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 19310.0,
+   "poc": 19032.125,
+   "rv_box": 1.5581621425414787,
+   "signal_close": 19370.0,
+   "entry": 19370.0,
+   "entry_time": "2026-11-20T10:00:00+09:00",
+   "stop": 19032.125,
+   "t1": 19707.875,
+   "t2": 20383.625,
+   "risk": 337.875,
+   "half": false,
+   "status": "closed",
+   "r": -1.272660007399186,
+   "exit_reason": "갭손절",
+   "exit_time": "2026-11-23T09:00:00+09:00",
+   "last_bar": "2026-11-23T09:00:00+09:00",
+   "days": [
+    "2026-11-20"
+   ],
+   "fake_checked": 3,
+   "fake_warned": true,
+   "uni": "top300",
+   "market": "down",
+   "exit_price": 18940.0
+  },
+  {
    "code": "041510",
    "name": "에스엠",
    "src": "",
@@ -760,43 +825,12 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-20T14:00:00+09:00",
+   "last_bar": "2026-11-23T09:00:00+09:00",
    "days": [
     "2026-11-18",
     "2026-11-19",
-    "2026-11-20"
-   ],
-   "fake_checked": 3,
-   "fake_warned": false,
-   "uni": "top300",
-   "market": "down"
-  },
-  {
-   "code": "097950",
-   "name": "CJ제일제당",
-   "src": "",
-   "signal_time": "2026-11-18T11:00:00+09:00",
-   "max_stop": 0.08,
-   "level": 182900.0,
-   "poc": 177535.0,
-   "rv_box": 1.7242774693322216,
-   "signal_close": 183300.0,
-   "entry": 183300.0,
-   "entry_time": "2026-11-18T12:00:00+09:00",
-   "stop": 177535.0,
-   "t1": 189065.0,
-   "t2": 200595.0,
-   "risk": 5765.0,
-   "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-20T14:00:00+09:00",
-   "days": [
-    "2026-11-18",
-    "2026-11-19",
-    "2026-11-20"
+    "2026-11-20",
+    "2026-11-23"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -824,10 +858,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-20T14:00:00+09:00",
+   "last_bar": "2026-11-23T09:00:00+09:00",
    "days": [
     "2026-11-19",
-    "2026-11-20"
+    "2026-11-20",
+    "2026-11-23"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -855,10 +890,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-20T14:00:00+09:00",
+   "last_bar": "2026-11-23T09:00:00+09:00",
    "days": [
     "2026-11-19",
-    "2026-11-20"
+    "2026-11-20",
+    "2026-11-23"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -886,39 +922,10 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-20T14:00:00+09:00",
+   "last_bar": "2026-11-23T09:00:00+09:00",
    "days": [
-    "2026-11-20"
-   ],
-   "fake_checked": 3,
-   "fake_warned": true,
-   "uni": "top300",
-   "market": "down"
-  },
-  {
-   "code": "024110",
-   "name": "기업은행",
-   "src": "",
-   "signal_time": "2026-11-20T09:00:00+09:00",
-   "max_stop": 0.08,
-   "level": 19310.0,
-   "poc": 19032.125,
-   "rv_box": 1.5581621425414787,
-   "signal_close": 19370.0,
-   "entry": 19370.0,
-   "entry_time": "2026-11-20T10:00:00+09:00",
-   "stop": 19032.125,
-   "t1": 19707.875,
-   "t2": 20383.625,
-   "risk": 337.875,
-   "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-20T14:00:00+09:00",
-   "days": [
-    "2026-11-20"
+    "2026-11-20",
+    "2026-11-23"
    ],
    "fake_checked": 3,
    "fake_warned": true,
@@ -1054,7 +1061,8 @@
    "~293490|11",
    "~195940|13",
    "~293490|13"
-  ]
+  ],
+  "2026-11-23": []
  },
  "skipped": [
   {

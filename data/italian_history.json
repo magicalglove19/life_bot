@@ -1,14 +1,4 @@
 [
-  "pesce",
-  "luna",
-  "sole",
-  "fiori",
-  "cucina",
-  "pasto",
-  "mare",
-  "libro",
-  "penna",
-  "telefono",
   "auto",
   "forno",
   "verdura",
@@ -498,5 +488,15 @@
   "orologio",
   "porta",
   "letto",
-  "fiume"
+  "fiume",
+  "banca",
+  "ospedale",
+  "treno",
+  "autobus",
+  "cibo",
+  "dottore",
+  "colazione",
+  "pranzo",
+  "cena",
+  "bagno"
 ]

@@ -825,12 +825,13 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-23T14:00:00+09:00",
+   "last_bar": "2026-11-24T12:00:00+09:00",
    "days": [
     "2026-11-18",
     "2026-11-19",
     "2026-11-20",
-    "2026-11-23"
+    "2026-11-23",
+    "2026-11-24"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -858,11 +859,12 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-23T14:00:00+09:00",
+   "last_bar": "2026-11-24T12:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
-    "2026-11-23"
+    "2026-11-23",
+    "2026-11-24"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -890,11 +892,12 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-23T14:00:00+09:00",
+   "last_bar": "2026-11-24T12:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
-    "2026-11-23"
+    "2026-11-23",
+    "2026-11-24"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -922,10 +925,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-23T14:00:00+09:00",
+   "last_bar": "2026-11-24T12:00:00+09:00",
    "days": [
     "2026-11-20",
-    "2026-11-23"
+    "2026-11-23",
+    "2026-11-24"
    ],
    "fake_checked": 3,
    "fake_warned": true,
@@ -942,20 +946,23 @@
    "poc": 30982.5,
    "rv_box": 4.013199351541327,
    "signal_close": 32800.0,
-   "entry": null,
-   "entry_time": null,
-   "stop": null,
-   "t1": null,
-   "t2": null,
-   "risk": null,
+   "entry": 32800.0,
+   "entry_time": "2026-11-23T15:00:00+09:00",
+   "stop": 30982.5,
+   "t1": 34617.5,
+   "t2": 38252.5,
+   "risk": 1817.5,
    "half": false,
    "status": "open",
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-23T14:00:00+09:00",
-   "days": [],
-   "fake_checked": 0,
+   "last_bar": "2026-11-24T12:00:00+09:00",
+   "days": [
+    "2026-11-23",
+    "2026-11-24"
+   ],
+   "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -1092,7 +1099,8 @@
   ],
   "2026-11-23": [
    "001430|14"
-  ]
+  ],
+  "2026-11-24": []
  },
  "skipped": [
   {

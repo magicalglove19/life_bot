@@ -825,7 +825,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T12:00:00+09:00",
+   "last_bar": "2026-11-24T13:00:00+09:00",
    "days": [
     "2026-11-18",
     "2026-11-19",
@@ -859,7 +859,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T12:00:00+09:00",
+   "last_bar": "2026-11-24T13:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -892,7 +892,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T12:00:00+09:00",
+   "last_bar": "2026-11-24T13:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -925,7 +925,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T12:00:00+09:00",
+   "last_bar": "2026-11-24T13:00:00+09:00",
    "days": [
     "2026-11-20",
     "2026-11-23",
@@ -957,7 +957,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T12:00:00+09:00",
+   "last_bar": "2026-11-24T13:00:00+09:00",
    "days": [
     "2026-11-23",
     "2026-11-24"
@@ -965,6 +965,34 @@
    "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "005380",
+   "name": "현대차",
+   "src": "",
+   "signal_time": "2026-11-24T13:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 276000.0,
+   "poc": 259581.25,
+   "rv_box": 1.8923039493958318,
+   "signal_close": 276500.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-24T13:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "base40",
    "market": "down"
   }
  ],
@@ -1100,7 +1128,9 @@
   "2026-11-23": [
    "001430|14"
   ],
-  "2026-11-24": []
+  "2026-11-24": [
+   "005380|13"
+  ]
  },
  "skipped": [
   {

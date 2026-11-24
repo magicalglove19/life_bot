@@ -1,14 +1,4 @@
 [
-  "auto",
-  "forno",
-  "verdura",
-  "vino",
-  "tè",
-  "bottiglia",
-  "valigia",
-  "casa",
-  "strada",
-  "parco",
   "stazione",
   "panchina",
   "amico",
@@ -498,5 +488,15 @@
   "colazione",
   "pranzo",
   "cena",
-  "bagno"
+  "bagno",
+  "montagna",
+  "lago",
+  "ragazzo",
+  "ragazza",
+  "viaggio",
+  "aereo",
+  "cappotto",
+  "calzini",
+  "maglione",
+  "biblioteca"
 ]

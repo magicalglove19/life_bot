@@ -821,11 +821,11 @@
    "t2": 106640.0,
    "risk": 6880.0,
    "half": true,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-24T13:00:00+09:00",
+   "status": "closed",
+   "r": 1.2049418604651163,
+   "exit_reason": "시간청산",
+   "exit_time": "2026-11-24T14:00:00+09:00",
+   "last_bar": "2026-11-24T14:00:00+09:00",
    "days": [
     "2026-11-18",
     "2026-11-19",
@@ -836,7 +836,8 @@
    "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
-   "market": "down"
+   "market": "down",
+   "exit_price": 95700.0
   },
   {
    "code": "008770",
@@ -859,7 +860,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T13:00:00+09:00",
+   "last_bar": "2026-11-24T14:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -892,7 +893,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T13:00:00+09:00",
+   "last_bar": "2026-11-24T14:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -925,7 +926,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T13:00:00+09:00",
+   "last_bar": "2026-11-24T14:00:00+09:00",
    "days": [
     "2026-11-20",
     "2026-11-23",
@@ -957,7 +958,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T13:00:00+09:00",
+   "last_bar": "2026-11-24T14:00:00+09:00",
    "days": [
     "2026-11-23",
     "2026-11-24"
@@ -977,6 +978,36 @@
    "poc": 259581.25,
    "rv_box": 1.8923039493958318,
    "signal_close": 276500.0,
+   "entry": 276500.0,
+   "entry_time": "2026-11-24T14:00:00+09:00",
+   "stop": 259581.25,
+   "t1": 293418.75,
+   "t2": 327256.25,
+   "risk": 16918.75,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-24T14:00:00+09:00",
+   "days": [
+    "2026-11-24"
+   ],
+   "fake_checked": 1,
+   "fake_warned": false,
+   "uni": "base40",
+   "market": "down"
+  },
+  {
+   "code": "003550",
+   "name": "LG",
+   "src": "",
+   "signal_time": "2026-11-24T14:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 91400.0,
+   "poc": 89357.5,
+   "rv_box": 1.7936798585111513,
+   "signal_close": 92000.0,
    "entry": null,
    "entry_time": null,
    "stop": null,
@@ -988,7 +1019,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T13:00:00+09:00",
+   "last_bar": "2026-11-24T14:00:00+09:00",
    "days": [],
    "fake_checked": 0,
    "fake_warned": false,
@@ -1129,7 +1160,8 @@
    "001430|14"
   ],
   "2026-11-24": [
-   "005380|13"
+   "005380|13",
+   "003550|14"
   ]
  },
  "skipped": [

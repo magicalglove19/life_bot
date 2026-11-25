@@ -925,7 +925,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T11:00:00+09:00",
+   "last_bar": "2026-11-25T12:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -959,7 +959,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T11:00:00+09:00",
+   "last_bar": "2026-11-25T12:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -993,7 +993,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T11:00:00+09:00",
+   "last_bar": "2026-11-25T12:00:00+09:00",
    "days": [
     "2026-11-20",
     "2026-11-23",
@@ -1026,7 +1026,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T11:00:00+09:00",
+   "last_bar": "2026-11-25T12:00:00+09:00",
    "days": [
     "2026-11-24",
     "2026-11-25"
@@ -1046,6 +1046,36 @@
    "poc": 12582.125,
    "rv_box": 3.2858621702193314,
    "signal_close": 13240.0,
+   "entry": 13230.0,
+   "entry_time": "2026-11-25T12:00:00+09:00",
+   "stop": 12582.125,
+   "t1": 13877.875,
+   "t2": 15173.625,
+   "risk": 647.875,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-25T12:00:00+09:00",
+   "days": [
+    "2026-11-25"
+   ],
+   "fake_checked": 1,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "003230",
+   "name": "삼양식품",
+   "src": "",
+   "signal_time": "2026-11-25T12:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 1307000.0,
+   "poc": 1278312.5,
+   "rv_box": 2.467852801214756,
+   "signal_close": 1314000.0,
    "entry": null,
    "entry_time": null,
    "stop": null,
@@ -1057,7 +1087,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T11:00:00+09:00",
+   "last_bar": "2026-11-25T12:00:00+09:00",
    "days": [],
    "fake_checked": 0,
    "fake_warned": false,
@@ -1202,7 +1232,11 @@
    "003550|14"
   ],
   "2026-11-25": [
-   "293490|11"
+   "293490|11",
+   "003230|12",
+   "~097950|12",
+   "~002790|12",
+   "~192820|12"
   ]
  },
  "skipped": [
@@ -1817,6 +1851,36 @@
    "signal_close": 12860.0,
    "poc": 11669.625,
    "rv_box": 2.518602879585007,
+   "market": "down"
+  },
+  {
+   "code": "097950",
+   "name": "CJ제일제당",
+   "uni": "top300",
+   "signal_time": "2026-11-25T12:00:00+09:00",
+   "signal_close": 190100.0,
+   "poc": 185436.25,
+   "rv_box": 1.7424664414943798,
+   "market": "down"
+  },
+  {
+   "code": "002790",
+   "name": "아모레퍼시픽홀딩스",
+   "uni": "top300",
+   "signal_time": "2026-11-25T12:00:00+09:00",
+   "signal_close": 29400.0,
+   "poc": 27912.5,
+   "rv_box": 1.6025464955379178,
+   "market": "down"
+  },
+  {
+   "code": "192820",
+   "name": "코스맥스",
+   "uni": "top300",
+   "signal_time": "2026-11-25T12:00:00+09:00",
+   "signal_close": 326500.0,
+   "poc": 291262.5,
+   "rv_box": 1.5110364363759303,
    "market": "down"
   }
  ]

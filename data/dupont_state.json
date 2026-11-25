@@ -925,7 +925,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T12:00:00+09:00",
+   "last_bar": "2026-11-25T13:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -959,7 +959,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T12:00:00+09:00",
+   "last_bar": "2026-11-25T13:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -993,7 +993,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T12:00:00+09:00",
+   "last_bar": "2026-11-25T13:00:00+09:00",
    "days": [
     "2026-11-20",
     "2026-11-23",
@@ -1026,7 +1026,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T12:00:00+09:00",
+   "last_bar": "2026-11-25T13:00:00+09:00",
    "days": [
     "2026-11-24",
     "2026-11-25"
@@ -1057,11 +1057,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T12:00:00+09:00",
+   "last_bar": "2026-11-25T13:00:00+09:00",
    "days": [
     "2026-11-25"
    ],
-   "fake_checked": 1,
+   "fake_checked": 2,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -1076,20 +1076,22 @@
    "poc": 1278312.5,
    "rv_box": 2.467852801214756,
    "signal_close": 1314000.0,
-   "entry": null,
-   "entry_time": null,
-   "stop": null,
-   "t1": null,
-   "t2": null,
-   "risk": null,
+   "entry": 1313000.0,
+   "entry_time": "2026-11-25T13:00:00+09:00",
+   "stop": 1278312.5,
+   "t1": 1347687.5,
+   "t2": 1417062.5,
+   "risk": 34687.5,
    "half": false,
    "status": "open",
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T12:00:00+09:00",
-   "days": [],
-   "fake_checked": 0,
+   "last_bar": "2026-11-25T13:00:00+09:00",
+   "days": [
+    "2026-11-25"
+   ],
+   "fake_checked": 1,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -1236,7 +1238,9 @@
    "003230|12",
    "~097950|12",
    "~002790|12",
-   "~192820|12"
+   "~192820|12",
+   "~443060|13",
+   "~483650|13"
   ]
  },
  "skipped": [
@@ -1881,6 +1885,26 @@
    "signal_close": 326500.0,
    "poc": 291262.5,
    "rv_box": 1.5110364363759303,
+   "market": "down"
+  },
+  {
+   "code": "443060",
+   "name": "HD현대마린솔루션",
+   "uni": "top300",
+   "signal_time": "2026-11-25T13:00:00+09:00",
+   "signal_close": 190000.0,
+   "poc": 183086.25,
+   "rv_box": 1.9436493605336596,
+   "market": "down"
+  },
+  {
+   "code": "483650",
+   "name": "달바글로벌",
+   "uni": "top300",
+   "signal_time": "2026-11-25T13:00:00+09:00",
+   "signal_close": 137800.0,
+   "poc": 125526.25,
+   "rv_box": 1.6653766611813268,
    "market": "down"
   }
  ]

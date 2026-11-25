@@ -921,11 +921,11 @@
    "t2": 48608.0,
    "risk": 3136.0,
    "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-25T13:00:00+09:00",
+   "status": "closed",
+   "r": -0.15943877551020408,
+   "exit_reason": "시간청산",
+   "exit_time": "2026-11-25T14:00:00+09:00",
+   "last_bar": "2026-11-25T14:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -936,7 +936,8 @@
    "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
-   "market": "down"
+   "market": "down",
+   "exit_price": 38700.0
   },
   {
    "code": "352820",
@@ -955,11 +956,11 @@
    "t2": 218488.0,
    "risk": 14096.0,
    "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-25T13:00:00+09:00",
+   "status": "closed",
+   "r": 0.04256526674233825,
+   "exit_reason": "시간청산",
+   "exit_time": "2026-11-25T14:00:00+09:00",
+   "last_bar": "2026-11-25T14:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
@@ -970,7 +971,8 @@
    "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
-   "market": "down"
+   "market": "down",
+   "exit_price": 176800.0
   },
   {
    "code": "090430",
@@ -993,7 +995,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T13:00:00+09:00",
+   "last_bar": "2026-11-25T14:00:00+09:00",
    "days": [
     "2026-11-20",
     "2026-11-23",
@@ -1026,7 +1028,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T13:00:00+09:00",
+   "last_bar": "2026-11-25T14:00:00+09:00",
    "days": [
     "2026-11-24",
     "2026-11-25"
@@ -1057,11 +1059,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T13:00:00+09:00",
+   "last_bar": "2026-11-25T14:00:00+09:00",
    "days": [
     "2026-11-25"
    ],
-   "fake_checked": 2,
+   "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -1087,12 +1089,12 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T13:00:00+09:00",
+   "last_bar": "2026-11-25T14:00:00+09:00",
    "days": [
     "2026-11-25"
    ],
-   "fake_checked": 1,
-   "fake_warned": false,
+   "fake_checked": 2,
+   "fake_warned": true,
    "uni": "top300",
    "market": "down"
   }
@@ -1240,7 +1242,9 @@
    "~002790|12",
    "~192820|12",
    "~443060|13",
-   "~483650|13"
+   "~483650|13",
+   "~323410|14",
+   "~443060|14"
   ]
  },
  "skipped": [
@@ -1905,6 +1909,26 @@
    "signal_close": 137800.0,
    "poc": 125526.25,
    "rv_box": 1.6653766611813268,
+   "market": "down"
+  },
+  {
+   "code": "323410",
+   "name": "카카오뱅크",
+   "uni": "top300",
+   "signal_time": "2026-11-25T14:00:00+09:00",
+   "signal_close": 21950.0,
+   "poc": 21558.75,
+   "rv_box": 2.7975964488857548,
+   "market": "down"
+  },
+  {
+   "code": "443060",
+   "name": "HD현대마린솔루션",
+   "uni": "top300",
+   "signal_time": "2026-11-25T14:00:00+09:00",
+   "signal_close": 191000.0,
+   "poc": 183247.5,
+   "rv_box": 2.5834424902494666,
    "market": "down"
   }
  ]

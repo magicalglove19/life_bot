@@ -1,14 +1,4 @@
 [
-  "stazione",
-  "panchina",
-  "amico",
-  "bagno",
-  "corsa",
-  "tempo",
-  "viaggio",
-  "finestra",
-  "sedia",
-  "tavolo",
   "porta",
   "zaino",
   "occhiali",
@@ -498,5 +488,15 @@
   "cappotto",
   "calzini",
   "maglione",
-  "biblioteca"
+  "biblioteca",
+  "città",
+  "strada",
+  "mercato",
+  "negozio",
+  "vestito",
+  "bottone",
+  "saluto",
+  "passeggiata",
+  "orario",
+  "autostrada"
 ]

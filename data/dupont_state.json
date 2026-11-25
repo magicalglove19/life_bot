@@ -840,6 +840,71 @@
    "exit_price": 95700.0
   },
   {
+   "code": "001430",
+   "name": "세아베스틸지주",
+   "src": "",
+   "signal_time": "2026-11-23T14:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 32400.0,
+   "poc": 30982.5,
+   "rv_box": 4.013199351541327,
+   "signal_close": 32800.0,
+   "entry": 32800.0,
+   "entry_time": "2026-11-23T15:00:00+09:00",
+   "stop": 30982.5,
+   "t1": 34617.5,
+   "t2": 38252.5,
+   "risk": 1817.5,
+   "half": false,
+   "status": "closed",
+   "r": -1.0,
+   "exit_reason": "손절",
+   "exit_time": "2026-11-25T09:00:00+09:00",
+   "last_bar": "2026-11-25T09:00:00+09:00",
+   "days": [
+    "2026-11-23",
+    "2026-11-24",
+    "2026-11-25"
+   ],
+   "fake_checked": 3,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down",
+   "exit_price": 30982.5
+  },
+  {
+   "code": "003550",
+   "name": "LG",
+   "src": "",
+   "signal_time": "2026-11-24T14:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 91400.0,
+   "poc": 89357.5,
+   "rv_box": 1.7936798585111513,
+   "signal_close": 92000.0,
+   "entry": 92000.0,
+   "entry_time": "2026-11-24T15:00:00+09:00",
+   "stop": 89357.5,
+   "t1": 94642.5,
+   "t2": 99927.5,
+   "risk": 2642.5,
+   "half": false,
+   "status": "closed",
+   "r": -1.0,
+   "exit_reason": "손절",
+   "exit_time": "2026-11-25T09:00:00+09:00",
+   "last_bar": "2026-11-25T09:00:00+09:00",
+   "days": [
+    "2026-11-24",
+    "2026-11-25"
+   ],
+   "fake_checked": 1,
+   "fake_warned": false,
+   "uni": "base40",
+   "market": "down",
+   "exit_price": 89357.5
+  },
+  {
    "code": "008770",
    "name": "호텔신라",
    "src": "",
@@ -860,12 +925,13 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T14:00:00+09:00",
+   "last_bar": "2026-11-25T11:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
     "2026-11-23",
-    "2026-11-24"
+    "2026-11-24",
+    "2026-11-25"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -893,12 +959,13 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T14:00:00+09:00",
+   "last_bar": "2026-11-25T11:00:00+09:00",
    "days": [
     "2026-11-19",
     "2026-11-20",
     "2026-11-23",
-    "2026-11-24"
+    "2026-11-24",
+    "2026-11-25"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -926,45 +993,15 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T14:00:00+09:00",
+   "last_bar": "2026-11-25T11:00:00+09:00",
    "days": [
     "2026-11-20",
     "2026-11-23",
-    "2026-11-24"
+    "2026-11-24",
+    "2026-11-25"
    ],
    "fake_checked": 3,
    "fake_warned": true,
-   "uni": "top300",
-   "market": "down"
-  },
-  {
-   "code": "001430",
-   "name": "세아베스틸지주",
-   "src": "",
-   "signal_time": "2026-11-23T14:00:00+09:00",
-   "max_stop": 0.08,
-   "level": 32400.0,
-   "poc": 30982.5,
-   "rv_box": 4.013199351541327,
-   "signal_close": 32800.0,
-   "entry": 32800.0,
-   "entry_time": "2026-11-23T15:00:00+09:00",
-   "stop": 30982.5,
-   "t1": 34617.5,
-   "t2": 38252.5,
-   "risk": 1817.5,
-   "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-24T14:00:00+09:00",
-   "days": [
-    "2026-11-23",
-    "2026-11-24"
-   ],
-   "fake_checked": 3,
-   "fake_warned": false,
    "uni": "top300",
    "market": "down"
   },
@@ -989,25 +1026,26 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T14:00:00+09:00",
+   "last_bar": "2026-11-25T11:00:00+09:00",
    "days": [
-    "2026-11-24"
+    "2026-11-24",
+    "2026-11-25"
    ],
-   "fake_checked": 1,
-   "fake_warned": false,
+   "fake_checked": 3,
+   "fake_warned": true,
    "uni": "base40",
    "market": "down"
   },
   {
-   "code": "003550",
-   "name": "LG",
+   "code": "293490",
+   "name": "카카오게임즈",
    "src": "",
-   "signal_time": "2026-11-24T14:00:00+09:00",
+   "signal_time": "2026-11-25T11:00:00+09:00",
    "max_stop": 0.08,
-   "level": 91400.0,
-   "poc": 89357.5,
-   "rv_box": 1.7936798585111513,
-   "signal_close": 92000.0,
+   "level": 12920.0,
+   "poc": 12582.125,
+   "rv_box": 3.2858621702193314,
+   "signal_close": 13240.0,
    "entry": null,
    "entry_time": null,
    "stop": null,
@@ -1019,11 +1057,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-24T14:00:00+09:00",
+   "last_bar": "2026-11-25T11:00:00+09:00",
    "days": [],
    "fake_checked": 0,
    "fake_warned": false,
-   "uni": "base40",
+   "uni": "top300",
    "market": "down"
   }
  ],
@@ -1162,6 +1200,9 @@
   "2026-11-24": [
    "005380|13",
    "003550|14"
+  ],
+  "2026-11-25": [
+   "293490|11"
   ]
  },
  "skipped": [

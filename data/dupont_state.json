@@ -1028,7 +1028,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T12:00:00+09:00",
+   "last_bar": "2026-11-26T13:00:00+09:00",
    "days": [
     "2026-11-20",
     "2026-11-23",
@@ -1062,7 +1062,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T12:00:00+09:00",
+   "last_bar": "2026-11-26T13:00:00+09:00",
    "days": [
     "2026-11-25",
     "2026-11-26"
@@ -1093,7 +1093,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T12:00:00+09:00",
+   "last_bar": "2026-11-26T13:00:00+09:00",
    "days": [
     "2026-11-25",
     "2026-11-26"
@@ -1124,11 +1124,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T12:00:00+09:00",
+   "last_bar": "2026-11-26T13:00:00+09:00",
    "days": [
     "2026-11-26"
    ],
-   "fake_checked": 2,
+   "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -1154,11 +1154,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T12:00:00+09:00",
+   "last_bar": "2026-11-26T13:00:00+09:00",
    "days": [
     "2026-11-26"
    ],
-   "fake_checked": 1,
+   "fake_checked": 2,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -1315,7 +1315,9 @@
   ],
   "2026-11-26": [
    "030000|10",
-   "001430|11"
+   "001430|11",
+   "~039490|13",
+   "~218410|13"
   ]
  },
  "skipped": [
@@ -2020,6 +2022,26 @@
    "signal_close": 191000.0,
    "poc": 183247.5,
    "rv_box": 2.5834424902494666,
+   "market": "down"
+  },
+  {
+   "code": "039490",
+   "name": "키움증권",
+   "uni": "top300",
+   "signal_time": "2026-11-26T13:00:00+09:00",
+   "signal_close": 207500.0,
+   "poc": 195362.5,
+   "rv_box": 1.8963506637345704,
+   "market": "down"
+  },
+  {
+   "code": "218410",
+   "name": "RFHIC",
+   "uni": "top300",
+   "signal_time": "2026-11-26T13:00:00+09:00",
+   "signal_close": 61300.0,
+   "poc": 57455.0,
+   "rv_box": 1.6098689308995868,
    "market": "down"
   }
  ]

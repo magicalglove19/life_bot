@@ -975,6 +975,39 @@
    "exit_price": 176800.0
   },
   {
+   "code": "005380",
+   "name": "현대차",
+   "src": "",
+   "signal_time": "2026-11-24T13:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 276000.0,
+   "poc": 259581.25,
+   "rv_box": 1.8923039493958318,
+   "signal_close": 276500.0,
+   "entry": 276500.0,
+   "entry_time": "2026-11-24T14:00:00+09:00",
+   "stop": 259581.25,
+   "t1": 293418.75,
+   "t2": 327256.25,
+   "risk": 16918.75,
+   "half": false,
+   "status": "closed",
+   "r": -1.0,
+   "exit_reason": "손절",
+   "exit_time": "2026-11-26T11:00:00+09:00",
+   "last_bar": "2026-11-26T11:00:00+09:00",
+   "days": [
+    "2026-11-24",
+    "2026-11-25",
+    "2026-11-26"
+   ],
+   "fake_checked": 3,
+   "fake_warned": true,
+   "uni": "base40",
+   "market": "down",
+   "exit_price": 259581.25
+  },
+  {
    "code": "090430",
    "name": "아모레퍼시픽",
    "src": "",
@@ -995,7 +1028,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T10:00:00+09:00",
+   "last_bar": "2026-11-26T11:00:00+09:00",
    "days": [
     "2026-11-20",
     "2026-11-23",
@@ -1006,38 +1039,6 @@
    "fake_checked": 3,
    "fake_warned": true,
    "uni": "top300",
-   "market": "down"
-  },
-  {
-   "code": "005380",
-   "name": "현대차",
-   "src": "",
-   "signal_time": "2026-11-24T13:00:00+09:00",
-   "max_stop": 0.08,
-   "level": 276000.0,
-   "poc": 259581.25,
-   "rv_box": 1.8923039493958318,
-   "signal_close": 276500.0,
-   "entry": 276500.0,
-   "entry_time": "2026-11-24T14:00:00+09:00",
-   "stop": 259581.25,
-   "t1": 293418.75,
-   "t2": 327256.25,
-   "risk": 16918.75,
-   "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-26T10:00:00+09:00",
-   "days": [
-    "2026-11-24",
-    "2026-11-25",
-    "2026-11-26"
-   ],
-   "fake_checked": 3,
-   "fake_warned": true,
-   "uni": "base40",
    "market": "down"
   },
   {
@@ -1061,7 +1062,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T10:00:00+09:00",
+   "last_bar": "2026-11-26T11:00:00+09:00",
    "days": [
     "2026-11-25",
     "2026-11-26"
@@ -1092,7 +1093,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T10:00:00+09:00",
+   "last_bar": "2026-11-26T11:00:00+09:00",
    "days": [
     "2026-11-25",
     "2026-11-26"
@@ -1112,6 +1113,36 @@
    "poc": 18728.0,
    "rv_box": 1.6084645189189744,
    "signal_close": 19550.0,
+   "entry": 19550.0,
+   "entry_time": "2026-11-26T11:00:00+09:00",
+   "stop": 18728.0,
+   "t1": 20372.0,
+   "t2": 22016.0,
+   "risk": 822.0,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-26T11:00:00+09:00",
+   "days": [
+    "2026-11-26"
+   ],
+   "fake_checked": 1,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "001430",
+   "name": "세아베스틸지주",
+   "src": "",
+   "signal_time": "2026-11-26T11:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 34200.0,
+   "poc": 30975.0,
+   "rv_box": 2.4727521261409304,
+   "signal_close": 34350.0,
    "entry": null,
    "entry_time": null,
    "stop": null,
@@ -1123,7 +1154,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T10:00:00+09:00",
+   "last_bar": "2026-11-26T11:00:00+09:00",
    "days": [],
    "fake_checked": 0,
    "fake_warned": false,
@@ -1281,7 +1312,8 @@
    "~443060|14"
   ],
   "2026-11-26": [
-   "030000|10"
+   "030000|10",
+   "001430|11"
   ]
  },
  "skipped": [

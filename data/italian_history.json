@@ -1,14 +1,4 @@
 [
-  "porta",
-  "zaino",
-  "occhiali",
-  "cappello",
-  "sciarpa",
-  "ombrello",
-  "computer",
-  "gatto",
-  "cane",
-  "bambino",
   "negozio",
   "passeggiata",
   "collo",
@@ -498,5 +488,15 @@
   "saluto",
   "passeggiata",
   "orario",
-  "autostrada"
+  "autostrada",
+  "sorella",
+  "fratello",
+  "nonno",
+  "nonna",
+  "scuola",
+  "studente",
+  "professore",
+  "spiaggia",
+  "mare",
+  "albero"
 ]

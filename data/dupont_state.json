@@ -1024,11 +1024,11 @@
    "t2": 178188.0,
    "risk": 11496.0,
    "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-26T13:00:00+09:00",
+   "status": "closed",
+   "r": 0.2174669450243563,
+   "exit_reason": "시간청산",
+   "exit_time": "2026-11-26T14:00:00+09:00",
+   "last_bar": "2026-11-26T14:00:00+09:00",
    "days": [
     "2026-11-20",
     "2026-11-23",
@@ -1039,7 +1039,8 @@
    "fake_checked": 3,
    "fake_warned": true,
    "uni": "top300",
-   "market": "down"
+   "market": "down",
+   "exit_price": 146200.0
   },
   {
    "code": "293490",
@@ -1062,7 +1063,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T13:00:00+09:00",
+   "last_bar": "2026-11-26T14:00:00+09:00",
    "days": [
     "2026-11-25",
     "2026-11-26"
@@ -1093,7 +1094,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T13:00:00+09:00",
+   "last_bar": "2026-11-26T14:00:00+09:00",
    "days": [
     "2026-11-25",
     "2026-11-26"
@@ -1124,7 +1125,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T13:00:00+09:00",
+   "last_bar": "2026-11-26T14:00:00+09:00",
    "days": [
     "2026-11-26"
    ],
@@ -1154,11 +1155,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T13:00:00+09:00",
+   "last_bar": "2026-11-26T14:00:00+09:00",
    "days": [
     "2026-11-26"
    ],
-   "fake_checked": 2,
+   "fake_checked": 3,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -1317,7 +1318,8 @@
    "030000|10",
    "001430|11",
    "~039490|13",
-   "~218410|13"
+   "~218410|13",
+   "~323410|14"
   ]
  },
  "skipped": [
@@ -2042,6 +2044,16 @@
    "signal_close": 61300.0,
    "poc": 57455.0,
    "rv_box": 1.6098689308995868,
+   "market": "down"
+  },
+  {
+   "code": "323410",
+   "name": "카카오뱅크",
+   "uni": "top300",
+   "signal_time": "2026-11-26T14:00:00+09:00",
+   "signal_close": 22250.0,
+   "poc": 21665.625,
+   "rv_box": 1.9685591076101554,
    "market": "down"
   }
  ]

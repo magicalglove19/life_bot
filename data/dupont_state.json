@@ -995,12 +995,13 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T14:00:00+09:00",
+   "last_bar": "2026-11-26T10:00:00+09:00",
    "days": [
     "2026-11-20",
     "2026-11-23",
     "2026-11-24",
-    "2026-11-25"
+    "2026-11-25",
+    "2026-11-26"
    ],
    "fake_checked": 3,
    "fake_warned": true,
@@ -1028,10 +1029,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T14:00:00+09:00",
+   "last_bar": "2026-11-26T10:00:00+09:00",
    "days": [
     "2026-11-24",
-    "2026-11-25"
+    "2026-11-25",
+    "2026-11-26"
    ],
    "fake_checked": 3,
    "fake_warned": true,
@@ -1059,9 +1061,10 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T14:00:00+09:00",
+   "last_bar": "2026-11-26T10:00:00+09:00",
    "days": [
-    "2026-11-25"
+    "2026-11-25",
+    "2026-11-26"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -1089,12 +1092,41 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-25T14:00:00+09:00",
+   "last_bar": "2026-11-26T10:00:00+09:00",
    "days": [
-    "2026-11-25"
+    "2026-11-25",
+    "2026-11-26"
    ],
-   "fake_checked": 2,
+   "fake_checked": 3,
    "fake_warned": true,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "030000",
+   "name": "제일기획",
+   "src": "",
+   "signal_time": "2026-11-26T10:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 19480.0,
+   "poc": 18728.0,
+   "rv_box": 1.6084645189189744,
+   "signal_close": 19550.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-26T10:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
    "uni": "top300",
    "market": "down"
   }
@@ -1247,6 +1279,9 @@
    "~443060|14",
    "~323410|14",
    "~443060|14"
+  ],
+  "2026-11-26": [
+   "030000|10"
   ]
  },
  "skipped": [

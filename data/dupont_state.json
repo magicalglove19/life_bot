@@ -1063,10 +1063,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T14:00:00+09:00",
+   "last_bar": "2026-11-27T10:00:00+09:00",
    "days": [
     "2026-11-25",
-    "2026-11-26"
+    "2026-11-26",
+    "2026-11-27"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -1094,10 +1095,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T14:00:00+09:00",
+   "last_bar": "2026-11-27T10:00:00+09:00",
    "days": [
     "2026-11-25",
-    "2026-11-26"
+    "2026-11-26",
+    "2026-11-27"
    ],
    "fake_checked": 3,
    "fake_warned": true,
@@ -1125,9 +1127,10 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T14:00:00+09:00",
+   "last_bar": "2026-11-27T10:00:00+09:00",
    "days": [
-    "2026-11-26"
+    "2026-11-26",
+    "2026-11-27"
    ],
    "fake_checked": 3,
    "fake_warned": false,
@@ -1155,11 +1158,68 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-26T14:00:00+09:00",
+   "last_bar": "2026-11-27T10:00:00+09:00",
    "days": [
-    "2026-11-26"
+    "2026-11-26",
+    "2026-11-27"
    ],
    "fake_checked": 3,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "008930",
+   "name": "한미사이언스",
+   "src": "",
+   "signal_time": "2026-11-27T10:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 58600.0,
+   "poc": 51962.5,
+   "rv_box": 4.355864924564135,
+   "signal_close": 59000.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-27T10:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
+   "fake_warned": false,
+   "uni": "top300",
+   "market": "down"
+  },
+  {
+   "code": "001720",
+   "name": "신영증권",
+   "src": "",
+   "signal_time": "2026-11-27T10:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 122900.0,
+   "poc": 117320.0,
+   "rv_box": 3.540650406504065,
+   "signal_close": 124900.0,
+   "entry": null,
+   "entry_time": null,
+   "stop": null,
+   "t1": null,
+   "t2": null,
+   "risk": null,
+   "half": false,
+   "status": "open",
+   "r": null,
+   "exit_reason": null,
+   "exit_time": null,
+   "last_bar": "2026-11-27T10:00:00+09:00",
+   "days": [],
+   "fake_checked": 0,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -1321,6 +1381,17 @@
    "~218410|13",
    "~323410|14",
    "~323410|14"
+  ],
+  "2026-11-27": [
+   "008930|10",
+   "001720|10",
+   "~006800|10",
+   "~323280|10",
+   "~071050|10",
+   "~086520|10",
+   "~247540|10",
+   "~229200|10",
+   "~012630|10"
   ]
  },
  "skipped": [
@@ -2065,6 +2136,76 @@
    "signal_close": 22250.0,
    "poc": 21665.625,
    "rv_box": 1.9685591076101554,
+   "market": "down"
+  },
+  {
+   "code": "006800",
+   "name": "미래에셋증권",
+   "uni": "top300",
+   "signal_time": "2026-11-27T10:00:00+09:00",
+   "signal_close": 21800.0,
+   "poc": 19336.875,
+   "rv_box": 3.288050177959477,
+   "market": "down"
+  },
+  {
+   "code": "323280",
+   "name": "태성",
+   "uni": "top300",
+   "signal_time": "2026-11-27T10:00:00+09:00",
+   "signal_close": 49900.0,
+   "poc": 44118.75,
+   "rv_box": 3.2484909411989737,
+   "market": "down"
+  },
+  {
+   "code": "071050",
+   "name": "한국금융지주",
+   "uni": "top300",
+   "signal_time": "2026-11-27T10:00:00+09:00",
+   "signal_close": 140600.0,
+   "poc": 123552.5,
+   "rv_box": 3.161563541515722,
+   "market": "down"
+  },
+  {
+   "code": "086520",
+   "name": "에코프로",
+   "uni": "base40",
+   "signal_time": "2026-11-27T10:00:00+09:00",
+   "signal_close": 70900.0,
+   "poc": 65755.0,
+   "rv_box": 2.660248633032255,
+   "market": "down"
+  },
+  {
+   "code": "247540",
+   "name": "에코프로비엠",
+   "uni": "base40",
+   "signal_time": "2026-11-27T10:00:00+09:00",
+   "signal_close": 90500.0,
+   "poc": 84600.0,
+   "rv_box": 2.603606028407378,
+   "market": "down"
+  },
+  {
+   "code": "229200",
+   "name": "KODEX 코스닥150",
+   "uni": "base40",
+   "signal_time": "2026-11-27T10:00:00+09:00",
+   "signal_close": 11590.0,
+   "poc": 10720.5,
+   "rv_box": 1.8336285824575798,
+   "market": "down"
+  },
+  {
+   "code": "012630",
+   "name": "HDC",
+   "uni": "top300",
+   "signal_time": "2026-11-27T10:00:00+09:00",
+   "signal_close": 20250.0,
+   "poc": 18930.0,
+   "rv_box": 1.529471611114741,
    "market": "down"
   }
  ]

@@ -1043,6 +1043,39 @@
    "exit_price": 146200.0
   },
   {
+   "code": "003230",
+   "name": "삼양식품",
+   "src": "",
+   "signal_time": "2026-11-25T12:00:00+09:00",
+   "max_stop": 0.08,
+   "level": 1307000.0,
+   "poc": 1278312.5,
+   "rv_box": 2.467852801214756,
+   "signal_close": 1314000.0,
+   "entry": 1313000.0,
+   "entry_time": "2026-11-25T13:00:00+09:00",
+   "stop": 1278312.5,
+   "t1": 1347687.5,
+   "t2": 1417062.5,
+   "risk": 34687.5,
+   "half": false,
+   "status": "closed",
+   "r": -1.0,
+   "exit_reason": "손절",
+   "exit_time": "2026-11-27T12:00:00+09:00",
+   "last_bar": "2026-11-27T12:00:00+09:00",
+   "days": [
+    "2026-11-25",
+    "2026-11-26",
+    "2026-11-27"
+   ],
+   "fake_checked": 3,
+   "fake_warned": true,
+   "uni": "top300",
+   "market": "down",
+   "exit_price": 1278312.5
+  },
+  {
    "code": "293490",
    "name": "카카오게임즈",
    "src": "",
@@ -1063,7 +1096,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-27T11:00:00+09:00",
+   "last_bar": "2026-11-27T12:00:00+09:00",
    "days": [
     "2026-11-25",
     "2026-11-26",
@@ -1071,38 +1104,6 @@
    ],
    "fake_checked": 3,
    "fake_warned": false,
-   "uni": "top300",
-   "market": "down"
-  },
-  {
-   "code": "003230",
-   "name": "삼양식품",
-   "src": "",
-   "signal_time": "2026-11-25T12:00:00+09:00",
-   "max_stop": 0.08,
-   "level": 1307000.0,
-   "poc": 1278312.5,
-   "rv_box": 2.467852801214756,
-   "signal_close": 1314000.0,
-   "entry": 1313000.0,
-   "entry_time": "2026-11-25T13:00:00+09:00",
-   "stop": 1278312.5,
-   "t1": 1347687.5,
-   "t2": 1417062.5,
-   "risk": 34687.5,
-   "half": false,
-   "status": "open",
-   "r": null,
-   "exit_reason": null,
-   "exit_time": null,
-   "last_bar": "2026-11-27T11:00:00+09:00",
-   "days": [
-    "2026-11-25",
-    "2026-11-26",
-    "2026-11-27"
-   ],
-   "fake_checked": 3,
-   "fake_warned": true,
    "uni": "top300",
    "market": "down"
   },
@@ -1127,7 +1128,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-27T11:00:00+09:00",
+   "last_bar": "2026-11-27T12:00:00+09:00",
    "days": [
     "2026-11-26",
     "2026-11-27"
@@ -1158,7 +1159,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-27T11:00:00+09:00",
+   "last_bar": "2026-11-27T12:00:00+09:00",
    "days": [
     "2026-11-26",
     "2026-11-27"
@@ -1189,12 +1190,12 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-27T11:00:00+09:00",
+   "last_bar": "2026-11-27T12:00:00+09:00",
    "days": [
     "2026-11-27"
    ],
-   "fake_checked": 1,
-   "fake_warned": false,
+   "fake_checked": 2,
+   "fake_warned": true,
    "uni": "top300",
    "market": "down"
   },
@@ -1219,11 +1220,11 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-27T11:00:00+09:00",
+   "last_bar": "2026-11-27T12:00:00+09:00",
    "days": [
     "2026-11-27"
    ],
-   "fake_checked": 1,
+   "fake_checked": 2,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -1399,7 +1400,9 @@
    "~263750|11",
    "~323280|11",
    "~009420|11",
-   "~012630|11"
+   "~012630|11",
+   "~012630|12",
+   "~005940|12"
   ]
  },
  "skipped": [
@@ -2254,6 +2257,26 @@
    "signal_close": 20600.0,
    "poc": 18896.875,
    "rv_box": 1.5294432498777235,
+   "market": "down"
+  },
+  {
+   "code": "012630",
+   "name": "HDC",
+   "uni": "top300",
+   "signal_time": "2026-11-27T12:00:00+09:00",
+   "signal_close": 21000.0,
+   "poc": 18934.375,
+   "rv_box": 6.499568734621985,
+   "market": "down"
+  },
+  {
+   "code": "005940",
+   "name": "NH투자증권",
+   "uni": "top300",
+   "signal_time": "2026-11-27T12:00:00+09:00",
+   "signal_close": 23900.0,
+   "poc": 22271.875,
+   "rv_box": 1.6480259394947916,
    "market": "down"
   }
  ]

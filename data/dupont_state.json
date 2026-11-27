@@ -1063,7 +1063,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-27T10:00:00+09:00",
+   "last_bar": "2026-11-27T11:00:00+09:00",
    "days": [
     "2026-11-25",
     "2026-11-26",
@@ -1095,7 +1095,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-27T10:00:00+09:00",
+   "last_bar": "2026-11-27T11:00:00+09:00",
    "days": [
     "2026-11-25",
     "2026-11-26",
@@ -1127,7 +1127,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-27T10:00:00+09:00",
+   "last_bar": "2026-11-27T11:00:00+09:00",
    "days": [
     "2026-11-26",
     "2026-11-27"
@@ -1158,7 +1158,7 @@
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-27T10:00:00+09:00",
+   "last_bar": "2026-11-27T11:00:00+09:00",
    "days": [
     "2026-11-26",
     "2026-11-27"
@@ -1178,20 +1178,22 @@
    "poc": 51962.5,
    "rv_box": 4.355864924564135,
    "signal_close": 59000.0,
-   "entry": null,
-   "entry_time": null,
-   "stop": null,
-   "t1": null,
-   "t2": null,
-   "risk": null,
+   "entry": 59000.0,
+   "entry_time": "2026-11-27T11:00:00+09:00",
+   "stop": 54280.0,
+   "t1": 63720.0,
+   "t2": 73160.0,
+   "risk": 4720.0,
    "half": false,
    "status": "open",
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-27T10:00:00+09:00",
-   "days": [],
-   "fake_checked": 0,
+   "last_bar": "2026-11-27T11:00:00+09:00",
+   "days": [
+    "2026-11-27"
+   ],
+   "fake_checked": 1,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -1206,20 +1208,22 @@
    "poc": 117320.0,
    "rv_box": 3.540650406504065,
    "signal_close": 124900.0,
-   "entry": null,
-   "entry_time": null,
-   "stop": null,
-   "t1": null,
-   "t2": null,
-   "risk": null,
+   "entry": 124900.0,
+   "entry_time": "2026-11-27T11:00:00+09:00",
+   "stop": 117320.0,
+   "t1": 132480.0,
+   "t2": 147640.0,
+   "risk": 7580.0,
    "half": false,
    "status": "open",
    "r": null,
    "exit_reason": null,
    "exit_time": null,
-   "last_bar": "2026-11-27T10:00:00+09:00",
-   "days": [],
-   "fake_checked": 0,
+   "last_bar": "2026-11-27T11:00:00+09:00",
+   "days": [
+    "2026-11-27"
+   ],
+   "fake_checked": 1,
    "fake_warned": false,
    "uni": "top300",
    "market": "down"
@@ -1391,7 +1395,11 @@
    "~086520|10",
    "~247540|10",
    "~229200|10",
-   "~012630|10"
+   "~012630|10",
+   "~263750|11",
+   "~323280|11",
+   "~009420|11",
+   "~012630|11"
   ]
  },
  "skipped": [
@@ -2206,6 +2214,46 @@
    "signal_close": 20250.0,
    "poc": 18930.0,
    "rv_box": 1.529471611114741,
+   "market": "down"
+  },
+  {
+   "code": "263750",
+   "name": "펄어비스",
+   "uni": "top300",
+   "signal_time": "2026-11-27T11:00:00+09:00",
+   "signal_close": 30150.0,
+   "poc": 27350.0,
+   "rv_box": 3.575000627694471,
+   "market": "down"
+  },
+  {
+   "code": "323280",
+   "name": "태성",
+   "uni": "top300",
+   "signal_time": "2026-11-27T11:00:00+09:00",
+   "signal_close": 50300.0,
+   "poc": 44165.625,
+   "rv_box": 1.6600023351994444,
+   "market": "down"
+  },
+  {
+   "code": "009420",
+   "name": "한올바이오파마",
+   "uni": "top300",
+   "signal_time": "2026-11-27T11:00:00+09:00",
+   "signal_close": 57400.0,
+   "poc": 52285.0,
+   "rv_box": 1.5447940685511543,
+   "market": "down"
+  },
+  {
+   "code": "012630",
+   "name": "HDC",
+   "uni": "top300",
+   "signal_time": "2026-11-27T11:00:00+09:00",
+   "signal_close": 20600.0,
+   "poc": 18896.875,
+   "rv_box": 1.5294432498777235,
    "market": "down"
   }
  ]

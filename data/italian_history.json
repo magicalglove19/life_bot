@@ -1,14 +1,4 @@
 [
-  "negozio",
-  "passeggiata",
-  "collo",
-  "cuscino",
-  "lampada",
-  "cappotto",
-  "calcio",
-  "caffè",
-  "latte",
-  "chiave",
   "pasta",
   "pizza",
   "giorno",
@@ -498,5 +488,15 @@
   "professore",
   "spiaggia",
   "mare",
-  "albero"
+  "albero",
+  "macchina",
+  "piazza",
+  "villaggio",
+  "frutta",
+  "acqua",
+  "latte",
+  "pane",
+  "sale",
+  "pepe",
+  "frigorifero"
 ]

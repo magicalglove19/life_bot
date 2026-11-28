@@ -1,14 +1,4 @@
 [
-  "pasta",
-  "pizza",
-  "giorno",
-  "notte",
-  "mercato",
-  "orologio",
-  "vestito",
-  "banca",
-  "treno",
-  "autobus",
   "colazione",
   "pranzo",
   "cena",
@@ -498,5 +488,15 @@
   "pane",
   "sale",
   "pepe",
-  "frigorifero"
+  "frigorifero",
+  "grazie",
+  "scusa",
+  "mela",
+  "pesce",
+  "gelato",
+  "cucina",
+  "telefono",
+  "aeroporto",
+  "muro",
+  "pantaloni"
 ]
